@@ -10,6 +10,8 @@ public class Account {
     private String status;
     // Admin , Trainer, User
     private String role;
+    // Wallet value for in-app currency
+    private int wallet;
 
     public Account(String username, String password, String status, String role) {
         this.username = username;
@@ -57,4 +59,6 @@ public class Account {
     public void setRole(String role) {
         this.role = role;
     }
+    public int getWallet() {return wallet;}
+    public void setWallet(int wallet) {this.wallet = wallet;}
 }
