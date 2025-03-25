@@ -6,6 +6,7 @@ import java.util.List;
 public class Workout {
     private int duration;
     private String description;
+    private String title;
     private List<Exercise> exercises;
 
     public Workout(int duration, String description, List<Exercise> exercises) {
@@ -36,6 +37,13 @@ public class Workout {
 
     public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
 
