@@ -66,23 +66,61 @@ public class CreateAccountView {
 
         usernameField = new JTextField();
         usernameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter username");
+        JLabel usernameError = new JLabel("");
 
         passwordField = new JPasswordField();
         passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter password");
         passwordField.putClientProperty(FlatClientProperties.STYLE, "" + "showRevealButton:true");
+        JLabel passwordError = new JLabel("");
 
         confirmPasswordField = new JPasswordField();
         confirmPasswordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Confirm password");
+        JLabel confirmPasswordError = new JLabel("");
 
         createAccountButton = new JButton("Create Account");
         createAccountButton.putClientProperty(FlatClientProperties.STYLE, "" + "background:lighten(@background,10%);");
         createAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+                boolean valid = true;
                 Account account = new Account(usernameField.getText(), passwordField.getText());
-                account.addAccount();
-                description.setText("Successfully created account");
-                Main.setWindow("LoginPage");
+
+                if (CreateAccountViewModel.validateUsername(account) != null) {
+                    valid = false;
+                    usernameError.setText(CreateAccountViewModel.validateUsername(account));
+                    usernameError.setForeground(Color.RED);
+                    usernameError.putClientProperty(FlatClientProperties.STYLE, "" + "font:-4");
+                }
+                else {
+                    usernameError.setText("");
+                }
+
+                if (CreateAccountViewModel.validatePassword(account) != null) {
+                    valid = false;
+                    passwordError.setText(CreateAccountViewModel.validatePassword(account));
+                    passwordError.setForeground(Color.RED);
+                    passwordError.putClientProperty(FlatClientProperties.STYLE, "" + "font:-4");
+
+                }
+                else {
+                    passwordError.setText("");
+                }
+
+                if (!passwordField.getText().equals(confirmPasswordField.getText())) {
+                    valid = false;
+                    confirmPasswordError.setText("Passwords do not match");
+                    confirmPasswordError.setForeground(Color.RED);
+                    confirmPasswordError.putClientProperty(FlatClientProperties.STYLE, "" + "font:-4");
+                }
+                else {
+                    confirmPasswordError.setText("");
+                }
+
+
+                if (valid) {
+                    account.addAccount();
+                    CreateAccountViewModel.setWindow();
+                }
             }
         });
 
@@ -90,10 +128,13 @@ public class CreateAccountView {
         createAccountMenu.add(description);
         createAccountMenu.add(new JLabel("Username"), "gapy 8");
         createAccountMenu.add(usernameField);
+        createAccountMenu.add(usernameError, "gapy 0");
         createAccountMenu.add(new JLabel("Password"), "gapy 8");
         createAccountMenu.add(passwordField);
+        createAccountMenu.add(passwordError, "gapy 0");
         createAccountMenu.add(new JLabel("Confirm Password"), "gapy 8");
         createAccountMenu.add(confirmPasswordField);
+        createAccountMenu.add(confirmPasswordError, "gapy 0");
         createAccountMenu.add(createAccountButton, "gapy 10");
         createAccountPanel.add(createAccountMenu);
 

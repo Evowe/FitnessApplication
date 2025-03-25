@@ -3,10 +3,7 @@ package fitness.app.Components;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import fitness.app.Components.CreateAccount.CreateAccountModel;
-import fitness.app.Components.CreateAccount.CreateAccountView;
 import fitness.app.Components.CreateAccount.CreateAccountViewModel;
-import fitness.app.Components.Login.LoginView;
 import fitness.app.Components.Login.LoginViewModel;
 
 import javax.swing.*;

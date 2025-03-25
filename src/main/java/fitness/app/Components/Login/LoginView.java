@@ -70,6 +70,8 @@ public class LoginView extends JPanel {
         passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter password");
         passwordField.putClientProperty(FlatClientProperties.STYLE, "" + "showRevealButton:true");
 
+        JLabel result = new JLabel("");
+
         logInButton = new JButton("Log In");
         logInButton.putClientProperty(FlatClientProperties.STYLE, "" + "background:lighten(@background,10%);");
         logInButton.addActionListener(new ActionListener() {
@@ -78,11 +80,15 @@ public class LoginView extends JPanel {
                 Account account = new Account(usernameField.getText(), passwordField.getText());
                 String errorMessage = LoginViewModel.logInRequest(account);
                 if (errorMessage != null) {
-                    description.setText(errorMessage);
                     passwordField.setText("");
+                    result.setText(errorMessage);
+                    result.setForeground(Color.RED);
+                    result.putClientProperty(FlatClientProperties.STYLE, "" + "font:-4");
                 }
                 else {
-                    description.setText("Successfully logged in");
+                    result.setText("Successfully logged in");
+                    result.setForeground(Color.GREEN);
+                    result.putClientProperty(FlatClientProperties.STYLE, "" + "font:-4");
                 }
             }
         });
@@ -104,6 +110,7 @@ public class LoginView extends JPanel {
         loginMenu.add(usernameField);
         loginMenu.add(new JLabel("Password"), "gapy 8");
         loginMenu.add(passwordField);
+        loginMenu.add(result, "gapy 0");
         loginMenu.add(logInButton, "gapy 10");
         loginMenu.add(createAccountButton, "gapy 10");
         loginPanel.add(loginMenu);
