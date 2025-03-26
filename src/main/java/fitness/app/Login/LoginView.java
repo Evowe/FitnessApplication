@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class LoginView extends JPanel {
-    private static JFrame window;
     private static JTextField usernameField;
     private static JPasswordField passwordField;
     private static JButton logInButton;
@@ -82,9 +81,10 @@ public class LoginView extends JPanel {
                     result.putClientProperty(FlatClientProperties.STYLE, "" + "font:-4");
                 }
                 else {
-                    result.setText("Successfully logged in");
-                    result.setForeground(Color.GREEN);
-                    result.putClientProperty(FlatClientProperties.STYLE, "" + "font:-4");
+                    Main.setWindow("HomePage");
+                    //result.setText("Successfully logged in");
+                    //result.setForeground(Color.GREEN);
+                    //result.putClientProperty(FlatClientProperties.STYLE, "" + "font:-4");
                 }
             }
         });
@@ -97,8 +97,6 @@ public class LoginView extends JPanel {
                 Main.setWindow("CreateAccountPage");
             }
         });
-
-
 
         loginMenu.add(title);
         loginMenu.add(description);

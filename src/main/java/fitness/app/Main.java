@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import fitness.app.CreateAccount.CreateAccountViewModel;
+import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginViewModel;
 
 import javax.swing.*;
@@ -35,19 +36,19 @@ public class Main {
     }
 
     public static void setWindow(String windowName) {
+        window.getContentPane().removeAll();
         switch (windowName) {
             case "LoginPage" -> {
-                window.getContentPane().removeAll();
                 window.add(LoginViewModel.getLoginView());
-                window.revalidate();
-                window.repaint();
             }
             case "CreateAccountPage" -> {
-                window.getContentPane().removeAll();
                 window.add(CreateAccountViewModel.getCreateAccountView());
-                window.revalidate();
-                window.repaint();
+            }
+            case "LandingPage" -> {
+                window.add(HomeViewModel.getHomeView());
             }
         }
+        window.revalidate();
+        window.repaint();
     }
 }
