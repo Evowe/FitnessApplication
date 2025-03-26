@@ -6,6 +6,8 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import fitness.app.CreateAccount.CreateAccountViewModel;
 import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginViewModel;
+import fitness.app.Objects.AccountsDB;
+import fitness.app.Objects.DatabaseManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +18,9 @@ public class Main {
     public static void main(String[] args) {
         System.setProperty("apple.awt.application.name", "Rocket Health");
         System.setProperty("apple.awt.application.appearance", "system");
+
+        DatabaseManager.addDatabase("accounts", new AccountsDB("accounts"));
+        System.out.println("Database initialized successfully.");
 
         //FlatLaf setup & settings
         FlatRobotoMonoFont.install();

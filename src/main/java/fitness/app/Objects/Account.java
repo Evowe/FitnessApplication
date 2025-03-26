@@ -1,18 +1,19 @@
 package fitness.app.Objects;
 
-import java.util.HashMap;
+import java.sql.SQLException;
 
 public class Account {
-    private static HashMap<String, Account> accounts = new HashMap<>();
     private String username;
     private String password;
     private String status;
     private String role;
     private int wallet;
+    private AccountsDB accountsDB;
 
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
+        this.accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
     }
 
     public Account(String username, String password, String status, String role) {
@@ -20,6 +21,7 @@ public class Account {
         this.password = password;
         this.status = status;
         this.role = role;
+        this.accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
     }
 
     public void setUsername(String username) {
@@ -38,14 +40,6 @@ public class Account {
         return password;
     }
 
-    public void addAccount() {
-        accounts.put(this.username, this);
-    }
-
-    public Account getAccount() {
-        return accounts.get(username);
-    }
-
     public String getStatus() {
         return status;
     }
@@ -61,18 +55,22 @@ public class Account {
     public int getWallet() {return wallet;}
     public void setWallet(int wallet) {this.wallet = wallet;}
 
-    public static boolean validLogin(Account account) {
-        String username = account.getUsername();
-        String password = account.getPassword();
-        if (accounts.containsKey(username)) {
-            if (accounts.get(username).getPassword().equals(password)) {
-                return true;
-            }
-        }
-        return false;
+    public void addAccount() throws SQLException {
+        accountsDB.addAccount(this);
     }
 
-    public static boolean usernameExists(String username) {
-        return accounts.containsKey(username);
+    public static Account getAccount(String username) throws SQLException {
+        AccountsDB accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
+        return accountsDB.getAccount(username);
+    }
+
+    public static boolean validateLogin(String username, String password) throws SQLException {
+        AccountsDB accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
+        return accountsDB.validLogin(username, password);  // Validate login credentials
+    }
+
+    public static boolean usernameExists(String username) throws SQLException {
+        AccountsDB accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
+        return accountsDB.usernameExists(username);  // Check if username exists in the database
     }
 }

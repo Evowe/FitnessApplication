@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class CreateAccountView {
     private static JFrame window;
@@ -113,7 +114,12 @@ public class CreateAccountView {
 
 
                 if (valid) {
-                    account.addAccount();
+                    try {
+                        account.addAccount();
+                    } catch (SQLException e){
+                        System.out.println(e.getMessage());
+                    }
+
                     CreateAccountViewModel.setWindow();
                 }
             }
