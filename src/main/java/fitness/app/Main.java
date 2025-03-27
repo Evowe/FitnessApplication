@@ -24,7 +24,7 @@ public class Main {
 
         //FlatLaf setup & settings
         FlatRobotoMonoFont.install();
-        FlatLaf.registerCustomDefaultsSource("Components.Themes");
+        FlatLaf.registerCustomDefaultsSource("FlatLafSettings");
         UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
 
@@ -49,7 +49,7 @@ public class Main {
             case "CreateAccountPage" -> {
                 window.add(CreateAccountViewModel.getCreateAccountView());
             }
-            case "LandingPage" -> {
+            case "HomePage" -> {
                 window.add(HomeViewModel.getHomeView());
             }
         }
