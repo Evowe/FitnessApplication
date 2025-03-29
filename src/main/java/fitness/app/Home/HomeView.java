@@ -3,12 +3,15 @@ package fitness.app.Home;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
+import fitness.app.Main;
 import net.miginfocom.swing.MigLayout;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -70,6 +73,13 @@ public class HomeView {
         logOutButton.setText("Log Out");
         logOutButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
         logOutButton.setIcon(HomeViewModel.getIcon("log-out"));
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                Main.setWindow("LoginPage");
+            }
+        });
+
 
         menu.add(title, "wrap, gapy 10");
         menu.add(generalLabel, "wrap, gap 0 0 10 0");
