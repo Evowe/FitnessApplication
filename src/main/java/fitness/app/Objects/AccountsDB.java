@@ -48,7 +48,7 @@ public class AccountsDB extends DBTemplate {
     }
 
     public Connection getConnection() throws SQLException {
-        System.out.println("Trying to connect");
+        //System.out.println("Trying to connect");
         try {
             // Load SQLite JDBC driver
             Class.forName("org.sqlite.JDBC");
