@@ -8,6 +8,7 @@ import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginViewModel;
 import fitness.app.Objects.AccountsDB;
 import fitness.app.Objects.DatabaseManager;
+import fitness.app.Statistics.StatsViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,6 +52,9 @@ public class Main {
             }
             case "HomePage" -> {
                 window.add(HomeViewModel.getHomeView());
+            }
+            case "StatsPage" -> {
+                window.add(StatsViewModel.getStatsView());
             }
         }
         window.revalidate();

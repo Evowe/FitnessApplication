@@ -9,6 +9,29 @@ public class Account {
     private String role;
     private int wallet;
     private AccountsDB accountsDB;
+    private int Calories;
+    private Double Weight;
+    private Double Sleep;
+
+    public int getCalories() {
+        return Calories;
+    }
+    public void setCalories(int calories) {
+        Calories = calories;
+    }
+    public Double getWeight() {
+        return Weight;
+    }
+    public void setWeight(Double weight) {
+        Weight = weight;
+    }
+    public Double getSleep() {
+        return Sleep;
+    }
+    public void setSleep(Double sleep) {
+        Sleep = sleep;
+    }
+
 
     public Account(String username, String password) {
         this.username = username;
