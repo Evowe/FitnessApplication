@@ -3,7 +3,7 @@ package fitness.app.CreateExercise;
 import fitness.app.Objects.Exercise;
 
 public class CreateExercise {
-    public void CreateExerciseCall(String name, Integer type, int valA, double valB) {
+    public Exercise CreateExerciseCall(String name, Integer type, int valA, double valB) {
         Exercise exercise = null;
         switch(type) {
             case 1: // reps
@@ -23,13 +23,14 @@ public class CreateExercise {
         }
         System.out.println("Exercise created");
 
-        System.out.println(exercise == null);
-    }
+        //System.out.println(exercise == null);
 
-    
+        return exercise;
+    }
 
     public static void main(String[] args) {
         CreateExercise exercise = new CreateExercise();
-        exercise.CreateExerciseCall("Ass", 4, 1, 0);
+        Exercise newExer = exercise.CreateExerciseCall("Ass", 3, 1, 0);
+        System.out.println(newExer.getName());
     }
 }
