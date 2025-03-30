@@ -7,6 +7,14 @@ public class CreditCard {
     private String cardHolder;
     private String zipCode;
 
+    CreditCard() {
+        this.cardNumber = null;
+        this.expiryDate = null;
+        this.cvv = null;
+        this.cardHolder = null;
+        this.zipCode = null;
+    }
+
     CreditCard(String cardNumber, String expiryDate, String cvv,
                String cardHolder, String zipCode) {
         this.cardNumber = cardNumber;
@@ -14,6 +22,26 @@ public class CreditCard {
         this.cvv = cvv;
         this.cardHolder = cardHolder;
         this.zipCode = zipCode;
+    }
+
+    public boolean CardValidation(CreditCard card) {
+        boolean isValid = true;
+        if ( card != null ) {
+            if ( ! card.getCardNumber().matches(("\\d{4} \\d{4} \\d{4} \\d{4}"))) {
+                isValid = false;
+            }
+            if ( ! card.getZipCode().matches(("\\d{5}"))) {
+                isValid = false;
+            }
+            if ( ! card.getExpiryDate().matches(("\\d{2}" + "/" + "\\d{2}" ))) {
+                isValid = false;
+            }
+            if ( ! card.getCvv().matches(("\\d{3}" ))) {
+                isValid = false;
+            }
+        }
+
+        return isValid;
     }
 
     public String getCardNumber() {

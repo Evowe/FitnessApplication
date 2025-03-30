@@ -26,6 +26,8 @@ public class TransactionInterface {
         JTextField textBox3 = new JTextField("xxxxx");
         JLabel label4 = new JLabel("CVV");
         JTextField textBox4 = new JTextField("xxx");
+        JLabel label5 = new JLabel("Expir. Date");
+        JTextField textBox5 = new JTextField("xx/xx");
 
         JButton button1 = new JButton("Submit");
 
@@ -37,45 +39,33 @@ public class TransactionInterface {
         panel.add(textBox3);
         panel.add(label4);
         panel.add(textBox4);
+        panel.add(label5);
+        panel.add(textBox5);
 
         panel.add(button1);
 
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Boolean allValid = true;
-                if (textBox1.getText().matches("\\d{4} \\d{4} \\d{4} \\d{4}")) {
-                    System.out.println(textBox1.getText());
-                }
-                else {
-                    JOptionPane.showMessageDialog(frame, "Invalid Card Number");
-                    allValid = false;
-                }
-                if (textBox3.getText().matches("\\d{5}")) {
-                    System.out.println(textBox3.getText());
-                }
-                else {
-                    JOptionPane.showMessageDialog(frame, "Please enter a valid Zip Code");
-                    allValid = false;
-                }
-                if (textBox4.getText().matches("\\d{3}")) {
-                    System.out.println(textBox4.getText());
-                }
-                else {
-                    JOptionPane.showMessageDialog(frame, "Invalid CVV");
-                    allValid = false;
-                }
-                if (allValid) {
+                CreditCard newCard = new CreditCard();
+                newCard.setCardNumber(textBox1.getText());
+                newCard.setCardHolder(textBox2.getText());
+                newCard.setZipCode(textBox3.getText());
+                newCard.setCvv(textBox4.getText());
+                newCard.setExpiryDate(textBox5.getText());
+
+                if (newCard.CardValidation(newCard)) {
                     String csvFile = "example.csv";
                     try (FileWriter writer = new FileWriter(csvFile, true)) {
                         writer.append(textBox2.getText() + "," +
                                 textBox1.getText() + "," +
                                 textBox3.getText() + "," +
-                                textBox4.getText() + "\n");
+                                textBox4.getText() + "," +
+                                textBox5.getText() + "\n");
                     } catch (IOException d) {
                         d.printStackTrace();
                     }
-
+                    System.out.println(newCard.CardValidation(newCard));
                 }
             }
         });
