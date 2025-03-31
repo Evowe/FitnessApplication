@@ -8,6 +8,7 @@ import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginViewModel;
 import fitness.app.Objects.AccountsDB;
 import fitness.app.Objects.DatabaseManager;
+import fitness.app.Objects.ExerciseDB;
 import fitness.app.Statistics.StatsViewModel;
 
 import javax.swing.*;
@@ -21,7 +22,8 @@ public class Main {
         System.setProperty("apple.awt.application.appearance", "system");
 
         DatabaseManager.addDatabase("accounts", new AccountsDB("accounts"));
-        System.out.println("Database initialized successfully.");
+        DatabaseManager.addDatabase("exercises", new ExerciseDB("exercises"));
+        System.out.println("Databases initialized successfully.");
 
         //FlatLaf setup & settings
         FlatRobotoMonoFont.install();

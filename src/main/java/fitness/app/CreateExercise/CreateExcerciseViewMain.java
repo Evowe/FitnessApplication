@@ -3,7 +3,7 @@ package fitness.app.CreateExercise;
 import com.formdev.flatlaf.FlatClientProperties;
 import fitness.app.Objects.Account;
 import fitness.app.Statistics.StatsModel;
-import fitness.app.UpdateSleep.UpdateSleepView;
+
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;

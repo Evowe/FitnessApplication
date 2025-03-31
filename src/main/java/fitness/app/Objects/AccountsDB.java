@@ -20,7 +20,7 @@ public class AccountsDB extends DBTemplate {
                 "wallet INTEGER DEFAULT 0"
         };
         createTable("accounts", columns);
-        insertBaseUser();
+        //insertBaseUser();
     }
 
 
