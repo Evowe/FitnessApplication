@@ -20,6 +20,8 @@ import java.io.IOException;
 
 import static javax.swing.JLabel.*;
 
+//Implement menu bar as seperate method to abstract?
+
 public class HomeView {
     private static JPanel mainPanel;
 
