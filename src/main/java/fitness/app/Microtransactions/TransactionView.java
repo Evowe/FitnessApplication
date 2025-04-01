@@ -5,6 +5,7 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.extras.components.FlatPasswordField;
 import com.formdev.flatlaf.extras.components.FlatTextField;
+import fitness.app.Objects.CreditCard;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -14,9 +15,9 @@ import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class TransactionInterface extends JPanel {
+public class TransactionView extends JPanel {
     private static JPanel mainPanel;
-    TransactionInterface () {
+    TransactionView () {
         mainPanel = new JPanel(new GridLayout(1,2));
 
         JPanel purchaseMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
@@ -51,6 +52,8 @@ public class TransactionInterface extends JPanel {
         FlatButton submitButton = new FlatButton();
         submitButton.setText("Submit Details");
         submitButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+
+        purchaseMenu.add(title);
 
         purchaseMenu.add(label1);
         purchaseMenu.add(cardNumberField);

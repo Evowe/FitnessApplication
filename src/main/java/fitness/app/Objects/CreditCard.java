@@ -1,4 +1,4 @@
-package fitness.app.Microtransactions;
+package fitness.app.Objects;
 
 public class CreditCard {
     private String cardNumber;
@@ -7,7 +7,7 @@ public class CreditCard {
     private String cardHolder;
     private String zipCode;
 
-    CreditCard() {
+    public CreditCard() {
         this.cardNumber = null;
         this.expiryDate = null;
         this.cvv = null;
