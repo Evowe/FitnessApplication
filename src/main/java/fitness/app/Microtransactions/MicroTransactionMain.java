@@ -5,11 +5,6 @@ package fitness.app.Microtransactions;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import fitness.app.Login.LoginView;
-import fitness.app.Login.LoginViewModel;
-import fitness.app.Objects.AccountsDB;
-import fitness.app.Objects.DatabaseManager;
-import fitness.app.Objects.ExerciseDB;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,10 +15,6 @@ public class MicroTransactionMain {
     public static void main(String[] args) {
         System.setProperty("apple.awt.application.name", "Rocket Health");
         System.setProperty("apple.awt.application.appearance", "system");
-
-        //DatabaseManager.addDatabase("accounts", new AccountsDB("accounts"));
-        //DatabaseManager.addDatabase("exercises", new ExerciseDB("exercises"));
-        //System.out.println("Databases initialized successfully.");
 
         //FlatLaf setup & settings
         FlatRobotoMonoFont.install();

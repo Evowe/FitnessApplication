@@ -5,7 +5,6 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.extras.components.FlatPasswordField;
 import com.formdev.flatlaf.extras.components.FlatTextField;
-import fitness.app.Login.LoginView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
