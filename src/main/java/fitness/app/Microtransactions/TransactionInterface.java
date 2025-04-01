@@ -1,5 +1,13 @@
 package fitness.app.Microtransactions;
 
+import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.components.FlatButton;
+import com.formdev.flatlaf.extras.components.FlatLabel;
+import com.formdev.flatlaf.extras.components.FlatPasswordField;
+import com.formdev.flatlaf.extras.components.FlatTextField;
+import fitness.app.Login.LoginView;
+import net.miginfocom.swing.MigLayout;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,61 +15,75 @@ import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class TransactionInterface {
-    TransactionInterface ( JFrame frame) {
-        // Create a new frame
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
+public class TransactionInterface extends JPanel {
+    private static JPanel mainPanel;
+    TransactionInterface () {
+        mainPanel = new JPanel(new GridLayout(1,2));
 
-        // Create a panel to hold the text boxes
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 2)); // Use a grid layout with one column
+        JPanel purchaseMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
+        purchaseMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
+
+        FlatLabel title = new FlatLabel();
+        title.setText("Please Enter Card Information");
+        title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
 
         // Create and add multiple text boxes to the panel
+        FlatTextField cardNumberField = new FlatTextField();
+        cardNumberField.setPlaceholderText("xxxx xxxx xxxx xxxx");
         JLabel label1 = new JLabel("CardNumber");
-        JTextField textBox1 = new JTextField("xxxx xxxx xxxx xxxx");
+
+        FlatTextField cardHolderField = new FlatTextField();
+        cardHolderField.setPlaceholderText("Name");
         JLabel label2 = new JLabel("CardHolder");
-        JTextField textBox2 = new JTextField("Name on Card");
+
+        FlatTextField zipField = new FlatTextField();
+        zipField.setPlaceholderText("xxxxx");
         JLabel label3 = new JLabel("Zip Code");
-        JTextField textBox3 = new JTextField("xxxxx");
+
+        FlatPasswordField cvvField = new FlatPasswordField();
+        cvvField.setPlaceholderText("Enter cvv");
+        cvvField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true");
         JLabel label4 = new JLabel("CVV");
-        JTextField textBox4 = new JTextField("xxx");
+
+        FlatTextField expirField = new FlatTextField();
+        expirField.setPlaceholderText("mm/dd");
         JLabel label5 = new JLabel("Expir. Date");
-        JTextField textBox5 = new JTextField("xx/xx");
 
-        JButton button1 = new JButton("Submit");
+        FlatButton submitButton = new FlatButton();
+        submitButton.setText("Submit Details");
+        submitButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
 
-        panel.add(label1);
-        panel.add(textBox1);
-        panel.add(label2);
-        panel.add(textBox2);
-        panel.add(label3);
-        panel.add(textBox3);
-        panel.add(label4);
-        panel.add(textBox4);
-        panel.add(label5);
-        panel.add(textBox5);
+        purchaseMenu.add(label1);
+        purchaseMenu.add(cardNumberField);
+        purchaseMenu.add(label2);
+        purchaseMenu.add(cardHolderField);
+        purchaseMenu.add(label3);
+        purchaseMenu.add(zipField);
+        purchaseMenu.add(label4);
+        purchaseMenu.add(cvvField);
+        purchaseMenu.add(label5);
+        purchaseMenu.add(expirField);
 
-        panel.add(button1);
+        purchaseMenu.add(submitButton);
 
-        button1.addActionListener(new ActionListener() {
+        submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CreditCard newCard = new CreditCard();
-                newCard.setCardNumber(textBox1.getText());
-                newCard.setCardHolder(textBox2.getText());
-                newCard.setZipCode(textBox3.getText());
-                newCard.setCvv(textBox4.getText());
-                newCard.setExpiryDate(textBox5.getText());
+                newCard.setCardNumber(cardNumberField.getText());
+                newCard.setCardHolder(cardHolderField.getText());
+                newCard.setZipCode(zipField.getText());
+                newCard.setCvv(cvvField.getText());
+                newCard.setExpiryDate(expirField.getText());
 
                 if (newCard.CardValidation(newCard)) {
                     String csvFile = "example.csv";
                     try (FileWriter writer = new FileWriter(csvFile, true)) {
-                        writer.append(textBox2.getText() + "," +
-                                textBox1.getText() + "," +
-                                textBox3.getText() + "," +
-                                textBox4.getText() + "," +
-                                textBox5.getText() + "\n");
+                        writer.append(cardHolderField.getText() + "," +
+                                cardNumberField.getText() + "," +
+                                zipField.getText() + "," +
+                                cvvField.getText() + "," +
+                                expirField.getText() + "\n");
                     } catch (IOException d) {
                         d.printStackTrace();
                     }
@@ -70,12 +92,9 @@ public class TransactionInterface {
             }
         });
 
-        // Add the panel to the frame
-        frame.add(panel);
-
-        // Make the frame visible
-        frame.pack();
-
-        frame.setVisible(true);
+        mainPanel.add(purchaseMenu);
     }
+
+    public static JPanel get() {return mainPanel;}
+
 }
