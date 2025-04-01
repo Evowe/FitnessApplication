@@ -74,7 +74,10 @@ public class LoginView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent event) {
                 Account account = new Account(usernameField.getText(), passwordField.getText());
-                String errorMessage = LoginViewModel.logInRequest(account);
+                Object[] loginResult = LoginViewModel.logInRequest(account);
+                String errorMessage = (String)loginResult[0];
+                Account validatedAccount = (Account)loginResult[1];
+
                 if (errorMessage != null) {
                     passwordField.setText("");
                     result.setText(errorMessage);
@@ -82,10 +85,16 @@ public class LoginView extends JPanel {
                     result.putClientProperty(FlatClientProperties.STYLE, "font:-4");
                 }
                 else {
-                    Main.setWindow("HomePage");
+                    // Check role and redirect accordingly
+                    if ("admin".equals(validatedAccount.getRole())) {
+                        Main.setWindow("AdminPage");
+                    } else {
+                        Main.setWindow("HomePage");
+                    }
                 }
             }
         });
+
 
         usernameField.addActionListener(new ActionListener() {
             @Override
@@ -98,7 +107,10 @@ public class LoginView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent event) {
                 Account account = new Account(usernameField.getText(), passwordField.getText());
-                String errorMessage = LoginViewModel.logInRequest(account);
+                Object[] loginResult = LoginViewModel.logInRequest(account);
+                String errorMessage = (String)loginResult[0];
+                Account validatedAccount = (Account)loginResult[1];
+
                 if (errorMessage != null) {
                     passwordField.setText("");
                     result.setText(errorMessage);
@@ -106,7 +118,12 @@ public class LoginView extends JPanel {
                     result.putClientProperty(FlatClientProperties.STYLE, "font:-4");
                 }
                 else {
-                    Main.setWindow("HomePage");
+                    // Check role and redirect accordingly
+                    if ("admin".equals(validatedAccount.getRole())) {
+                        Main.setWindow("AdminPage");
+                    } else {
+                        Main.setWindow("HomePage");
+                    }
                 }
             }
         });
