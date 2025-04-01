@@ -14,6 +14,8 @@ import fitness.app.Statistics.StatsViewModel;
 import javax.swing.*;
 import java.awt.*;
 
+//Store user information somewhere?
+
 public class Main {
     private static JFrame window;
 
