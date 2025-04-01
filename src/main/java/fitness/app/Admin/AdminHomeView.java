@@ -29,6 +29,13 @@ import net.miginfocom.swing.MigLayout;
 
 public class AdminHomeView {
 	private static JPanel mainPanel;
+
+	public static JPanel getMainPanel() {
+		if (mainPanel == null) {
+			createView();
+		}
+		return mainPanel;
+	}
 	
 	//Testing
 	private static JFrame window;
@@ -96,17 +103,11 @@ public class AdminHomeView {
 	        
 	        contentPanel.add(contentTitle, "wrap, growx");
 	        contentPanel.add(requestsScroll, "growx");
-	        
-	        
-	        
+
 	        //Test
 	        contentPanel.setBorder(new LineBorder(Color.RED, 2));
 	        
-	        
-	        
-	        
-	        
-	        
+
 	        //Add components to main panel
 	        mainPanel.add(bMenu, "grow, push");
 	        mainPanel.add(contentPanel, "grow, push");

@@ -170,8 +170,7 @@ public class WorkoutMenuView {
 	
 	
 	
-	
-	/*
+    /*
 	//Testing
 	public static void main(String[] args) {
 		 //FlatLaf setup & settings
@@ -192,5 +191,5 @@ public class WorkoutMenuView {
 
         window.setVisible(true);
 	}
-	*/
+    */
 }

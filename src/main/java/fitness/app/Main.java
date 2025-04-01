@@ -3,9 +3,11 @@ package fitness.app;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import fitness.app.Admin.AdminHomeView;
 import fitness.app.CreateAccount.CreateAccountViewModel;
 import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginViewModel;
+import fitness.app.Objects.Account;
 import fitness.app.Objects.AccountsDB;
 import fitness.app.Objects.DatabaseManager;
 import fitness.app.Objects.ExerciseDB;
@@ -13,6 +15,7 @@ import fitness.app.Statistics.StatsViewModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 //Store user information somewhere?
 
@@ -26,6 +29,8 @@ public class Main {
         DatabaseManager.addDatabase("accounts", new AccountsDB("accounts"));
         DatabaseManager.addDatabase("exercises", new ExerciseDB("exercises"));
         System.out.println("Databases initialized successfully.");
+
+        addTestAdminAccount();
 
         //FlatLaf setup & settings
         FlatRobotoMonoFont.install();
@@ -60,8 +65,29 @@ public class Main {
             case "StatsPage" -> {
                 window.add(StatsViewModel.getStatsView());
             }
+            case "AdminPage" -> {
+                window.add(AdminHomeView.getMainPanel());
+            }
         }
         window.revalidate();
         window.repaint();
+    }
+
+    public static void addTestAdminAccount() {
+        try {
+            // Create admin account with username "admin" and password "admin123"
+            Account adminAccount = new Account("admin", "admin123", "active", "admin");
+
+            // Check if admin account already exists
+            if (!Account.usernameExists("admin")) {
+                adminAccount.addAccount();
+                System.out.println("Test admin account created successfully.");
+            } else {
+                System.out.println("Test admin account already exists.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error creating test admin account: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

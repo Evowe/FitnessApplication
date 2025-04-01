@@ -99,13 +99,4 @@ public class CreateExercise {
         }
     }
 
-    public static void main(String[] args) {
-        CreateExercise exercise = new CreateExercise();
-        Exercise newExer = exercise.CreateExerciseCall("Temp", "Description", 3, 1, 0);
-        if (newExer != null) {
-            System.out.println(newExer.getName());
-        } else {
-            System.out.println("Failed to create exercise");
-        }
-    }
 }
