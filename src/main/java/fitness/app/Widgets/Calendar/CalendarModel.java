@@ -25,20 +25,56 @@ public class CalendarModel {
         lastDay = today.with(TemporalAdjusters.lastDayOfMonth());
         calendar = new String[7][7];
 
-        for (int i = 0; i < 7; ++i) {
-            String day = String.valueOf(today.plusDays(i).getDayOfWeek()).substring(0,3);
-            System.out.println(day);
+        calendar[0][0] = "Sun";
+        calendar[0][1] = "Mon";
+        calendar[0][2] = "Tue";
+        calendar[0][3] = "Wed";
+        calendar[0][4] = "Thu";
+        calendar[0][5] = "Fri";
+        calendar[0][6] = "Sat";
+
+        int row = 1;
+        int col = -1;
+        switch (firstDay.getDayOfWeek()) {
+            case SUNDAY -> {
+                col = 0;
+            }
+            case MONDAY -> {
+                col = 1;
+            }
+            case TUESDAY -> {
+                col = 2;
+            }
+            case WEDNESDAY -> {
+                col = 3;
+            }
+            case THURSDAY -> {
+                col = 4;
+            }
+            case FRIDAY -> {
+                col = 5;
+            }
+            case SATURDAY -> {
+                col = 6;
+            }
         }
 
         LocalDate date = firstDay.with(TemporalAdjusters.firstDayOfMonth());
-        int row = 1;
-        int col = date.getDayOfMonth();
+        while (date.getMonth() == month.getMonth()) {
+            calendar[row][col] = String.valueOf(date.getDayOfMonth());
+            if (col == 6) {
+                col = 0;
+                ++row;
+            }
+            else {
+                ++col;
+            }
+            date = date.plusDays(1);
+        }
     }
 
     public static void main(String[] args) {
         CalendarModel model = new CalendarModel();
-        System.out.println("Today is " + model.today);
-        System.out.println("First date: " + model.firstDay);
-        System.out.println("Last date: " + model.lastDay);
+        System.out.println(model.calendar[1][2]);
     }
 }
