@@ -5,6 +5,7 @@ import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import fitness.app.Admin.AdminHomeView;
 import fitness.app.CreateAccount.CreateAccountViewModel;
+import fitness.app.Goals.GoalsViewModel;
 import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginViewModel;
 import fitness.app.Objects.Account;
@@ -67,6 +68,9 @@ public class Main {
             }
             case "AdminPage" -> {
                 window.add(AdminHomeView.getMainPanel());
+            }
+            case "GoalsPage" -> {
+                window.add(GoalsViewModel.getGoalsView());
             }
         }
         window.revalidate();

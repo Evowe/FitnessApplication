@@ -44,15 +44,21 @@ public class HomeView {
         homeButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
         homeButton.setIcon(HomeViewModel.getIcon("home"));
 
-        FlatButton classesButton = new FlatButton();
-        classesButton.setText("Classes");
-        classesButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
-        classesButton.setIcon(HomeViewModel.getIcon("classes"));
-
         FlatButton workoutsButton = new FlatButton();
         workoutsButton.setText("Workouts");
         workoutsButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
         workoutsButton.setIcon(HomeViewModel.getIcon("workouts"));
+
+        FlatButton goalsButton = new FlatButton();
+        goalsButton.setText("Goals");
+        goalsButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        goalsButton.setIcon(HomeViewModel.getIcon("goals"));
+        goalsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.setWindow("GoalsPage");
+            }
+        });
 
         FlatButton statisticsButton = new FlatButton();
         statisticsButton.setText("Statistics");
@@ -94,7 +100,7 @@ public class HomeView {
         menu.add(title, "wrap, gapy 10");
         menu.add(generalLabel, "wrap, gap 0 0 10 0");
         menu.add(homeButton, "wrap, gapy 0");
-        menu.add(classesButton, "wrap, gapy 10");
+        menu.add(goalsButton, "wrap, gapy 10");
         menu.add(workoutsButton, "wrap, gapy 10");
         menu.add(statisticsButton, "wrap, gapy 10");
         menu.add(accountLabel, "wrap, gap 0 0 10 0");
