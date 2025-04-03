@@ -30,11 +30,13 @@ public class CalendarModel {
             } while (date.getMonth() == input.getMonth());
         }
 
+        //Default Constructor
         public Calendar() {
             LocalDate date = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
             initCalendar(date);
         }
 
+        //Custom Constructor
         public Calendar(YearMonth yearMonth) {
             LocalDate date = LocalDate.of(yearMonth.getYear(), yearMonth.getMonth(), 1);
             initCalendar(date);
@@ -56,29 +58,35 @@ public class CalendarModel {
     private YearMonth yearMonth;
     private Calendar calendar;
 
+    //Default Constructor
     public CalendarModel() {
         yearMonth = YearMonth.now();
         calendar = new Calendar();
     }
 
+    //Custom Constructor
     public CalendarModel(int year, int month) {
         yearMonth = YearMonth.of(year, month);
         calendar = new Calendar(yearMonth);
     }
 
+    //Changes the year and month, updates the calendar page
     public void setYearMonth(int year, int month) {
         yearMonth = YearMonth.of(year, month);
         calendar = new Calendar(yearMonth);
     }
 
+    //Gets calendar year and month
     public YearMonth getYearMonth() {
         return yearMonth;
     }
 
+    //Gets calendar page
     public ArrayList<String[]> getCalendar() {
         return calendar.calendar;
     }
 
+    //Converts CalenderModel to a String
     @Override
     public String toString() {
         return yearMonth.getMonth() + " " + yearMonth.getYear() + "\n" + calendar.toString();
