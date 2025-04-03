@@ -3,16 +3,15 @@ package fitness.app;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+
 import fitness.app.Admin.AdminHomeView;
 import fitness.app.CreateAccount.CreateAccountViewModel;
 import fitness.app.Goals.GoalsViewModel;
 import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginViewModel;
-import fitness.app.Objects.Account;
-import fitness.app.Objects.AccountsDB;
-import fitness.app.Objects.DatabaseManager;
-import fitness.app.Objects.ExerciseDB;
 import fitness.app.Statistics.StatsViewModel;
+
+import fitness.app.Objects.*;
 import fitness.app.Widgets.Calendar.CalendarViewModel;
 
 import javax.swing.*;
@@ -30,6 +29,7 @@ public class Main {
 
         DatabaseManager.addDatabase("accounts", new AccountsDB("accounts"));
         DatabaseManager.addDatabase("exercises", new ExerciseDB("exercises"));
+        DatabaseManager.addDatabase("creditCard", new CreditCardDB("creditCard"));
         System.out.println("Databases initialized successfully.");
 
         addTestAdminAccount();

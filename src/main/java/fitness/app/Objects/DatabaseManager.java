@@ -1,6 +1,5 @@
 package fitness.app.Objects;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
