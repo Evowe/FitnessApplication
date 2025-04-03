@@ -13,6 +13,7 @@ import fitness.app.Objects.AccountsDB;
 import fitness.app.Objects.DatabaseManager;
 import fitness.app.Objects.ExerciseDB;
 import fitness.app.Statistics.StatsViewModel;
+import fitness.app.Widgets.Calendar.CalendarViewModel;
 
 import javax.swing.*;
 import java.awt.*;
