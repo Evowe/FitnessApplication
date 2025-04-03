@@ -65,8 +65,7 @@ public class CalendarModel {
     }
 
     //Custom Constructor
-    public CalendarModel(int year, int month) {
-        yearMonth = YearMonth.of(year, month);
+    public CalendarModel(YearMonth yearMonth) {
         calendar = new Calendar(yearMonth);
     }
 

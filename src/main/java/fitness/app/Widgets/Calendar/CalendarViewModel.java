@@ -16,6 +16,10 @@ public class CalendarViewModel {
     private static CalendarView calendarView;
     private static CalendarModel calendarModel;
 
+    public void setYearMonth(int year, int month) {
+        calendarModel.setYearMonth(year, month);
+    }
+
     public static JPanel getCalendarView() {
         calendarView = new CalendarView();
         return calendarView.getCalendarView();
