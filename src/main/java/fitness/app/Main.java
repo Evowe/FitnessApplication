@@ -22,6 +22,7 @@ import java.sql.SQLException;
 
 public class Main {
     private static JFrame window;
+    private static Account currentUser;
 
     public static void main(String[] args) {
         System.setProperty("apple.awt.application.name", "Rocket Health");
@@ -94,5 +95,13 @@ public class Main {
             System.out.println("Error creating test admin account: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public static Account getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(Account account) {
+        currentUser = account;
     }
 }
