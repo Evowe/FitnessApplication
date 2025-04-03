@@ -2,79 +2,85 @@ package fitness.app.Widgets.Calendar;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Year;
 import java.time.YearMonth;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 
 public class CalendarModel {
-    private LocalDate today;
-    private LocalDate firstDay;
-    private LocalDate lastDay;
+    private static class Calendar {
+        private ArrayList<String[]> calendar;
 
-    private YearMonth month;
-    private Year year;
+        private void initCalendar(LocalDate input) {
+            calendar = new ArrayList<>();
+            LocalDate date = input;
 
-    private String[][] calendar;
+            //Day labels
+            calendar.add(new String[]{"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"});
+            while (date.getDayOfWeek() != DayOfWeek.SUNDAY) {
+                date = date.minusDays(1);
+            }
 
-    public CalendarModel() {
-        today = LocalDate.now();
-        month = YearMonth.now();
-        year = Year.now();
-
-        firstDay = today.with(TemporalAdjusters.firstDayOfMonth());
-        lastDay = today.with(TemporalAdjusters.lastDayOfMonth());
-        calendar = new String[7][7];
-
-        calendar[0][0] = "Sun";
-        calendar[0][1] = "Mon";
-        calendar[0][2] = "Tue";
-        calendar[0][3] = "Wed";
-        calendar[0][4] = "Thu";
-        calendar[0][5] = "Fri";
-        calendar[0][6] = "Sat";
-
-        int row = 1;
-        int col = -1;
-        switch (firstDay.getDayOfWeek()) {
-            case SUNDAY -> {
-                col = 0;
-            }
-            case MONDAY -> {
-                col = 1;
-            }
-            case TUESDAY -> {
-                col = 2;
-            }
-            case WEDNESDAY -> {
-                col = 3;
-            }
-            case THURSDAY -> {
-                col = 4;
-            }
-            case FRIDAY -> {
-                col = 5;
-            }
-            case SATURDAY -> {
-                col = 6;
-            }
+            do {
+                String[] week = new String[7];
+                for (int i = 0; i < 7; ++i) {
+                    week[i] = toString().valueOf(date.getDayOfMonth());
+                    date = date.plusDays(1);
+                }
+                calendar.add(week);
+            } while (date.getMonth() == input.getMonth());
         }
 
-        LocalDate date = firstDay.with(TemporalAdjusters.firstDayOfMonth());
-        while (date.getMonth() == month.getMonth()) {
-            calendar[row][col] = String.valueOf(date.getDayOfMonth());
-            if (col == 6) {
-                col = 0;
-                ++row;
+        public Calendar() {
+            LocalDate date = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
+            initCalendar(date);
+        }
+
+        public Calendar(YearMonth yearMonth) {
+            LocalDate date = LocalDate.of(yearMonth.getYear(), yearMonth.getMonth(), 1);
+            initCalendar(date);
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder output = new StringBuilder();
+            for (String[] week : calendar) {
+                for (String day : week) {
+                    output.append(day + "\t");
+                }
+                output.append("\n");
             }
-            else {
-                ++col;
-            }
-            date = date.plusDays(1);
+
+            return output.toString();
         }
     }
+    private YearMonth yearMonth;
+    private Calendar calendar;
 
-    public static void main(String[] args) {
-        CalendarModel model = new CalendarModel();
-        System.out.println(model.calendar[1][2]);
+    public CalendarModel() {
+        yearMonth = YearMonth.now();
+        calendar = new Calendar();
+    }
+
+    public CalendarModel(int year, int month) {
+        yearMonth = YearMonth.of(year, month);
+        calendar = new Calendar(yearMonth);
+    }
+
+    public void setYearMonth(int year, int month) {
+        yearMonth = YearMonth.of(year, month);
+        calendar = new Calendar(yearMonth);
+    }
+
+    public YearMonth getYearMonth() {
+        return yearMonth;
+    }
+
+    public ArrayList<String[]> getCalendar() {
+        return calendar.calendar;
+    }
+
+    @Override
+    public String toString() {
+        return yearMonth.getMonth() + " " + yearMonth.getYear() + "\n" + calendar.toString();
     }
 }
