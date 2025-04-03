@@ -9,6 +9,7 @@ import fitness.app.CreateAccount.CreateAccountViewModel;
 import fitness.app.Goals.GoalsViewModel;
 import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginViewModel;
+import fitness.app.Settings.SettingsViewModel;
 import fitness.app.Statistics.StatsViewModel;
 
 import fitness.app.Objects.*;
@@ -73,6 +74,9 @@ public class Main {
             }
             case "GoalsPage" -> {
                 window.add(GoalsViewModel.getGoalsView());
+            }
+            case "SettingsPage" -> {
+                window.add(SettingsViewModel.getSettingsView());
             }
         }
         window.revalidate();

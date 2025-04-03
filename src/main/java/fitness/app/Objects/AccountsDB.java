@@ -12,13 +12,19 @@ public class AccountsDB extends DBTemplate {
     @Override
     protected void createDatabase() throws SQLException {
         // Create Account table
+
         String[] columns = {
                 "username TEXT NOT NULL",
                 "password TEXT NOT NULL",
                 "status TEXT DEFAULT 'active'",
                 "role TEXT DEFAULT 'user'",
-                "wallet INTEGER DEFAULT 0"
+                "wallet INTEGER DEFAULT 0",
+                "theme TEXT DEFAULT 'dark'",
+                "notifications INTEGER DEFAULT 1",
+                "weight_unit TEXT DEFAULT 'kg'"
         };
+
+
         createTable("accounts", columns);
         //insertBaseUser();
     }
@@ -70,18 +76,31 @@ public class AccountsDB extends DBTemplate {
             pstmt.setString(1, username);
             ResultSet rs = pstmt.executeQuery();
 
-            //If it finds it will make an account object
             if (rs.next()) {
-                return new Account(
+                Account account = new Account(
                         rs.getString("username"),
                         rs.getString("password"),
                         rs.getString("status"),
                         rs.getString("role")
                 );
+
+                account.setWallet(rs.getInt("wallet"));
+
+                // Set preferences if columns exist
+                try {
+                    account.setTheme(rs.getString("theme"));
+                    account.setNotifications(rs.getInt("notifications") == 1);
+                    account.setWeightUnit(rs.getString("weight_unit"));
+                } catch (SQLException e) {
+                    // Columns might not exist yet in older database versions
+                    System.out.println("Note: Preference columns may not exist yet: " + e.getMessage());
+                }
+
+                return account;
             }
         } catch (SQLException e) {
             System.out.println("Error getting account: " + e.getMessage());
-            throw e; //Throw e again for caller to handle
+            throw e;
         }
         return null;
     }
@@ -122,6 +141,46 @@ public class AccountsDB extends DBTemplate {
             System.out.println("Error checking username: " + e.getMessage());
         }
         return false;
+    }
+
+    public boolean changePassword(String username, String newPassword) throws SQLException {
+        String sql = "UPDATE accounts SET password = ? WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newPassword);
+            pstmt.setString(2, username);
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            // Return true if the update was successful (affected exactly one row)
+            return rowsAffected == 1;
+
+        } catch (SQLException e) {
+            System.out.println("Error changing password: " + e.getMessage());
+            throw e; // Throw exception for caller to handle
+        }
+    }
+
+    public boolean updateUserPreferences(String username, String theme, boolean notifications, String weightUnit) throws SQLException {
+        String sql = "UPDATE accounts SET theme = ?, notifications = ?, weight_unit = ? WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, theme);
+            pstmt.setInt(2, notifications ? 1 : 0);
+            pstmt.setString(3, weightUnit);
+            pstmt.setString(4, username);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected == 1;
+
+        } catch (SQLException e) {
+            System.out.println("Error updating user preferences: " + e.getMessage());
+            throw e;
+        }
     }
 
     private void insertBaseUser() throws SQLException {

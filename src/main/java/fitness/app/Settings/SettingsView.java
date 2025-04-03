@@ -18,17 +18,18 @@ public class SettingsView {
     private static JLabel confirmPasswordError;
     private static JComboBox<String> themeSelector;
     private static JCheckBox enableNotifications;
+    private static JComboBox<String> weightUnitSelector;
 
     public SettingsView() {
-        mainPanel = new JPanel(new MigLayout("fill,insets 20", "[grow]", "center"));
+        mainPanel = new JPanel(new MigLayout("fill, insets 20", "[grow]", "[grow]"));
 
-        settingsPanel = new JPanel(new MigLayout("wrap,fillx,insets 30", "center"));
+        // Use a fixed width panel with some flexibility
+        settingsPanel = new JPanel(new MigLayout("wrap, insets 30", "[400:400:600]", "[]"));
         settingsPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
 
         JLabel title = new JLabel("Settings");
         title.putClientProperty(FlatClientProperties.STYLE, "font:bold +10");
 
-        // Account settings section
         JLabel accountSectionLabel = new JLabel("Account");
         accountSectionLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4");
 
@@ -56,7 +57,12 @@ public class SettingsView {
                 passwordError.setText("");
                 confirmPasswordError.setText("");
 
-                // Validate password
+                String oldPasswordValidation = SettingsViewModel.validateOldPassword(oldPassField.getText());
+                if (oldPasswordValidation != null) {
+                    valid = false;
+                    JOptionPane.showMessageDialog(null, oldPasswordValidation, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
                 String validation = SettingsViewModel.validateNewPassword(newPassField.getText());
                 if (validation != null) {
                     valid = false;
@@ -65,7 +71,6 @@ public class SettingsView {
                     passwordError.putClientProperty(FlatClientProperties.STYLE, "font:-4");
                 }
 
-                // Validate password confirmation
                 if (!newPassField.getText().equals(newPassConfField.getText())) {
                     valid = false;
                     confirmPasswordError.setText("Passwords do not match");
@@ -87,53 +92,71 @@ public class SettingsView {
             }
         });
 
-        // Appearance section
         JLabel appearanceLabel = new JLabel("Appearance");
         appearanceLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4");
 
         String[] themes = {"Dark Mode", "Light Mode"};
         themeSelector = new JComboBox<>(themes);
+        themeSelector.setSelectedIndex(SettingsViewModel.getThemeIndex());
 
-        // Notifications section
         JLabel notificationsLabel = new JLabel("Notifications");
         notificationsLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4");
 
         enableNotifications = new JCheckBox("Enable Notifications");
-        enableNotifications.setSelected(true);
+        enableNotifications.setSelected(SettingsViewModel.isNotificationsEnabled());
 
-        // Save button
+        JLabel unitPreferencesLabel = new JLabel("Unit Preferences");
+        unitPreferencesLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4");
+
+        JLabel weightUnitLabel = new JLabel("Weight Unit");
+        String[] weightUnits = {"Kilograms (kg)", "Pounds (lbs)"};
+        weightUnitSelector = new JComboBox<>(weightUnits);
+        weightUnitSelector.setSelectedItem(SettingsViewModel.getWeightUnitDisplayString());
+
         JButton saveButton = new JButton("Save Changes");
         saveButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SettingsViewModel.saveSettings(themeSelector.getSelectedIndex(), enableNotifications.isSelected());
-                JOptionPane.showMessageDialog(null, "Settings saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                boolean success = SettingsViewModel.saveSettings(
+                        themeSelector.getSelectedIndex(),
+                        enableNotifications.isSelected(),
+                        weightUnitSelector.getSelectedItem().toString()
+                );
+
+                if (success) {
+                    JOptionPane.showMessageDialog(null, "Settings saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Failed to save settings.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
-        // Add all components to the settings panel
-        settingsPanel.add(title, "width 100%");
-
-        settingsPanel.add(accountSectionLabel, "gapy 20, width 100%");
-        settingsPanel.add(new JLabel("Change Password"), "width 100%");
-        settingsPanel.add(oldPassField, "width 100%");
-        settingsPanel.add(newPassField, "width 100%");
+        // Add components with proper sizing
+        settingsPanel.add(title, "align center, growx");
+        settingsPanel.add(accountSectionLabel, "gapy 20, growx");
+        settingsPanel.add(new JLabel("Change Password"), "growx");
+        settingsPanel.add(oldPassField, "growx");
+        settingsPanel.add(newPassField, "growx");
         settingsPanel.add(passwordError, "gapy 0");
-        settingsPanel.add(newPassConfField, "width 100%");
+        settingsPanel.add(newPassConfField, "growx");
         settingsPanel.add(confirmPasswordError, "gapy 0");
-        settingsPanel.add(changePasswordButton, "width 100%");
+        settingsPanel.add(changePasswordButton, "growx");
 
-        settingsPanel.add(appearanceLabel, "gapy 20, width 100%");
-        settingsPanel.add(new JLabel("Theme"), "width 100%");
-        settingsPanel.add(themeSelector, "width 100%");
+        settingsPanel.add(appearanceLabel, "gapy 20, growx");
+        settingsPanel.add(new JLabel("Theme"), "growx");
+        settingsPanel.add(themeSelector, "growx");
 
-        settingsPanel.add(notificationsLabel, "gapy 20, width 100%");
-        settingsPanel.add(enableNotifications, "width 100%");
+        settingsPanel.add(notificationsLabel, "gapy 20, growx");
+        settingsPanel.add(enableNotifications, "growx");
 
-        settingsPanel.add(saveButton, "gapy 20, width 50%, align center");
+        settingsPanel.add(unitPreferencesLabel, "gapy 20, growx");
+        settingsPanel.add(weightUnitLabel, "growx");
+        settingsPanel.add(weightUnitSelector, "growx");
 
-        mainPanel.add(settingsPanel, "grow");
+        settingsPanel.add(saveButton, "width 200, align center, gapy 20");
+
+        mainPanel.add(settingsPanel, "align center");
     }
 
     public static JPanel getSettingsView() {

@@ -3,11 +3,10 @@ package fitness.app.Settings;
 import fitness.app.Main;
 import fitness.app.Objects.Account;
 import java.sql.SQLException;
-import fitness.app.Objects.DatabaseManager;
 
 public class SettingsModel {
 
-    public static String validatePassword(String password) {
+    public static String validateOldPassword(String password) {
         Account currentUser = Main.getCurrentUser();
 
         if (currentUser.getPassword().equals(password)) {
@@ -17,39 +16,89 @@ public class SettingsModel {
         }
     }
 
+    public static String validateNewPassword(String password) {
+        if (password == null || password.isEmpty()) {
+            return "Password cannot be empty";
+        }
+        if (password.length() < 8) {
+            return "Password must be at least 8 characters long";
+        }
+        return null;
+    }
+
     public static boolean changePassword(String oldPassword, String newPassword) {
         try {
-
             Account currentUser = Main.getCurrentUser();
 
+            if (validateOldPassword(oldPassword) == null) {
+                boolean success;
+                success = Account.changePassword(currentUser.getUsername(), newPassword);
 
-            if (validatePassword(oldPassword) == null) {
-                currentUser.setPassword(newPassword);
-                currentUser.updateAccount();
-                return true;
+                if (success) {
+                    currentUser.setPassword(newPassword);
+                    return true;
+                }
             }
 
-            return false; // Old password didn't match
+            return false;
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    public static void saveSettings(int themeIndex, boolean notificationsEnabled) {
+    public static int getThemeIndex() {
         Account currentUser = Main.getCurrentUser();
-        if (currentUser == null) {
-            System.out.println("Cannot save settings: No user logged in");
-            return;
+        if (currentUser == null) return 0;
+
+        return currentUser.getTheme().equals("dark") ? 0 : 1;
+    }
+
+    // Get notifications enabled
+    public static boolean isNotificationsEnabled() {
+        Account currentUser = Main.getCurrentUser();
+        if (currentUser == null) return true;
+
+        return currentUser.isNotificationsEnabled();
+    }
+
+    // Get weight unit display string for dropdown
+    public static String getWeightUnitDisplayString() {
+        Account currentUser = Main.getCurrentUser();
+        if (currentUser == null) return "Kilograms (kg)"; // Default
+
+        return currentUser.getWeightUnit().equals("kg") ? "Kilograms (kg)" : "Pounds (lbs)";
+    }
+
+
+    public static boolean saveSettings(int themeIndex, boolean notificationsEnabled, String weightUnitDisplay) {
+        try {
+            Account currentUser = Main.getCurrentUser();
+
+            String theme = (themeIndex == 0) ? "dark" : "light";
+
+            // Convert weight unit display string to stored value
+            String weightUnit = weightUnitDisplay.contains("kg") ? "kg" : "lbs";
+
+            // Update account object
+            currentUser.setTheme(theme);
+            currentUser.setNotifications(notificationsEnabled);
+            currentUser.setWeightUnit(weightUnit);
+
+            // Save to database
+            boolean success = currentUser.savePreferences();
+            if (success) {
+                System.out.println("Successfully saved user preferences");
+            } else {
+                System.out.println("Failed to save user preferences");
+            }
+            return success;
+
+        } catch (SQLException e) {
+            System.out.println("Error saving preferences: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
-
-        String theme = (themeIndex == 0) ? "dark" : "light";
-        System.out.println("Saving settings for user " + currentUser.getUsername() +
-                ": Theme=" + theme + ", Notifications=" + notificationsEnabled);
-
-        // TODO: Implement actual saving logic here
-        // You might want to add theme and notification preferences to your Account class
-        // or have a separate UserPreferences table in your database
     }
 }
