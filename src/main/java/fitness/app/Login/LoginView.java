@@ -85,6 +85,7 @@ public class LoginView extends JPanel {
                     result.putClientProperty(FlatClientProperties.STYLE, "font:-4");
                 }
                 else {
+                    Main.setCurrentUser(validatedAccount);
                     // Check role and redirect accordingly
                     if ("admin".equals(validatedAccount.getRole())) {
                         Main.setWindow("AdminPage");

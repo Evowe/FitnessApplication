@@ -84,6 +84,12 @@ public class HomeView {
         settingsButton.setText("Settings");
         settingsButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
         settingsButton.setIcon(HomeViewModel.getIcon("settings"));
+        settingsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                Main.setWindow("SettingsPage" );
+            }
+        });
 
         FlatButton logOutButton = new FlatButton();
         logOutButton.setText("Log Out");

@@ -9,6 +9,7 @@ import fitness.app.CreateAccount.CreateAccountViewModel;
 import fitness.app.Goals.GoalsViewModel;
 import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginViewModel;
+import fitness.app.Settings.SettingsViewModel;
 import fitness.app.Statistics.StatsViewModel;
 
 import fitness.app.Objects.*;
@@ -22,6 +23,7 @@ import java.sql.SQLException;
 
 public class Main {
     private static JFrame window;
+    private static Account currentUser;
 
     public static void main(String[] args) {
         System.setProperty("apple.awt.application.name", "Rocket Health");
@@ -73,6 +75,9 @@ public class Main {
             case "GoalsPage" -> {
                 window.add(GoalsViewModel.getGoalsView());
             }
+            case "SettingsPage" -> {
+                window.add(SettingsViewModel.getSettingsView());
+            }
         }
         window.revalidate();
         window.repaint();
@@ -94,5 +99,13 @@ public class Main {
             System.out.println("Error creating test admin account: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public static Account getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(Account account) {
+        currentUser = account;
     }
 }

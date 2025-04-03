@@ -12,7 +12,7 @@ public class CreditCardDB extends DBTemplate {
     protected void createDatabase() throws SQLException {
         // Create Credit Card table
         String[] columns = {
-                "cardNumber TEXT PRIMARY KEY",
+                "cardNumber TEXT NOT NULL",
                 "expiryDate TEXT NOT NULL",
                 "cvv TEXT NOT NULL",
                 "cardHolder TEXT NOT NULL",
