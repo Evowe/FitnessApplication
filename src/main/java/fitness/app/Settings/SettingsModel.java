@@ -30,14 +30,11 @@ public class SettingsModel {
         try {
             Account currentUser = Main.getCurrentUser();
 
-            if (validateOldPassword(oldPassword) == null) {
-                boolean success;
-                success = Account.changePassword(currentUser.getUsername(), newPassword);
+            boolean success = Account.changePassword(currentUser.getUsername(), newPassword);
 
-                if (success) {
-                    currentUser.setPassword(newPassword);
-                    return true;
-                }
+            if (success) {
+                currentUser.setPassword(newPassword);
+                return true;
             }
 
             return false;

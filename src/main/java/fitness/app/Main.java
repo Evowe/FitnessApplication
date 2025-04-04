@@ -56,6 +56,7 @@ public class Main {
 
     public static void setWindow(String windowName) {
         window.getContentPane().removeAll();
+        System.out.println(currentUser);
         switch (windowName) {
             case "LoginPage" -> {
                 window.add(LoginViewModel.getLoginView());

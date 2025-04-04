@@ -57,13 +57,17 @@ public class SettingsView {
                 passwordError.setText("");
                 confirmPasswordError.setText("");
 
-                String oldPasswordValidation = SettingsViewModel.validateOldPassword(oldPassField.getText());
+                String oldPassword = new String(oldPassField.getPassword());
+                String newPassword = new String(newPassField.getPassword());
+                String confirmPassword = new String(newPassConfField.getPassword());
+
+                String oldPasswordValidation = SettingsViewModel.validateOldPassword(oldPassword);
                 if (oldPasswordValidation != null) {
                     valid = false;
                     JOptionPane.showMessageDialog(null, oldPasswordValidation, "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
-                String validation = SettingsViewModel.validateNewPassword(newPassField.getText());
+                String validation = SettingsViewModel.validateNewPassword(newPassword);
                 if (validation != null) {
                     valid = false;
                     passwordError.setText(validation);
@@ -71,7 +75,7 @@ public class SettingsView {
                     passwordError.putClientProperty(FlatClientProperties.STYLE, "font:-4");
                 }
 
-                if (!newPassField.getText().equals(newPassConfField.getText())) {
+                if (!newPassword.equals(confirmPassword)) {
                     valid = false;
                     confirmPasswordError.setText("Passwords do not match");
                     confirmPasswordError.setForeground(Color.RED);
@@ -79,14 +83,14 @@ public class SettingsView {
                 }
 
                 if (valid) {
-                    boolean success = SettingsViewModel.changePassword(oldPassField.getText(), newPassField.getText());
+                    boolean success = SettingsViewModel.changePassword(oldPassword, newPassword);
                     if (success) {
                         JOptionPane.showMessageDialog(null, "Password changed successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                         oldPassField.setText("");
                         newPassField.setText("");
                         newPassConfField.setText("");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Failed to change password. Please check your old password.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Failed to change password. Database error occurred.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
