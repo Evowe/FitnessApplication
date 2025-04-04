@@ -3,6 +3,7 @@ package fitness.app.CreateExercise;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import fitness.app.Objects.Account;
+import fitness.app.Objects.Exercise;
 import fitness.app.Statistics.StatsModel;
 import net.miginfocom.swing.MigLayout;
 
@@ -97,6 +98,10 @@ public class CreateExcerciseView {
                 String Description = DescriptionField.getText();
                 int RepAmount = Integer.parseInt(RepAmountField.getText());
                 double WeightAmount = Double.parseDouble(WeightAmountField.getText());
+                int type = dropdown.getSelectedIndex();
+                CreateExercise exercise = new CreateExercise () ;
+                Exercise newexercise = exercise.CreateExerciseCall
+                                       (Name, Description, type, RepAmount, WeightAmount);
             }
         });
 

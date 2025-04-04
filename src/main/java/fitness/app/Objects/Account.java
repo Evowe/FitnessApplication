@@ -12,6 +12,9 @@ public class Account {
     private int Calories;
     private Double Weight;
     private Double Sleep;
+    private String theme = "dark";
+    private boolean notifications = true;
+    private String weightUnit = "kg";
 
     public int getCalories() {
         return Calories;
@@ -78,6 +81,30 @@ public class Account {
     public int getWallet() {return wallet;}
     public void setWallet(int wallet) {this.wallet = wallet;}
 
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public boolean isNotificationsEnabled() {
+        return notifications;
+    }
+
+    public void setNotifications(boolean notifications) {
+        this.notifications = notifications;
+    }
+
+    public String getWeightUnit() {
+        return weightUnit;
+    }
+
+    public void setWeightUnit(String weightUnit) {
+        this.weightUnit = weightUnit;
+    }
+
     public void addAccount() throws SQLException {
         accountsDB.addAccount(this);
     }
@@ -95,5 +122,14 @@ public class Account {
     public static boolean usernameExists(String username) throws SQLException {
         AccountsDB accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
         return accountsDB.usernameExists(username);  // Check if username exists in the database
+    }
+
+    public static boolean changePassword(String username, String newPassword) throws SQLException {
+        AccountsDB accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
+        return accountsDB.changePassword(username, newPassword);
+    }
+
+    public boolean savePreferences() throws SQLException {
+        return accountsDB.updateUserPreferences(username, theme, notifications, weightUnit);
     }
 }
