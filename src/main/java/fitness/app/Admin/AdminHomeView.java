@@ -30,8 +30,10 @@ import net.miginfocom.swing.MigLayout;
 public class AdminHomeView {
 	private static JPanel mainPanel;
 	
+	/*
 	//Testing
 	private static JFrame window;
+	*/
 	
 	public static void createView() {		
 		//Init whole window with 2 cols with unequal ratio. 
@@ -96,25 +98,13 @@ public class AdminHomeView {
 	        
 	        contentPanel.add(contentTitle, "wrap, growx");
 	        contentPanel.add(requestsScroll, "growx");
-	        
-	        
-	        
-	        //Test
-	        contentPanel.setBorder(new LineBorder(Color.RED, 2));
-	        
-	        
-	        
-	        
-	        
-	        
+   	        
 	        //Add components to main panel
 	        mainPanel.add(bMenu, "grow, push");
-	        mainPanel.add(contentPanel, "grow, push");
-		
-		
-		
+	        mainPanel.add(contentPanel, "grow, push");	
 	}
 	
+	/*
 	//Testing
 	public static void main(String[] args) {
 	//FlatLaf setup & settings
@@ -135,6 +125,6 @@ public class AdminHomeView {
 
 		window.setVisible(true);
 	}
-	
+	*/
 	
 }
