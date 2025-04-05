@@ -13,105 +13,37 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.time.Month;
-import java.time.YearMonth;
 import java.util.ArrayList;
 
-public class CalendarView {
-    private static JPanel mainPanel;
-    private static JPanel calendarMenu;
-    private static JPanel menuBar;
-    private static YearMonth yearMonth;
-    private static ArrayList<JPanel> dayMenu;
+public class CalendarView extends JPanel {
+    private final CalendarViewModel viewModel;
+    private FlatButton currentSelection;
 
     public CalendarView() {
-        yearMonth = YearMonth.now();
-        mainPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
+        //Panel Layout & Settings
+        setLayout(new MigLayout("insets 10"));
+        putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
 
-        calendarMenu = new JPanel(new MigLayout("wrap,fillx,insets 10", "fill"));
-        calendarMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
+        //Intialize ViewModel
+        viewModel = new CalendarViewModel();
 
-        setMenuBar();
-        setDayMenu();
-
-        mainPanel.add(calendarMenu);
-    }
-
-    private static void setMenuBar() {
-        //Top Row of Calendar Menu
-        menuBar = new JPanel(new MigLayout());
+        //Create Menu Bar
+        JPanel menuBar = new JPanel(new MigLayout());
         menuBar.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
 
-        FlatButton lastMonthButton = new FlatButton();
-        lastMonthButton.setText("<");
-        lastMonthButton.setMaximumSize(new Dimension(30, 30));
-        lastMonthButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                yearMonth.minusMonths(1);
-                calendarMenu.removeAll();
-                setMenuBar();
-                setDayMenu();
-            }
-        });
-        FlatButton lastYearButton = new FlatButton();
-        lastYearButton.setText("<<");
-        lastYearButton.setMaximumSize(new Dimension(30, 30));
-        lastYearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                yearMonth.minusYears(1);
-                calendarMenu.removeAll();
-                setMenuBar();
-                setDayMenu();
-            }
-        });
-
+        //Month Selection Button
         FlatButton monthButton = new FlatButton();
-        switch (yearMonth.getMonth()) {
-            case JANUARY -> {
-                monthButton.setText("January");
-            }
-            case FEBRUARY -> {
-                monthButton.setText("February");
-            }
-            case MARCH -> {
-                monthButton.setText("March");
-            }
-            case APRIL -> {
-                monthButton.setText("April");
-            }
-            case MAY -> {
-                monthButton.setText("May");
-            }
-            case JUNE -> {
-                monthButton.setText("June");
-            }
-            case JULY -> {
-                monthButton.setText("July");
-            }
-            case AUGUST -> {
-                monthButton.setText("August");
-            }
-            case SEPTEMBER -> {
-                monthButton.setText("September");
-            }
-            case OCTOBER -> {
-                monthButton.setText("October");
-            }
-            case NOVEMBER -> {
-                monthButton.setText("November");
-            }
-            case DECEMBER -> {
-                monthButton.setText("December");
-            }
-        }
-
         monthButton.setHorizontalAlignment(SwingConstants.RIGHT);
         monthButton.setMinimumSize(new Dimension(95, 30));
         monthButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
         monthButton.setBorderPainted(false);
+        char[] buttonName = viewModel.getMonth().toString().toLowerCase().toCharArray();
+        buttonName[0] = Character.toUpperCase(buttonName[0]);
+        monthButton.setText(new String(buttonName));
 
+        //Month Selection Menu
         FlatPopupMenu monthPopupMenu = new FlatPopupMenu();
         String[] months = {"January", "February", "March", "April", "May", "June", "July", "August",  "September", "October", "November", "December"};
         for (String month : months) {
@@ -120,81 +52,14 @@ public class CalendarView {
             item.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    switch (month) {
-                        case "January" -> {
-                            if (yearMonth.getMonth() != Month.JANUARY) {
-                                yearMonth = yearMonth.withMonth(1);
-                            }
-                        }
-                        case "February" -> {
-                            if (yearMonth.getMonth() != Month.FEBRUARY) {
-                                yearMonth = yearMonth.withMonth(2);
-                            }
-                        }
-                        case "March" -> {
-                            if (yearMonth.getMonth() != Month.MARCH) {
-                                yearMonth = yearMonth.withMonth(3);
-                            }
-                        }
-                        case "April" -> {
-                            if (yearMonth.getMonth() != Month.APRIL) {
-                                yearMonth = yearMonth.withMonth(4);
-                            }
-
-                        }
-                        case "May" -> {
-                            if (yearMonth.getMonth() != Month.MAY) {
-                                yearMonth = yearMonth.withMonth(5);
-                            }
-                        }
-                        case "June" -> {
-                            if (yearMonth.getMonth() != Month.JUNE) {
-                                yearMonth = yearMonth.withMonth(6);
-                            }
-                        }
-                        case "July" -> {
-                            if (yearMonth.getMonth() != Month.JULY) {
-                                yearMonth = yearMonth.withMonth(7);
-                            }
-
-                        }
-                        case "August" -> {
-                            if (yearMonth.getMonth() != Month.AUGUST) {
-                                yearMonth = yearMonth.withMonth(8);
-                            }
-                        }
-                        case "September" -> {
-                            if (yearMonth.getMonth() != Month.SEPTEMBER) {
-                                yearMonth = yearMonth.withMonth(9);
-                            }
-                        }
-                        case "October" -> {
-                            if (yearMonth.getMonth() != Month.OCTOBER) {
-                                yearMonth = yearMonth.withMonth(10);
-                            }
-                        }
-                        case "November" -> {
-                            if (yearMonth.getMonth() != Month.NOVEMBER) {
-                                yearMonth = yearMonth.withMonth(11);
-                            }
-                        }
-                        case "December" -> {
-                            if (yearMonth.getMonth() != Month.DECEMBER) {
-                                yearMonth = yearMonth.withMonth(12);
-                            }
-                        }
-                    }
-                    if (!month.equals(monthButton.getText())) {
-                        monthButton.setText(item.getText());
-                        calendarMenu.removeAll();
-                        setMenuBar();
-                        setDayMenu();
-                    }
+                    viewModel.setMonth(Month.valueOf(item.getText().toUpperCase()));
+                    monthButton.setText(item.getText());
                 }
             });
             monthPopupMenu.add(item);
         }
 
+        //Link Month Selection Button and Menu
         monthButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -202,89 +67,122 @@ public class CalendarView {
             }
         });
 
-        JLabel yearLabel = new JLabel(String.valueOf(yearMonth.getYear()));
+        //Year Label
+        JLabel yearLabel = new JLabel(String.valueOf(viewModel.getYear()));
         yearLabel.setMinimumSize(new Dimension(55, 30));
         yearLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+        //Previous Month Button
+        FlatButton lastMonthButton = new FlatButton();
+        lastMonthButton.setMaximumSize(new Dimension(30, 30));
+        lastMonthButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (viewModel.getMonth() == Month.JANUARY) {
+                    viewModel.setYear(viewModel.getYear() - 1);
+                    yearLabel.setText(String.valueOf(viewModel.getYear()));
+                }
+                viewModel.setMonth(viewModel.getMonth().minus(1));
+                char[] buttonName = viewModel.getMonth().toString().toLowerCase().toCharArray();
+                buttonName[0] = Character.toUpperCase(buttonName[0]);
+                monthButton.setText(new String(buttonName));
+            }
+        });
+        lastMonthButton.setText("<");
+
+        //Previous Year Button
+        FlatButton lastYearButton = new FlatButton();
+        lastYearButton.setMaximumSize(new Dimension(30, 30));
+        lastYearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                viewModel.setYear(viewModel.getYear() - 1);
+                yearLabel.setText(String.valueOf(viewModel.getYear()));
+            }
+        });
+        lastYearButton.setText("<<");
+
+        //Next Year Button
         FlatButton nextYearButton = new FlatButton();
-        nextYearButton.setText(">>");
         nextYearButton.setMaximumSize(new Dimension(30, 30));
         nextYearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                yearMonth.plusYears(1);
-                calendarMenu.removeAll();
-                setMenuBar();
-                setDayMenu();
+                viewModel.setYear(viewModel.getYear() + 1);
+                yearLabel.setText(String.valueOf(viewModel.getYear()));
             }
         });
+        nextYearButton.setText(">>");
 
+        //Next Month Button
         FlatButton nextMonthButton = new FlatButton();
-        nextMonthButton.setText(">");
         nextMonthButton.setMaximumSize(new Dimension(30, 30));
         nextMonthButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                yearMonth.plusMonths(1);
-                calendarMenu.removeAll();
-                setMenuBar();
-                setDayMenu();
+                if (viewModel.getMonth() == Month.DECEMBER) {
+                    viewModel.setYear(viewModel.getYear() + 1);
+                    yearLabel.setText(String.valueOf(viewModel.getYear()));
+                }
+                viewModel.setMonth(viewModel.getMonth().plus(1));
+                char[] buttonName = viewModel.getMonth().toString().toLowerCase().toCharArray();
+                buttonName[0] = Character.toUpperCase(buttonName[0]);
+                monthButton.setText(new String(buttonName));
             }
         });
-        menuBar.add(lastMonthButton);
-        menuBar.add(lastYearButton);
-        menuBar.add(monthButton);
-        menuBar.add(yearLabel);
-        menuBar.add(nextMonthButton);
-        menuBar.add(nextYearButton);
+        nextMonthButton.setText(">");
 
-        calendarMenu.add(menuBar);
+        add(lastMonthButton);
+        add(lastYearButton);
+        add(monthButton);
+        add(yearLabel);
+        add(nextYearButton);
+        add(nextMonthButton);
     }
 
-    private static void setDayMenu() {
-        //Day Label Row
-        JPanel dayLabelBar = new JPanel(new MigLayout("fill, insets 0", "[grow,fill][grow,fill][grow,fill][grow,fill][grow,fill][grow,fill][grow,fill]", "fill"));
-        dayLabelBar.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+    private void setCalendar() {
+        JPanel calendarPanel = new JPanel(new MigLayout());
+        ArrayList<String[]> format = viewModel.getCalendar();
 
-        String[] days = {"Sun", "Mon", "Tue",  "Wed", "Thu", "Fri", "Sat"};
-        for (String day : days) {
-            JLabel label = new JLabel(day);
-            label.setHorizontalAlignment(SwingConstants.CENTER);
-            label.putClientProperty(FlatClientProperties.STYLE, "font:bold");
-            dayLabelBar.add(label, "align center");
-        }
-        calendarMenu.add(dayLabelBar, "growx");
-
-        CalendarModel test = new CalendarModel(yearMonth);
-        ArrayList<String[]> calendar = test.getCalendar();
-
-        for (int i = 1; i < calendar.size(); ++i) {
-            String[] weekday = calendar.get(i);
-            JPanel dayMenu = new JPanel(new MigLayout("fill, insets 0", "[grow,fill][grow,fill][grow,fill][grow,fill][grow,fill][grow,fill][grow,fill]", "fill"));
-            dayMenu.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
-            for (int j = 0; j < 7; ++j) {
-                FlatButton dayButton = new FlatButton();
-                dayButton.setButtonType(FlatButton.ButtonType.roundRect);
-                dayButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
-                dayButton.setHorizontalAlignment(SwingConstants.CENTER);
-                dayButton.setMaximumSize(new Dimension(30, 30));
-                dayButton.setText(weekday[j]);
-                if ((i == 1 && Integer.parseInt(weekday[j]) > 7) || (i == calendar.size() - 1 && Integer.parseInt(weekday[j]) < 7)) {
-                    dayButton.setForeground(Color.GRAY);
-                }
-                dayMenu.add(dayButton, "align center");
+        String[] labels = format.get(0);
+        for (String label : labels) {
+            if (label.equals(labels[7])) {
+                calendarPanel.add(new JLabel(label), "wrap");
             }
-            calendarMenu.add(dayMenu, "growx");
+            else{
+                calendarPanel.add(new JLabel(label));
+            }
+        }
+        format.removeFirst();
+
+        for (String[] week : format) {
+            for (String day : week) {
+                FlatButton dayButton = new FlatButton();
+                dayButton.setMaximumSize(new Dimension(30, 30));
+                dayButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        viewModel.setDay(Integer.parseInt(day));
+                        currentSelection.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+                        currentSelection = dayButton;
+                        currentSelection.setForeground(Color.BLUE);
+                    }
+                });
+            }
         }
     }
 
-    public static JPanel getCalendarView() {
-        return mainPanel;
+    //test
+    private void update() {
+        remove(getComponentCount() - 1);
+
+        setCalendar();
+
+        revalidate();
+        repaint();
     }
 
     public static void main(String[] args) {
-        System.setProperty("apple.awt.application.name", "Rocket Health");
-        System.setProperty("apple.awt.application.appearance", "system");
-
         //FlatLaf setup & settings
         FlatRobotoMonoFont.install();
         FlatLaf.registerCustomDefaultsSource("FlatLafSettings");
@@ -296,7 +194,9 @@ public class CalendarView {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(new Dimension(1200, 700));
         window.setLocationRelativeTo(null);
-        window.add(CalendarViewModel.getCalendarView());
+        JPanel panel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
+        panel.add(new CalendarView());
+        window.add(panel);
         window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
         window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
 

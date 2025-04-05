@@ -14,7 +14,6 @@ import fitness.app.Statistics.StatsView;
 import fitness.app.Statistics.StatsViewModel;
 
 import fitness.app.Objects.*;
-import fitness.app.Widgets.Calendar.CalendarViewModel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,32 +1,56 @@
 package fitness.app.Widgets.Calendar;
 
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import fitness.app.Objects.AccountsDB;
-import fitness.app.Objects.DatabaseManager;
-import fitness.app.Objects.ExerciseDB;
 
-import javax.swing.*;
-import java.awt.*;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.YearMonth;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class CalendarViewModel {
-    private static CalendarView calendarView;
-    private static CalendarModel calendarModel;
+    private final CalendarModel model;
+    private LocalDate date;
 
-    public void setYearMonth(int year, int month) {
-        calendarModel.setYearMonth(year, month);
+    public CalendarViewModel() {
+        model = new CalendarModel();
+        date = LocalDate.now();
     }
 
-    public static JPanel getCalendarView() {
-        calendarView = new CalendarView();
-        return calendarView.getCalendarView();
+    public void setDate(LocalDate date) {
+        this.date = date;
+        model.setYearMonth(YearMonth.from(this.date));
     }
 
-    public static ArrayList<String[]> getCalendar() {
-        calendarModel = new CalendarModel();
-        return calendarModel.getCalendar();
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDay(int day) {
+        date = date.withDayOfMonth(day);
+    }
+
+    public int getDay() {
+        return date.getDayOfMonth();
+    }
+
+    public void setMonth(Month month) {
+        date = date.withMonth(month.getValue());
+        model.setYearMonth(YearMonth.from(date));
+    }
+
+    public Month getMonth() {
+        return date.getMonth();
+    }
+
+    public void setYear(int year) {
+        date = date.withYear(year);
+        model.setYearMonth(YearMonth.from(date));
+    }
+
+    public int getYear() {
+        return date.getYear();
+    }
+
+    public ArrayList<String[]> getCalendar() {
+        return model.getCalendar();
     }
 }
