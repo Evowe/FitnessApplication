@@ -172,6 +172,7 @@ public class CalendarView extends JPanel {
         }
     }
 
+    //test
     private void update() {
         remove(getComponentCount() - 1);
 

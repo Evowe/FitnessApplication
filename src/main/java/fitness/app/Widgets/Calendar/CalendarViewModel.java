@@ -17,7 +17,7 @@ public class CalendarViewModel {
 
     public void setDate(LocalDate date) {
         this.date = date;
-        model.setYearMonth(YearMonth.from(date));
+        model.setYearMonth(YearMonth.from(this.date));
     }
 
     public LocalDate getDate() {
