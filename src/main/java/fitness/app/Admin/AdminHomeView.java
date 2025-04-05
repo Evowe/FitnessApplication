@@ -105,15 +105,12 @@ public class AdminHomeView {
 	        
 	        contentPanel.add(contentTitle, "wrap, growx");
 	        contentPanel.add(requestsScroll, "growx");
-<<<<<<< HEAD
-   	        
-=======
+
 
 	        //Test
 	        contentPanel.setBorder(new LineBorder(Color.RED, 2));
 	        
 
->>>>>>> c249608b058f3921f419a37e86502f5c62d46688
 	        //Add components to main panel
 	        mainPanel.add(bMenu, "grow, push");
 	        mainPanel.add(contentPanel, "grow, push");	

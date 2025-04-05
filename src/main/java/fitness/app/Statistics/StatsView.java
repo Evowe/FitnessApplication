@@ -8,6 +8,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import fitness.app.Widgets.Graph.GraphView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -15,11 +16,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class StatsView extends JPanel {
+public class StatsView extends JPanel {
     private static JFrame window;
     private static JPanel mainPanel;
 
     public StatsView(Account acc) {
+        StatsViewModel viewModel = new StatsViewModel(acc);
         //FlatLaf setup & settings
         FlatRobotoMonoFont.install();
         FlatLaf.registerCustomDefaultsSource("Components.Themes");
@@ -32,7 +34,7 @@ class StatsView extends JPanel {
 //        window.setSize(new Dimension(1200, 700));
 //        window.setLocationRelativeTo(null);
 
-        mainPanel = new JPanel(new GridLayout(3, 3));
+        mainPanel = new JPanel(new MigLayout("wrap 3", "[grow][grow][grow]", "[]"));
         //DISPLAY CALORIES
         JPanel calDis = new JPanel(new MigLayout("fill,insets 20", "left", "Top"));
         JPanel CdisMen = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
@@ -60,10 +62,38 @@ class StatsView extends JPanel {
         weightDisMen.add(Wdistitle);
         weightDis.add(weightDisMen);
         mainPanel.add(weightDis);
-        //FILLER LABELS
-        mainPanel.add (new JLabel(""));
-        mainPanel.add (new JLabel(""));
-        mainPanel.add (new JLabel(""));
+        //Graphs
+
+        JPanel cg = new JPanel(new MigLayout("fill,insets 20", "Left", "Center"));
+        JPanel cgm = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
+        cgm.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
+        GraphView g = new GraphView(viewModel.getx(), viewModel.gety(),"Day","Calories", "Calorie Graph");
+        cgm.add(g.getPanel());
+        cg.add(cgm);
+        //cg.setPreferredSize(new Dimension(700, 800));
+        mainPanel.add(cg);
+
+        JPanel wg = new JPanel(new MigLayout("fill,insets 20", "Center", "Center"));
+        JPanel wgm = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
+        wgm.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
+        GraphView wgg = new GraphView(viewModel.getx(), viewModel.gety(),"Day","Sleep", "Sleep Graph");
+        wgm.add(wgg.getPanel());
+        wg.add(wgm);
+        //cg.setPreferredSize(new Dimension(700, 800));
+        mainPanel.add(wg);
+
+        JPanel sg = new JPanel(new MigLayout("fill,insets 20", "Right", "Center"));
+        JPanel sgm = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
+        sgm.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
+        GraphView sgg = new GraphView(viewModel.getx(), viewModel.gety(),"Day","Weight", "Weight Graph");
+        sgm.add(sgg.getPanel());
+        sg.add(sgm);
+        //cg.setPreferredSize(new Dimension(700, 800));
+        mainPanel.add(sg);
+
+        //mainPanel.add (new JLabel(""));
+        //mainPanel.add (new JLabel(""));
+        //mainPanel.add (new JLabel(""));
 
         //Calorie Panel
         JPanel calPanel = new JPanel(new MigLayout("fill,insets 20", "left", "bot"));
@@ -225,5 +255,17 @@ class StatsView extends JPanel {
     public JPanel getViewPanel()
     {
         return mainPanel;
+    }
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("UpdateSleepInterface");
+        Account a = new Account("Bob", "Smith");
+        a.setSleep(0.0);
+        a.setCalories(0);
+        a.setWeight(0.0);
+        StatsView sl = new StatsView(a);
+        frame.setContentPane(sl.getViewPanel());
+        frame.setSize(1200, 700);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }

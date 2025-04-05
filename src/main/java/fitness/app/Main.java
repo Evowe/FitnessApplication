@@ -10,6 +10,7 @@ import fitness.app.Goals.GoalsViewModel;
 import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginViewModel;
 import fitness.app.Settings.SettingsViewModel;
+import fitness.app.Statistics.StatsView;
 import fitness.app.Statistics.StatsViewModel;
 
 import fitness.app.Objects.*;
@@ -68,7 +69,8 @@ public class Main {
                 window.add(HomeViewModel.getHomeView());
             }
             case "StatsPage" -> {
-                window.add(StatsViewModel.getStatsView());
+                StatsView statsView = new StatsView(currentUser);
+                window.add(statsView.getViewPanel());
             }
             case "AdminPage" -> {
                 window.add(AdminHomeView.getMainPanel());
