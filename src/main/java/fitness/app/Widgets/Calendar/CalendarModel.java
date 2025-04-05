@@ -1,18 +1,21 @@
 package fitness.app.Widgets.Calendar;
 
+import javax.swing.*;
+import java.awt.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CalendarModel {
-    private static class Calendar {
+    private static class CalendarFormat {
         private ArrayList<String[]> calendar;
 
-        private void initCalendar(LocalDate input) {
+        private void initCalendar(YearMonth input) {
             calendar = new ArrayList<>();
-            LocalDate date = input;
+            LocalDate date = input.atDay(1);
 
             //Day labels
             calendar.add(new String[]{"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"});
@@ -20,6 +23,7 @@ public class CalendarModel {
                 date = date.minusDays(1);
             }
 
+            //Week labels
             do {
                 String[] week = new String[7];
                 for (int i = 0; i < 7; ++i) {
@@ -31,15 +35,13 @@ public class CalendarModel {
         }
 
         //Default Constructor
-        public Calendar() {
-            LocalDate date = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
-            initCalendar(date);
+        public CalendarFormat() {
+            initCalendar(YearMonth.now());
         }
 
         //Custom Constructor
-        public Calendar(YearMonth yearMonth) {
-            LocalDate date = LocalDate.of(yearMonth.getYear(), yearMonth.getMonth(), 1);
-            initCalendar(date);
+        public CalendarFormat(YearMonth input) {
+            initCalendar(input);
         }
 
         @Override
@@ -49,45 +51,37 @@ public class CalendarModel {
                 for (String day : week) {
                     output.append(day + "\t");
                 }
-                output.append("\n");
+                if (week != calendar.getLast()) {
+                    output.append("\n");
+                }
             }
-
             return output.toString();
         }
     }
-    private YearMonth yearMonth;
-    private Calendar calendar;
+
+    private CalendarFormat format;
 
     //Default Constructor
     public CalendarModel() {
-        yearMonth = YearMonth.now();
-        calendar = new Calendar();
+        format = new CalendarFormat();
     }
 
     //Custom Constructor
-    public CalendarModel(YearMonth yearMonth) {
-        calendar = new Calendar(yearMonth);
+    public CalendarModel(YearMonth input) {
+        format = new CalendarFormat(input);
     }
 
-    //Changes the year and month, updates the calendar page
-    public void setYearMonth(int year, int month) {
-        yearMonth = YearMonth.of(year, month);
-        calendar = new Calendar(yearMonth);
+
+    public void setYearMonth(YearMonth input) {
+        format = new CalendarFormat(input);
     }
 
-    //Gets calendar year and month
-    public YearMonth getYearMonth() {
-        return yearMonth;
-    }
-
-    //Gets calendar page
     public ArrayList<String[]> getCalendar() {
-        return calendar.calendar;
+        return format.calendar;
     }
 
-    //Converts CalenderModel to a String
     @Override
     public String toString() {
-        return yearMonth.getMonth() + " " + yearMonth.getYear() + "\n" + calendar.toString();
+        return format.toString();
     }
 }
