@@ -120,6 +120,8 @@ public class LoginView extends JPanel {
                 }
                 else {
                     Main.setCurrentUser(validatedAccount);
+                    //Test
+                    System.out.println(validatedAccount.getRole());
                     if ("admin".equals(validatedAccount.getRole())) {
                         Main.setWindow("AdminPage");
                     } else {
