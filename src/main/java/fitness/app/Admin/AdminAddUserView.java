@@ -1,12 +1,8 @@
-package fitness.app.CreateAccount;
+package fitness.app.Admin;
 
-import fitness.app.Objects.Account;
-import com.formdev.flatlaf.FlatClientProperties;
-import net.miginfocom.swing.MigLayout;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -14,16 +10,40 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class CreateAccountView {
-    private static JTextField usernameField;
-    private static JPasswordField passwordField;
-    private static JPasswordField confirmPasswordField;
-    private static JButton createAccountButton;
-    private static JPanel mainPanel;
-    private static JPanel logoPanel;
-    private static JPanel createAccountPanel;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import com.formdev.flatlaf.FlatClientProperties;
+
+import fitness.app.Main;
+import fitness.app.CreateAccount.CreateAccountViewModel;
+import fitness.app.Objects.Account;
+import net.miginfocom.swing.MigLayout;
+
+public class AdminAddUserView {
+	private static JPanel mainPanel;
     
-    public CreateAccountView() {
+    public static JPanel getView() {
+		if (mainPanel == null) {
+			createView();
+		}
+		return mainPanel;
+	}
+    
+    public static void createView() {
+    	JTextField usernameField;
+        JPasswordField passwordField;
+        JPasswordField confirmPasswordField;
+        JButton createAccountButton;
+        JPanel logoPanel;
+        JPanel createAccountPanel;
+    	
         //Organizes the window into 2 halves
         mainPanel = new JPanel(new GridLayout(1,2));
 
@@ -53,11 +73,11 @@ public class CreateAccountView {
         JPanel createAccountMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         createAccountMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
 
-        JLabel title = new JLabel("Welcome to Rocket Health");
+        JLabel title = new JLabel("Add a New User");
         title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
 
-        JLabel description = new JLabel("Create a new account to continue");
-        description.putClientProperty(FlatClientProperties.STYLE, "foreground:darken(@foreground,33%)");
+        //JLabel description = new JLabel("Create a new account to continue");
+        //description.putClientProperty(FlatClientProperties.STYLE, "foreground:darken(@foreground,33%)");
 
         usernameField = new JTextField();
         usernameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter username");
@@ -71,14 +91,19 @@ public class CreateAccountView {
         confirmPasswordField = new JPasswordField();
         confirmPasswordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Confirm password");
         JLabel confirmPasswordError = new JLabel("");
-
+        
+        //Dropdown for role selection
+        String[] roles = {"Admin", "Trainer", "User"};
+        JComboBox<String> roleSelect = new JComboBox(roles);
+        
+        //Create account button
         createAccountButton = new JButton("Create Account");
         createAccountButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
         createAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 boolean valid = true;
-                Account account = new Account(usernameField.getText(), passwordField.getText());
+                Account account = new Account(usernameField.getText(), passwordField.getText(), "active", ((String) roleSelect.getSelectedItem()).toLowerCase());
 
                 if (CreateAccountViewModel.validateUsername(account) != null) {
                     valid = false;
@@ -119,19 +144,20 @@ public class CreateAccountView {
                         System.out.println(e.getMessage());
                     }
 
-                    CreateAccountViewModel.setWindow();
+                    Main.setWindow("AdminUsers");
                 }
             }
         });
 
         createAccountMenu.add(title);
-        createAccountMenu.add(description);
         createAccountMenu.add(new JLabel("Username"), "gapy 8");
         createAccountMenu.add(usernameField);
         createAccountMenu.add(usernameError, "gapy 0");
         createAccountMenu.add(new JLabel("Password"), "gapy 8");
         createAccountMenu.add(passwordField);
         createAccountMenu.add(passwordError, "gapy 0");
+        createAccountMenu.add(new JLabel("Role"), "gapy 8");
+        createAccountMenu.add(roleSelect);
         createAccountMenu.add(new JLabel("Confirm Password"), "gapy 8");
         createAccountMenu.add(confirmPasswordField);
         createAccountMenu.add(confirmPasswordError, "gapy 0");
@@ -140,8 +166,5 @@ public class CreateAccountView {
 
         mainPanel.add(createAccountPanel);
     }
-
-    public static JPanel getCreateAccountView() {
-        return mainPanel;
-    }
+    
 }

@@ -3,6 +3,7 @@ package fitness.app.Objects;
 import java.sql.SQLException;
 
 public class Account {
+	private Integer id;
     private String username;
     private String password;
     private String status;
@@ -15,6 +16,14 @@ public class Account {
     private String theme = "dark";
     private boolean notifications = true;
     private String weightUnit = "kg";
+    
+    public Integer getId() {
+    	return id;
+    }
+    
+    public void setId(Integer id) {
+    	this.id = id;
+    }
 
     public int getCalories() {
         return Calories;

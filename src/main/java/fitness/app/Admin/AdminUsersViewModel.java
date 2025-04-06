@@ -19,7 +19,7 @@ public class AdminUsersViewModel {
 				promote = "Promote";
 				
 			} else {
-				promote = "";
+				promote = "Depromote";
 			}
 			
 			users.add(new Object[] {acc.getUsername(), acc.getRole(), promote, "Reset Password"});
@@ -28,5 +28,11 @@ public class AdminUsersViewModel {
 		return users;
 	}
 	
+	public void promoteUser(String user) {
+		model.promoteUser(user);
+	}
 	
+	public void depromoteUser(String user) {
+		model.depromoteUser(user);
+	}
 }

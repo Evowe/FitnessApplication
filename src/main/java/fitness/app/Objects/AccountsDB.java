@@ -16,6 +16,7 @@ public class AccountsDB extends DBTemplate {
         // Create Account table
 
         String[] columns = {
+        		"id INTEGER PRIMARY KEY",
                 "username TEXT NOT NULL",
                 "password TEXT NOT NULL",
                 "status TEXT DEFAULT 'active'",
@@ -31,15 +32,13 @@ public class AccountsDB extends DBTemplate {
         //insertBaseUser();
     }
 
-
-
     public void addAccount(Account account) throws SQLException {
         String sql = "INSERT INTO accounts (username, password, status, role, wallet) VALUES (?, ?, ?, ?, ?)";
 
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
+        	
             pstmt.setString(1, account.getUsername());
             pstmt.setString(2, account.getPassword());
             pstmt.setString(3, account.getStatus());
@@ -87,6 +86,7 @@ public class AccountsDB extends DBTemplate {
                 );
 
                 account.setWallet(rs.getInt("wallet"));
+                account.setId(rs.getInt("id"));
 
                 // Set preferences if columns exist
                 try {
@@ -104,6 +104,7 @@ public class AccountsDB extends DBTemplate {
             System.out.println("Error getting account: " + e.getMessage());
             throw e;
         }
+        
         return null;
     }
 
@@ -224,6 +225,9 @@ public class AccountsDB extends DBTemplate {
 						rs.getString("role")
 				);
 				
+				account.setId(rs.getInt("id"));
+				account.setWallet(rs.getInt("wallet"));
+				
 				allUsers.add(account);
 			}
 			
@@ -234,6 +238,34 @@ public class AccountsDB extends DBTemplate {
     	return allUsers;
     }
     
+    public void promoteUser(Integer id) {
+    	String sql = "UPDATE accounts SET role = ? WHERE id = ?";
+    	
+    	try (Connection conn = getConnection();
+    		PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    		
+    		pstmt.setString(1, "trainer");
+    		pstmt.setInt(2, id);
+    		pstmt.executeUpdate();
+    		
+    	} catch (SQLException e) {
+			System.out.println("Error: Could not promote user through admin action");
+		}
+    }
     
+    public void depromoteUser(Integer id) {
+    	String sql = "UPDATE accounts SET role = ? WHERE id = ?";
+    	
+    	try (Connection conn = getConnection();
+    		PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    		
+    		pstmt.setString(1, "user");
+    		pstmt.setInt(2, id);
+    		pstmt.executeUpdate();
+    		
+    	} catch (SQLException e) {
+    		System.out.println("Error: Could not depromote user through admin action");
+    	}
+    }
     
 }

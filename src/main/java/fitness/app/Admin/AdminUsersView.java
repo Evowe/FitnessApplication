@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -23,9 +25,12 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
+import fitness.app.Main;
 import net.miginfocom.swing.MigLayout;
 
 //TODO: search filter for username and sort by
+//TODO: depromote users
+//TODO: confirmation dialog for promotion
 
 public class AdminUsersView {
 	private static AdminUsersViewModel viewModel = new AdminUsersViewModel();
@@ -55,6 +60,11 @@ public class AdminUsersView {
 		
 		FlatButton addUser = new FlatButton();
 		addUser.setText("+ Add User");
+		addUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.setWindow("AdminAddUser");
+			}
+		});
 		
 		//Add top bar items to top bar panel
 		topBar.add(backButton, "grow, push, gapright 20");
@@ -65,16 +75,11 @@ public class AdminUsersView {
 		JPanel content = new JPanel();
 		
 		//Create table
-		String[] cols = {"User", "Role", "Promote", "Reset Password"};
+		String[] cols = {"User", "Role", "Promotion", "Reset Password"};
 		
 		//get users from db and loop
 		//TODO: implement by getting data from db
 		List<Object[]> data = viewModel.getUsers();
-		
-		//Testing
-		for (int i = 0; i < 50; i++) {
-			data.add(new Object[] {"User name", "User role", "Promote", "Reset Password"});
-		}
 		
 		//Init table
 		JTable table = new JTable(data.toArray(new Object[data.size()][4]), cols) {
@@ -85,7 +90,7 @@ public class AdminUsersView {
 		table.setCellSelectionEnabled(true);
 		
 		//set column text for promote and reset password to red
-		table.getColumn("Promote").setCellRenderer(new DefaultTableCellRenderer() {
+		table.getColumn("Promotion").setCellRenderer(new DefaultTableCellRenderer() {
 			public Component getTableCellRendererComponent(JTable t, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
 				Component c = super.getTableCellRendererComponent(t, value, isSelected, hasFocus, row, col);
 				
@@ -114,10 +119,16 @@ public class AdminUsersView {
 				
 				if (col == 2 || col == 3) {
 					Object val = table.getValueAt(row, col);
+					String user = (String) table.getValueAt(row, 0);
 					
-					if (cols[2].equals(val)) {
-						//method for promotion
-						System.out.println("promote");
+					if ("Promote".equals(val)) {
+						//Promotes user
+						viewModel.promoteUser(user);	
+						
+					} else if ("Depromote".equals(val)) {
+						//Depromotes user
+						viewModel.depromoteUser(user);
+						
 					} else if (cols[3].equals(val)) {
 						//method for reset password
 						System.out.println("reset password");
@@ -134,29 +145,4 @@ public class AdminUsersView {
 		mainPanel.add(topBar, "aligny top, growx, wrap");
 		mainPanel.add(scrollTable, "grow, push, gap 20 20 10 20");
 	}
-	
-	
-	//Testing
-	private static JFrame window;
-	public static void main(String[] args) {
-		//FlatLaf setup & settings
-		FlatRobotoMonoFont.install();
-		FlatLaf.registerCustomDefaultsSource("FlatLafSettings");
-		UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
-		FlatMacDarkLaf.setup();
-
-		//Application window
-		window = new JFrame("Rocket Health");
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setSize(new Dimension(1200, 700));
-		window.setLocationRelativeTo(null);
-		createView();
-		window.add(mainPanel);
-		window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
-		window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
-
-		window.setVisible(true);
-	}
-	
-	
 }

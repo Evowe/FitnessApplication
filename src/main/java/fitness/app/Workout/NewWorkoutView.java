@@ -94,7 +94,7 @@ public class NewWorkoutView {
 	
 	
 	
-	/*
+	
 	
 	//Testing
 		public static void main(String[] args) {
@@ -116,5 +116,5 @@ public class NewWorkoutView {
 
 	        window.setVisible(true);
 		}
-		*/
+		
 }

@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
+import fitness.app.Admin.AdminAddUserView;
 import fitness.app.Admin.AdminHomeView;
 import fitness.app.Admin.AdminUsersView;
 import fitness.app.CreateAccount.CreateAccountViewModel;
@@ -86,6 +87,9 @@ public class Main {
             }
             case "AdminUsers" -> {
             	window.add(AdminUsersView.getView());
+            }
+            case "AdminAddUser" -> {
+            	window.add(AdminAddUserView.getView());
             }
         }
         window.revalidate();
