@@ -1,6 +1,8 @@
 package fitness.app.Objects;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountsDB extends DBTemplate {
 
@@ -182,7 +184,8 @@ public class AccountsDB extends DBTemplate {
             throw e;
         }
     }
-
+    
+    //Still necessary? Don't see implementation anywhere. Was it replaced by impl. in main?
     private void insertBaseUser() throws SQLException {
         String insertSQL = "INSERT INTO accounts (username, password, status, role, wallet) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
@@ -199,4 +202,38 @@ public class AccountsDB extends DBTemplate {
             throw e;
         }
     }
+    
+    public List<Account> getAllUsers() throws SQLException {
+    	//db query to select all users
+		String query = "SELECT * FROM accounts WHERE role != 'admin'";
+		List<Account> allUsers = new ArrayList<>();
+    	
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(query)) {
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			allUsers = new ArrayList<>();
+			
+			//Processes all query results and creates and account object for each row
+			while (rs.next()) {
+				Account account = new Account(
+						rs.getString("username"),
+						rs.getString("password"),
+						rs.getString("status"),
+						rs.getString("role")
+				);
+				
+				allUsers.add(account);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Error getting users: " + e.getMessage());
+		}
+
+    	return allUsers;
+    }
+    
+    
+    
 }

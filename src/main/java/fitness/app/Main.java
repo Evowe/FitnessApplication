@@ -5,6 +5,7 @@ import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
 import fitness.app.Admin.AdminHomeView;
+import fitness.app.Admin.AdminUsersView;
 import fitness.app.CreateAccount.CreateAccountViewModel;
 import fitness.app.Goals.GoalsViewModel;
 import fitness.app.Home.HomeViewModel;
@@ -19,7 +20,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 
-//Store user information somewhere?
+//Need to implement navigation method?
+//	Use stack with Panels to implement navigation? (create navigationcontroller)
+
+//handle errors with dialogs?
 
 public class Main {
     private static JFrame window;
@@ -79,6 +83,9 @@ public class Main {
             }
             case "SettingsPage" -> {
                 window.add(SettingsViewModel.getSettingsView());
+            }
+            case "AdminUsers" -> {
+            	window.add(AdminUsersView.getView());
             }
         }
         window.revalidate();
