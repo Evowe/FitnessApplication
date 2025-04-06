@@ -13,9 +13,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
+
 import java.time.Month;
 import java.util.ArrayList;
+
+import static java.lang.Integer.parseInt;
 
 public class CalendarView extends JPanel {
     private final CalendarViewModel viewModel;
@@ -23,14 +25,14 @@ public class CalendarView extends JPanel {
 
     public CalendarView() {
         //Panel Layout & Settings
-        setLayout(new MigLayout("insets 10"));
+        setLayout(new MigLayout("wrap,fillx,insets 15"));
         putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
 
         //Intialize ViewModel
         viewModel = new CalendarViewModel();
 
         //Create Menu Bar
-        JPanel menuBar = new JPanel(new MigLayout());
+        JPanel menuBar = new JPanel(new MigLayout("fill, insets 0" , "fill"));
         menuBar.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
 
         //Month Selection Button
@@ -54,6 +56,8 @@ public class CalendarView extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     viewModel.setMonth(Month.valueOf(item.getText().toUpperCase()));
                     monthButton.setText(item.getText());
+                    remove(getComponentCount() - 1);
+                    setCalendar();
                 }
             });
             monthPopupMenu.add(item);
@@ -86,6 +90,9 @@ public class CalendarView extends JPanel {
                 char[] buttonName = viewModel.getMonth().toString().toLowerCase().toCharArray();
                 buttonName[0] = Character.toUpperCase(buttonName[0]);
                 monthButton.setText(new String(buttonName));
+
+                remove(getComponentCount() - 1);
+                setCalendar();
             }
         });
         lastMonthButton.setText("<");
@@ -98,6 +105,9 @@ public class CalendarView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 viewModel.setYear(viewModel.getYear() - 1);
                 yearLabel.setText(String.valueOf(viewModel.getYear()));
+
+                remove(getComponentCount() - 1);
+                setCalendar();
             }
         });
         lastYearButton.setText("<<");
@@ -110,6 +120,9 @@ public class CalendarView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 viewModel.setYear(viewModel.getYear() + 1);
                 yearLabel.setText(String.valueOf(viewModel.getYear()));
+
+                remove(getComponentCount() - 1);
+                setCalendar();
             }
         });
         nextYearButton.setText(">>");
@@ -128,58 +141,73 @@ public class CalendarView extends JPanel {
                 char[] buttonName = viewModel.getMonth().toString().toLowerCase().toCharArray();
                 buttonName[0] = Character.toUpperCase(buttonName[0]);
                 monthButton.setText(new String(buttonName));
+
+                remove(getComponentCount() - 1);
+                setCalendar();
             }
         });
         nextMonthButton.setText(">");
 
-        add(lastMonthButton);
-        add(lastYearButton);
-        add(monthButton);
-        add(yearLabel);
-        add(nextYearButton);
-        add(nextMonthButton);
+        menuBar.add(lastMonthButton);
+        menuBar.add(lastYearButton);
+        menuBar.add(monthButton);
+        menuBar.add(yearLabel);
+        menuBar.add(nextYearButton);
+        menuBar.add(nextMonthButton);
+
+        add(menuBar);
+
+        setCalendar();
     }
 
     private void setCalendar() {
-        JPanel calendarPanel = new JPanel(new MigLayout());
+        JPanel calendarPanel = new JPanel(new MigLayout("wrap, fillx, insets 0", "fill"));
+        calendarPanel.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
         ArrayList<String[]> format = viewModel.getCalendar();
 
-        String[] labels = format.get(0);
+        JPanel dayLabels = new JPanel(new MigLayout("fill, insets 0", "center"));
+        dayLabels.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+        String[] labels = format.removeFirst();
         for (String label : labels) {
-            if (label.equals(labels[7])) {
-                calendarPanel.add(new JLabel(label), "wrap");
-            }
-            else{
-                calendarPanel.add(new JLabel(label));
-            }
+            JLabel day = new JLabel(label);
+            day.putClientProperty(FlatClientProperties.STYLE, "font:bold");
+            dayLabels.add(day);
         }
-        format.removeFirst();
+        calendarPanel.add(dayLabels);
 
         for (String[] week : format) {
+            JPanel dateLabels = new JPanel(new MigLayout("fill, insets 0", "center"));
+            dateLabels.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
             for (String day : week) {
                 FlatButton dayButton = new FlatButton();
                 dayButton.setMaximumSize(new Dimension(30, 30));
-                dayButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        viewModel.setDay(Integer.parseInt(day));
-                        currentSelection.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+                dayButton.setText(day);
+                dayButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+                if ((week.equals(format.getFirst()) && parseInt(day) > 7 ) || (week.equals(format.getLast()) && parseInt(day) < 7)) {
+                    dayButton.setFocusable(false);
+                    dayButton.setForeground(Color.GRAY);
+                }
+                else {
+                    if (parseInt(day) == viewModel.getDay()) {
                         currentSelection = dayButton;
-                        currentSelection.setForeground(Color.BLUE);
+                        currentSelection.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,20%)");
                     }
-                });
+                    dayButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            viewModel.setDay(parseInt(day));
+                            currentSelection.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+                            currentSelection = dayButton;
+                            currentSelection.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,20%)");
+                        }
+                    });
+                }
+                dateLabels.add(dayButton);
             }
+            calendarPanel.add(dateLabels);
         }
-    }
 
-    //test
-    private void update() {
-        remove(getComponentCount() - 1);
-
-        setCalendar();
-
-        revalidate();
-        repaint();
+        add(calendarPanel, "growx");
     }
 
     public static void main(String[] args) {
