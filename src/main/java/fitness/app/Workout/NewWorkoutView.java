@@ -22,9 +22,6 @@ import net.miginfocom.swing.MigLayout;
 public class NewWorkoutView {
 	private static JPanel mainPanel;
 	
-	//Testing
-	private static JFrame window;
-	
 	private static void createView() {
 		//Init view with mig layout
 		mainPanel = new JPanel(new MigLayout());
@@ -69,52 +66,5 @@ public class NewWorkoutView {
 		workoutName.setBorder(new LineBorder(Color.red, 2));
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//Testing
-		public static void main(String[] args) {
-			 //FlatLaf setup & settings
-	        FlatRobotoMonoFont.install();
-	        FlatLaf.registerCustomDefaultsSource("FlatLafSettings");
-	        UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
-	        FlatMacDarkLaf.setup();
-
-	        //Application window
-	        window = new JFrame("Rocket Health");
-	        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        window.setSize(new Dimension(1200, 700));
-	        window.setLocationRelativeTo(null);
-	        createView();
-	        window.add(mainPanel);
-	        window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
-	        window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
-
-	        window.setVisible(true);
-		}
 		
 }
