@@ -71,6 +71,17 @@ public class HomeView {
             }
         });
 
+        FlatButton shopButton = new FlatButton();
+        shopButton.setText("Buy Rocket Bucks");
+        shopButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        //shopButton.setIcon(HomeViewModel.getIcon("buy Rocket Bucks"));
+        shopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                Main.setWindow("currencyShopPage" );
+            }
+        });
+
         FlatLabel accountLabel = new FlatLabel();
         accountLabel.setText("Account");
         accountLabel.putClientProperty(FlatClientProperties.STYLE, "foreground:darken(@foreground,33%)");
@@ -109,6 +120,7 @@ public class HomeView {
         menu.add(goalsButton, "wrap, gapy 10");
         menu.add(workoutsButton, "wrap, gapy 10");
         menu.add(statisticsButton, "wrap, gapy 10");
+        menu.add(shopButton, "wrap, gapy 10");
         menu.add(accountLabel, "wrap, gap 0 0 10 0");
         menu.add(profileButton, "wrap, gapy 0");
         menu.add(settingsButton, "wrap, gapy 10");

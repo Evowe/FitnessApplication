@@ -5,6 +5,7 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.extras.components.FlatPasswordField;
 import com.formdev.flatlaf.extras.components.FlatTextField;
+import fitness.app.Objects.Account;
 import fitness.app.Objects.CreditCard;
 import net.miginfocom.swing.MigLayout;
 
@@ -17,7 +18,7 @@ import java.io.IOException;
 
 public class TransactionView extends JPanel {
     private static JPanel mainPanel;
-    TransactionView () {
+    TransactionView (Account acc) {
         mainPanel = new JPanel(new GridLayout(1,2));
 
         JPanel purchaseMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
@@ -77,6 +78,8 @@ public class TransactionView extends JPanel {
                 newCard.setZipCode(zipField.getText());
                 newCard.setCvv(cvvField.getText());
                 newCard.setExpiryDate(expirField.getText());
+
+                acc.setCard(newCard);
 
                 if (newCard.CardValidation(newCard)) {
                     String csvFile = "example.csv";

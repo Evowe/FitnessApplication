@@ -8,9 +8,12 @@ import fitness.app.Admin.AdminAddUserView;
 import fitness.app.Admin.AdminHomeView;
 import fitness.app.Admin.AdminUsersView;
 import fitness.app.CreateAccount.CreateAccountViewModel;
+import fitness.app.CurrencyShop.currencyShopViewModel;
+import fitness.app.CurrencyShop.currencyshopview;
 import fitness.app.Goals.GoalsViewModel;
 import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginViewModel;
+import fitness.app.Microtransactions.TransactionViewModel;
 import fitness.app.Settings.SettingsViewModel;
 import fitness.app.Statistics.StatsView;
 import fitness.app.Statistics.StatsViewModel;
@@ -78,6 +81,13 @@ public class Main {
             }
             case "AdminPage" -> {
                 window.add(AdminHomeView.getMainPanel());
+            }
+            case "currencyShopPage" -> {
+                currencyShopViewModel view = new currencyShopViewModel();
+                TransactionViewModel transact = new TransactionViewModel();
+                transact.getCardUser(currentUser);
+                view.findCurrUser(currentUser);
+                window.add(currencyShopViewModel.getCurrencyView());
             }
             case "GoalsPage" -> {
                 window.add(GoalsViewModel.getGoalsView());

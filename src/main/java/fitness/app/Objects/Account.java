@@ -16,6 +16,7 @@ public class Account {
     private String theme = "dark";
     private boolean notifications = true;
     private String weightUnit = "kg";
+    private CreditCard card;
     
     public Integer getId() {
     	return id;
@@ -115,6 +116,10 @@ public class Account {
     public void setWeightUnit(String weightUnit) {
         this.weightUnit = weightUnit;
     }
+
+    public void setCard(CreditCard card) {this.card = card;}
+
+    public Boolean hasCard() {return card != null;}
 
     public void addAccount() throws SQLException {
         accountsDB.addAccount(this);
