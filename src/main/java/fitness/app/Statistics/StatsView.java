@@ -9,6 +9,7 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import fitness.app.Widgets.Graph.GraphView;
+import fitness.app.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -22,19 +23,17 @@ public class StatsView extends JPanel {
 
     public StatsView(Account acc) {
         StatsViewModel viewModel = new StatsViewModel(acc);
-        //FlatLaf setup & settings
+
         FlatRobotoMonoFont.install();
         FlatLaf.registerCustomDefaultsSource("Components.Themes");
         UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
 
-        //Application window
-//        window = new JFrame("Update Calories");
-//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        window.setSize(new Dimension(1200, 700));
-//        window.setLocationRelativeTo(null);
+        mainPanel = new JPanel(new MigLayout("fill", "[grow]", "[grow]"));
+        mainPanel.add(new SideMenuView(), "growy, pushy");
 
-        mainPanel = new JPanel(new MigLayout("wrap 3", "[grow][grow][grow]", "[]"));
+        JPanel statsPanel = new JPanel(new MigLayout("wrap 3", "[grow][grow][grow]", "[]"));
+
         //DISPLAY CALORIES
         JPanel calDis = new JPanel(new MigLayout("fill,insets 20", "left", "Top"));
         JPanel CdisMen = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
@@ -43,7 +42,7 @@ public class StatsView extends JPanel {
         cdistitle.putClientProperty(FlatClientProperties.STYLE, "" + "font:bold +6");
         CdisMen.add(cdistitle);
         calDis.add(CdisMen);
-        mainPanel.add(calDis);
+        statsPanel.add(calDis);
         //DISPLAY SLEEP
         JPanel sleepDis = new JPanel(new MigLayout("fill,insets 20", "center", "Top"));
         JPanel SleepDisMen = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
@@ -52,7 +51,7 @@ public class StatsView extends JPanel {
         Sdistitle.putClientProperty(FlatClientProperties.STYLE, "" + "font:bold +6");
         SleepDisMen.add(Sdistitle);
         sleepDis.add(SleepDisMen);
-        mainPanel.add(sleepDis);
+        statsPanel.add(sleepDis);
         //WEIGHT DISPLAY
         JPanel weightDis = new JPanel(new MigLayout("fill,insets 20", "center", "Top"));
         JPanel weightDisMen = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
@@ -61,7 +60,7 @@ public class StatsView extends JPanel {
         Wdistitle.putClientProperty(FlatClientProperties.STYLE, "" + "font:bold +6");
         weightDisMen.add(Wdistitle);
         weightDis.add(weightDisMen);
-        mainPanel.add(weightDis);
+        statsPanel.add(weightDis);
         //Graphs
 
         JPanel cg = new JPanel(new MigLayout("fill,insets 20", "Left", "Center"));
@@ -71,7 +70,7 @@ public class StatsView extends JPanel {
         cgm.add(g.getPanel());
         cg.add(cgm);
         //cg.setPreferredSize(new Dimension(700, 800));
-        mainPanel.add(cg);
+        statsPanel.add(cg);
 
         JPanel wg = new JPanel(new MigLayout("fill,insets 20", "Center", "Center"));
         JPanel wgm = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
@@ -80,7 +79,7 @@ public class StatsView extends JPanel {
         wgm.add(wgg.getPanel());
         wg.add(wgm);
         //cg.setPreferredSize(new Dimension(700, 800));
-        mainPanel.add(wg);
+        statsPanel.add(wg);
 
         JPanel sg = new JPanel(new MigLayout("fill,insets 20", "Right", "Center"));
         JPanel sgm = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
@@ -89,7 +88,7 @@ public class StatsView extends JPanel {
         sgm.add(sgg.getPanel());
         sg.add(sgm);
         //cg.setPreferredSize(new Dimension(700, 800));
-        mainPanel.add(sg);
+        statsPanel.add(sg);
 
         //mainPanel.add (new JLabel(""));
         //mainPanel.add (new JLabel(""));
@@ -140,7 +139,7 @@ public class StatsView extends JPanel {
         CalMenu.add(CaloriesField, "gapy 10");
         CalMenu.add(csubmitButton);
         calPanel.add(CalMenu);
-        mainPanel.add(calPanel);
+        statsPanel.add(calPanel);
 
         //SLEEP PANEL
         JPanel sleepPanel = new JPanel(new MigLayout("fill,insets 20", "center", "Bottom"));
@@ -183,7 +182,7 @@ public class StatsView extends JPanel {
         SMenu.add(sleepField, "gapy 10");
         SMenu.add(ssubmitButton);
         sleepPanel.add(SMenu);
-        mainPanel.add(sleepPanel);
+        statsPanel.add(sleepPanel);
         //WEight panel
 
         JPanel weightPanel = new JPanel(new MigLayout("fill,insets 20", "right", "Bottom"));
@@ -228,7 +227,7 @@ public class StatsView extends JPanel {
         WMenu.add(weightField, "gapy 10");
         WMenu.add(wsubmitButton);
         weightPanel.add(WMenu);
-        mainPanel.add(weightPanel);
+        statsPanel.add(weightPanel);
 
 //        submitButton.addActionListener(new ActionListener() {
 //            @Override
@@ -251,6 +250,7 @@ public class StatsView extends JPanel {
 //            window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
 //            window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
 //        });
+        mainPanel.add(statsPanel);
     }
     public JPanel getViewPanel()
     {
