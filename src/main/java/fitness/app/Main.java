@@ -11,6 +11,7 @@ import fitness.app.CreateAccount.CreateAccountViewModel;
 import fitness.app.CurrencyShop.currencyShopViewModel;
 import fitness.app.CurrencyShop.currencyshopview;
 import fitness.app.Goals.GoalsViewModel;
+import fitness.app.Home.HomeView;
 import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginViewModel;
 import fitness.app.Microtransactions.TransactionViewModel;
@@ -73,6 +74,7 @@ public class Main {
                 window.add(CreateAccountViewModel.getCreateAccountView());
             }
             case "HomePage" -> {
+                HomeView homeView = new HomeView();
                 window.add(HomeViewModel.getHomeView());
             }
             case "StatsPage" -> {

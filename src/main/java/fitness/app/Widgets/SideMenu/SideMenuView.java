@@ -8,6 +8,7 @@ import fitness.app.Main;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,36 +28,33 @@ public class SideMenuView extends JPanel {
 
         FlatButton homeButton = new FlatButton();
         homeButton.setText("Home");
-        homeButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        homeButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
         homeButton.setIcon(HomeViewModel.getIcon("home"));
-        homeButton.setMinimumHeight(35);
-        homeButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
-        // Create a border with proper padding on the left
-        homeButton.setBorder(BorderFactory.createEmptyBorder(5, 25, 5, 5));
-        // Set alignment properties
-        homeButton.setIconTextGap(10);
         homeButton.setHorizontalAlignment(SwingConstants.LEFT);
-        homeButton.setHorizontalTextPosition(SwingConstants.RIGHT);
+        homeButton.setMargin(new Insets(5, 25, 5, 5));
+        homeButton.setMinimumHeight(35);
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.setWindow("HomePage");
+            }
+        });
 
         FlatButton workoutsButton = new FlatButton();
         workoutsButton.setText("Workouts");
-        workoutsButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        workoutsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background: lighten(@background,10%);");
         workoutsButton.setIcon(HomeViewModel.getIcon("workouts"));
-        workoutsButton.setMinimumHeight(35);
-        workoutsButton.setBorder(BorderFactory.createEmptyBorder(5, 25, 5, 5));
-        workoutsButton.setIconTextGap(10);
         workoutsButton.setHorizontalAlignment(SwingConstants.LEFT);
-        workoutsButton.setHorizontalTextPosition(SwingConstants.RIGHT);
+        workoutsButton.setMargin(new Insets(5,25,5,5));
+        workoutsButton.setMinimumHeight(35);
 
         FlatButton goalsButton = new FlatButton();
         goalsButton.setText("Goals");
-        goalsButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        goalsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
         goalsButton.setIcon(HomeViewModel.getIcon("goals"));
-        goalsButton.setMinimumHeight(35);
-        goalsButton.setBorder(BorderFactory.createEmptyBorder(5, 25, 5, 5));
-        goalsButton.setIconTextGap(10);
         goalsButton.setHorizontalAlignment(SwingConstants.LEFT);
-        goalsButton.setHorizontalTextPosition(SwingConstants.RIGHT);
+        goalsButton.setMargin(new Insets(5,25,5,5));
+        goalsButton.setMinimumHeight(35);
         goalsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,13 +64,11 @@ public class SideMenuView extends JPanel {
 
         FlatButton statisticsButton = new FlatButton();
         statisticsButton.setText("Statistics");
-        statisticsButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        statisticsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
         statisticsButton.setIcon(HomeViewModel.getIcon("statistics"));
-        statisticsButton.setMinimumHeight(35);
-        statisticsButton.setBorder(BorderFactory.createEmptyBorder(5, 25, 5, 5));
-        statisticsButton.setIconTextGap(10);
         statisticsButton.setHorizontalAlignment(SwingConstants.LEFT);
-        statisticsButton.setHorizontalTextPosition(SwingConstants.RIGHT);
+        statisticsButton.setMargin(new Insets(5,25,5,5));
+        statisticsButton.setMinimumHeight(35);
         statisticsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -82,13 +78,11 @@ public class SideMenuView extends JPanel {
 
         FlatButton shopButton = new FlatButton();
         shopButton.setText("Shop");
-        shopButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        shopButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
         shopButton.setIcon(HomeViewModel.getIcon("Cart"));
-        shopButton.setMinimumHeight(35);
-        shopButton.setBorder(BorderFactory.createEmptyBorder(5, 25, 5, 5));
-        shopButton.setIconTextGap(10);
         shopButton.setHorizontalAlignment(SwingConstants.LEFT);
-        shopButton.setHorizontalTextPosition(SwingConstants.RIGHT);
+        shopButton.setMargin(new Insets(5,25,5,5));
+        shopButton.setMinimumHeight(35);
         shopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -102,23 +96,19 @@ public class SideMenuView extends JPanel {
 
         FlatButton profileButton = new FlatButton();
         profileButton.setText("Profile");
-        profileButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        profileButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
         profileButton.setIcon(HomeViewModel.getIcon("profile"));
-        profileButton.setMinimumHeight(35);
-        profileButton.setBorder(BorderFactory.createEmptyBorder(5, 25, 5, 5));
-        profileButton.setIconTextGap(10);
         profileButton.setHorizontalAlignment(SwingConstants.LEFT);
-        profileButton.setHorizontalTextPosition(SwingConstants.RIGHT);
+        profileButton.setMargin(new Insets(5,25,5,5));
+        profileButton.setMinimumHeight(35);
 
         FlatButton settingsButton = new FlatButton();
         settingsButton.setText("Settings");
-        settingsButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        settingsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
         settingsButton.setIcon(HomeViewModel.getIcon("settings"));
-        settingsButton.setMinimumHeight(35);
-        settingsButton.setBorder(BorderFactory.createEmptyBorder(5, 25, 5, 5));
-        settingsButton.setIconTextGap(10);
         settingsButton.setHorizontalAlignment(SwingConstants.LEFT);
-        settingsButton.setHorizontalTextPosition(SwingConstants.RIGHT);
+        settingsButton.setMargin(new Insets(5,25,5,5));
+        settingsButton.setMinimumHeight(35);
         settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -128,13 +118,11 @@ public class SideMenuView extends JPanel {
 
         FlatButton logOutButton = new FlatButton();
         logOutButton.setText("Log Out");
-        logOutButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        logOutButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
         logOutButton.setIcon(HomeViewModel.getIcon("log-out"));
-        logOutButton.setMinimumHeight(35);
-        logOutButton.setBorder(BorderFactory.createEmptyBorder(5, 25, 5, 5));
-        logOutButton.setIconTextGap(10);
         logOutButton.setHorizontalAlignment(SwingConstants.LEFT);
-        logOutButton.setHorizontalTextPosition(SwingConstants.RIGHT);
+        logOutButton.setMargin(new Insets(5,25,5,5));
+        logOutButton.setMinimumHeight(35);
         logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
