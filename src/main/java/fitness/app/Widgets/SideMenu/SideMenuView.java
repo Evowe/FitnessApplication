@@ -110,7 +110,7 @@ public class SideMenuView extends JPanel {
         add(accountLabel, "wrap, gap 0 0 10 0");
         add(profileButton, "wrap, gapy 0");
         add(settingsButton, "wrap, gapy 10");
-        add(new JLabel(), "wrap, gapy 100");
+        add(new JLabel(), "wrap, growy, pushy");
         add(logOutButton, "wrap, gapy 10");
     }
 

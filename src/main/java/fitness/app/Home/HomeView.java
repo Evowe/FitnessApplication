@@ -31,7 +31,7 @@ public class HomeView {
         mainPanel = new JPanel();
         mainPanel.setLayout(new MigLayout());
 
-        mainPanel.add(new SideMenuView());
+        mainPanel.add(new SideMenuView(), "growy, pushy");
     }
 
 
