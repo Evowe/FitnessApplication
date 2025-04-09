@@ -19,11 +19,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class LoginView extends JPanel {
-    private static JPanel mainPanel;
+    private final LoginViewModel loginViewModel;
 
     public LoginView() {
+        loginViewModel = new LoginViewModel();
+
         //Organizes the window into 2 halves
-        mainPanel = new JPanel(new GridLayout(1,2));
+        setLayout(new GridLayout(1,2));
 
         //Left half
         JPanel logoPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
@@ -41,14 +43,14 @@ public class LoginView extends JPanel {
 
         logoPanel.add(logo);
 
-        mainPanel.add(logoPanel);
+        add(logoPanel);
 
 
         //Right half
         JPanel loginPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
 
         JPanel loginMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
-        loginMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
+        loginMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,5%)");
 
         FlatLabel title = new FlatLabel();
         title.setText("Welcome to Rocket Health");
@@ -74,7 +76,7 @@ public class LoginView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent event) {
                 Account account = new Account(usernameField.getText(), passwordField.getText());
-                Object[] loginResult = LoginViewModel.logInRequest(account);
+                Object[] loginResult = loginViewModel.logInRequest(account);
                 String errorMessage = (String)loginResult[0];
                 Account validatedAccount = (Account)loginResult[1];
 
@@ -151,10 +153,6 @@ public class LoginView extends JPanel {
         loginMenu.add(createAccountButton, "gapy 10");
         loginPanel.add(loginMenu);
 
-        mainPanel.add(loginPanel);
-    }
-
-    public static JPanel get() {
-        return mainPanel;
+        add(loginPanel);
     }
 }

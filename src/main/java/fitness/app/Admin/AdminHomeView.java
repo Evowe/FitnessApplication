@@ -12,22 +12,14 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import fitness.app.Main;
 import fitness.app.Home.HomeViewModel;
+import fitness.app.Widgets.SideMenu.SideMenuModel;
 import net.miginfocom.swing.MigLayout;
 
-public class AdminHomeView {
-	private static JPanel mainPanel;
-
-	public static JPanel getMainPanel() {
-		if (mainPanel == null) {
-			createView();
-		}
-		return mainPanel;
-	}
-	
-	public static void createView() {		
+public class AdminHomeView extends JPanel{
+	public void createView() {
 		//Init whole window with 2 cols with unequal ratio. 
 		//20% - menu bar, 80% - content
-		mainPanel = new JPanel(new MigLayout("", "[20%] [80%]", "[grow]"));
+		setLayout(new MigLayout("", "[20%] [80%]", "[grow]"));
 		
 		//Button menu sidebar (consistent with home page)
 			//TODO: play around with padding (insets)
@@ -36,7 +28,7 @@ public class AdminHomeView {
 			bMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
 			
 			//Title for menu
-			JLabel title = new JLabel("Rocket Health", HomeViewModel.getIcon("rocket"), JLabel.LEFT);
+			JLabel title = new JLabel("Rocket Health", SideMenuModel.getIcon("rocket"), JLabel.LEFT);
 	        title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
 	        
 	        //Button to view all users (including trainers)
@@ -54,7 +46,7 @@ public class AdminHomeView {
 	        FlatButton logOutButton = new FlatButton();
 	        logOutButton.setText("Log Out");
 	        logOutButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
-	        logOutButton.setIcon(HomeViewModel.getIcon("log-out"));
+	        logOutButton.setIcon(SideMenuModel.getIcon("log-out"));
 	        logOutButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent event) {
@@ -84,8 +76,8 @@ public class AdminHomeView {
 	        contentPanel.add(requestsScroll, "growx");	        
 
 	        //Add components to main panel
-	        mainPanel.add(bMenu, "grow, push");
-	        mainPanel.add(contentPanel, "grow, push");	
+	        add(bMenu, "grow, push");
+	        add(contentPanel, "grow, push");
 	}
 	
 }

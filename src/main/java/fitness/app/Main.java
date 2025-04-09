@@ -7,12 +7,15 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import fitness.app.Admin.AdminAddUserView;
 import fitness.app.Admin.AdminHomeView;
 import fitness.app.Admin.AdminUsersView;
+import fitness.app.CreateAccount.CreateAccountView;
 import fitness.app.CreateAccount.CreateAccountViewModel;
 import fitness.app.CurrencyShop.currencyShopViewModel;
 import fitness.app.CurrencyShop.currencyshopview;
+import fitness.app.Goals.GoalsView;
 import fitness.app.Goals.GoalsViewModel;
 import fitness.app.Home.HomeView;
 import fitness.app.Home.HomeViewModel;
+import fitness.app.Login.LoginView;
 import fitness.app.Login.LoginViewModel;
 import fitness.app.Microtransactions.TransactionViewModel;
 import fitness.app.Settings.SettingsViewModel;
@@ -56,7 +59,7 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(new Dimension(1200, 700));
         window.setLocationRelativeTo(null);
-        window.add(LoginViewModel.getLoginView());
+        window.add(new LoginView());
         window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
         window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
 
@@ -68,21 +71,20 @@ public class Main {
         System.out.println(currentUser);
         switch (windowName) {
             case "LoginPage" -> {
-                window.add(LoginViewModel.getLoginView());
+                window.add(new LoginView());
             }
             case "CreateAccountPage" -> {
-                window.add(CreateAccountViewModel.getCreateAccountView());
+                window.add(new CreateAccountView());
             }
             case "HomePage" -> {
-                HomeView homeView = new HomeView();
-                window.add(HomeViewModel.getHomeView());
+                window.add(new HomeView());
             }
             case "StatsPage" -> {
                 StatsView statsView = new StatsView(currentUser);
                 window.add(statsView.getViewPanel());
             }
             case "AdminPage" -> {
-                window.add(AdminHomeView.getMainPanel());
+                window.add(new AdminHomeView());
             }
             case "currencyShopPage" -> {
                 currencyShopViewModel view = new currencyShopViewModel();
@@ -92,7 +94,7 @@ public class Main {
                 window.add(currencyShopViewModel.getCurrencyView());
             }
             case "GoalsPage" -> {
-                window.add(GoalsViewModel.getGoalsView());
+                window.add(new GoalsView());
             }
             case "SettingsPage" -> {
                 window.add(SettingsViewModel.getSettingsView());
@@ -101,7 +103,7 @@ public class Main {
             	window.add(AdminUsersView.getView());
             }
             case "AdminAddUser" -> {
-            	window.add(AdminAddUserView.getView());
+            	window.add(new AdminAddUserView());
             }
         }
         window.revalidate();

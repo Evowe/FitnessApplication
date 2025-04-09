@@ -2,7 +2,6 @@ package fitness.app.Widgets.SideMenu;
 
 import com.kitfox.svg.SVGUniverse;
 import com.kitfox.svg.app.beans.SVGIcon;
-
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;

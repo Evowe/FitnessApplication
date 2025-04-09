@@ -1,4 +1,9 @@
 package fitness.app.Widgets.Profile;
 
-public class ProfileView {
+import javax.swing.*;
+
+public class ProfileView extends JPanel {
+    public ProfileView() {
+
+    }
 }

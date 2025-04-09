@@ -21,6 +21,7 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
 import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginViewModel;
+import fitness.app.Widgets.SideMenu.SideMenuModel;
 import net.miginfocom.swing.MigLayout;
 
 public class WorkoutMenuView {
@@ -46,7 +47,7 @@ public class WorkoutMenuView {
 		bMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
 		
 		//Title for menu
-		JLabel title = new JLabel("Rocket Health", HomeViewModel.getIcon("rocket"), JLabel.LEFT);
+		JLabel title = new JLabel("Rocket Health", SideMenuModel.getIcon("rocket"), JLabel.LEFT);
         title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
         
         //Buttons to log workout/create a template

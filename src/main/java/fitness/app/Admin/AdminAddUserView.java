@@ -26,17 +26,14 @@ import fitness.app.CreateAccount.CreateAccountViewModel;
 import fitness.app.Objects.Account;
 import net.miginfocom.swing.MigLayout;
 
-public class AdminAddUserView {
-	private static JPanel mainPanel;
+public class AdminAddUserView extends JPanel {
+    private final CreateAccountViewModel createAccountViewModel;
+
+    public AdminAddUserView() {
+        createAccountViewModel = new CreateAccountViewModel();
+    }
     
-    public static JPanel getView() {
-		if (mainPanel == null) {
-			createView();
-		}
-		return mainPanel;
-	}
-    
-    public static void createView() {
+    public void createView() {
     	JTextField usernameField;
         JPasswordField passwordField;
         JPasswordField confirmPasswordField;
@@ -45,7 +42,7 @@ public class AdminAddUserView {
         JPanel createAccountPanel;
     	
         //Organizes the window into 2 halves
-        mainPanel = new JPanel(new GridLayout(1,2));
+        setLayout(new GridLayout(1,2));
 
         //Left half
         logoPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
@@ -64,7 +61,7 @@ public class AdminAddUserView {
 
         logoPanel.add(logo);
 
-        mainPanel.add(logoPanel);
+        add(logoPanel);
 
 
         //Right half
@@ -105,9 +102,9 @@ public class AdminAddUserView {
                 boolean valid = true;
                 Account account = new Account(usernameField.getText(), passwordField.getText(), "active", ((String) roleSelect.getSelectedItem()).toLowerCase());
 
-                if (CreateAccountViewModel.validateUsername(account) != null) {
+                if (createAccountViewModel.validateUsername(account) != null) {
                     valid = false;
-                    usernameError.setText(CreateAccountViewModel.validateUsername(account));
+                    usernameError.setText(createAccountViewModel.validateUsername(account));
                     usernameError.setForeground(Color.RED);
                     usernameError.putClientProperty(FlatClientProperties.STYLE, "font:-4");
                 }
@@ -115,9 +112,9 @@ public class AdminAddUserView {
                     usernameError.setText("");
                 }
 
-                if (CreateAccountViewModel.validatePassword(account) != null) {
+                if (createAccountViewModel.validatePassword(account) != null) {
                     valid = false;
-                    passwordError.setText(CreateAccountViewModel.validatePassword(account));
+                    passwordError.setText(createAccountViewModel.validatePassword(account));
                     passwordError.setForeground(Color.RED);
                     passwordError.putClientProperty(FlatClientProperties.STYLE, "font:-4");
 
@@ -164,7 +161,7 @@ public class AdminAddUserView {
         createAccountMenu.add(createAccountButton, "gapy 10");
         createAccountPanel.add(createAccountMenu);
 
-        mainPanel.add(createAccountPanel);
+        add(createAccountPanel);
     }
     
 }

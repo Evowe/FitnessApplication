@@ -24,9 +24,4 @@ public class LoginViewModel extends JFrame {
 
         return new Object[]{errorMessage, null}; // Error found, no account
     }
-
-    public static JPanel getLoginView() {
-        loginView = new LoginView();
-        return loginView.get();
-    }
 }

@@ -3,23 +3,24 @@ package fitness.app.Widgets.SideMenu;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
-import fitness.app.Home.HomeViewModel;
 import fitness.app.Main;
 import net.miginfocom.swing.MigLayout;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SideMenuView extends JPanel {
+    private final SideMenuViewModel sideMenuViewModel;
 
     public SideMenuView() {
+        sideMenuViewModel = new SideMenuViewModel();
+
         //Button Menu
         setLayout(new MigLayout("fillx,insets 10", "fill, 125"));
         putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
 
-        JLabel title = new JLabel("Rocket Health", HomeViewModel.getIcon("start-up"), JLabel.LEFT);
+        JLabel title = new JLabel("Rocket Health", sideMenuViewModel.getIcon("start-up"), JLabel.LEFT);
         title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
 
         JLabel generalLabel = new JLabel();
@@ -28,8 +29,8 @@ public class SideMenuView extends JPanel {
 
         FlatButton homeButton = new FlatButton();
         homeButton.setText("Home");
-        homeButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
-        homeButton.setIcon(HomeViewModel.getIcon("home-03"));
+        homeButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        homeButton.setIcon(sideMenuViewModel.getIcon("home-03"));
         homeButton.setHorizontalAlignment(SwingConstants.LEFT);
         homeButton.setMargin(new Insets(5, 25, 5, 5));
         homeButton.setMinimumHeight(50);
@@ -42,16 +43,16 @@ public class SideMenuView extends JPanel {
 
         FlatButton workoutsButton = new FlatButton();
         workoutsButton.setText("Workouts");
-        workoutsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background: lighten(@background,10%);");
-        workoutsButton.setIcon(HomeViewModel.getIcon("workout-run"));
+        workoutsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background: lighten(@background,10%);");
+        workoutsButton.setIcon(sideMenuViewModel.getIcon("workout-run"));
         workoutsButton.setHorizontalAlignment(SwingConstants.LEFT);
         workoutsButton.setMargin(new Insets(5,25,5,5));
         workoutsButton.setMinimumHeight(50);
 
         FlatButton goalsButton = new FlatButton();
         goalsButton.setText("Goals");
-        goalsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
-        goalsButton.setIcon(HomeViewModel.getIcon("contact"));
+        goalsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        goalsButton.setIcon(sideMenuViewModel.getIcon("contact"));
         goalsButton.setHorizontalAlignment(SwingConstants.LEFT);
         goalsButton.setMargin(new Insets(5,25,5,5));
         goalsButton.setMinimumHeight(50);
@@ -64,8 +65,8 @@ public class SideMenuView extends JPanel {
 
         FlatButton statisticsButton = new FlatButton();
         statisticsButton.setText("Statistics");
-        statisticsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
-        statisticsButton.setIcon(HomeViewModel.getIcon("chart-evaluation"));
+        statisticsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        statisticsButton.setIcon(sideMenuViewModel.getIcon("chart-evaluation"));
         statisticsButton.setHorizontalAlignment(SwingConstants.LEFT);
         statisticsButton.setMargin(new Insets(5,25,5,5));
         statisticsButton.setMinimumHeight(50);
@@ -78,8 +79,8 @@ public class SideMenuView extends JPanel {
 
         FlatButton shopButton = new FlatButton();
         shopButton.setText("Shop");
-        shopButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
-        shopButton.setIcon(HomeViewModel.getIcon("shopping-cart"));
+        shopButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        shopButton.setIcon(sideMenuViewModel.getIcon("shopping-cart"));
         shopButton.setHorizontalAlignment(SwingConstants.LEFT);
         shopButton.setMargin(new Insets(5,25,5,5));
         shopButton.setMinimumHeight(50);
@@ -96,15 +97,15 @@ public class SideMenuView extends JPanel {
 
         FlatButton profileButton = new FlatButton();
         profileButton.setText("Profile");
-        profileButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
-        profileButton.setIcon(HomeViewModel.getIcon("user-circle"));
+        profileButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        profileButton.setIcon(sideMenuViewModel.getIcon("user-circle"));
         profileButton.setHorizontalAlignment(SwingConstants.LEFT);
         profileButton.setMargin(new Insets(5,25,5,5));
 
         FlatButton settingsButton = new FlatButton();
         settingsButton.setText("Settings");
-        settingsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
-        settingsButton.setIcon(HomeViewModel.getIcon("setting"));
+        settingsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        settingsButton.setIcon(sideMenuViewModel.getIcon("setting"));
         settingsButton.setHorizontalAlignment(SwingConstants.LEFT);
         settingsButton.setMargin(new Insets(5,25,5,5));
         settingsButton.setMinimumHeight(50);
@@ -117,8 +118,8 @@ public class SideMenuView extends JPanel {
 
         FlatButton logOutButton = new FlatButton();
         logOutButton.setText("Log Out");
-        logOutButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
-        logOutButton.setIcon(HomeViewModel.getIcon("logout"));
+        logOutButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        logOutButton.setIcon(sideMenuViewModel.getIcon("logout"));
         logOutButton.setHorizontalAlignment(SwingConstants.LEFT);
         logOutButton.setMargin(new Insets(5,25,5,5));
         logOutButton.setMinimumHeight(50);

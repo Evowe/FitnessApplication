@@ -1,9 +1,9 @@
 package fitness.app.CreateAccount;
 
+import fitness.app.Main;
 import fitness.app.Objects.Account;
 import com.formdev.flatlaf.FlatClientProperties;
 import net.miginfocom.swing.MigLayout;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -14,21 +14,17 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class CreateAccountView {
-    private static JTextField usernameField;
-    private static JPasswordField passwordField;
-    private static JPasswordField confirmPasswordField;
-    private static JButton createAccountButton;
-    private static JPanel mainPanel;
-    private static JPanel logoPanel;
-    private static JPanel createAccountPanel;
-    
+public class CreateAccountView extends JPanel {
+    private final CreateAccountViewModel createAccountViewModel;
+
     public CreateAccountView() {
+        createAccountViewModel = new CreateAccountViewModel();
+
         //Organizes the window into 2 halves
-        mainPanel = new JPanel(new GridLayout(1,2));
+        setLayout(new GridLayout(1,2));
 
         //Left half
-        logoPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
+        JPanel logoPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
         logoPanel.putClientProperty(FlatClientProperties.STYLE, "[dark]background:darken(@background,5%)");
 
         BufferedImage img = null;
@@ -44,11 +40,11 @@ public class CreateAccountView {
 
         logoPanel.add(logo);
 
-        mainPanel.add(logoPanel);
+        add(logoPanel);
 
 
         //Right half
-        createAccountPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
+        JPanel createAccountPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
 
         JPanel createAccountMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         createAccountMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
@@ -59,20 +55,20 @@ public class CreateAccountView {
         JLabel description = new JLabel("Create a new account to continue");
         description.putClientProperty(FlatClientProperties.STYLE, "foreground:darken(@foreground,33%)");
 
-        usernameField = new JTextField();
+        JTextField usernameField = new JTextField();
         usernameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter username");
         JLabel usernameError = new JLabel("");
 
-        passwordField = new JPasswordField();
+        JPasswordField passwordField = new JPasswordField();
         passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter password");
         passwordField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true");
         JLabel passwordError = new JLabel("");
 
-        confirmPasswordField = new JPasswordField();
+        JPasswordField confirmPasswordField = new JPasswordField();
         confirmPasswordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Confirm password");
         JLabel confirmPasswordError = new JLabel("");
 
-        createAccountButton = new JButton("Create Account");
+        JButton createAccountButton = new JButton("Create Account");
         createAccountButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
         createAccountButton.addActionListener(new ActionListener() {
             @Override
@@ -80,9 +76,9 @@ public class CreateAccountView {
                 boolean valid = true;
                 Account account = new Account(usernameField.getText(), passwordField.getText());
 
-                if (CreateAccountViewModel.validateUsername(account) != null) {
+                if (createAccountViewModel.validateUsername(account) != null) {
                     valid = false;
-                    usernameError.setText(CreateAccountViewModel.validateUsername(account));
+                    usernameError.setText(createAccountViewModel.validateUsername(account));
                     usernameError.setForeground(Color.RED);
                     usernameError.putClientProperty(FlatClientProperties.STYLE, "font:-4");
                 }
@@ -90,9 +86,9 @@ public class CreateAccountView {
                     usernameError.setText("");
                 }
 
-                if (CreateAccountViewModel.validatePassword(account) != null) {
+                if (createAccountViewModel.validatePassword(account) != null) {
                     valid = false;
-                    passwordError.setText(CreateAccountViewModel.validatePassword(account));
+                    passwordError.setText(createAccountViewModel.validatePassword(account));
                     passwordError.setForeground(Color.RED);
                     passwordError.putClientProperty(FlatClientProperties.STYLE, "font:-4");
 
@@ -119,7 +115,7 @@ public class CreateAccountView {
                         System.out.println(e.getMessage());
                     }
 
-                    CreateAccountViewModel.setWindow();
+                    Main.setWindow("HomePage");
                 }
             }
         });
@@ -138,10 +134,6 @@ public class CreateAccountView {
         createAccountMenu.add(createAccountButton, "gapy 10");
         createAccountPanel.add(createAccountMenu);
 
-        mainPanel.add(createAccountPanel);
-    }
-
-    public static JPanel getCreateAccountView() {
-        return mainPanel;
+        add(createAccountPanel);
     }
 }

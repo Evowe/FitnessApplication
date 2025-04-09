@@ -6,22 +6,17 @@ import fitness.app.Main;
 import javax.swing.*;
 
 public class CreateAccountViewModel {
-    private static CreateAccountView createAccountView;
+    private static CreateAccountModel createAccountModel;
 
-    public static JPanel getCreateAccountView() {
-        createAccountView = new CreateAccountView();
-        return createAccountView.getCreateAccountView();
+    public CreateAccountViewModel() {
+        createAccountModel = new CreateAccountModel();
     }
 
-    public static String validateUsername(Account account) {
-        return CreateAccountModel.validateUsername(account.getUsername());
+    public String validateUsername(Account account) {
+        return createAccountModel.validateUsername(account.getUsername());
     }
 
-    public static String validatePassword(Account account) {
-        return CreateAccountModel.validatePassword(account.getPassword());
-    }
-
-    public static void setWindow() {
-        Main.setWindow("LoginPage");
+    public String validatePassword(Account account) {
+        return createAccountModel.validatePassword(account.getPassword());
     }
 }

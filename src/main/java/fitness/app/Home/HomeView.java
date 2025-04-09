@@ -4,27 +4,18 @@ import fitness.app.Widgets.Battlepass.BattlepassView;
 import fitness.app.Widgets.Calendar.CalendarView;
 import fitness.app.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
-
 import javax.swing.*;
 
-
-//Implement menu bar as seperate method to abstract?
-
-public class HomeView {
-
-    private static JPanel mainPanel;
+public class HomeView extends JPanel {
+    private final HomeViewModel homeViewModel;
 
     public HomeView() {
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new MigLayout("insets 20", "left", "top"));
+        homeViewModel = new HomeViewModel();
 
-        mainPanel.add(new SideMenuView(), "growy, pushy");
-        mainPanel.add(new CalendarView(), "gapx 10");
-        mainPanel.add(new BattlepassView(), "gapx 10, growx, pushx");
-    }
+        setLayout(new MigLayout("insets 20", "left", "top"));
 
-
-    public static JPanel getMainPanel() {
-        return mainPanel;
+        add(new SideMenuView(), "growy, pushy");
+        add(new CalendarView(), "gapx 10");
+        add(new BattlepassView(), "gapx 10, growx, pushx");
     }
 }

@@ -1,15 +1,10 @@
 package fitness.app.Widgets.Calendar;
 
-import javax.swing.*;
-import java.awt.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.Calendar;
 
-//test
 public class CalendarModel {
     private static class CalendarFormat {
         private ArrayList<String[]> calendar;
