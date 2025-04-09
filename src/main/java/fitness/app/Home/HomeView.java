@@ -20,7 +20,7 @@ public class HomeView {
 
         mainPanel.add(new SideMenuView(), "growy, pushy");
         mainPanel.add(new CalendarView(), "gapx 10");
-        mainPanel.add(new BattlepassView(), "gapx 10");
+        mainPanel.add(new BattlepassView(), "gapx 10, growx, pushx");
     }
 
 
