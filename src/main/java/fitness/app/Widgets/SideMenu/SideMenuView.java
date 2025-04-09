@@ -28,7 +28,7 @@ public class SideMenuView extends JPanel {
 
         FlatButton homeButton = new FlatButton();
         homeButton.setText("Home");
-        homeButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        homeButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
         homeButton.setIcon(HomeViewModel.getIcon("home-03"));
         homeButton.setHorizontalAlignment(SwingConstants.LEFT);
         homeButton.setMargin(new Insets(5, 25, 5, 5));
@@ -42,7 +42,7 @@ public class SideMenuView extends JPanel {
 
         FlatButton workoutsButton = new FlatButton();
         workoutsButton.setText("Workouts");
-        workoutsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background: lighten(@background,10%);");
+        workoutsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background: lighten(@background,10%);");
         workoutsButton.setIcon(HomeViewModel.getIcon("workout-run"));
         workoutsButton.setHorizontalAlignment(SwingConstants.LEFT);
         workoutsButton.setMargin(new Insets(5,25,5,5));
@@ -50,7 +50,7 @@ public class SideMenuView extends JPanel {
 
         FlatButton goalsButton = new FlatButton();
         goalsButton.setText("Goals");
-        goalsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        goalsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
         goalsButton.setIcon(HomeViewModel.getIcon("contact"));
         goalsButton.setHorizontalAlignment(SwingConstants.LEFT);
         goalsButton.setMargin(new Insets(5,25,5,5));
@@ -64,7 +64,7 @@ public class SideMenuView extends JPanel {
 
         FlatButton statisticsButton = new FlatButton();
         statisticsButton.setText("Statistics");
-        statisticsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        statisticsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
         statisticsButton.setIcon(HomeViewModel.getIcon("chart-evaluation"));
         statisticsButton.setHorizontalAlignment(SwingConstants.LEFT);
         statisticsButton.setMargin(new Insets(5,25,5,5));
@@ -78,7 +78,7 @@ public class SideMenuView extends JPanel {
 
         FlatButton shopButton = new FlatButton();
         shopButton.setText("Shop");
-        shopButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        shopButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
         shopButton.setIcon(HomeViewModel.getIcon("shopping-cart"));
         shopButton.setHorizontalAlignment(SwingConstants.LEFT);
         shopButton.setMargin(new Insets(5,25,5,5));
@@ -96,14 +96,14 @@ public class SideMenuView extends JPanel {
 
         FlatButton profileButton = new FlatButton();
         profileButton.setText("Profile");
-        profileButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        profileButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
         profileButton.setIcon(HomeViewModel.getIcon("user-circle"));
         profileButton.setHorizontalAlignment(SwingConstants.LEFT);
         profileButton.setMargin(new Insets(5,25,5,5));
 
         FlatButton settingsButton = new FlatButton();
         settingsButton.setText("Settings");
-        settingsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        settingsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
         settingsButton.setIcon(HomeViewModel.getIcon("setting"));
         settingsButton.setHorizontalAlignment(SwingConstants.LEFT);
         settingsButton.setMargin(new Insets(5,25,5,5));
@@ -117,7 +117,7 @@ public class SideMenuView extends JPanel {
 
         FlatButton logOutButton = new FlatButton();
         logOutButton.setText("Log Out");
-        logOutButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
+        logOutButton.putClientProperty(FlatClientProperties.STYLE, "arc: 10; background:lighten(@background,10%);");
         logOutButton.setIcon(HomeViewModel.getIcon("logout"));
         logOutButton.setHorizontalAlignment(SwingConstants.LEFT);
         logOutButton.setMargin(new Insets(5,25,5,5));
