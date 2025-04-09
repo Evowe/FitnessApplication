@@ -43,7 +43,7 @@ public class SideMenuView extends JPanel {
         FlatButton workoutsButton = new FlatButton();
         workoutsButton.setText("Workouts");
         workoutsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background: lighten(@background,10%);");
-        workoutsButton.setIcon(HomeViewModel.getIcon("body-part-muscle"));
+        workoutsButton.setIcon(HomeViewModel.getIcon("workout-run"));
         workoutsButton.setHorizontalAlignment(SwingConstants.LEFT);
         workoutsButton.setMargin(new Insets(5,25,5,5));
         workoutsButton.setMinimumHeight(50);

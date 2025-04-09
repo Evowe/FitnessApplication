@@ -28,10 +28,11 @@ public class BattlepassView extends JPanel {
         itemsPanel.add(getItem(2));
         itemsPanel.add(getItem(3));
         itemsPanel.add(getItem(4));
-        itemsPanel.add(getItem(5), "wrap");
+        itemsPanel.add(getItem(5));
+        itemsPanel.add(getItem(6), "wrap");
 
         FlatProgressBar progressBar = new FlatProgressBar();
-        progressBar.setValue(50);
+        progressBar.setValue(25);
         itemsPanel.add(progressBar, "span, growx");
 
         FlatButton previousButton = new FlatButton();
