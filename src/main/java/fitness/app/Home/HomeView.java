@@ -1,5 +1,7 @@
 package fitness.app.Home;
 
+import fitness.app.Widgets.Battlepass.BattlepassView;
+import fitness.app.Widgets.Calendar.CalendarView;
 import fitness.app.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
@@ -14,9 +16,11 @@ public class HomeView {
 
     public HomeView() {
         mainPanel = new JPanel();
-        mainPanel.setLayout(new MigLayout());
+        mainPanel.setLayout(new MigLayout("insets 20", "left", "top"));
 
         mainPanel.add(new SideMenuView(), "growy, pushy");
+        mainPanel.add(new CalendarView(), "gapx 10");
+        mainPanel.add(new BattlepassView(), "gapx 10");
     }
 
 

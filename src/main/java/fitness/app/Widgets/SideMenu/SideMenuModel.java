@@ -3,6 +3,7 @@ package fitness.app.Widgets.SideMenu;
 import com.kitfox.svg.SVGUniverse;
 import com.kitfox.svg.app.beans.SVGIcon;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,6 +34,7 @@ public class SideMenuModel {
         output.setSvgUniverse(images);
         output.setSvgURI(imageURI);
         output.setAntiAlias(true);
+        output.setPreferredSize(new Dimension(32, 32));
 
         return output;
     }

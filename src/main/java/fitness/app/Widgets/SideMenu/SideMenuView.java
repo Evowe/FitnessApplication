@@ -19,7 +19,7 @@ public class SideMenuView extends JPanel {
         setLayout(new MigLayout("fillx,insets 10", "fill, 125"));
         putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
 
-        JLabel title = new JLabel("Rocket Health", HomeViewModel.getIcon("rocket"), JLabel.LEFT);
+        JLabel title = new JLabel("Rocket Health", HomeViewModel.getIcon("start-up"), JLabel.LEFT);
         title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
 
         JLabel generalLabel = new JLabel();
@@ -29,10 +29,10 @@ public class SideMenuView extends JPanel {
         FlatButton homeButton = new FlatButton();
         homeButton.setText("Home");
         homeButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
-        homeButton.setIcon(HomeViewModel.getIcon("home"));
+        homeButton.setIcon(HomeViewModel.getIcon("home-03"));
         homeButton.setHorizontalAlignment(SwingConstants.LEFT);
         homeButton.setMargin(new Insets(5, 25, 5, 5));
-        homeButton.setMinimumHeight(35);
+        homeButton.setMinimumHeight(50);
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,18 +43,18 @@ public class SideMenuView extends JPanel {
         FlatButton workoutsButton = new FlatButton();
         workoutsButton.setText("Workouts");
         workoutsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background: lighten(@background,10%);");
-        workoutsButton.setIcon(HomeViewModel.getIcon("workouts"));
+        workoutsButton.setIcon(HomeViewModel.getIcon("body-part-muscle"));
         workoutsButton.setHorizontalAlignment(SwingConstants.LEFT);
         workoutsButton.setMargin(new Insets(5,25,5,5));
-        workoutsButton.setMinimumHeight(35);
+        workoutsButton.setMinimumHeight(50);
 
         FlatButton goalsButton = new FlatButton();
         goalsButton.setText("Goals");
         goalsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
-        goalsButton.setIcon(HomeViewModel.getIcon("goals"));
+        goalsButton.setIcon(HomeViewModel.getIcon("contact"));
         goalsButton.setHorizontalAlignment(SwingConstants.LEFT);
         goalsButton.setMargin(new Insets(5,25,5,5));
-        goalsButton.setMinimumHeight(35);
+        goalsButton.setMinimumHeight(50);
         goalsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -65,10 +65,10 @@ public class SideMenuView extends JPanel {
         FlatButton statisticsButton = new FlatButton();
         statisticsButton.setText("Statistics");
         statisticsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
-        statisticsButton.setIcon(HomeViewModel.getIcon("statistics"));
+        statisticsButton.setIcon(HomeViewModel.getIcon("chart-evaluation"));
         statisticsButton.setHorizontalAlignment(SwingConstants.LEFT);
         statisticsButton.setMargin(new Insets(5,25,5,5));
-        statisticsButton.setMinimumHeight(35);
+        statisticsButton.setMinimumHeight(50);
         statisticsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -79,10 +79,10 @@ public class SideMenuView extends JPanel {
         FlatButton shopButton = new FlatButton();
         shopButton.setText("Shop");
         shopButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
-        shopButton.setIcon(HomeViewModel.getIcon("Cart"));
+        shopButton.setIcon(HomeViewModel.getIcon("shopping-cart"));
         shopButton.setHorizontalAlignment(SwingConstants.LEFT);
         shopButton.setMargin(new Insets(5,25,5,5));
-        shopButton.setMinimumHeight(35);
+        shopButton.setMinimumHeight(50);
         shopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -97,18 +97,17 @@ public class SideMenuView extends JPanel {
         FlatButton profileButton = new FlatButton();
         profileButton.setText("Profile");
         profileButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
-        profileButton.setIcon(HomeViewModel.getIcon("profile"));
+        profileButton.setIcon(HomeViewModel.getIcon("user-circle"));
         profileButton.setHorizontalAlignment(SwingConstants.LEFT);
         profileButton.setMargin(new Insets(5,25,5,5));
-        profileButton.setMinimumHeight(35);
 
         FlatButton settingsButton = new FlatButton();
         settingsButton.setText("Settings");
         settingsButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
-        settingsButton.setIcon(HomeViewModel.getIcon("settings"));
+        settingsButton.setIcon(HomeViewModel.getIcon("setting"));
         settingsButton.setHorizontalAlignment(SwingConstants.LEFT);
         settingsButton.setMargin(new Insets(5,25,5,5));
-        settingsButton.setMinimumHeight(35);
+        settingsButton.setMinimumHeight(50);
         settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -119,10 +118,10 @@ public class SideMenuView extends JPanel {
         FlatButton logOutButton = new FlatButton();
         logOutButton.setText("Log Out");
         logOutButton.putClientProperty(FlatClientProperties.STYLE, "arc: 20; background:lighten(@background,10%);");
-        logOutButton.setIcon(HomeViewModel.getIcon("log-out"));
+        logOutButton.setIcon(HomeViewModel.getIcon("logout"));
         logOutButton.setHorizontalAlignment(SwingConstants.LEFT);
         logOutButton.setMargin(new Insets(5,25,5,5));
-        logOutButton.setMinimumHeight(35);
+        logOutButton.setMinimumHeight(50);
         logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {

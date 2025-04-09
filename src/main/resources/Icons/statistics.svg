@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-  <g stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-    <path d="m3 3v18" style="fill-rule: nonzero; stroke: rgb(255, 255, 255);"/>
-    <path d="m21 21h-18" style="fill-rule: nonzero; stroke: rgb(255, 255, 255);"/>
-    <path d="m7 16 5.25-5.25 3.5 3.5 5.25-5.25" style="fill-rule: nonzero; stroke: rgb(255, 255, 255);"/>
-  </g>
-</svg>
