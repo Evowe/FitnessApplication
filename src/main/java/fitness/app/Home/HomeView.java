@@ -1,5 +1,6 @@
 package fitness.app.Home;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import fitness.app.Widgets.Battlepass.BattlepassView;
 import fitness.app.Widgets.Calendar.CalendarView;
 import fitness.app.Widgets.GoalProgressMeter.GoalProgressMeterView;
@@ -15,21 +16,23 @@ public class HomeView extends JPanel {
         homeViewModel = new HomeViewModel();
 
         setLayout(new MigLayout("insets 20", "left", "top"));
-        setBackground(new Color(18, 21, 28));
+        putClientProperty(FlatClientProperties.STYLE, "background:darken(@background, 1%)");
 
         add(new SideMenuView(), "growy, pushy");
         JPanel whole = new JPanel(new MigLayout("wrap, insets 2"));
-        whole.setBackground(new Color(18, 21, 28));
+        whole.putClientProperty(FlatClientProperties.STYLE, "background:darken(@background, 1%)");
 
         JPanel top = new JPanel(new MigLayout("insets 0", "left", "top"));
         top.setBackground(new Color(18, 21, 28));
         top.add(new CalendarView(), "gapx 10");
         top.add(new BattlepassView(), "gapx 10, growx, pushx, wrap");
+        top.putClientProperty(FlatClientProperties.STYLE, "background:darken(@background, 1%)");
         whole.add(top);
 
         JPanel bottom = new JPanel(new MigLayout("insets 0", "left", "top"));
         bottom.setBackground(new Color(18, 21, 28));
         bottom.add(new GoalProgressMeterView(), "gapy 5, gapx 10, growx, pushx, wrap");
+        bottom.putClientProperty(FlatClientProperties.STYLE, "background:darken(@background, 1%)");
         whole.add(bottom);
 
         add(whole, "growy, pushy");
