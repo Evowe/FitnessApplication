@@ -31,6 +31,7 @@ public class AdminAddUserView extends JPanel {
 
     public AdminAddUserView() {
         createAccountViewModel = new CreateAccountViewModel();
+        createView();
     }
     
     public void createView() {
