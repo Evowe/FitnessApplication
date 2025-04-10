@@ -20,6 +20,7 @@ public class GoalProgressMeterView extends JPanel {
             add(new JLabel("Goal " + i), "wrap, gapy 5");
             FlatProgressBar progressBar = new FlatProgressBar();
             progressBar.setValue((int)(Math.random() * (101)));
+            //progressBar.setForeground(Color.RED);
             add(progressBar, "wrap");
         }
     }

@@ -24,20 +24,21 @@ public class CalendarView extends JPanel {
     public CalendarView() {
         //Panel Layout & Settings
         setLayout(new MigLayout("wrap,fillx,insets 15"));
-        putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
+        putClientProperty(FlatClientProperties.STYLE, "arc:20;");
+        setBackground(new Color(38, 14, 13));
 
         //Intialize ViewModel
         viewModel = new CalendarViewModel();
 
         //Create Menu Bar
         JPanel menuBar = new JPanel(new MigLayout("fill, insets 0" , "fill"));
-        menuBar.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+        menuBar.setBackground(new Color(38, 14, 13));
 
         //Month Selection Button
         FlatButton monthButton = new FlatButton();
         monthButton.setHorizontalAlignment(SwingConstants.RIGHT);
         monthButton.setMinimumSize(new Dimension(95, 30));
-        monthButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+        monthButton.setBackground(new Color(38, 14, 13));
         monthButton.setBorderPainted(false);
         char[] buttonName = viewModel.getMonth().toString().toLowerCase().toCharArray();
         buttonName[0] = Character.toUpperCase(buttonName[0]);
@@ -76,6 +77,7 @@ public class CalendarView extends JPanel {
 
         //Previous Month Button
         FlatButton lastMonthButton = new FlatButton();
+        lastMonthButton.setBackground(new Color(65, 20, 17));
         lastMonthButton.setMaximumSize(new Dimension(30, 30));
         lastMonthButton.addActionListener(new ActionListener() {
             @Override
@@ -97,6 +99,7 @@ public class CalendarView extends JPanel {
 
         //Previous Year Button
         FlatButton lastYearButton = new FlatButton();
+        lastYearButton.setBackground(new Color(65, 20, 17));
         lastYearButton.setMaximumSize(new Dimension(30, 30));
         lastYearButton.addActionListener(new ActionListener() {
             @Override
@@ -113,6 +116,7 @@ public class CalendarView extends JPanel {
         //Next Year Button
         FlatButton nextYearButton = new FlatButton();
         nextYearButton.setMaximumSize(new Dimension(30, 30));
+        nextYearButton.setBackground(new Color(65, 20, 17));
         nextYearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -128,6 +132,7 @@ public class CalendarView extends JPanel {
         //Next Month Button
         FlatButton nextMonthButton = new FlatButton();
         nextMonthButton.setMaximumSize(new Dimension(30, 30));
+        nextMonthButton.setBackground(new Color(65, 20, 17));
         nextMonthButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -160,11 +165,11 @@ public class CalendarView extends JPanel {
 
     private void setCalendar() {
         JPanel calendarPanel = new JPanel(new MigLayout("wrap, fillx, insets 0", "fill"));
-        calendarPanel.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+        calendarPanel.setBackground(new Color(38, 14, 13));
         ArrayList<String[]> format = viewModel.getCalendar();
 
         JPanel dayLabels = new JPanel(new MigLayout("fill, insets 0", "center"));
-        dayLabels.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+        dayLabels.setBackground(new Color(38, 14, 13));
         String[] labels = format.removeFirst();
         for (String label : labels) {
             JLabel day = new JLabel(label);
@@ -175,12 +180,12 @@ public class CalendarView extends JPanel {
 
         for (String[] week : format) {
             JPanel dateLabels = new JPanel(new MigLayout("fill, insets 0", "center"));
-            dateLabels.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+            dateLabels.setBackground(new Color(38, 14, 13));
             for (String day : week) {
                 FlatButton dayButton = new FlatButton();
                 dayButton.setMaximumSize(new Dimension(30, 30));
                 dayButton.setText(day);
-                dayButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+                dayButton.setBackground(new Color(38, 14, 13));
                 if ((week.equals(format.getFirst()) && parseInt(day) > 7 ) || (week.equals(format.getLast()) && parseInt(day) < 7)) {
                     dayButton.setFocusable(false);
                     dayButton.setForeground(Color.GRAY);
@@ -188,15 +193,15 @@ public class CalendarView extends JPanel {
                 else {
                     if (parseInt(day) == viewModel.getDay()) {
                         currentSelection = dayButton;
-                        currentSelection.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,20%)");
+                        currentSelection.setBackground(new Color(65, 20, 17));
                     }
                     dayButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             viewModel.setDay(parseInt(day));
-                            currentSelection.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+                            currentSelection.setBackground(new Color(38, 14, 13));
                             currentSelection = dayButton;
-                            currentSelection.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,20%)");
+                            currentSelection.setBackground(new Color(65, 20, 17));
                         }
                     });
                 }
