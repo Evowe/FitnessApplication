@@ -11,6 +11,7 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,7 +30,7 @@ public class LoginView extends JPanel {
 
         //Left half
         JPanel logoPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
-        logoPanel.putClientProperty(FlatClientProperties.STYLE, "[dark]background:darken(@background,5%)");
+        logoPanel.putClientProperty(FlatClientProperties.STYLE, "background:darken(@background,1%)");
 
         BufferedImage img = null;
         try {
@@ -48,9 +49,10 @@ public class LoginView extends JPanel {
 
         //Right half
         JPanel loginPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
+        loginPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         JPanel loginMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
-        loginMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,5%)");
+        loginMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
         FlatLabel title = new FlatLabel();
         title.setText("Welcome to Rocket Health");
@@ -58,20 +60,21 @@ public class LoginView extends JPanel {
 
         FlatLabel description = new FlatLabel();
         description.setText("Please log in to continue");
-        description.putClientProperty(FlatClientProperties.STYLE, "foreground:darken(@foreground,33%)");
+        description.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
 
         FlatTextField usernameField = new FlatTextField();
         usernameField.setPlaceholderText("Enter username");
+        usernameField.putClientProperty(FlatClientProperties.STYLE, "arc:10;");
 
         FlatLabel result = new FlatLabel();
 
         FlatPasswordField passwordField = new FlatPasswordField();
         passwordField.setPlaceholderText("Enter password");
-        passwordField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true");
+        passwordField.putClientProperty(FlatClientProperties.STYLE, "arc:10; showRevealButton:true");
 
         FlatButton logInButton = new FlatButton();
+        logInButton.setBorderPainted(false);
         logInButton.setText("Log in");
-        logInButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -134,7 +137,7 @@ public class LoginView extends JPanel {
 
         FlatButton createAccountButton = new FlatButton();
         createAccountButton.setText("Create Account");
-        createAccountButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        createAccountButton.setBorderPainted(false);
         createAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {

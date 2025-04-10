@@ -1,5 +1,7 @@
 package fitness.app.CreateAccount;
 
+import com.formdev.flatlaf.extras.components.FlatPasswordField;
+import com.formdev.flatlaf.extras.components.FlatTextField;
 import fitness.app.Main;
 import fitness.app.Objects.Account;
 import com.formdev.flatlaf.FlatClientProperties;
@@ -25,7 +27,7 @@ public class CreateAccountView extends JPanel {
 
         //Left half
         JPanel logoPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
-        logoPanel.putClientProperty(FlatClientProperties.STYLE, "[dark]background:darken(@background,5%)");
+        logoPanel.putClientProperty(FlatClientProperties.STYLE, "background:darken(@background,1%)");
 
         BufferedImage img = null;
         try {
@@ -45,31 +47,34 @@ public class CreateAccountView extends JPanel {
 
         //Right half
         JPanel createAccountPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
+        createAccountPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         JPanel createAccountMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
-        createAccountMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
+        createAccountMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
         JLabel title = new JLabel("Welcome to Rocket Health");
         title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
 
         JLabel description = new JLabel("Create a new account to continue");
-        description.putClientProperty(FlatClientProperties.STYLE, "foreground:darken(@foreground,33%)");
+        description.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
 
-        JTextField usernameField = new JTextField();
-        usernameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter username");
+        FlatTextField usernameField = new FlatTextField();
+        usernameField.putClientProperty(FlatClientProperties.STYLE, "arc:10;");
+        usernameField.setPlaceholderText("Enter username");
         JLabel usernameError = new JLabel("");
 
-        JPasswordField passwordField = new JPasswordField();
-        passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter password");
-        passwordField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true");
+        FlatPasswordField passwordField = new FlatPasswordField();
+        passwordField.setPlaceholderText("Enter password");
+        passwordField.putClientProperty(FlatClientProperties.STYLE, "arc:10; showRevealButton:true");
         JLabel passwordError = new JLabel("");
 
-        JPasswordField confirmPasswordField = new JPasswordField();
-        confirmPasswordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Confirm password");
+        FlatPasswordField confirmPasswordField = new FlatPasswordField();
+        confirmPasswordField.setPlaceholderText("Confirm password");
+        confirmPasswordField.putClientProperty(FlatClientProperties.STYLE, "arc:10;");
         JLabel confirmPasswordError = new JLabel("");
 
         JButton createAccountButton = new JButton("Create Account");
-        createAccountButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        createAccountButton.setBorderPainted(false);
         createAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {

@@ -15,7 +15,7 @@ import java.awt.geom.Arc2D;
 public class GoalProgressMeterView extends JPanel {
     public GoalProgressMeterView() {
         setLayout(new MigLayout("wrap,fillx,insets 30", "fill,275"));
-        putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,5%)");
+        putClientProperty(FlatClientProperties.STYLE, "arc:20;");
         for (int i = 1; i <= 5; ++i) {
             add(new JLabel("Goal " + i), "wrap, gapy 5");
             FlatProgressBar progressBar = new FlatProgressBar();

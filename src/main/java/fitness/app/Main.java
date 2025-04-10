@@ -1,39 +1,28 @@
 package fitness.app;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-
 import fitness.app.Admin.AdminAddUserView;
 import fitness.app.Admin.AdminHomeView;
 import fitness.app.Admin.AdminUsersView;
 import fitness.app.CreateAccount.CreateAccountView;
-import fitness.app.CreateAccount.CreateAccountViewModel;
 import fitness.app.CurrencyShop.currencyShopViewModel;
-import fitness.app.CurrencyShop.currencyshopview;
 import fitness.app.Goals.GoalsView;
-import fitness.app.Goals.GoalsViewModel;
 import fitness.app.Home.HomeView;
-import fitness.app.Home.HomeViewModel;
 import fitness.app.Login.LoginView;
-import fitness.app.Login.LoginViewModel;
 import fitness.app.Microtransactions.TransactionViewModel;
 import fitness.app.Settings.SettingsViewModel;
 import fitness.app.Statistics.StatsView;
-import fitness.app.Statistics.StatsViewModel;
-
 import fitness.app.Objects.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 
-//Need to implement navigation method?
-//	Use stack with Panels to implement navigation? (create navigationcontroller)
-
-//handle errors with dialogs?
-
 public class Main {
+
     private static JFrame window;
     private static Account currentUser;
 
@@ -51,8 +40,13 @@ public class Main {
         //FlatLaf setup & settings
         FlatRobotoMonoFont.install();
         FlatLaf.registerCustomDefaultsSource("FlatLafSettings");
+        FlatDarkLaf.setup();
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (UnsupportedLookAndFeelException e) {
+            throw new RuntimeException(e);
+        }
         UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
-        FlatMacDarkLaf.setup();
 
         //Application window
         window = new JFrame("Rocket Health");
@@ -62,6 +56,8 @@ public class Main {
         window.add(new LoginView());
         window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
         window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
+
+        JButton test = new JButton("Test");
 
         window.setVisible(true);
     }

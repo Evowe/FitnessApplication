@@ -20,10 +20,9 @@ import java.util.ArrayList;
 public class BattlepassView extends JPanel {
     public BattlepassView() {
         setLayout(new MigLayout("fill,insets 10", "center", "center"));
-        putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,5%)");
+        putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
         JPanel itemsPanel = new JPanel(new MigLayout("fill,insets 0"));
-        itemsPanel.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
         itemsPanel.add(getItem(1));
         itemsPanel.add(getItem(2));
         itemsPanel.add(getItem(3));
@@ -36,13 +35,13 @@ public class BattlepassView extends JPanel {
         itemsPanel.add(progressBar, "span, growx");
 
         FlatButton previousButton = new FlatButton();
-        previousButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+        previousButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryAccent");
         previousButton.setBorderPainted(false);
         previousButton.setText("<");
 
 
         FlatButton nextButton = new FlatButton();
-        nextButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
+        nextButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryAccent");
         nextButton.setBorderPainted(false);
         nextButton.setText(">");
 
@@ -53,43 +52,16 @@ public class BattlepassView extends JPanel {
 
     private JPanel getItem(int tier) {
         JPanel itemPanel = new JPanel(new MigLayout("wrap,fillx,insets 0", "center", "center"));
-        itemPanel.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,5%)");
 
         JLabel itemLabel = new JLabel(String.valueOf(tier));
         itemPanel.add(itemLabel);
 
         FlatButton itemButton = new FlatButton();
+        itemButton.setBorderPainted(false);
         itemButton.setMinimumSize(new Dimension(75, 75));
         itemButton.setIcon(BattlepassModel.getIcon("start-up"));
         itemPanel.add(itemButton);
 
         return itemPanel;
     }
-
-    public static void main(String[] args) {
-        System.setProperty("apple.awt.application.name", "Rocket Health");
-        System.setProperty("apple.awt.application.appearance", "system");
-
-        //FlatLaf setup & settings
-        FlatRobotoMonoFont.install();
-        FlatLaf.registerCustomDefaultsSource("FlatLafSettings");
-        UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
-        FlatMacDarkLaf.setup();
-
-        //Application window
-        JFrame window = new JFrame("Rocket Health");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(new Dimension(1200, 700));
-        window.setLocationRelativeTo(null);
-        window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
-        window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
-
-        JPanel panel = new JPanel(new MigLayout("wrap, fillx, insets 15", "center", "center"));
-        panel.add(new BattlepassView());
-
-        window.add(panel);
-
-        window.setVisible(true);
-    }
-
 }
