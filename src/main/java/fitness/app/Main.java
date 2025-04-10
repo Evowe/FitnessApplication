@@ -89,7 +89,7 @@ public class Main {
                 window.add(currencyShopViewModel.getCurrencyView());
             }
             case "GoalsPage" -> {
-                window.add(new GoalsView());
+                //window.add(gview.());
             }
             case "SettingsPage" -> {
                 window.add(SettingsViewModel.getSettingsView());
