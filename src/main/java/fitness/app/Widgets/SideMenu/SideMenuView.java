@@ -30,7 +30,6 @@ public class SideMenuView extends JPanel {
         FlatButton homeButton = new FlatButton();
         homeButton.setBorderPainted(false);
         homeButton.setText("Home");
-        homeButton.setBackground(new Color(65, 20, 17));
         homeButton.setIcon(sideMenuViewModel.getIcon("home-03"));
         homeButton.setHorizontalAlignment(SwingConstants.LEFT);
         homeButton.setMargin(new Insets(5, 25, 5, 5));

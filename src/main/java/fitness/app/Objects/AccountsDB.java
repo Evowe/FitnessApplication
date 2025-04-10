@@ -16,7 +16,6 @@ public class AccountsDB extends DBTemplate {
         // Create Account table
 
         String[] columns = {
-        		"id INTEGER PRIMARY KEY",
                 "username TEXT NOT NULL",
                 "password TEXT NOT NULL",
                 "status TEXT DEFAULT 'active'",

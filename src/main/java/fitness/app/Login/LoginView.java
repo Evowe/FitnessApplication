@@ -60,7 +60,7 @@ public class LoginView extends JPanel {
 
         FlatLabel description = new FlatLabel();
         description.setText("Please log in to continue");
-        description.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
+        description.putClientProperty(FlatClientProperties.STYLE, "foreground:@primaryForeground");
 
         FlatTextField usernameField = new FlatTextField();
         usernameField.setPlaceholderText("Enter username");
