@@ -25,7 +25,7 @@ public class SideMenuView extends JPanel {
 
         JLabel generalLabel = new JLabel();
         generalLabel.setText("General");
-        generalLabel.setForeground(Color.GRAY);
+        generalLabel.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
 
         FlatButton homeButton = new FlatButton();
         homeButton.setBorderPainted(false);
@@ -93,7 +93,7 @@ public class SideMenuView extends JPanel {
 
         FlatLabel accountLabel = new FlatLabel();
         accountLabel.setText("Account");
-        accountLabel.putClientProperty(FlatClientProperties.STYLE, "foreground:darken(@foreground,33%)");
+        accountLabel.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
 
         FlatButton profileButton = new FlatButton();
         profileButton.setBorderPainted(false);

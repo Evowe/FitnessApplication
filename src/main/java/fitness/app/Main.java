@@ -97,7 +97,7 @@ public class Main {
             case "AdminUsers" -> {
             	window.add(AdminUsersView.getView());
             }
-            case "AdminAddUser" -> {
+            case "AdminAddUserView" -> {
             	window.add(new AdminAddUserView());
             }
         }

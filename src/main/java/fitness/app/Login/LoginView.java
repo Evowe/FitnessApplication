@@ -30,7 +30,7 @@ public class LoginView extends JPanel {
 
         //Left half
         JPanel logoPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
-        logoPanel.putClientProperty(FlatClientProperties.STYLE, "background:darken(@background,1%)");
+        logoPanel.putClientProperty(FlatClientProperties.STYLE, "background:darken(@background,3%)");
 
         BufferedImage img = null;
         try {
@@ -60,7 +60,7 @@ public class LoginView extends JPanel {
 
         FlatLabel description = new FlatLabel();
         description.setText("Please log in to continue");
-        description.putClientProperty(FlatClientProperties.STYLE, "foreground:@primaryForeground");
+        description.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
 
         FlatTextField usernameField = new FlatTextField();
         usernameField.setPlaceholderText("Enter username");

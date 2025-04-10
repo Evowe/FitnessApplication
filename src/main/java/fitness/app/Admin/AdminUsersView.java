@@ -62,7 +62,7 @@ public class AdminUsersView {
 		addUser.setText("+ Add User");
 		addUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Main.setWindow("AdminAddUser");
+				Main.setWindow("AdminAddUserView");
 			}
 		});
 		
