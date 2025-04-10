@@ -28,7 +28,7 @@ public class AdminHomeView extends JPanel{
 			bMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
 			
 			//Title for menu
-			JLabel title = new JLabel("Rocket Health", SideMenuModel.getIcon("rocket"), JLabel.LEFT);
+			JLabel title = new JLabel("Rocket Health", SideMenuModel.getIcon("start-up"), JLabel.LEFT);
 	        title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
 	        
 	        //Button to view all users (including trainers)
@@ -46,7 +46,7 @@ public class AdminHomeView extends JPanel{
 	        FlatButton logOutButton = new FlatButton();
 	        logOutButton.setText("Log Out");
 	        logOutButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
-	        logOutButton.setIcon(SideMenuModel.getIcon("log-out"));
+	        logOutButton.setIcon(SideMenuModel.getIcon("logout"));
 	        logOutButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent event) {
@@ -79,5 +79,8 @@ public class AdminHomeView extends JPanel{
 	        add(bMenu, "grow, push");
 	        add(contentPanel, "grow, push");
 	}
-	
+
+	public AdminHomeView() {
+		createView();
+	}
 }
