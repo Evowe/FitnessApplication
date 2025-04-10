@@ -57,7 +57,7 @@ public class Main {
         //Application window
         window = new JFrame("Rocket Health");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(new Dimension(1200, 700));
+        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
         window.setLocationRelativeTo(null);
         window.add(new LoginView());
         window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
