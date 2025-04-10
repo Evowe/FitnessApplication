@@ -1,6 +1,8 @@
 package fitness.app.Settings;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import fitness.app.Home.HomeView;
+import fitness.app.Main;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -130,8 +132,10 @@ public class SettingsView {
 
                 if (success) {
                     JOptionPane.showMessageDialog(null, "Settings saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    Main.setWindow("HomePage");
                 } else {
                     JOptionPane.showMessageDialog(null, "Failed to save settings.", "Error", JOptionPane.ERROR_MESSAGE);
+                    Main.setWindow("HomePage");
                 }
             }
         });

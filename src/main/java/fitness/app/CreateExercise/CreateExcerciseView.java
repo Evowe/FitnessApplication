@@ -132,7 +132,7 @@ public class CreateExcerciseView {
 
 
 
-    public JPanel getViewPanel()
+    public static JPanel getViewPanel()
     {
         return mainPanel;
     }
