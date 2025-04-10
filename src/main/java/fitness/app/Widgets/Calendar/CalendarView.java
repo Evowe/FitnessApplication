@@ -37,7 +37,7 @@ public class CalendarView extends JPanel {
         monthButton.setBorderPainted(false);
         monthButton.setHorizontalAlignment(SwingConstants.RIGHT);
         monthButton.setMinimumSize(new Dimension(95, 30));
-        monthButton.setBackground(new Color(38, 14, 13));
+        monthButton.putClientProperty(FlatClientProperties.STYLE, "background: @secondaryAccent");
         monthButton.setBorderPainted(false);
         char[] buttonName = viewModel.getMonth().toString().toLowerCase().toCharArray();
         buttonName[0] = Character.toUpperCase(buttonName[0]);
@@ -182,23 +182,23 @@ public class CalendarView extends JPanel {
                 dayButton.setBorderPainted(false);
                 dayButton.setMaximumSize(new Dimension(30, 30));
                 dayButton.setText(day);
-                dayButton.setBackground(new Color(38, 14, 13));
+                dayButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryAccent");
                 if ((week.equals(format.getFirst()) && parseInt(day) > 7 ) || (week.equals(format.getLast()) && parseInt(day) < 7)) {
                     dayButton.setFocusable(false);
-                    dayButton.setForeground(Color.GRAY);
+                    dayButton.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
                 }
                 else {
                     if (parseInt(day) == viewModel.getDay()) {
                         currentSelection = dayButton;
-                        currentSelection.setBackground(new Color(65, 20, 17));
+                        currentSelection.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
                     }
                     dayButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             viewModel.setDay(parseInt(day));
-                            currentSelection.setBackground(new Color(38, 14, 13));
+                            currentSelection.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryAccent");
                             currentSelection = dayButton;
-                            currentSelection.setBackground(new Color(65, 20, 17));
+                            currentSelection.putClientProperty(FlatClientProperties.STYLE, "background:@primaryAccent");
                         }
                     });
                 }
