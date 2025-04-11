@@ -3,11 +3,14 @@ package fitness.app.ExerciseLibrary;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
+import fitness.app.Main;
 import fitness.app.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -69,7 +72,15 @@ public class ExerciseLibraryView extends JPanel {
         addExercise.setMinimumHeight(35);
         addExercise.setMinimumWidth(200);
         addExercise.setText("+ Add Exercise");
+        addExercise.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                Main.setWindow("CreateExercise" );
+            }
+        });
+
         buttonPanel.add(addExercise);
+
 
         FlatButton createWorkout = new FlatButton();
         createWorkout.setMinimumHeight(35);
