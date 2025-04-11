@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fitness.app.Objects.Account;
-import fitness.app.Objects.AccountsDB;
 
 public class AdminUsersViewModel {
 	private AdminUsersModel model = new AdminUsersModel();

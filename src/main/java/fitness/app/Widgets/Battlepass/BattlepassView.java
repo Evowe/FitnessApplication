@@ -1,21 +1,12 @@
 package fitness.app.Widgets.Battlepass;
 
 import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatProgressBar;
-import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import fitness.app.Login.LoginViewModel;
-import fitness.app.Objects.AccountsDB;
-import fitness.app.Objects.CreditCardDB;
-import fitness.app.Objects.DatabaseManager;
-import fitness.app.Objects.ExerciseDB;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class BattlepassView extends JPanel {
     public BattlepassView() {

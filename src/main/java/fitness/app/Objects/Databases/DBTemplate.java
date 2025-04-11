@@ -1,4 +1,4 @@
-package fitness.app.Objects;
+package fitness.app.Objects.Databases;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

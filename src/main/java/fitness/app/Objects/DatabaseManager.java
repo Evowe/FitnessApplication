@@ -1,5 +1,7 @@
 package fitness.app.Objects;
 
+import fitness.app.Objects.Databases.DBTemplate;
+
 import java.util.HashMap;
 import java.util.Map;
 

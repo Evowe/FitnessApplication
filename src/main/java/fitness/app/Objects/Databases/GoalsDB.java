@@ -1,11 +1,13 @@
-package fitness.app.Objects;
+package fitness.app.Objects.Databases;
+
+import fitness.app.Objects.Goal;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoalsDB extends DBTemplate{
+public class GoalsDB extends DBTemplate {
     public GoalsDB(String dbName) {
         super(dbName);
     }

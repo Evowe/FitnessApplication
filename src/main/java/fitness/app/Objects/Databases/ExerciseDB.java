@@ -1,4 +1,6 @@
-package fitness.app.Objects;
+package fitness.app.Objects.Databases;
+
+import fitness.app.Objects.Exercise;
 
 import java.io.BufferedReader;
 import java.io.File;

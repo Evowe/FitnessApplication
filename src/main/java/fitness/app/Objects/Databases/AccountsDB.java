@@ -1,4 +1,6 @@
-package fitness.app.Objects;
+package fitness.app.Objects.Databases;
+
+import fitness.app.Objects.Account;
 
 import java.sql.*;
 import java.util.ArrayList;

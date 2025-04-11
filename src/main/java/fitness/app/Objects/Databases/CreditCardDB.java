@@ -1,4 +1,6 @@
-package fitness.app.Objects;
+package fitness.app.Objects.Databases;
+
+import fitness.app.Objects.CreditCard;
 
 import java.sql.*;
 
@@ -9,7 +11,7 @@ public class CreditCardDB extends DBTemplate {
     }
 
     @Override
-    protected void createDatabase() throws SQLException {
+    public void createDatabase() throws SQLException {
         // Create Credit Card table
         String[] columns = {
                 "cardNumber TEXT NOT NULL",
@@ -55,7 +57,7 @@ public class CreditCardDB extends DBTemplate {
         }
     }
 
-    public CreditCard getCreditCard(String cardNumber) throws SQLException {
+    protected CreditCard getCreditCard(String cardNumber) throws SQLException {
         String sql = "SELECT * FROM creditCards WHERE cardNumber = ?";
 
         try (Connection conn = getConnection();

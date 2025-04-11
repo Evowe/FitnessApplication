@@ -1,5 +1,7 @@
 package fitness.app.Objects;
 
+import fitness.app.Objects.Databases.AccountsDB;
+
 import java.sql.SQLException;
 
 public class Account {

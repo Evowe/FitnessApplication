@@ -1,4 +1,4 @@
-package fitness.app.Objects;
+package fitness.app.Objects.Databases;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StatsDB extends DBTemplate{
+public class StatsDB extends DBTemplate {
 
     public StatsDB(String dbName){
         super(dbName);
