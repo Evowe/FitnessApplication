@@ -9,6 +9,7 @@ import fitness.app.Admin.AdminUsersView;
 import fitness.app.Admin.AdminUsersViewModel;
 import fitness.app.CreateAccount.CreateAccountView;
 import fitness.app.CurrencyShop.currencyShopViewModel;
+import fitness.app.ExerciseLibrary.ExerciseLibraryView;
 import fitness.app.Goals.GoalsView;
 import fitness.app.Home.HomeView;
 import fitness.app.Login.LoginView;
@@ -100,6 +101,9 @@ public class Main {
             }
             case "AdminAddUserView" -> {
             	window.add(new AdminAddUserView());
+            }
+            case "ExerciseLibrary" -> {
+                window.add(new ExerciseLibraryView());
             }
         }
         window.revalidate();

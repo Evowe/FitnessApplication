@@ -3,6 +3,8 @@ package fitness.app.ExerciseLibrary;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
+import fitness.app.Widgets.SideMenu.SideMenuView;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,10 +17,19 @@ public class ExerciseLibraryView extends JPanel {
 
     public ExerciseLibraryView() {
 
-        //Setup Main Panel Layout
-        setLayout(new BorderLayout());
-        putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        setLayout(new MigLayout("insets 20", "left", "top"));
+        putClientProperty(FlatClientProperties.STYLE, "background:darken(@background, 1%)");
 
+        add(new SideMenuView(), "growy, pushy");
+
+
+        //Setup Main Panel Layout
+        //setLayout(new BorderLayout());
+        //putClientProperty(FlatClientProperties.STYLE, "background:@background");
+
+        //add(new SideMenuView(), BorderLayout.WEST);
+        JPanel main = new JPanel();
+        main.putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         //North Panel Setup - Title
         JPanel titlePanel = new JPanel();
@@ -30,25 +41,23 @@ public class ExerciseLibraryView extends JPanel {
         title.putClientProperty(FlatClientProperties.STYLE, "font:bold +25");
         titlePanel.add(title);
 
-        add(titlePanel, BorderLayout.NORTH);
+        main.add(titlePanel, BorderLayout.NORTH);
 
 
         //Center Panel Setup - Exercise List/Table
         JTable table = new JTable(getRowData("sample_exercises.csv"), getColumNames("sample_exercises.csv"));
-        JScrollPane scrollPane = new JScrollPane(table);
+        table.setRowHeight(75);
 
-        scrollPane.setPreferredSize(new Dimension(1000, 700));
-        scrollPane.setMaximumSize(new Dimension(1000, 700));
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setPreferredSize(new Dimension(1200, 650));
+        scrollPane.setMaximumSize(new Dimension(1200, 650));
 
         JPanel tablePanel = new JPanel();
         tablePanel.setBackground(Color.BLACK);
         tablePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         tablePanel.add(scrollPane);
 
-        //scrollPane.setBackground(Color.WHITE);
-        //table.setBackground(Color.WHITE);
-
-        add(tablePanel, BorderLayout.CENTER);
+        main.add(tablePanel, BorderLayout.CENTER);
 
 
         //South Panel Setup - Buttons
@@ -68,7 +77,9 @@ public class ExerciseLibraryView extends JPanel {
         createWorkout.setText("+ Create Workout");
         buttonPanel.add(createWorkout);
 
-        add(buttonPanel, BorderLayout.SOUTH);
+        main.add(buttonPanel, BorderLayout.SOUTH);
+
+        add(main, "growy, pushy");
     }
 
 
