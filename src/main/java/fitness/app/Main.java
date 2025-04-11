@@ -10,6 +10,7 @@ import fitness.app.Admin.AdminHomeView;
 import fitness.app.Admin.AdminUsersView;
 import fitness.app.CreateAccount.CreateAccountView;
 import fitness.app.CurrencyShop.currencyShopViewModel;
+import fitness.app.Goals.GoalsDB;
 import fitness.app.Goals.GoalsView;
 import fitness.app.Home.HomeView;
 import fitness.app.Login.LoginView;
@@ -33,6 +34,8 @@ public class Main {
         DatabaseManager.addDatabase("accounts", new AccountsDB("accounts"));
         DatabaseManager.addDatabase("exercises", new ExerciseDB("exercises"));
         DatabaseManager.addDatabase("creditCard", new CreditCardDB("creditCard"));
+        DatabaseManager.addDatabase("goals", new GoalsDB("goals"));
+        DatabaseManager.addDatabase("stats", new StatsDB("stats"));
         System.out.println("Databases initialized successfully.");
 
         addTestAdminAccount();
@@ -89,7 +92,7 @@ public class Main {
                 window.add(currencyShopViewModel.getCurrencyView());
             }
             case "GoalsPage" -> {
-                //window.add(gview.());
+                window.add(new GoalsView(currentUser));
             }
             case "SettingsPage" -> {
                 window.add(SettingsViewModel.getSettingsView());
