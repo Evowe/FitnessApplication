@@ -10,6 +10,8 @@ public class AdminUsersViewModel {
 	
 	public List<Object[]> getUsers() {
 		List<Object[]> users = new ArrayList<>();
+
+
  		
 		for (Account acc : model.getUsers()) {
 			String promote;
@@ -23,6 +25,8 @@ public class AdminUsersViewModel {
 			
 			users.add(new Object[] {acc.getUsername(), acc.getRole(), promote, "Reset Password"});
 		}
+
+
 		
 		return users;
 	}
@@ -33,5 +37,9 @@ public class AdminUsersViewModel {
 	
 	public void depromoteUser(String user) {
 		model.depromoteUser(user);
+	}
+
+	public static void refreshUsersView() {
+		AdminUsersView.refreshView();
 	}
 }

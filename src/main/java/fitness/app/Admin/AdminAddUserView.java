@@ -138,6 +138,7 @@ public class AdminAddUserView extends JPanel {
                 if (valid) {
                     try {
                         account.addAccount();
+                        AdminUsersViewModel.refreshUsersView();
                     } catch (SQLException e){
                         System.out.println(e.getMessage());
                     }

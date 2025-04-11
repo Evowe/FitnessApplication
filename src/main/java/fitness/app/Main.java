@@ -6,6 +6,7 @@ import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import fitness.app.Admin.AdminAddUserView;
 import fitness.app.Admin.AdminHomeView;
 import fitness.app.Admin.AdminUsersView;
+import fitness.app.Admin.AdminUsersViewModel;
 import fitness.app.CreateAccount.CreateAccountView;
 import fitness.app.CurrencyShop.currencyShopViewModel;
 import fitness.app.Goals.GoalsView;
