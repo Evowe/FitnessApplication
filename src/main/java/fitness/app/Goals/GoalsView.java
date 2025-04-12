@@ -4,11 +4,11 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import fitness.app.Main;
 import fitness.app.Objects.Account;
-import fitness.app.Objects.AccountsDB;
 import fitness.app.Objects.DatabaseManager;
-import fitness.app.Widgets.Calendar.CalendarView;
+import fitness.app.Objects.Goal;
+import fitness.app.Objects.Databases.GoalsDB;
+import fitness.app.Objects.Goal;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -232,8 +232,6 @@ public class GoalsView extends JPanel {
             }
         } catch (SQLException e) {
             weightContent.setText("Error loading goal.");
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
         }
 
         weightPanel.add(weightTitle);
@@ -265,8 +263,6 @@ public class GoalsView extends JPanel {
             }
         } catch (SQLException e) {
             distanceContent.setText("Error loading goal.");
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
         }
 
         distancePanel.add(distanceTitle);

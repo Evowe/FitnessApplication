@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fitness.app.Objects.Account;
-import fitness.app.Objects.AccountsDB;
+import fitness.app.Objects.Databases.AccountsDB;
 import fitness.app.Objects.DatabaseManager;
 
 public class AdminUsersModel {

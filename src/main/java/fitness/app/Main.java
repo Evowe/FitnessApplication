@@ -1,20 +1,21 @@
 package fitness.app;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import fitness.app.Admin.AdminAddUserView;
 import fitness.app.Admin.AdminHomeView;
 import fitness.app.Admin.AdminUsersView;
+import fitness.app.Admin.AdminUsersViewModel;
 import fitness.app.CreateAccount.CreateAccountView;
+import fitness.app.CreateExercise.CreateExcerciseView;
 import fitness.app.CurrencyShop.currencyShopViewModel;
-import fitness.app.Goals.GoalsDB;
+import fitness.app.ExerciseLibrary.ExerciseLibraryView;
 import fitness.app.Goals.GoalsView;
 import fitness.app.Home.HomeView;
 import fitness.app.Login.LoginView;
 import fitness.app.Microtransactions.TransactionViewModel;
+import fitness.app.Objects.Databases.*;
 import fitness.app.Settings.SettingsViewModel;
 import fitness.app.Statistics.StatsView;
 import fitness.app.Objects.*;
@@ -66,6 +67,7 @@ public class Main {
     }
 
     public static void setWindow(String windowName) {
+        System.out.println(currentUser);
         window.getContentPane().removeAll();
         switch (windowName) {
             case "LoginPage" -> {
@@ -102,6 +104,12 @@ public class Main {
             }
             case "AdminAddUserView" -> {
             	window.add(new AdminAddUserView());
+            }
+            case "ExerciseLibrary" -> {
+                window.add(new ExerciseLibraryView());
+            }
+            case "CreateExercise" -> {
+                window.add(new CreateExcerciseView());
             }
         }
         window.revalidate();

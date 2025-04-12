@@ -77,6 +77,20 @@ public class SideMenuView extends JPanel {
             }
         });
 
+        FlatButton exerciseLibraryButton = new FlatButton();
+        exerciseLibraryButton.setBorderPainted(false);
+        exerciseLibraryButton.setText("Exercise Library");
+        exerciseLibraryButton.setIcon(sideMenuViewModel.getIcon("chart-evaluation"));
+        exerciseLibraryButton.setHorizontalAlignment(SwingConstants.LEFT);
+        exerciseLibraryButton.setMargin(new Insets(5,25,5,5));
+        exerciseLibraryButton.setMinimumHeight(50);
+        exerciseLibraryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                Main.setWindow("ExerciseLibrary" );
+            }
+        });
+
         FlatButton shopButton = new FlatButton();
         shopButton.setBorderPainted(false);
         shopButton.setText("Shop");
@@ -136,6 +150,7 @@ public class SideMenuView extends JPanel {
         add(goalsButton, "wrap, gapy 10");
         add(workoutsButton, "wrap, gapy 10");
         add(statisticsButton, "wrap, gapy 10");
+        add(exerciseLibraryButton, "wrap, gapy 10");
         add(shopButton, "wrap, gapy 10");
         add(accountLabel, "wrap, gap 0 0 10 0");
         add(profileButton, "wrap, gapy 0");

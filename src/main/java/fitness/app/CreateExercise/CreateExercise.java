@@ -2,7 +2,7 @@ package fitness.app.CreateExercise;
 
 import fitness.app.Objects.DatabaseManager;
 import fitness.app.Objects.Exercise;
-import fitness.app.Objects.ExerciseDB;
+import fitness.app.Objects.Databases.ExerciseDB;
 
 import java.sql.SQLException;
 

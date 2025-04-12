@@ -15,7 +15,7 @@ public class CreditCard {
         this.zipCode = null;
     }
 
-    CreditCard(String cardNumber, String expiryDate, String cvv,
+    public CreditCard(String cardNumber, String expiryDate, String cvv,
                String cardHolder, String zipCode) {
         this.cardNumber = cardNumber;
         this.expiryDate = expiryDate;

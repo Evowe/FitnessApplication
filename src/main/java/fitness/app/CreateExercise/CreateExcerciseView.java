@@ -2,9 +2,13 @@ package fitness.app.CreateExercise;
 
 
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.components.FlatButton;
+import com.formdev.flatlaf.extras.components.FlatLabel;
+import com.formdev.flatlaf.extras.components.FlatTextField;
 import fitness.app.Objects.Account;
 import fitness.app.Objects.Exercise;
 import fitness.app.Statistics.StatsModel;
+import fitness.app.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -12,130 +16,129 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CreateExcerciseView {
-    private static JFrame window;
-    private static JPanel mainPanel;
+import static com.formdev.flatlaf.util.ColorFunctions.darken;
 
-    public CreateExcerciseView(Account acc) {
-        //Application window
-        window = new JFrame("Create Exercise");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(new Dimension(1200, 700));
-        window.setLocationRelativeTo(null);
+public class CreateExcerciseView extends JPanel {
 
+    public CreateExcerciseView() {
+        //Setup Main Panel
+        setLayout(new MigLayout("insets 20", "left", "top"));
+        putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
-        mainPanel = new JPanel(new GridLayout(3, 3));
+        //Add navigation bar
+        add(new SideMenuView(), "growy, pushy");
 
 
-        //DISPLAY CALORIES
+        //Setup Main Panel
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        //mainPanel.setMinimumSize(new Dimension(500, 500));
+        mainPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
-        /*
-        JPanel excDis = new JPanel(new MigLayout("fill,insets 20", "left", "Top"));
-        JPanel EdisMen = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
-        EdisMen.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
-        JLabel EdisTitle = new JLabel("New Exercise: ");
-        EdisTitle.putClientProperty(FlatClientProperties.STYLE, "" + "font:bold +6");
-        EdisMen.add(EdisTitle);
-        excDis.add(EdisMen);
-        mainPanel.add(excDis);
+        //North Panel Setup
+        JPanel titlePanel = new JPanel();
+        titlePanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        FlatLabel title = new FlatLabel();
+        title.setText("Create Exercise");
+        title.putClientProperty(FlatClientProperties.STYLE, "font:bold +25");
+        titlePanel.add(title);
+
+        mainPanel.add(titlePanel, BorderLayout.NORTH);
 
 
-         */
+        //Center Panel Setup
+        JPanel centerPanel = new JPanel();
+        centerPanel.setMinimumSize(new Dimension(1200, 500));
+        centerPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        centerPanel.setLayout(new GridLayout(15, 1));
 
 
+        //Setup Exercise Name
+        FlatLabel name = new FlatLabel();
+        name.setText("Exercise Name");
+        name.putClientProperty(FlatClientProperties.STYLE, "" + "font:regular +6");
+        centerPanel.add(name);
 
-        //Calorie Panel
+        FlatTextField nameField = new FlatTextField();
+        nameField.setMinimumSize(new Dimension(200, 12));
+        nameField.setMaximumSize(new Dimension(200, 12));
+        nameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Name");
+        centerPanel.add(nameField);
 
-        JLabel EdisTitle = new JLabel("New Exercise: ");
-        EdisTitle.putClientProperty(FlatClientProperties.STYLE, "" + "font:bold +6");
 
-        JPanel excPanel = new JPanel( new MigLayout("fill,insets 0", "center"));
+        //Setup Exercise Description
+        FlatLabel description = new FlatLabel();
+        description.setText("Exercise Description");
+        description.putClientProperty(FlatClientProperties.STYLE, "" + "font:regular +6");
+        centerPanel.add(description);
 
-        //JPanel ExcMenu = new JPanel(new MigLayout("wrap,fillx,insets 0", "fill,275"));
-        JPanel ExcMenu = new JPanel(new MigLayout("wrap,fill,insets 0", "fill,500"));
-        ExcMenu.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
+        FlatTextField descriptionField = new FlatTextField();
+        descriptionField.setMinimumSize(new Dimension(200, 12));
+        descriptionField.setMaximumSize(new Dimension(200, 12));
+        descriptionField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Description");
+        centerPanel.add(descriptionField);
 
-        JLabel exName = new JLabel("Exercise Name");
-        exName.putClientProperty(FlatClientProperties.STYLE, "" + "font:bold +6");
 
-        JLabel Edescription = new JLabel("*All fields required");
-        Edescription.putClientProperty(FlatClientProperties.STYLE, "" + "foreground:darken(@foreground,33%)");
-
-        JTextField NameField = new JTextField();
-        NameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Name");
-
-        JLabel desTitle = new JLabel("Exercise Description");
-        exName.putClientProperty(FlatClientProperties.STYLE, "" + "font:bold +6");
-
-        JTextField DescriptionField = new JTextField();
-        DescriptionField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Description");
-
+        //Setup Exercise Type
         JLabel dropdownTitle = new JLabel("Exercise Type");
-        dropdownTitle.putClientProperty(FlatClientProperties.STYLE, "" + "font:bold +6");
+        dropdownTitle.putClientProperty(FlatClientProperties.STYLE, "" + "font:regular +6");
+        centerPanel.add(dropdownTitle);
 
-        String[] options = {"No Selection", "Sets", "Sets w/ Weight", "Sets w/o Weight"};
+        String[] options = {"Select Type", "Sets", "Sets w/ Weight", "Sets w/o Weight"};
         JComboBox<String> dropdown = new JComboBox<>(options);
+        dropdown.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Select Type");
+        dropdown.setBackground(new Color(200,200,200));
+        dropdown.setForeground(new Color(120, 120, 120));
+        centerPanel.add(dropdown);
 
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
+
+
+        //Setup Rep Amount
         JLabel repAmount = new JLabel("Rep Amount");
-        repAmount.putClientProperty(FlatClientProperties.STYLE, "" + "font:bold +6");
+        repAmount.putClientProperty(FlatClientProperties.STYLE, "" + "font:regular +6");
+        centerPanel.add(repAmount);
 
         JTextField RepAmountField = new JTextField();
         RepAmountField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Rep Amount");
+        centerPanel.add(RepAmountField);
 
+        //Setup Weight Amount
         JLabel weightAmount = new JLabel("Weight Amount");
-        weightAmount.putClientProperty(FlatClientProperties.STYLE, "" + "font:bold +6");
+        weightAmount.putClientProperty(FlatClientProperties.STYLE, "" + "font:regular +6");
+        centerPanel.add(weightAmount);
 
         JTextField WeightAmountField = new JTextField();
         WeightAmountField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Weight Amount");
+        centerPanel.add(WeightAmountField);
 
 
-        JButton eSubmitButton = new JButton("Submit");
-        eSubmitButton.putClientProperty(FlatClientProperties.STYLE, "" + "background:lighten(@background,10%);");
-        eSubmitButton.addActionListener(new ActionListener() {
+        //Setup Submit Button
+        FlatButton submitButton = new FlatButton();
+        submitButton.setText("Submit");
+        submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                String Name = NameField.getText();
-                String Description = DescriptionField.getText();
+                String Name = nameField.getText();
+                String Description = descriptionField.getText();
                 int RepAmount = Integer.parseInt(RepAmountField.getText());
                 double WeightAmount = Double.parseDouble(WeightAmountField.getText());
                 int type = dropdown.getSelectedIndex();
                 CreateExercise exercise = new CreateExercise () ;
                 Exercise newexercise = exercise.CreateExerciseCall
-                                       (Name, Description, type, RepAmount, WeightAmount);
+                        (Name, Description, type, RepAmount, WeightAmount);
             }
         });
 
-        ExcMenu.add(EdisTitle, "gapy 0");
-        ExcMenu.add(exName, "gapy 0");
-        ExcMenu.add(NameField, "gapy 0");
-        ExcMenu.add(NameField, "gapy 0");
-        ExcMenu.add(desTitle, "gapy 0");
-        ExcMenu.add(DescriptionField, "gapy 0");
-        ExcMenu.add(DescriptionField, "gapy 0");
-        ExcMenu.add(dropdownTitle, "gapy 0");
-        ExcMenu.add(dropdown, "gapy 0");
-        ExcMenu.add(repAmount, "gapy 0");
-        ExcMenu.add(RepAmountField, "gapy 0");
-        ExcMenu.add(weightAmount, "gapy 0");
-        ExcMenu.add(WeightAmountField, "gapy 0");
-        ExcMenu.add(eSubmitButton, "gapy 0");
-        excPanel.add(ExcMenu, "gapy 0");
+        JLabel space = new JLabel();
+        space.setBackground(new Color(20,20,20));
+        centerPanel.add(space);
+        centerPanel.add(submitButton);
+        add(mainPanel, "growy, pushy");
 
-        mainPanel.add(excPanel, "span, growy, gap 10 10 10 10");
-
-        window.add(new JLabel (""));
-        window.add(mainPanel);
-        window.setVisible(true);
     }
 
-
-
-
-
-    public static JPanel getViewPanel()
-    {
-        return mainPanel;
-    }
 }
 
 

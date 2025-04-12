@@ -1,6 +1,7 @@
 package fitness.app.Goals;
 
 import fitness.app.Objects.DatabaseManager;
+import fitness.app.Objects.Databases.GoalsDB;
 
 import java.sql.SQLException;
 import java.util.Date;

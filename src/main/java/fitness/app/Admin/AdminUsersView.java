@@ -73,7 +73,7 @@ public class AdminUsersView {
 		
 		//Content Panel
 		JPanel content = new JPanel();
-		
+
 		//Create table
 		String[] cols = {"User", "Role", "Promotion", "Reset Password"};
 		
@@ -144,5 +144,17 @@ public class AdminUsersView {
 		//Add components to main frame
 		mainPanel.add(topBar, "aligny top, growx, wrap");
 		mainPanel.add(scrollTable, "grow, push, gap 20 20 10 20");
+	}
+
+	public static void refreshView() {
+		// Only refresh if the view has been created
+		if (mainPanel != null) {
+			mainPanel.removeAll();
+			// Recreate the view (which will fetch fresh data)
+			createView();
+			// Make sure UI updates
+			mainPanel.revalidate();
+			mainPanel.repaint();
+		}
 	}
 }

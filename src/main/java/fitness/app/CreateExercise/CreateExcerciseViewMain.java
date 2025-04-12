@@ -20,7 +20,7 @@ public class CreateExcerciseViewMain {
         frame.setVisible(true);
 
          */
-        CreateExcerciseView excerciseView = new CreateExcerciseView(new Account("rylan", "djranch1122"));
+        CreateExcerciseView excerciseView = new CreateExcerciseView();
 
     }
 }

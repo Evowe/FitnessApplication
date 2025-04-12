@@ -19,7 +19,7 @@ import static java.lang.Integer.parseInt;
 
 public class CalendarView extends JPanel {
     private final CalendarViewModel viewModel;
-    private FlatButton currentSelection;
+    private JButton currentSelection;
 
     public CalendarView() {
         //Panel Layout & Settings
@@ -37,7 +37,8 @@ public class CalendarView extends JPanel {
         monthButton.setBorderPainted(false);
         monthButton.setHorizontalAlignment(SwingConstants.RIGHT);
         monthButton.setMinimumSize(new Dimension(95, 30));
-        monthButton.setBackground(new Color(38, 14, 13));
+        monthButton.setBackground(new Color(255, 255, 255));
+        monthButton.setForeground(new Color(255, 30, 5));
         monthButton.setBorderPainted(false);
         char[] buttonName = viewModel.getMonth().toString().toLowerCase().toCharArray();
         buttonName[0] = Character.toUpperCase(buttonName[0]);
@@ -178,11 +179,13 @@ public class CalendarView extends JPanel {
         for (String[] week : format) {
             JPanel dateLabels = new JPanel(new MigLayout("fill, insets 0", "center"));
             for (String day : week) {
-                FlatButton dayButton = new FlatButton();
+                JButton dayButton = new JButton();
+                dayButton.setBackground(new Color(255, 255, 255));
+                dayButton.setForeground(new Color(0, 0, 0));
                 dayButton.setBorderPainted(false);
                 dayButton.setMaximumSize(new Dimension(30, 30));
                 dayButton.setText(day);
-                dayButton.setBackground(new Color(38, 14, 13));
+                //dayButton.setBackground(new Color(38, 14, 13));
                 if ((week.equals(format.getFirst()) && parseInt(day) > 7 ) || (week.equals(format.getLast()) && parseInt(day) < 7)) {
                     dayButton.setFocusable(false);
                     dayButton.setForeground(Color.GRAY);
@@ -190,15 +193,15 @@ public class CalendarView extends JPanel {
                 else {
                     if (parseInt(day) == viewModel.getDay()) {
                         currentSelection = dayButton;
-                        currentSelection.setBackground(new Color(65, 20, 17));
+                        currentSelection.setBackground(new Color(200, 200, 200));
                     }
                     dayButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             viewModel.setDay(parseInt(day));
-                            currentSelection.setBackground(new Color(38, 14, 13));
+                            currentSelection.setBackground(new Color(255, 255, 255));
                             currentSelection = dayButton;
-                            currentSelection.setBackground(new Color(65, 20, 17));
+                            currentSelection.setBackground(new Color(200, 200, 200));
                         }
                     });
                 }

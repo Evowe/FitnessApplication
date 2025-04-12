@@ -52,6 +52,16 @@ public class CreateAccountView extends JPanel {
         JPanel createAccountMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         createAccountMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
+        JButton backButton = new JButton("Back");
+        backButton.setMaximumSize(new Dimension(50, 25));
+        backButton.setBorderPainted(false);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.setWindow("LoginPage");
+            }
+        });
+
         JLabel title = new JLabel("Welcome to Rocket Health");
         title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
 
@@ -125,6 +135,7 @@ public class CreateAccountView extends JPanel {
             }
         });
 
+        createAccountMenu.add(backButton, "gapy 2");
         createAccountMenu.add(title);
         createAccountMenu.add(description);
         createAccountMenu.add(new JLabel("Username"), "gapy 8");
