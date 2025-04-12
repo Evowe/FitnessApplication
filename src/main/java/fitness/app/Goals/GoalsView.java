@@ -211,7 +211,7 @@ public class GoalsView extends JPanel {
         FlatMacDarkLaf.setup();
 
         // Set layout with two columns: one for SideMenuView, one for main content
-        setLayout(new MigLayout("insets 0, fill", "[][grow]", "[][grow][]"));
+        setLayout(new MigLayout("insets 0, fill", "push[grow]push", "push[grow]push"));
 
         // Add SideMenuView to the first column, spanning all rows
 
