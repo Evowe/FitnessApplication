@@ -1,12 +1,9 @@
 package fitness.app.Widgets.Calendar;
 
 import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatMenuItem;
 import com.formdev.flatlaf.extras.components.FlatPopupMenu;
-import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import java.awt.*;
@@ -37,12 +34,11 @@ public class CalendarView extends JPanel {
         monthButton.setBorderPainted(false);
         monthButton.setHorizontalAlignment(SwingConstants.RIGHT);
         monthButton.setMinimumSize(new Dimension(95, 30));
-        monthButton.setBackground(new Color(255, 255, 255));
-        monthButton.setForeground(new Color(255, 30, 5));
         monthButton.setBorderPainted(false);
         char[] buttonName = viewModel.getMonth().toString().toLowerCase().toCharArray();
         buttonName[0] = Character.toUpperCase(buttonName[0]);
         monthButton.setText(new String(buttonName));
+        monthButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground; foreground:@foreground;");
 
         //Month Selection Menu
         FlatPopupMenu monthPopupMenu = new FlatPopupMenu();
@@ -180,28 +176,26 @@ public class CalendarView extends JPanel {
             JPanel dateLabels = new JPanel(new MigLayout("fill, insets 0", "center"));
             for (String day : week) {
                 JButton dayButton = new JButton();
-                dayButton.setBackground(new Color(255, 255, 255));
-                dayButton.setForeground(new Color(0, 0, 0));
+                dayButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground;");
                 dayButton.setBorderPainted(false);
                 dayButton.setMaximumSize(new Dimension(30, 30));
                 dayButton.setText(day);
-                //dayButton.setBackground(new Color(38, 14, 13));
                 if ((week.equals(format.getFirst()) && parseInt(day) > 7 ) || (week.equals(format.getLast()) && parseInt(day) < 7)) {
                     dayButton.setFocusable(false);
-                    dayButton.setForeground(Color.GRAY);
+                    dayButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground; foreground:@secondaryForeground;");
                 }
                 else {
                     if (parseInt(day) == viewModel.getDay()) {
                         currentSelection = dayButton;
-                        currentSelection.setBackground(new Color(200, 200, 200));
+                        currentSelection.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
                     }
                     dayButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             viewModel.setDay(parseInt(day));
-                            currentSelection.setBackground(new Color(255, 255, 255));
+                            currentSelection.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground;");
                             currentSelection = dayButton;
-                            currentSelection.setBackground(new Color(200, 200, 200));
+                            currentSelection.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
                         }
                     });
                 }
@@ -211,26 +205,5 @@ public class CalendarView extends JPanel {
         }
 
         add(calendarPanel, "growx");
-    }
-
-    public static void main(String[] args) {
-        //FlatLaf setup & settings
-        FlatRobotoMonoFont.install();
-        FlatLaf.registerCustomDefaultsSource("FlatLafSettings");
-        UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
-        FlatMacDarkLaf.setup();
-
-        //Application window
-        JFrame window = new JFrame("Rocket Health");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(new Dimension(1200, 700));
-        window.setLocationRelativeTo(null);
-        JPanel panel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
-        panel.add(new CalendarView());
-        window.add(panel);
-        window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
-        window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
-
-        window.setVisible(true);
     }
 }
