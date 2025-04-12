@@ -19,11 +19,13 @@ public class Goal {
         this.completed = completed;
     }
 
-    public Goal(String associatedUsername, String Type, Integer Value, String dateString, Boolean completed) {
+    public Goal(String associatedUsername, String Type, Integer Value, String dateString, Boolean completed) throws ParseException {
         this.associatedUsername = associatedUsername;
         this.Type = Type;
         this.Value = Value;
-        this.date = convertStringToDate(dateString);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        this.date = dateFormat.parse(dateString);
+
         this.completed = completed;
     }
 
@@ -37,6 +39,11 @@ public class Goal {
             return new Date();
         }
     }
+    public String getDateString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        return dateFormat.format(this.date);
+    }
+
 
 
     public String getAssociatedUsername() {

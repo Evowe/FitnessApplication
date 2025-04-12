@@ -3,6 +3,7 @@ package fitness.app.Objects.Databases;
 import fitness.app.Objects.Goal;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class GoalsDB extends DBTemplate {
         }
     }
 
-    public List<Goal> getGoalsByUsername(String username) throws SQLException {
+    public List<Goal> getGoalsByUsername(String username) throws SQLException, ParseException {
         String sql = "SELECT * FROM Goals WHERE username = ?";
         List<Goal> goals = new ArrayList<>();
 
@@ -85,7 +86,7 @@ public class GoalsDB extends DBTemplate {
             }
 
             return goals;
-        } catch (SQLException e) {
+        } catch (SQLException | ParseException e) {
             System.out.println("Error retrieving goals: " + e.getMessage());
             throw e;
         }
@@ -113,6 +114,8 @@ public class GoalsDB extends DBTemplate {
         } catch (SQLException e) {
             System.out.println("Error retrieving goal: " + e.getMessage());
             throw e;
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -144,7 +147,7 @@ public class GoalsDB extends DBTemplate {
         String sql = "UPDATE Goals SET Completed = ? WHERE username = ? AND Type = ?";
 
         try (Connection conn = getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setBoolean(1, goal.getCompleted());
 
             pstmt.setString(2, goal.getAssociatedUsername());

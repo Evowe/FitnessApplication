@@ -35,6 +35,8 @@ public class Main {
         DatabaseManager.addDatabase("accounts", new AccountsDB("accounts"));
         DatabaseManager.addDatabase("exercises", new ExerciseDB("exercises"));
         DatabaseManager.addDatabase("creditCard", new CreditCardDB("creditCard"));
+        DatabaseManager.addDatabase("goals", new GoalsDB("goals"));
+        DatabaseManager.addDatabase("stats", new StatsDB("stats"));
         System.out.println("Databases initialized successfully.");
 
         addTestAdminAccount();
@@ -92,7 +94,7 @@ public class Main {
                 window.add(currencyShopViewModel.getCurrencyView());
             }
             case "GoalsPage" -> {
-                window.add(new GoalsView());
+                window.add(new GoalsView(currentUser));
             }
             case "SettingsPage" -> {
                 window.add(SettingsViewModel.getSettingsView());
