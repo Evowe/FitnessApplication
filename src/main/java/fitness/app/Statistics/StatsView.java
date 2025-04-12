@@ -8,6 +8,9 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import fitness.app.Objects.DatabaseManager;
+import fitness.app.Objects.Databases.GoalsDB;
+import fitness.app.Objects.Databases.StatsDB;
 import fitness.app.Widgets.Graph.GraphView;
 import fitness.app.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
@@ -22,6 +25,7 @@ public class StatsView extends JPanel {
     private static JPanel mainPanel;
 
     public StatsView(Account acc) {
+        StatsDB statsDB = (StatsDB) DatabaseManager.getDatabase("stats");
         StatsViewModel viewModel = new StatsViewModel(acc);
 
         FlatRobotoMonoFont.install();

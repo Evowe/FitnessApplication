@@ -80,7 +80,7 @@ public class Main {
                 window.add(new CreateAccountView());
             }
             case "HomePage" -> {
-                window.add(new HomeView());
+                window.add(new HomeView(currentUser));
             }
             case "StatsPage" -> {
                 StatsView statsView = new StatsView(currentUser);

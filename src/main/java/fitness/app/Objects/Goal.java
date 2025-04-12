@@ -10,7 +10,14 @@ public class Goal {
     Integer Value;
     Date date;
     Boolean completed = false;
-
+    public Goal()
+    {
+        associatedUsername = "";
+        Type = "";
+        Value = 0;
+        date = null;
+        completed = false;
+    }
     public Goal(String associatedUsername, String Type, Integer Value, Date date, Boolean completed) {
         this.associatedUsername = associatedUsername;
         this.Type = Type;

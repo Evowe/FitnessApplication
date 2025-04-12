@@ -1,5 +1,7 @@
 package fitness.app.Goals;
 
+import com.kitfox.svg.app.beans.SVGIcon;
+
 import javax.swing.*;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -16,6 +18,9 @@ public class GoalsViewModel {
     }
     public static void checkDB() throws SQLException {
         gmodel.checkDB();
+    }
+    public static SVGIcon getIcon(String iconName) {
+        return GoalsModel.getIcon(iconName);
     }
     public static String verifyDistance(Double dist) {
         if( dist >= 0 && dist <= 10000)
