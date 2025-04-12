@@ -1,0 +1,11 @@
+Name,Description,Type,Sets,Reps,Weight
+Push-up,Standard push-up exercise using bodyweight,3,3,10,0
+Bench Press,Barbell bench press for chest development,2,3,0,135.0
+Sit-ups,Standard abdominal exercise,1,0,20,0
+Squat,Barbell back squat for leg development,2,4,0,185.0
+Pull-up,Upper body compound exercise,3,3,8,0
+Plank,Core stability exercise held for time in seconds,1,0,60,0
+Bicep Curl,Dumbbell curl for bicep development,2,3,0,25.0
+Tricep Extension,Dumbbell extension for tricep development,2,3,0,20.0
+Deadlift,Compound exercise for posterior chain,2,3,0,225.0
+Lunge,Bodyweight lunge for leg development,3,3,10,0
