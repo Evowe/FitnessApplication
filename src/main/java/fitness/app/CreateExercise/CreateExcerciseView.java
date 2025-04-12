@@ -5,6 +5,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.extras.components.FlatTextField;
+import fitness.app.Main;
 import fitness.app.Objects.Account;
 import fitness.app.Objects.Exercise;
 import fitness.app.Statistics.StatsModel;
@@ -128,6 +129,8 @@ public class CreateExcerciseView extends JPanel {
                 CreateExercise exercise = new CreateExercise () ;
                 Exercise newexercise = exercise.CreateExerciseCall
                         (Name, Description, type, RepAmount, WeightAmount);
+
+                Main.setWindow("ExerciseLibrary" );
             }
         });
 

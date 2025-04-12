@@ -7,7 +7,7 @@ import fitness.app.Objects.Databases.ExerciseDB;
 import java.sql.SQLException;
 
 public class CreateExercise {
-    private static final String DB_NAME = "exercises";
+    private static final String DB_NAME = "exercise";
 
     public Exercise CreateExerciseCall(String name, String desc, Integer type, int valA, double valB) {
         Exercise exercise = null;
@@ -30,7 +30,8 @@ public class CreateExercise {
         System.out.println("Exercise created");
 
         try {
-            ExerciseDB exerciseDB = (ExerciseDB) DatabaseManager.getDatabase(DB_NAME);
+            ExerciseDB exerciseDB = new ExerciseDB(DB_NAME);
+                    //(ExerciseDB) DatabaseManager.getDatabase(DB_NAME);
             if (exerciseDB == null) { // Fixed logic error - only return null if exerciseDB is null
                 System.out.println("Exercise database not found");
                 return null;

@@ -47,7 +47,17 @@ public class Exercise {
     public void setWeight(double weight) {
         this.weight = weight;
     }
+    public Object [] getString(){
+        Object [] str = new Object [5];
+        str[0] = this.name;
+        str[1] = this.description;
+        str[2] = String.valueOf(this.sets);
+        str[3] = String.valueOf(this.reps);
+        str[4] = String.valueOf(this.weight);
 
+        return str;
+        //Name,Description,Type,Sets,Reps,Weight
+    }
 }
 
 

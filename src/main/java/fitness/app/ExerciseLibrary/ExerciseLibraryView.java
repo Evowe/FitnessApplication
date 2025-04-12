@@ -48,7 +48,8 @@ public class ExerciseLibraryView extends JPanel {
 
 
         //Center Panel Setup - Exercise List/Table
-        JTable table = new JTable(getRowData("sample_exercises.csv"), getColumNames("sample_exercises.csv"));
+        //JTable table = new JTable(getRowData("sample_exercises.csv"), getColumNames("sample_exercises.csv"));
+        JTable table = new JTable(ExerciseLibraryModel.getExerciseData(), ExerciseLibraryModel.getExerciseColums());
         table.setRowHeight(75);
 
         JScrollPane scrollPane = new JScrollPane(table);
