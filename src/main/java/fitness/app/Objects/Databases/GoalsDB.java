@@ -24,6 +24,17 @@ public class GoalsDB extends DBTemplate {
         };
         createTable("Goals", exerciseColumns);
     }
+    public void ensureDefaultGoals(String username) throws SQLException, ParseException {
+        // Insert default Distance goal if not present
+        if (getGoalByTypeAndUsername(username, "Distance") == null) {
+            addGoal(new Goal(username, "Distance", 0, "01/01/2099", false));
+        }
+
+        // Insert default Weight goal if not present
+        if (getGoalByTypeAndUsername(username, "Weight") == null) {
+            addGoal(new Goal(username, "Weight", 0, "01/01/2099", false));
+        }
+    }
 
     public Connection getConnection() throws SQLException {
         try {

@@ -44,7 +44,6 @@ public class LoginView extends JPanel {
 
         logoPanel.add(logo, "pos (45% - pref/2) (50% - pref/2)");
 
-
         add(logoPanel);
 
 

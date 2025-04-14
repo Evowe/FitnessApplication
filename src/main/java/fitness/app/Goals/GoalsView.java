@@ -7,11 +7,15 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import fitness.app.Objects.Account;
 import fitness.app.Objects.DatabaseManager;
 import fitness.app.Objects.Goal;
+import fitness.app.Widgets.Calendar.CalendarView;
 import fitness.app.Objects.Databases.GoalsDB;
 import fitness.app.Objects.Goal;
+import fitness.app.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
-
+import fitness.app.Widgets.SideMenu.SideMenuViewModel;
+ 
 import javax.swing.*;
+import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -126,7 +130,7 @@ public class GoalsView extends JPanel {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         format.setLenient(false); // strict parsing
 
-        JFormattedTextField dateField = new JFormattedTextField(new javax.swing.text.DateFormatter(format));
+        JFormattedTextField dateField = new JFormattedTextField(new DateFormatter(format));
         dateField.setFocusLostBehavior(JFormattedTextField.PERSIST); // Prevents "fixing" bad input
 
         dateField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "MM/dd/yyyy ");
@@ -156,7 +160,7 @@ public class GoalsView extends JPanel {
                     desc.putClientProperty(FlatClientProperties.STYLE, "font:-4");
                 }
                 else {
-                    java.util.Date date = null;
+                    Date date = null;
                     try {
                         date = new SimpleDateFormat("MM/dd/yyyy").parse(dateField.getText());
                     if(boxTitle.getText() == "Distance")
@@ -205,72 +209,66 @@ public class GoalsView extends JPanel {
         FlatLaf.registerCustomDefaultsSource("Components.Themes");
         UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
-        JPanel panel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
-        JPanel mainPanel = new JPanel(new MigLayout("fill, aligny center", "[grow]", "[grow][pref!][grow]"));
+
+        // Set layout with two columns: one for SideMenuView, one for main content
+        setLayout(new MigLayout("insets 0, fill", "push[grow]push", "push[grow]push"));
+
+        // Add SideMenuView to the first column, spanning all rows
+
+        // Create mainPanel for content
+        JPanel mainPanel = new JPanel(new MigLayout("wrap 3, fill", "[grow][grow][grow]", "[][][]"));
+        mainPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
         // -- LEFT: Current Weight Goal --
-        JPanel weightPanel = new JPanel(new MigLayout("wrap 1", "left","center"));
-        weightPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,3%)");
+//        JPanel weightPanel = new JPanel(new MigLayout("wrap 1", "right", "center"));
+//        weightPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,3%)");
+//
+//
+//        weightPanel.add(weightTitle);
+//        weightPanel.add(weightContent);
 
+        // -- RIGHT: Current Distance Goal --
+        JPanel distancePanel = new JPanel(new MigLayout("wrap 1", "right", "center"));
+        distancePanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,3%)");
         JLabel weightTitle = new JLabel("Current Weight Goal");
         weightTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold");
         SimpleDateFormat displayFormat = new SimpleDateFormat("MM/dd/yyyy");
 
         JLabel weightContent = new JLabel("");
         try {
-            Goal weightGoal= null;
+            Goal weightGoal = goalsDB.getGoalByTypeAndUsername(currentUser.getUsername(), "Weight");
             if (weightGoal == null) {
                 weightGoal = new Goal(currentUser.getUsername(), "Weight", 0, new Date(), false);
-                goalsDB.addGoal(weightGoal);  // Insert buffer goal into the database
+                goalsDB.addGoal(weightGoal);
             }
-            weightGoal = goalsDB.getGoalByTypeAndUsername(currentUser.getUsername(), "Weight");
-            if (weightGoal != null) {
-                String formattedDate = displayFormat.format(weightGoal.getDate());
-                weightContent.setText(weightGoal.getValue() + " by " + formattedDate);
-            } else {
-                weightContent.setText("No goal set.");
-            }
+            String formattedDate = displayFormat.format(weightGoal.getDate());
+            weightContent.setText(weightGoal.getValue() + " by " + formattedDate);
         } catch (SQLException e) {
             weightContent.setText("Error loading goal.");
         }
-
-        weightPanel.add(weightTitle);
-        weightPanel.add(weightContent);
-
-
-        // -- RIGHT: Current Distance Goal --
-        JPanel distancePanel = new JPanel(new MigLayout("wrap 1", "right","center"));
-        distancePanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,3%)");
-
         JLabel distanceTitle = new JLabel("Current Distance Goal");
         distanceTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold");
 
         JLabel distanceContent = new JLabel("");
         try {
-            Goal distanceGoal= null;
-            distanceGoal = goalsDB.getGoalByTypeAndUsername(currentUser.getUsername(), "Distance");
-            if(distanceGoal == null)
-            {
-                distanceGoal = new Goal(currentUser.getUsername(), "Weight", 0, new Date(), false);
-                goalsDB.addGoal(distanceGoal);  // Insert buffer goal into the database
+            Goal distanceGoal = goalsDB.getGoalByTypeAndUsername(currentUser.getUsername(), "Distance");
+            if (distanceGoal == null) {
+                distanceGoal = new Goal(currentUser.getUsername(), "Distance", 0, new Date(), false);
+                goalsDB.addGoal(distanceGoal);
             }
             String formattedDate = displayFormat.format(distanceGoal.getDate());
-
-            if (distanceGoal != null) {
-                distanceContent.setText(distanceGoal.getValue() + " by " + formattedDate);
-            } else {
-                distanceContent.setText("No goal set.");
-            }
+            distanceContent.setText(distanceGoal.getValue() + " by " + formattedDate);
         } catch (SQLException e) {
             distanceContent.setText("Error loading goal.");
         }
-
+        distancePanel.add(weightTitle);
+        distancePanel.add(weightContent);
         distancePanel.add(distanceTitle);
         distancePanel.add(distanceContent);
 
 
         // -- CENTER: Editable Goal Form --
-        JPanel centerPanel = new JPanel(new MigLayout("wrap,fillx,insets 30", "[grow,fill]"));
+        JPanel centerPanel = new JPanel(new MigLayout("wrap, fillx, insets 30", "[grow,fill]", "[][][][][]"));
         centerPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,5%)");
 
         JLabel formTitle = new JLabel("Modify a Goal");
@@ -280,11 +278,12 @@ public class GoalsView extends JPanel {
         desc.putClientProperty(FlatClientProperties.STYLE, "foreground:darken(@foreground,33%)");
 
         JComboBox<String> goalTypeBox = new JComboBox<>(new String[]{"Distance", "Weight"});
+        goalTypeBox.putClientProperty(FlatClientProperties.STYLE,
+                "foreground:darken(@foreground,33%); background:darken(@background,27%)");
         JTextField valueField = new JTextField();
         valueField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter goal value");
 
-        //SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        JFormattedTextField dateField = new JFormattedTextField();
+        JFormattedTextField dateField = new JFormattedTextField(new DateFormatter(new SimpleDateFormat("MM/dd/yyyy")));
         dateField.setFocusLostBehavior(JFormattedTextField.PERSIST);
         dateField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "MM/dd/yyyy");
 
@@ -310,7 +309,8 @@ public class GoalsView extends JPanel {
                     desc.setForeground(Color.RED);
                     return;
                 }
-                SimpleDateFormat format  = new SimpleDateFormat("MM/dd/yyyy");
+
+                SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
                 format.setLenient(false);
                 Date goalDate = format.parse(dateStr);
                 Goal existing = goalsDB.getGoalByTypeAndUsername(currentUser.getUsername(), goalType);
@@ -322,13 +322,9 @@ public class GoalsView extends JPanel {
                     existing.setValue((int) val);
                     existing.setDate(goalDate);
                     goalsDB.updateGoal(existing);
-                    System.out.println(existing.getDate());
-                    Goal g =goalsDB.getGoalByTypeAndUsername(currentUser.getUsername(), "Distance");
-                    System.out.println(g.getDate());
                 }
 
-                JOptionPane.showMessageDialog(null, "Goal updated!",
-                        "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Goal updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 modifyGoalsPanel();
             } catch (NumberFormatException | ParseException ex) {
                 desc.setText("Invalid input.");
@@ -346,13 +342,14 @@ public class GoalsView extends JPanel {
         centerPanel.add(desc);
         centerPanel.add(submit, "gapy 20");
 
-        mainPanel.add(weightPanel, "growx");
-        mainPanel.add(centerPanel,"growx");
-        mainPanel.add(distancePanel, "growx");
-        panel.add(mainPanel);;
+        mainPanel.add(centerPanel, "grow");
+        mainPanel.add(distancePanel, "grow");
 
+        // Add mainPanel to the second column, spanning all rows
         removeAll();
-        add(panel);
+        add(new SideMenuView(), "cell 0 0 1 3, growy");
+        add(mainPanel, "cell 1 1 1 1, grow");
+
         revalidate();
         repaint();
     }

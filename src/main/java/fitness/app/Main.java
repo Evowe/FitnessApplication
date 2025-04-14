@@ -2,6 +2,7 @@ package fitness.app;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import fitness.app.Admin.AdminAddUserView;
 import fitness.app.Admin.AdminHomeView;
@@ -26,6 +27,7 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class Main {
+    private static boolean dark = false;
 
     private static JFrame window;
     private static Account currentUser;
@@ -46,9 +48,14 @@ public class Main {
         //FlatLaf setup & settings
         FlatRobotoMonoFont.install();
         FlatLaf.registerCustomDefaultsSource("FlatLafSettings");
-        FlatDarkLaf.setup();
+
         try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
+            if (dark) {
+                UIManager.setLookAndFeel(new FlatDarkLaf());
+            }
+            else {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            }
         } catch (UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
@@ -58,13 +65,9 @@ public class Main {
         window = new JFrame("Rocket Health");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        window.setLocationRelativeTo(null);
         window.add(new LoginView());
         window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
         window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
-
-        JButton test = new JButton("Test");
-
         window.setVisible(true);
     }
 
@@ -79,7 +82,7 @@ public class Main {
                 window.add(new CreateAccountView());
             }
             case "HomePage" -> {
-                window.add(new HomeView());
+                window.add(new HomeView(currentUser));
             }
             case "StatsPage" -> {
                 StatsView statsView = new StatsView(currentUser);

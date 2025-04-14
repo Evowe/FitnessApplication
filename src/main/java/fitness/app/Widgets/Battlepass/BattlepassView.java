@@ -26,13 +26,13 @@ public class BattlepassView extends JPanel {
         itemsPanel.add(progressBar, "span, growx");
 
         FlatButton previousButton = new FlatButton();
-        previousButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryAccent");
+        previousButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground");
         previousButton.setBorderPainted(false);
         previousButton.setText("<");
 
 
         FlatButton nextButton = new FlatButton();
-        nextButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryAccent");
+        nextButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground");
         nextButton.setBorderPainted(false);
         nextButton.setText(">");
 

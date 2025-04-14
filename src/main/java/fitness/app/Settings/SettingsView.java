@@ -23,34 +23,39 @@ public class SettingsView {
     private static JComboBox<String> weightUnitSelector;
 
     public SettingsView() {
+        // Set the main panel with black background
         mainPanel = new JPanel(new MigLayout("fill, insets 20", "[grow]", "[grow]"));
+        mainPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
 
-        // Use a fixed width panel with some flexibility
+        // Create the settings panel with WHITE background and rounded corners
         settingsPanel = new JPanel(new MigLayout("wrap, insets 30", "[400:400:600]", "[]"));
-        settingsPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
+        settingsPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:#FFFFFF;");
 
+        // Style the title with red text
         JLabel title = new JLabel("Settings");
-        title.putClientProperty(FlatClientProperties.STYLE, "font:bold +10");
+        title.putClientProperty(FlatClientProperties.STYLE, "font:bold +10; foreground:#FF3B30;");
 
+        // Style section labels with red text
         JLabel accountSectionLabel = new JLabel("Account");
-        accountSectionLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4");
+        accountSectionLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:#FF3B30;");
 
         oldPassField = new JPasswordField();
         oldPassField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Old Password");
-        oldPassField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true");
+        oldPassField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true; background:#FFFFFF; foreground:#000000;");
 
         newPassField = new JPasswordField();
         newPassField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "New Password");
-        newPassField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true");
+        newPassField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true; background:#FFFFFF; foreground:#000000;");
         passwordError = new JLabel("");
 
         newPassConfField = new JPasswordField();
         newPassConfField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Confirm New Password");
-        newPassConfField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true");
+        newPassConfField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true; background:#FFFFFF; foreground:#000000;");
         confirmPasswordError = new JLabel("");
 
+        // Style button to RED with white text
         JButton changePasswordButton = new JButton("Change Password");
-        changePasswordButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        changePasswordButton.putClientProperty(FlatClientProperties.STYLE, "background:#FF3B30; foreground:#FFFFFF;");
         changePasswordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,29 +103,48 @@ public class SettingsView {
             }
         });
 
+        // Style appearance section with red text
         JLabel appearanceLabel = new JLabel("Appearance");
-        appearanceLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4");
+        appearanceLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:#FF3B30;");
+
+        JLabel themeLabel = new JLabel("Theme");
+        themeLabel.setForeground(Color.WHITE);
 
         String[] themes = {"Dark Mode", "Light Mode"};
         themeSelector = new JComboBox<>(themes);
         themeSelector.setSelectedIndex(SettingsViewModel.getThemeIndex());
+        // Make dropdown more readable with dark background
+        themeSelector.setBackground(new Color(30, 30, 30));
+        themeSelector.setForeground(Color.WHITE);
+        themeSelector.putClientProperty(FlatClientProperties.STYLE, "background:#2A2A2A; foreground:#FFFFFF;");
 
+        // Style notifications section with red text
         JLabel notificationsLabel = new JLabel("Notifications");
-        notificationsLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4");
+        notificationsLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:#FF3B30;");
 
         enableNotifications = new JCheckBox("Enable Notifications");
         enableNotifications.setSelected(SettingsViewModel.isNotificationsEnabled());
+        enableNotifications.setForeground(Color.WHITE);
+        enableNotifications.putClientProperty(FlatClientProperties.STYLE, "");
 
+        // Style unit preferences section with red text
         JLabel unitPreferencesLabel = new JLabel("Unit Preferences");
-        unitPreferencesLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4");
+        unitPreferencesLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:#FF3B30;");
 
         JLabel weightUnitLabel = new JLabel("Weight Unit");
+        weightUnitLabel.setForeground(Color.WHITE);
+
         String[] weightUnits = {"Kilograms (kg)", "Pounds (lbs)"};
         weightUnitSelector = new JComboBox<>(weightUnits);
         weightUnitSelector.setSelectedItem(SettingsViewModel.getWeightUnitDisplayString());
+        // Make dropdown more readable with dark background
+        weightUnitSelector.setBackground(new Color(30, 30, 30));
+        weightUnitSelector.setForeground(Color.WHITE);
+        weightUnitSelector.putClientProperty(FlatClientProperties.STYLE, "background:#2A2A2A; foreground:#FFFFFF;");
 
+        // Style save button to RED with white text
         JButton saveButton = new JButton("Save Changes");
-        saveButton.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+        saveButton.putClientProperty(FlatClientProperties.STYLE, "background:#FF3B30; foreground:#FFFFFF;");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -143,7 +167,11 @@ public class SettingsView {
         // Add components with proper sizing
         settingsPanel.add(title, "align center, growx");
         settingsPanel.add(accountSectionLabel, "gapy 20, growx");
-        settingsPanel.add(new JLabel("Change Password"), "growx");
+
+        JLabel changePasswordLabel = new JLabel("Change Password");
+        changePasswordLabel.setForeground(Color.WHITE);
+        settingsPanel.add(changePasswordLabel, "growx");
+
         settingsPanel.add(oldPassField, "growx");
         settingsPanel.add(newPassField, "growx");
         settingsPanel.add(passwordError, "gapy 0");
@@ -152,7 +180,7 @@ public class SettingsView {
         settingsPanel.add(changePasswordButton, "growx");
 
         settingsPanel.add(appearanceLabel, "gapy 20, growx");
-        settingsPanel.add(new JLabel("Theme"), "growx");
+        settingsPanel.add(themeLabel, "growx");
         settingsPanel.add(themeSelector, "growx");
 
         settingsPanel.add(notificationsLabel, "gapy 20, growx");
