@@ -56,7 +56,7 @@ public class GraphView extends JFrame {
         chart.getLegend().setItemPaint(Color.LIGHT_GRAY);
         // Line color and style
         LineAndShapeRenderer renderer = (LineAndShapeRenderer) plot.getRenderer();
-        renderer.setSeriesPaint(0, new Color(0xFF8C00)); // Bright orange for fitness theme
+        renderer.setSeriesPaint(0, new Color(255,45,45)); // Bright orange for fitness theme
         renderer.setDefaultStroke(new BasicStroke(2f));
         //setContentPane(panel);
         panel = new ChartPanel(chart);

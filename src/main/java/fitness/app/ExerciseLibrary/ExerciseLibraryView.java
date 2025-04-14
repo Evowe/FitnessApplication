@@ -19,14 +19,14 @@ import java.util.Scanner;
 public class ExerciseLibraryView extends JPanel {
 
     public ExerciseLibraryView() {
-
+        //Setup Main Panel Layout
         setLayout(new MigLayout("insets 20", "left", "top"));
-        putClientProperty(FlatClientProperties.STYLE, "background:darken(@background, 1%)");
+        putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         add(new SideMenuView(), "growy, pushy");
 
 
-        //Setup Main Panel Layout
+
         //setLayout(new BorderLayout());
         //putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
@@ -87,6 +87,13 @@ public class ExerciseLibraryView extends JPanel {
         createWorkout.setMinimumHeight(35);
         createWorkout.setMinimumWidth(200);
         createWorkout.setText("+ Create Workout");
+        createWorkout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                Main.setWindow("NewWorkout" );
+            }
+        });
+
         buttonPanel.add(createWorkout);
 
         main.add(buttonPanel, BorderLayout.SOUTH);

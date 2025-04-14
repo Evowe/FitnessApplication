@@ -1,5 +1,6 @@
 package fitness.app.Objects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -8,6 +9,14 @@ public class Workout {
     private String description;
     private String title;
     private List<Exercise> exercises;
+
+
+    public Workout(){
+        duration = 0;
+        description = "";
+        title = "";
+        exercises = new ArrayList<>();
+    }
 
     public Workout(int duration, String description, List<Exercise> exercises) {
         this.duration = duration;
@@ -37,6 +46,10 @@ public class Workout {
 
     public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
+    }
+
+    public void addExercise(Exercise exercise) {
+        this.exercises.add(exercise);
     }
 
     public String getTitle() {

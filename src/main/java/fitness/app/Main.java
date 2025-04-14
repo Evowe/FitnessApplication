@@ -20,12 +20,14 @@ import fitness.app.Objects.Databases.*;
 import fitness.app.Settings.SettingsViewModel;
 import fitness.app.Statistics.StatsView;
 import fitness.app.Objects.*;
+import fitness.app.Workout.NewWorkoutView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 
 public class Main {
-    private static boolean dark = false;
+    private static boolean dark = true;
 
     private static JFrame window;
     private static Account currentUser;
@@ -113,6 +115,9 @@ public class Main {
             }
             case "CreateExercise" -> {
                 window.add(new CreateExcerciseView());
+            }
+            case "NewWorkout" -> {
+                window.add(new NewWorkoutView());
             }
         }
         window.revalidate();

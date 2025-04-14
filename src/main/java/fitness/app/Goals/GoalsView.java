@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.kitfox.svg.pathcmd.Horizontal;
 import fitness.app.Objects.Account;
 import fitness.app.Objects.DatabaseManager;
 import fitness.app.Objects.Goal;
@@ -284,6 +285,7 @@ public class GoalsView extends JPanel {
         JTextField valueField = new JTextField();
         valueField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter goal value");
 
+        JPanel horiBox = new JPanel();
         JFormattedTextField dateField = new JFormattedTextField(new DateFormatter(new SimpleDateFormat("MM/dd/yyyy")));
         dateField.setFocusLostBehavior(JFormattedTextField.PERSIST);
         dateField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "MM/dd/yyyy");
