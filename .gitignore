@@ -39,3 +39,4 @@ build/
 
 # Ignore all .db files
 *.db
+.csv
