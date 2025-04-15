@@ -9,8 +9,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static java.lang.Integer.parseInt;
 
@@ -212,5 +216,14 @@ public class CalendarView extends JPanel {
         }
 
         add(calendarPanel, "growx");
+    }
+    public String getDate()
+    {
+        LocalDate date = viewModel.getDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String formattedDate = date.format(formatter);
+        //System.out.println(formattedDate);
+        viewModel.getDay();
+        return formattedDate;
     }
 }

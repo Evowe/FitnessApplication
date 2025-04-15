@@ -2,24 +2,24 @@ package fitness.app.Goals;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import com.kitfox.svg.pathcmd.Horizontal;
 import fitness.app.Objects.Account;
 import fitness.app.Objects.DatabaseManager;
 import fitness.app.Objects.Goal;
 import fitness.app.Widgets.Calendar.CalendarView;
 import fitness.app.Objects.Databases.GoalsDB;
-import fitness.app.Objects.Goal;
 import fitness.app.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
-import fitness.app.Widgets.SideMenu.SideMenuViewModel;
- 
+
 import javax.swing.*;
 import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,11 +27,22 @@ import java.util.Date;
 
 public class GoalsView extends JPanel {
     private static Account currentUser;
+
+    public boolean isFrameOpen() {
+        return isFrameOpen;
+    }
+
+    public int setFrameOpen(boolean frameOpen) {
+        isFrameOpen = frameOpen;
+        return JFrame.DISPOSE_ON_CLOSE;
+    }
+
+    private boolean isFrameOpen = false;
     //private static JPanel mainPanel;
     //private static JPanel goalsPanel;
 
     public GoalsView(Account acc) {
-       //GoalsViewModel.checkDB();
+        //GoalsViewModel.checkDB();
         currentUser = acc;
 
         modifyGoalsPanel();
@@ -104,133 +115,21 @@ public class GoalsView extends JPanel {
         repaint();
     }
 
-    public void setGoalsPanel(String goalType)
-    {
-        GoalsDB db = DatabaseManager.getGoalsDB();
-        //GoalsDB db = new GoalsDB("Goals.db");
-        //FlatRobotoMonoFont.install();
-        FlatLaf.registerCustomDefaultsSource("Components.Themes");
-        UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
-        FlatMacDarkLaf.setup();
-        JPanel goalsPanel = new JPanel(new MigLayout("wrap 1, align center, insets 0", "[center]", "push[]push"));
-        //DISPLAY CALORIES
-        JPanel box = new JPanel(new MigLayout("fill,insets 20", "center", "Center"));
-        JPanel boxMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "[grow,fill]")
-        );
-
-        boxMenu.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
-        boxMenu.setOpaque(true);
-
-        JLabel boxTitle = new JLabel("Set " + goalType + " Goal");
-        boxTitle.putClientProperty(FlatClientProperties.STYLE, "" + "font:bold +6");
-
-        JLabel desc = new JLabel("");
-        desc.putClientProperty(FlatClientProperties.STYLE, "" + "foreground:darken(@foreground,33%)");
-        JTextField contentField = new JTextField();
-        contentField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter " + goalType);
-
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        format.setLenient(false); // strict parsing
-
-        JFormattedTextField dateField = new JFormattedTextField(new DateFormatter(format));
-        dateField.setFocusLostBehavior(JFormattedTextField.PERSIST); // Prevents "fixing" bad input
-
-        dateField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "MM/dd/yyyy ");
-
-        JButton submit = new JButton("Submit");
-        submit.putClientProperty(FlatClientProperties.STYLE, "" + "background:lighten(@background,10%);");
-        submit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                Double val = Double.parseDouble(contentField.getText());
-                String errorMessage = GoalsViewModel.verifyDistance(val);
-                if (errorMessage != null) {
-                    contentField.setText("");
-                    desc.setText(errorMessage);
-                    desc.setForeground(Color.RED);
-                    desc.setForeground(Color.RED);
-                    desc.putClientProperty(FlatClientProperties.STYLE, "font:-4");
-                    errorMessage = " asd";
-                }
-                String d = dateField.getText();
-                errorMessage = GoalsViewModel.verifyDate(d);
-                if (errorMessage != null) {
-                    dateField.setText("");
-                    desc.setText(errorMessage);
-                    desc.setForeground(Color.RED);
-                    desc.setForeground(Color.RED);
-                    desc.putClientProperty(FlatClientProperties.STYLE, "font:-4");
-                }
-                else {
-                    Date date = null;
-                    try {
-                        date = new SimpleDateFormat("MM/dd/yyyy").parse(dateField.getText());
-                    if(boxTitle.getText() == "Distance")
-                    {
-                        db.updateGoal(new Goal(currentUser.getUsername(), "Distance",
-                                Integer.valueOf(contentField.getText()), date, false));
-                    }
-                    else
-                        db.updateGoal(new Goal(currentUser.getUsername(), "Weight",
-                                Integer.valueOf(contentField.getText()), date, false));
-                    } catch (ParseException | SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Goal saved successfully!",
-                            "Success",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    goalsPanel.removeAll();
-                    removeAll();
-                    selectTypeMenu();
-                    //Main.setWindow("HomePage");
-                    // goalsPanel = selectTypeMenu(acc,frame);
-
-                }
-            }
-        });
-        //boxTitle.putClientProperty(FlatClientProperties.STYLE, "" + "font:bold +6");
-        boxMenu.add(boxTitle, "span, align center, gapbottom 20");
-        boxMenu.add(desc);
-        boxMenu.add(contentField);
-        boxMenu.add(dateField,"gapy 20");
-        boxMenu.add(submit, "gapy 20");
-        box.add(boxMenu);
-        goalsPanel.add(box);
-        //add(goalsPanel);
-
-        removeAll();
-        add(goalsPanel);
-        revalidate();
-        repaint();
-        //return goalsPanel;
-    }
     public void modifyGoalsPanel() {
-        GoalsDB goalsDB = DatabaseManager.getGoalsDB();
+        GoalsDB goalsDB = (GoalsDB) DatabaseManager.getDatabase("goals");
         FlatLaf.registerCustomDefaultsSource("Components.Themes");
         UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
 
-        // Set layout with two columns: one for SideMenuView, one for main content
-        setLayout(new MigLayout("insets 0, fill", "push[grow]push", "push[grow]push"));
-
-        // Add SideMenuView to the first column, spanning all rows
-
-        // Create mainPanel for content
-        JPanel mainPanel = new JPanel(new MigLayout("wrap 3, fill", "[grow][grow][grow]", "[][][]"));
+//        setLayout(new MigLayout("insets 0, fill", "push[grow]push", "push[grow]push"));
+        setLayout(new MigLayout("fill,insets 20"));
+        putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        JPanel mainPanel = new JPanel(new MigLayout("insets"));
         mainPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
-        // -- LEFT: Current Weight Goal --
-//        JPanel weightPanel = new JPanel(new MigLayout("wrap 1", "right", "center"));
-//        weightPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,3%)");
-//
-//
-//        weightPanel.add(weightTitle);
-//        weightPanel.add(weightContent);
 
         // -- RIGHT: Current Distance Goal --
-        JPanel distancePanel = new JPanel(new MigLayout("wrap 1", "right", "center"));
+        JPanel distancePanel = new JPanel(new MigLayout("insets 0,wrap"));
         distancePanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,3%)");
         JLabel weightTitle = new JLabel("Current Weight Goal");
         weightTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold");
@@ -270,14 +169,14 @@ public class GoalsView extends JPanel {
 
 
         // -- CENTER: Editable Goal Form --
-        JPanel centerPanel = new JPanel(new MigLayout("wrap, fillx, insets 30", "[grow,fill]", "[][][][][]"));
-        centerPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,5%)");
+        JPanel centerPanel = new JPanel(new MigLayout("wrap, fillx, insets 30", "fill,275", "[][][][][]"));
+        centerPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
         JLabel formTitle = new JLabel("Modify a Goal");
         formTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
 
         JLabel desc = new JLabel("");
-        desc.putClientProperty(FlatClientProperties.STYLE, "foreground:darken(@foreground,33%)");
+        //desc.putClientProperty(FlatClientProperties.STYLE, "foreground:darken(@foreground,33%)");
 
         JComboBox<String> goalTypeBox = new JComboBox<>(new String[]{"Distance", "Weight"});
         goalTypeBox.putClientProperty(FlatClientProperties.STYLE,
@@ -289,10 +188,52 @@ public class GoalsView extends JPanel {
         JFormattedTextField dateField = new JFormattedTextField(new DateFormatter(new SimpleDateFormat("MM/dd/yyyy")));
         dateField.setFocusLostBehavior(JFormattedTextField.PERSIST);
         dateField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "MM/dd/yyyy");
+        dateField.setPreferredSize(dim);
+        dateField.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground");
 
+
+        JButton calButt = new JButton("");
+        calButt.setIcon(GoalsViewModel.getIcon("calendar"));
+        horiBox.add(dateField, BorderLayout.CENTER);
+        horiBox.add(calButt, BorderLayout.EAST);
+        calButt.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                isFrameOpen = true;
+                JFrame popWindow = new JFrame();
+                popWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                CalendarView cal = new CalendarView();
+                new Thread(() -> {
+                    while(isFrameOpen) {
+                    popWindow.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            setFrameOpen(false);
+                        }
+                    });
+                        try {
+                            System.out.println(cal.getDate());
+                            dateField.setText(cal.getDate());
+                            Thread.sleep(500); // Check every 500ms
+                        } catch (InterruptedException b) {
+                            b.printStackTrace();
+                            return;
+                            }
+                        if(!isFrameOpen) {
+                            break;
+                        }
+                        }
+
+                }).start();
+                popWindow.add(cal);
+                popWindow.setSize(new Dimension(600, 400));
+                popWindow.setLocation(200, 100);
+                dateField.setText(cal.getDate());
+                popWindow.setVisible(true);
+            }
+        });
         JButton submit = new JButton("Submit");
         submit.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%)");
-
         submit.addActionListener(e -> {
             try {
                 double val = Double.parseDouble(valueField.getText());
@@ -339,10 +280,10 @@ public class GoalsView extends JPanel {
         });
 
         centerPanel.add(formTitle, "gapbottom 20");
-        centerPanel.add(goalTypeBox);
-        centerPanel.add(valueField);
-        centerPanel.add(dateField, "gapy 10");
-        centerPanel.add(desc);
+        centerPanel.add(goalTypeBox , "gapy 10");
+        centerPanel.add(valueField,"gapy 10");
+        centerPanel.add(horiBox, "gapy 10");
+        centerPanel.add(desc,"gapy 10");
         centerPanel.add(submit, "gapy 20");
 
         mainPanel.add(centerPanel, "grow");
@@ -350,8 +291,8 @@ public class GoalsView extends JPanel {
 
         // Add mainPanel to the second column, spanning all rows
         removeAll();
-        add(new SideMenuView(), "cell 0 0 1 3, growy");
-        add(mainPanel, "cell 1 1 1 1, grow");
+        add(new SideMenuView(),"growy, pushy");
+        add(mainPanel, "");
 
         revalidate();
         repaint();
@@ -360,6 +301,7 @@ public class GoalsView extends JPanel {
 
 
     public static void main(String[] args) {
+        DatabaseManager.addDatabase("goals", new GoalsDB("goals"));
         //FlatLaf setup & settings
         FlatRobotoMonoFont.install();
         FlatLaf.registerCustomDefaultsSource("FlatLafSettings");
@@ -372,6 +314,8 @@ public class GoalsView extends JPanel {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(new Dimension(1200, 700));
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        System.setProperty("apple.awt.application.appearance", "system");
+        UIManager.setLookAndFeel(new FlatLightLaf());
 
         window.setLocationRelativeTo(null);
         JPanel panel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));

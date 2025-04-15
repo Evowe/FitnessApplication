@@ -57,11 +57,11 @@ public class GoalsViewModel {
         Calendar cal = Calendar.getInstance();
         cal.setLenient(false);
         cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, month - 1); // Calendar months are 0-based
+        cal.set(Calendar.MONTH, month - 1);
         cal.set(Calendar.DAY_OF_MONTH, day);
 
         try {
-            cal.getTime(); // Throws if the date is invalid (e.g., 31/02/2025)
+            cal.getTime();
         } catch (Exception e) {
             return "Invalid date. Please check day and month values.";
         }

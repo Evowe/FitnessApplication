@@ -49,6 +49,12 @@ public class SideMenuView extends JPanel {
         workoutsButton.setHorizontalAlignment(SwingConstants.LEFT);
         workoutsButton.setMargin(new Insets(5,25,5,5));
         workoutsButton.setMinimumHeight(50);
+        workoutsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                Main.setWindow("WorkoutLibrary" );
+            }
+        });
 
         FlatButton goalsButton = new FlatButton();
         goalsButton.setBorderPainted(false);

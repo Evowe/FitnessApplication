@@ -20,6 +20,7 @@ public class CalendarViewModel {
     }
 
     public LocalDate getDate() {
+
         return date;
     }
 
@@ -28,6 +29,7 @@ public class CalendarViewModel {
     }
 
     public int getDay() {
+        //System.out.println(date.toString());
         return date.getDayOfMonth();
     }
 
