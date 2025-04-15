@@ -101,5 +101,47 @@ public class TransactionView extends JPanel {
     }
 
     public static JPanel get() {return mainPanel;}
+/*
+    static class CreditCardDocumentFilter extends DocumentFilter {
+        private static final int MAX_DIGITS = 16;
+
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if (string != null) {
+                replace(fb, offset, 0, string, attr);
+            }
+        }
+
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            Document doc = fb.getDocument();
+            StringBuilder currentText = new StringBuilder(doc.getText(0, doc.getLength()));
+            currentText.replace(offset, offset + length, text);
+
+            // Remove all non-digits
+            String digitsOnly = currentText.toString().replaceAll("\\D", "");
+            if (digitsOnly.length() > MAX_DIGITS) {
+                digitsOnly = digitsOnly.substring(0, MAX_DIGITS);
+            }
+
+            // Format into groups of 4
+            StringBuilder formatted = new StringBuilder();
+            for (int i = 0; i < digitsOnly.length(); i++) {
+                if (i > 0 && i % 4 == 0) {
+                    formatted.append(" ");
+                }
+                formatted.append(digitsOnly.charAt(i));
+            }
+
+            fb.replace(0, doc.getLength(), formatted.toString(), attrs);
+        }
+
+        @Override
+        public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+            replace(fb, offset, length, "", null);
+        }
+    }
+
+ */
 
 }

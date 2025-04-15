@@ -27,7 +27,7 @@ public class CreateAccountView extends JPanel {
 
         //Left half
         JPanel logoPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
-        logoPanel.putClientProperty(FlatClientProperties.STYLE, "background:darken(@background,1%)");
+        logoPanel.putClientProperty(FlatClientProperties.STYLE, "background:darken(@background,3%)");
 
         BufferedImage img = null;
         try {
@@ -71,16 +71,19 @@ public class CreateAccountView extends JPanel {
         description.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
 
         FlatTextField usernameField = new FlatTextField();
+        usernameField.setMinimumSize(new Dimension(30, 30));
         usernameField.putClientProperty(FlatClientProperties.STYLE, "arc:10;");
         usernameField.setPlaceholderText("Enter username");
         JLabel usernameError = new JLabel("");
 
         FlatPasswordField passwordField = new FlatPasswordField();
+        passwordField.setMinimumSize(new Dimension(30, 30));
         passwordField.setPlaceholderText("Enter password");
         passwordField.putClientProperty(FlatClientProperties.STYLE, "arc:10; showRevealButton:true");
         JLabel passwordError = new JLabel("");
 
         FlatPasswordField confirmPasswordField = new FlatPasswordField();
+        confirmPasswordField.setMinimumSize(new Dimension(30, 30));
         confirmPasswordField.setPlaceholderText("Confirm password");
         confirmPasswordField.putClientProperty(FlatClientProperties.STYLE, "arc:10;");
         JLabel confirmPasswordError = new JLabel("");
