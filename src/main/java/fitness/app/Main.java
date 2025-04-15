@@ -7,7 +7,6 @@ import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import fitness.app.Admin.AdminAddUserView;
 import fitness.app.Admin.AdminHomeView;
 import fitness.app.Admin.AdminUsersView;
-import fitness.app.Admin.AdminUsersViewModel;
 import fitness.app.CreateAccount.CreateAccountView;
 import fitness.app.CreateExercise.CreateExcerciseView;
 import fitness.app.CurrencyShop.currencyShopViewModel;
@@ -21,7 +20,6 @@ import fitness.app.Settings.SettingsViewModel;
 import fitness.app.Statistics.StatsView;
 import fitness.app.Objects.*;
 import fitness.app.Workout.NewWorkoutView;
-
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
