@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
 import fitness.app.Main;
+import fitness.app.Objects.Account;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import java.awt.*;
@@ -34,13 +35,8 @@ public class SideMenuView extends JPanel {
         homeButton.setHorizontalAlignment(SwingConstants.LEFT);
         homeButton.setMargin(new Insets(5, 25, 5, 5));
         homeButton.setMinimumHeight(50);
-        homeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(homeButton.getSize());
-                Main.setWindow("HomePage");
-            }
-        });
+        homeButton.addActionListener(genButtonListener("HomePage"));
+
 
         FlatButton workoutsButton = new FlatButton();
         workoutsButton.setBorderPainted(false);
@@ -49,12 +45,8 @@ public class SideMenuView extends JPanel {
         workoutsButton.setHorizontalAlignment(SwingConstants.LEFT);
         workoutsButton.setMargin(new Insets(5,25,5,5));
         workoutsButton.setMinimumHeight(50);
-        workoutsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                Main.setWindow("WorkoutLibrary" );
-            }
-        });
+        workoutsButton.addActionListener(genButtonListener("WorkoutLibrary"));
+
 
         FlatButton goalsButton = new FlatButton();
         goalsButton.setBorderPainted(false);
@@ -63,12 +55,8 @@ public class SideMenuView extends JPanel {
         goalsButton.setHorizontalAlignment(SwingConstants.LEFT);
         goalsButton.setMargin(new Insets(5,25,5,5));
         goalsButton.setMinimumHeight(50);
-        goalsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Main.setWindow("GoalsPage");
-            }
-        });
+        goalsButton.addActionListener(genButtonListener("GoalsPage"));
+
 
         FlatButton statisticsButton = new FlatButton();
         statisticsButton.setBorderPainted(false);
@@ -77,12 +65,8 @@ public class SideMenuView extends JPanel {
         statisticsButton.setHorizontalAlignment(SwingConstants.LEFT);
         statisticsButton.setMargin(new Insets(5,25,5,5));
         statisticsButton.setMinimumHeight(50);
-        statisticsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                Main.setWindow("StatsPage" );
-            }
-        });
+        statisticsButton.addActionListener(genButtonListener("StatsPage"));
+
 
         FlatButton exerciseLibraryButton = new FlatButton();
         exerciseLibraryButton.setBorderPainted(false);
@@ -91,12 +75,7 @@ public class SideMenuView extends JPanel {
         exerciseLibraryButton.setHorizontalAlignment(SwingConstants.LEFT);
         exerciseLibraryButton.setMargin(new Insets(5,25,5,5));
         exerciseLibraryButton.setMinimumHeight(50);
-        exerciseLibraryButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                Main.setWindow("ExerciseLibrary" );
-            }
-        });
+        exerciseLibraryButton.addActionListener(genButtonListener("ExerciseLibrary"));
 
         FlatButton shopButton = new FlatButton();
         shopButton.setBorderPainted(false);
@@ -105,12 +84,8 @@ public class SideMenuView extends JPanel {
         shopButton.setHorizontalAlignment(SwingConstants.LEFT);
         shopButton.setMargin(new Insets(5,25,5,5));
         shopButton.setMinimumHeight(50);
-        shopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                Main.setWindow("currencyShopPage" );
-            }
-        });
+        shopButton.addActionListener(genButtonListener("currencyShopPage"));
+
 
         FlatLabel accountLabel = new FlatLabel();
         accountLabel.setText("Account");
@@ -130,12 +105,8 @@ public class SideMenuView extends JPanel {
         settingsButton.setHorizontalAlignment(SwingConstants.LEFT);
         settingsButton.setMargin(new Insets(5,25,5,5));
         settingsButton.setMinimumHeight(50);
-        settingsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                Main.setWindow("SettingsPage" );
-            }
-        });
+        settingsButton.addActionListener(genButtonListener("SettingsPage"));
+
 
         FlatButton logOutButton = new FlatButton();
         logOutButton.setBorderPainted(false);
@@ -144,12 +115,7 @@ public class SideMenuView extends JPanel {
         logOutButton.setHorizontalAlignment(SwingConstants.LEFT);
         logOutButton.setMargin(new Insets(5,25,5,5));
         logOutButton.setMinimumHeight(50);
-        logOutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                Main.setWindow("LoginPage");
-            }
-        });
+        logOutButton.addActionListener(genButtonListener("LoginPage"));
 
         add(title, "wrap, gapy 10");
         add(generalLabel, "wrap, gap 0 0 10 0");
@@ -166,4 +132,12 @@ public class SideMenuView extends JPanel {
         add(logOutButton, "wrap, gapy 0");
     }
 
+    private ActionListener genButtonListener(String page) {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.setWindow(page);
+            }
+        };
+    }
 }
