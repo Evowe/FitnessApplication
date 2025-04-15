@@ -33,29 +33,29 @@ public class SettingsView {
 
         // Style the title with red text
         JLabel title = new JLabel("Settings");
-        title.putClientProperty(FlatClientProperties.STYLE, "font:bold +10; foreground:#FF3B30;");
+        title.putClientProperty(FlatClientProperties.STYLE, "font:bold +10; foreground:@foreground;");
 
         // Style section labels with red text
         JLabel accountSectionLabel = new JLabel("Account");
-        accountSectionLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:#FF3B30;");
+        accountSectionLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:@foreground");
 
         oldPassField = new JPasswordField();
         oldPassField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Old Password");
-        oldPassField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true; background:#FFFFFF; foreground:#000000;");
+        oldPassField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true; background:@secondaryBackground; foreground:@foreground;");
 
         newPassField = new JPasswordField();
         newPassField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "New Password");
-        newPassField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true; background:#FFFFFF; foreground:#000000;");
+        newPassField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true; background:@secondaryBackground; foreground:@foreground;");
         passwordError = new JLabel("");
 
         newPassConfField = new JPasswordField();
         newPassConfField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Confirm New Password");
-        newPassConfField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true; background:#FFFFFF; foreground:#000000;");
+        newPassConfField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true; background:@secondaryBackground; foreground:@foreground;");
         confirmPasswordError = new JLabel("");
 
         // Style button to RED with white text
         JButton changePasswordButton = new JButton("Change Password");
-        changePasswordButton.putClientProperty(FlatClientProperties.STYLE, "background:#FF3B30; foreground:#FFFFFF;");
+        changePasswordButton.putClientProperty(FlatClientProperties.STYLE, "background:@accent; foreground:@foreground;");
         changePasswordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -105,7 +105,7 @@ public class SettingsView {
 
         // Style appearance section with red text
         JLabel appearanceLabel = new JLabel("Appearance");
-        appearanceLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:#FF3B30;");
+        appearanceLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:@foreground;");
 
         JLabel themeLabel = new JLabel("Theme");
         themeLabel.putClientProperty(FlatClientProperties.STYLE, "foreground:@foreground");
@@ -114,7 +114,7 @@ public class SettingsView {
         themeSelector = new JComboBox<>(themes);
         themeSelector.setSelectedIndex(SettingsViewModel.getThemeIndex());
         // Make dropdown more readable with dark background
-        themeSelector.putClientProperty(FlatClientProperties.STYLE, "background:@accent; foreground:@foreground");
+        themeSelector.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground; foreground:@foreground");
 
         // Style notifications section with red text
         JLabel notificationsLabel = new JLabel("Notifications");
@@ -127,7 +127,7 @@ public class SettingsView {
 
         // Style unit preferences section with red text
         JLabel unitPreferencesLabel = new JLabel("Unit Preferences");
-        unitPreferencesLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:#FF3B30;");
+        unitPreferencesLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:@foreground;");
 
         JLabel weightUnitLabel = new JLabel("Weight Unit");
         weightUnitLabel.setForeground(Color.WHITE);
@@ -138,11 +138,11 @@ public class SettingsView {
         // Make dropdown more readable with dark background
         weightUnitSelector.setBackground(new Color(30, 30, 30));
         weightUnitSelector.setForeground(Color.WHITE);
-        weightUnitSelector.putClientProperty(FlatClientProperties.STYLE, "background:#2A2A2A; foreground:#FFFFFF;");
+        weightUnitSelector.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground; foreground:@foreground;");
 
         // Style save button to RED with white text
         JButton saveButton = new JButton("Save Changes");
-        saveButton.putClientProperty(FlatClientProperties.STYLE, "background:#FF3B30; foreground:#FFFFFF;");
+        saveButton.putClientProperty(FlatClientProperties.STYLE, "background:@accent; foreground:@foreground;");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
