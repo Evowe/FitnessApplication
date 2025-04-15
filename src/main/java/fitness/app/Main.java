@@ -20,6 +20,8 @@ import fitness.app.Settings.SettingsViewModel;
 import fitness.app.Statistics.StatsView;
 import fitness.app.Objects.*;
 import fitness.app.Workout.NewWorkoutView;
+import fitness.app.WorkoutLibrary.WorkoutLibraryView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
@@ -110,6 +112,9 @@ public class Main {
             }
             case "ExerciseLibrary" -> {
                 window.add(new ExerciseLibraryView());
+            }
+            case "WorkoutLibrary" -> {
+                window.add(new WorkoutLibraryView());
             }
             case "CreateExercise" -> {
                 window.add(new CreateExcerciseView());
