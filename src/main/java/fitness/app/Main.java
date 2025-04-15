@@ -66,6 +66,7 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
         window.setSize(1200, 700);
+        window.setLocationRelativeTo(null);
         window.add(new LoginView());
         window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
         window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
