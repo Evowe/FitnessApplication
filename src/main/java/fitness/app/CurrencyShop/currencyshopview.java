@@ -5,17 +5,23 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
 import fitness.app.Microtransactions.TransactionViewModel;
 import fitness.app.Objects.*;
+import fitness.app.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
+import static fitness.app.Objects.Account.updateWallet;
 
 public class currencyshopview extends JPanel {
     private static JPanel mainPanel;
         currencyshopview (Account acc) {
-            mainPanel = new JPanel(new GridLayout(1,2));
+            mainPanel = new JPanel(new MigLayout("fill,insets 20", "left", "Top"));
+            add(new SideMenuView(), "growy, pushy");
+
 
             JPanel shopMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
             shopMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
@@ -48,6 +54,10 @@ public class currencyshopview extends JPanel {
             FlatButton oneHundred = new FlatButton();
             oneHundred.setText("9999 Rocket Bucks" + "\n" + "$100.00");
             oneHundred.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+
+            MenuBar menuBar = new MenuBar();
+
+            mainPanel.add(new SideMenuView(), "growy, pushy");
 
             shopMenu.add(title);
             shopMenu.add(subtext);
@@ -92,7 +102,11 @@ public class currencyshopview extends JPanel {
 
             // Card is now available — update wallet on the Swing UI thread
             SwingUtilities.invokeLater(() -> {
-                acc.setWallet(acc.getWallet() + rocketBucks);
+                try {
+                    updateWallet(acc.getUsername(), rocketBucks);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 JOptionPane.showMessageDialog(null, "Rocket Bucks added!");
                 window.setVisible(false);
                 window.dispose();
