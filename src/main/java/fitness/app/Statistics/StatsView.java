@@ -72,7 +72,7 @@ public class StatsView extends JPanel {
         JPanel cg = new JPanel(new MigLayout("fill,insets 20", "Left", "Center"));
         JPanel cgm = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         cgm.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
-        calorieGraph = new GraphView(viewModel.getx(), viewModel.gety("calories"),"Day","Calories", "Calorie Graph");
+        calorieGraph = new GraphView(viewModel.getx(), viewModel.gety("calories"),"Day of the Month","Calories", "Calorie Graph");
         cgm.add(calorieGraph.getPanel());
         cg.add(cgm);
         statsPanel.add(cg);
@@ -80,7 +80,7 @@ public class StatsView extends JPanel {
         JPanel wg = new JPanel(new MigLayout("fill,insets 20", "Center", "Center"));
         JPanel wgm = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         wgm.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
-        sleepGraph = new GraphView(viewModel.getx(), viewModel.gety("sleep"),"Day","Sleep", "Sleep Graph");
+        sleepGraph = new GraphView(viewModel.getx(), viewModel.gety("sleep"),"Day of the Month","Sleep", "Sleep Graph");
         wgm.add(sleepGraph.getPanel());
         wg.add(wgm);
         statsPanel.add(wg);
@@ -88,7 +88,7 @@ public class StatsView extends JPanel {
         JPanel sg = new JPanel(new MigLayout("fill,insets 20", "Right", "Center"));
         JPanel sgm = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         sgm.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
-        weightGraph = new GraphView(viewModel.getx(), viewModel.gety("weight"),"Day","Weight", "Weight Graph");
+        weightGraph = new GraphView(viewModel.getx(), viewModel.gety("weight"),"Day of the Month","Weight", "Weight Graph");
         sgm.add(weightGraph.getPanel());
         sg.add(sgm);
         statsPanel.add(sg);

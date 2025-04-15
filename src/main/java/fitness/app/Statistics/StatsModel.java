@@ -15,7 +15,7 @@ public class StatsModel {
     public final StatsDB statsDB;
     StatsModel(Account acc) {
         this.acc = acc;
-        this.statsDB = (StatsDB) DatabaseManager.getDatabase("stats");
+        this.statsDB = DatabaseManager.getStatsDB();
     }
 
     public String verifyCalories(int calories) {

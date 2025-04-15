@@ -5,13 +5,12 @@ import fitness.app.Objects.Databases.AccountsDB;
 import java.sql.SQLException;
 
 public class Account {
-	private Integer id;
+    private Integer id;
     private String username;
     private String password;
     private String status;
     private String role;
     private int wallet;
-    private AccountsDB accountsDB;
     private int Calories;
     private Double Weight;
     private Double Sleep;
@@ -19,13 +18,18 @@ public class Account {
     private boolean notifications = true;
     private String weightUnit = "kg";
     private CreditCard card;
-    
-    public Integer getId() {
-    	return id;
+
+
+    private static AccountsDB getAccountsDB() {
+        return DatabaseManager.getAccountsDB();
     }
-    
+
+    public Integer getId() {
+        return id;
+    }
+
     public void setId(Integer id) {
-    	this.id = id;
+        this.id = id;
     }
 
     public int getCalories() {
@@ -53,7 +57,6 @@ public class Account {
         this.password = password;
         this.status = "active";
         this.role = "user";
-        this.accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
     }
 
     public Account(String username, String password, String status, String role) {
@@ -61,7 +64,6 @@ public class Account {
         this.password = password;
         this.status = status;
         this.role = role;
-        this.accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
     }
 
     public void setUsername(String username) {
@@ -124,16 +126,15 @@ public class Account {
     public Boolean hasCard() {return card != null;}
 
     public void addAccount() throws SQLException {
-        accountsDB.addAccount(this);
+        getAccountsDB().addAccount(this);
     }
 
     public static Account getAccount(String username) throws SQLException {
-        AccountsDB accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
-        return accountsDB.getAccount(username);
+        return getAccountsDB().getAccount(username);
     }
 
     public static Account updateWallet(String username, int val) throws SQLException {
-        AccountsDB accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
+        AccountsDB accountsDB = getAccountsDB();
         int wallet = accountsDB.getWallet(username);
         val += wallet;
         accountsDB.updateWallet(username, val);
@@ -141,21 +142,18 @@ public class Account {
     }
 
     public static boolean validateLogin(String username, String password) throws SQLException {
-        AccountsDB accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
-        return accountsDB.validLogin(username, password);  // Validate login credentials
+        return getAccountsDB().validLogin(username, password);  // Validate login credentials
     }
 
     public static boolean usernameExists(String username) throws SQLException {
-        AccountsDB accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
-        return accountsDB.usernameExists(username);  // Check if username exists in the database
+        return getAccountsDB().usernameExists(username);  // Check if username exists in the database
     }
 
     public static boolean changePassword(String username, String newPassword) throws SQLException {
-        AccountsDB accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
-        return accountsDB.changePassword(username, newPassword);
+        return getAccountsDB().changePassword(username, newPassword);
     }
 
     public boolean savePreferences() throws SQLException {
-        return accountsDB.updateUserPreferences(username, theme, notifications, weightUnit);
+        return getAccountsDB().updateUserPreferences(username, theme, notifications, weightUnit);
     }
 }

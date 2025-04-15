@@ -9,7 +9,7 @@ import fitness.app.Objects.Databases.AccountsDB;
 import fitness.app.Objects.DatabaseManager;
 
 public class AdminUsersModel {
-	private AccountsDB accDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
+	private AccountsDB accDB = DatabaseManager.getAccountsDB();
 	
 	public List<Account> getUsers() {
 		List<Account> allUsers = new ArrayList<>();

@@ -1,5 +1,6 @@
 package fitness.app.ExerciseLibrary;
 
+import fitness.app.Objects.DatabaseManager;
 import fitness.app.Objects.Databases.ExerciseDB;
 import fitness.app.Objects.Exercise;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class ExerciseLibraryModel {
 
-    private static ExerciseDB exerciseDB = new ExerciseDB("exercise");
+    private static ExerciseDB exerciseDB = DatabaseManager.getExerciseDB();
 
 
     public static Object [][] getExerciseData(){

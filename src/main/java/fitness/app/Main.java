@@ -27,21 +27,22 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class Main {
-    private static boolean dark = true;
+    private static boolean dark = false;
 
     private static JFrame window;
     private static Account currentUser;
 
+    private static AccountsDB accountsDB;
+    private static ExerciseDB exerciseDB;
+    private static CreditCardDB creditCardDB;
+    private static GoalsDB goalsDB;
+    private static StatsDB statsDB;
+    private static WorkoutDB workoutDB;
+
     public static void main(String[] args) {
         System.setProperty("apple.awt.application.name", "Rocket Health");
         System.setProperty("apple.awt.application.appearance", "system");
-
-        DatabaseManager.addDatabase("accounts", new AccountsDB("accounts"));
-        DatabaseManager.addDatabase("exercises", new ExerciseDB("exercises"));
-        DatabaseManager.addDatabase("creditCard", new CreditCardDB("creditCard"));
-        DatabaseManager.addDatabase("goals", new GoalsDB("goals"));
-        DatabaseManager.addDatabase("stats", new StatsDB("stats"));
-        System.out.println("Databases initialized successfully.");
+        DatabaseManager.initializeDatabases();
 
         addTestAdminAccount();
 
@@ -146,6 +147,7 @@ public class Main {
             e.printStackTrace();
         }
     }
+
 
     public static Account getCurrentUser() {
         return currentUser;

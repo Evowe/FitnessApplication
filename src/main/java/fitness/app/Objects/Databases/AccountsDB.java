@@ -8,13 +8,13 @@ import java.util.List;
 
 public class AccountsDB extends DBTemplate {
 
-    public AccountsDB(String dbName) {
-        super(dbName);
+    public AccountsDB() {
+        super("accounts");
     }
 
 
     @Override
-    protected void createDatabase() throws SQLException {
+    protected void createTables() throws SQLException {
         // Create Account table
 
         String[] columns = {
@@ -30,7 +30,7 @@ public class AccountsDB extends DBTemplate {
 
 
         createTable("accounts", columns);
-        //insertBaseUser();
+
     }
 
     public void addAccount(Account account) throws SQLException {
@@ -52,20 +52,6 @@ public class AccountsDB extends DBTemplate {
         } catch (SQLException e) {
             System.out.println("Error adding account: " + e.getMessage());
             throw e; //Throw e again for caller to handle
-        }
-    }
-
-    public Connection getConnection() throws SQLException {
-        //System.out.println("Trying to connect");
-        try {
-            // Load SQLite JDBC driver
-            Class.forName("org.sqlite.JDBC");
-
-            // Create a connection to the SQLite database
-            String dbURL = "jdbc:sqlite:accounts.db";
-            return DriverManager.getConnection(dbURL);
-        } catch (ClassNotFoundException e) {
-            throw new SQLException("SQLite JDBC driver not found", e);
         }
     }
 

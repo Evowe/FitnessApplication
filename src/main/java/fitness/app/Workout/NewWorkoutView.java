@@ -17,6 +17,7 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
 import fitness.app.ExerciseLibrary.ExerciseLibraryModel;
 import fitness.app.Main;
+import fitness.app.Objects.DatabaseManager;
 import fitness.app.Objects.Databases.ExerciseDB;
 import fitness.app.Objects.Exercise;
 import fitness.app.Objects.Workout;
@@ -81,7 +82,7 @@ public class NewWorkoutView extends JPanel {
 		addExercise.addActionListener(e -> {
 			int[] selectedRows = table.getSelectedRows();
 			for (int i = 0; i < selectedRows.length; i++) {
-				ExerciseDB exerciseDB = new ExerciseDB("exercise");
+				ExerciseDB exerciseDB = DatabaseManager.getExerciseDB();
                 List<Exercise> exercises = null;
                 try {
                     exercises = exerciseDB.getAllExercises();
