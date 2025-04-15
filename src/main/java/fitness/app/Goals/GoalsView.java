@@ -43,6 +43,7 @@ public class GoalsView extends JPanel {
     public GoalsView(Account acc) {
         //GoalsViewModel.checkDB();
         currentUser = acc;
+
         modifyGoalsPanel();
     }
 

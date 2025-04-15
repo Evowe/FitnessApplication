@@ -35,6 +35,8 @@ public class CalendarView extends JPanel {
 
         //Month Selection Button
         FlatButton monthButton = new FlatButton();
+        monthButton.setMargin(new Insets(0, 0, 0, 0));
+        monthButton.setMinimumHeight(36);
         monthButton.setBorderPainted(false);
         monthButton.setHorizontalAlignment(SwingConstants.RIGHT);
         monthButton.setMinimumSize(new Dimension(95, 30));
@@ -78,7 +80,8 @@ public class CalendarView extends JPanel {
         //Previous Month Button
         FlatButton lastMonthButton = new FlatButton();
         lastMonthButton.setBorderPainted(false);
-        lastMonthButton.setMaximumSize(new Dimension(30, 30));
+        lastMonthButton.setMargin(new Insets(0, 0, 0, 0));
+        lastMonthButton.setMinimumSize(new Dimension(36, 36));
         lastMonthButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -100,7 +103,8 @@ public class CalendarView extends JPanel {
         //Previous Year Button
         FlatButton lastYearButton = new FlatButton();
         lastYearButton.setBorderPainted(false);
-        lastYearButton.setMaximumSize(new Dimension(30, 30));
+        lastYearButton.setMargin(new Insets(0, 0, 0, 0));
+        lastYearButton.setMinimumSize(new Dimension(36, 36));
         lastYearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -116,7 +120,8 @@ public class CalendarView extends JPanel {
         //Next Year Button
         FlatButton nextYearButton = new FlatButton();
         nextYearButton.setBorderPainted(false);
-        nextYearButton.setMaximumSize(new Dimension(30, 30));
+        nextYearButton.setMargin(new Insets(0, 0, 0, 0));
+        nextYearButton.setMinimumSize(new Dimension(36, 36));
         nextYearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -132,7 +137,8 @@ public class CalendarView extends JPanel {
         //Next Month Button
         FlatButton nextMonthButton = new FlatButton();
         nextMonthButton.setBorderPainted(false);
-        nextMonthButton.setMaximumSize(new Dimension(30, 30));
+        nextMonthButton.setMargin(new Insets(0, 0, 0, 0));
+        nextMonthButton.setMinimumSize(new Dimension(36, 36));
         nextMonthButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -182,7 +188,8 @@ public class CalendarView extends JPanel {
                 JButton dayButton = new JButton();
                 dayButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground;");
                 dayButton.setBorderPainted(false);
-                dayButton.setMaximumSize(new Dimension(30, 30));
+                dayButton.setMargin(new Insets(0, 0, 0, 0));
+                dayButton.setMinimumSize(new Dimension(36, 36));
                 dayButton.setText(day);
                 if ((week.equals(format.getFirst()) && parseInt(day) > 7 ) || (week.equals(format.getLast()) && parseInt(day) < 7)) {
                     dayButton.setFocusable(false);

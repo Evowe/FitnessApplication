@@ -132,6 +132,14 @@ public class Account {
         return accountsDB.getAccount(username);
     }
 
+    public static Account updateWallet(String username, int val) throws SQLException {
+        AccountsDB accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
+        int wallet = accountsDB.getWallet(username);
+        val += wallet;
+        accountsDB.updateWallet(username, val);
+        return accountsDB.getAccount(username);
+    }
+
     public static boolean validateLogin(String username, String password) throws SQLException {
         AccountsDB accountsDB = (AccountsDB) DatabaseManager.getDatabase("accounts");
         return accountsDB.validLogin(username, password);  // Validate login credentials

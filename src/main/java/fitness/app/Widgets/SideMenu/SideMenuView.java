@@ -37,6 +37,7 @@ public class SideMenuView extends JPanel {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println(homeButton.getSize());
                 Main.setWindow("HomePage");
             }
         });
