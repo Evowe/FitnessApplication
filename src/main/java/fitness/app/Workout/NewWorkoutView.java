@@ -106,7 +106,7 @@ public class NewWorkoutView extends JPanel {
 		workoutFieldsPanel.add(nameField);
 
 		JLabel description = new JLabel("Workout Description");
-		name.putClientProperty(FlatClientProperties.STYLE, "" + "font:regular +6");
+		description.putClientProperty(FlatClientProperties.STYLE, "" + "font:regular +6");
 		workoutFieldsPanel.add(description);
 
 		JTextField descriptionField = new JTextField();
