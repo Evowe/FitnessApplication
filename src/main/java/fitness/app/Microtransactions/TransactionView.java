@@ -10,11 +10,14 @@ import fitness.app.Objects.CreditCard;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Year;
+import java.util.stream.IntStream;
 
 public class TransactionView extends JPanel {
     private static JPanel mainPanel;
@@ -31,6 +34,7 @@ public class TransactionView extends JPanel {
         // Create and add multiple text boxes to the panel
         FlatTextField cardNumberField = new FlatTextField();
         cardNumberField.setPlaceholderText("xxxx xxxx xxxx xxxx");
+        ((AbstractDocument) cardNumberField.getDocument()).setDocumentFilter(new CreditCardDocumentFilter());
         JLabel label1 = new JLabel("CardNumber");
 
         FlatTextField cardHolderField = new FlatTextField();
@@ -46,9 +50,22 @@ public class TransactionView extends JPanel {
         cvvField.putClientProperty(FlatClientProperties.STYLE, "showRevealButton:true");
         JLabel label4 = new JLabel("CVV");
 
-        FlatTextField expirField = new FlatTextField();
-        expirField.setPlaceholderText("mm/yr");
+        //FlatTextField expirField = new FlatTextField();
+        //expirField.setPlaceholderText("mm/yr");
         JLabel label5 = new JLabel("Expir. Date");
+        // Month ComboBox (01 to 12)
+        JPanel cardField = new JPanel(new MigLayout("fillx,insets 0", "fill,275"));
+        String[] months = IntStream.rangeClosed(1, 12)
+                .mapToObj(i -> String.format("%02d", i))
+                .toArray(String[]::new);
+        JComboBox<String> monthComboBox = new JComboBox<>(months);
+
+        // Year ComboBox (current year to current year + 10)
+        int currentYear = Year.now().getValue();
+        String[] years = IntStream.range(currentYear, currentYear + 11)
+                .mapToObj(Integer::toString)
+                .toArray(String[]::new);
+        JComboBox<String> yearComboBox = new JComboBox<>(years);
 
         FlatButton submitButton = new FlatButton();
         submitButton.setText("Submit Details");
@@ -65,7 +82,11 @@ public class TransactionView extends JPanel {
         purchaseMenu.add(label4);
         purchaseMenu.add(cvvField);
         purchaseMenu.add(label5);
-        purchaseMenu.add(expirField);
+        //purchaseMenu.add(expirField);
+        cardField.add(monthComboBox, "left");
+        cardField.add(yearComboBox, "right");
+
+        purchaseMenu.add(cardField);
 
         purchaseMenu.add(submitButton);
 
@@ -77,21 +98,26 @@ public class TransactionView extends JPanel {
                 newCard.setCardHolder(cardHolderField.getText());
                 newCard.setZipCode(zipField.getText());
                 newCard.setCvv(cvvField.getText());
-                newCard.setExpiryDate(expirField.getText());
+                String selectedMonth = (String) monthComboBox.getSelectedItem();
+                String selectedYear = (String) yearComboBox.getSelectedItem();
+                newCard.setExpiryDate(selectedMonth + "/" + selectedYear.substring(2));
 
                 acc.setCard(newCard);
 
                 if (newCard.CardValidation(newCard)) {
+                    /*
                     String csvFile = "example.csv";
                     try (FileWriter writer = new FileWriter(csvFile, true)) {
                         writer.append(cardHolderField.getText() + "," +
                                 cardNumberField.getText() + "," +
                                 zipField.getText() + "," +
                                 cvvField.getText() + "," +
-                                expirField.getText() + "\n");
+                                expirField.getText() + "\n")
+
                     } catch (IOException d) {
                         d.printStackTrace();
                     }
+                     */
                     System.out.println(newCard.CardValidation(newCard));
                 }
             }
@@ -101,7 +127,7 @@ public class TransactionView extends JPanel {
     }
 
     public static JPanel get() {return mainPanel;}
-/*
+
     static class CreditCardDocumentFilter extends DocumentFilter {
         private static final int MAX_DIGITS = 16;
 
@@ -142,6 +168,5 @@ public class TransactionView extends JPanel {
         }
     }
 
- */
 
 }
