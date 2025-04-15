@@ -1,32 +1,32 @@
 package fitness.app.Statistics;
 
-import com.kitfox.svg.Title;
-import fitness.app.Login.LoginViewModel;
-import fitness.app.Main;
 import fitness.app.Objects.Account;
+import fitness.app.Objects.DatabaseManager;
+import fitness.app.Widgets.Graph.GraphView;
+import fitness.app.Widgets.SideMenu.SideMenuView;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import fitness.app.Objects.DatabaseManager;
-import fitness.app.Objects.Databases.GoalsDB;
-import fitness.app.Objects.Databases.StatsDB;
-import fitness.app.Widgets.Graph.GraphView;
-import fitness.app.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class StatsView extends JPanel {
-    private static JFrame window;
     private static JPanel mainPanel;
+    private StatsViewModel viewModel;
+    private GraphView calorieGraph;
+    private GraphView sleepGraph;
+    private GraphView weightGraph;
+    private JPanel statsPanel;
 
     public StatsView(Account acc) {
-        StatsDB statsDB = (StatsDB) DatabaseManager.getDatabase("stats");
-        StatsViewModel viewModel = new StatsViewModel(acc);
+        viewModel = new StatsViewModel(acc);
+        viewModel.loadTestData(10);
 
         FlatRobotoMonoFont.install();
         FlatLaf.registerCustomDefaultsSource("Components.Themes");
@@ -36,7 +36,7 @@ public class StatsView extends JPanel {
         mainPanel = new JPanel(new MigLayout("fill", "[grow]", "[grow]"));
         mainPanel.add(new SideMenuView(), "growy, pushy");
 
-        JPanel statsPanel = new JPanel(new MigLayout("wrap 3", "[grow][grow][grow]", "[]"));
+        statsPanel = new JPanel(new MigLayout("wrap 3", "[grow][grow][grow]", "[]"));
 
         //DISPLAY CALORIES
         JPanel calDis = new JPanel(new MigLayout("fill,insets 20", "left", "Top"));
@@ -47,6 +47,7 @@ public class StatsView extends JPanel {
         CdisMen.add(cdistitle);
         calDis.add(CdisMen);
         statsPanel.add(calDis);
+
         //DISPLAY SLEEP
         JPanel sleepDis = new JPanel(new MigLayout("fill,insets 20", "center", "Top"));
         JPanel SleepDisMen = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
@@ -56,6 +57,7 @@ public class StatsView extends JPanel {
         SleepDisMen.add(Sdistitle);
         sleepDis.add(SleepDisMen);
         statsPanel.add(sleepDis);
+
         //WEIGHT DISPLAY
         JPanel weightDis = new JPanel(new MigLayout("fill,insets 20", "center", "Top"));
         JPanel weightDisMen = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
@@ -65,42 +67,34 @@ public class StatsView extends JPanel {
         weightDisMen.add(Wdistitle);
         weightDis.add(weightDisMen);
         statsPanel.add(weightDis);
-        //Graphs
 
+        //Graphs - Creating graph panels
         JPanel cg = new JPanel(new MigLayout("fill,insets 20", "Left", "Center"));
         JPanel cgm = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         cgm.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
-        GraphView g = new GraphView(viewModel.getx(), viewModel.gety(),"Day","Calories", "Calorie Graph");
-        cgm.add(g.getPanel());
+        calorieGraph = new GraphView(viewModel.getx(), viewModel.gety("calories"),"Day","Calories", "Calorie Graph");
+        cgm.add(calorieGraph.getPanel());
         cg.add(cgm);
-        //cg.setPreferredSize(new Dimension(700, 800));
         statsPanel.add(cg);
 
         JPanel wg = new JPanel(new MigLayout("fill,insets 20", "Center", "Center"));
         JPanel wgm = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         wgm.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
-        GraphView wgg = new GraphView(viewModel.getx(), viewModel.gety(),"Day","Sleep", "Sleep Graph");
-        wgm.add(wgg.getPanel());
+        sleepGraph = new GraphView(viewModel.getx(), viewModel.gety("sleep"),"Day","Sleep", "Sleep Graph");
+        wgm.add(sleepGraph.getPanel());
         wg.add(wgm);
-        //cg.setPreferredSize(new Dimension(700, 800));
         statsPanel.add(wg);
 
         JPanel sg = new JPanel(new MigLayout("fill,insets 20", "Right", "Center"));
         JPanel sgm = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         sgm.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
-        GraphView sgg = new GraphView(viewModel.getx(), viewModel.gety(),"Day","Weight", "Weight Graph");
-        sgm.add(sgg.getPanel());
+        weightGraph = new GraphView(viewModel.getx(), viewModel.gety("weight"),"Day","Weight", "Weight Graph");
+        sgm.add(weightGraph.getPanel());
         sg.add(sgm);
-        //cg.setPreferredSize(new Dimension(700, 800));
         statsPanel.add(sg);
-
-        //mainPanel.add (new JLabel(""));
-        //mainPanel.add (new JLabel(""));
-        //mainPanel.add (new JLabel(""));
 
         //Calorie Panel
         JPanel calPanel = new JPanel(new MigLayout("fill,insets 20", "left", "bot"));
-
         JPanel CalMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         CalMenu.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
 
@@ -110,10 +104,6 @@ public class StatsView extends JPanel {
         JLabel Cdescription = new JLabel("All fields required");
         Cdescription.putClientProperty(FlatClientProperties.STYLE, "" + "foreground:darken(@foreground,33%)");
 
-        //CalMenu.add(description);
-//        CalMenu.add(new JLabel("Date"), "gapy 8");
-//        CalMenu.add(dateField);
-
         JTextField CaloriesField = new JTextField();
         CaloriesField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Calories");
 
@@ -122,19 +112,28 @@ public class StatsView extends JPanel {
         csubmitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                int Calories = Integer.parseInt(CaloriesField.getText());
-                String errorMessage = StatsModel.verifyCalories(Calories);
-                if (errorMessage != null) {
+                try {
+                    int Calories = Integer.parseInt(CaloriesField.getText());
+                    String errorMessage = viewModel.updateCalories(Calories);
+                    if (errorMessage != null) {
+                        CaloriesField.setText("");
+                        Cdescription.setText(errorMessage);
+                        Cdescription.setForeground(Color.RED);
+                        Cdescription.putClientProperty(FlatClientProperties.STYLE, "font:-4");
+                    }
+                    else {
+                        acc.setCalories(acc.getCalories() + Calories);
+                        cdistitle.setText("Daily Calories: " + acc.getCalories());
+                        Cdescription.setText("All fields required");
+                        Cdescription.putClientProperty(FlatClientProperties.STYLE, "" + "foreground:darken(@foreground,33%)");
+                        // Refresh the calorie graph
+                        refreshGraph("calories");
+                    }
+                } catch (NumberFormatException e) {
                     CaloriesField.setText("");
-                    Cdescription.setText(errorMessage);
+                    Cdescription.setText("Please enter a valid number");
                     Cdescription.setForeground(Color.RED);
                     Cdescription.putClientProperty(FlatClientProperties.STYLE, "font:-4");
-                }
-                else {
-                    acc.setCalories(acc.getCalories() + Calories);
-                    cdistitle.setText("Daily Calories: " + acc.getCalories());
-                    Cdescription.setText("All fields required");
-                    Cdescription.putClientProperty(FlatClientProperties.STYLE, "" + "foreground:darken(@foreground,33%)");
                 }
             }
         });
@@ -147,7 +146,6 @@ public class StatsView extends JPanel {
 
         //SLEEP PANEL
         JPanel sleepPanel = new JPanel(new MigLayout("fill,insets 20", "center", "Bottom"));
-
         JPanel SMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         SMenu.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
 
@@ -165,19 +163,28 @@ public class StatsView extends JPanel {
         ssubmitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                Double sl = Double.parseDouble(sleepField.getText());
-                String errorMessage = StatsModel.verifySleep(sl);
-                if (errorMessage != null) {
+                try {
+                    Double sl = Double.parseDouble(sleepField.getText());
+                    String errorMessage = viewModel.updateSleep(sl);
+                    if (errorMessage != null) {
+                        sleepField.setText("");
+                        Sdescription.setText(errorMessage);
+                        Sdescription.setForeground(Color.RED);
+                        Sdescription.putClientProperty(FlatClientProperties.STYLE, "font:-4");
+                    }
+                    else {
+                        acc.setSleep(sl);
+                        Sdistitle.setText("Total Sleep: " + acc.getSleep());
+                        Sdescription.setText("All fields required");
+                        Sdescription.putClientProperty(FlatClientProperties.STYLE, "" + "foreground:darken(@foreground,33%)");
+                        // Refresh the sleep graph
+                        refreshGraph("sleep");
+                    }
+                } catch (NumberFormatException e) {
                     sleepField.setText("");
-                    Sdescription.setText(errorMessage);
+                    Sdescription.setText("Please enter a valid number");
                     Sdescription.setForeground(Color.RED);
                     Sdescription.putClientProperty(FlatClientProperties.STYLE, "font:-4");
-                }
-                else {
-                    acc.setSleep(sl);
-                    Sdistitle.setText("Total Sleep: " + acc.getSleep());
-                    Sdescription.setText("All fields required");
-                    Sdescription.putClientProperty(FlatClientProperties.STYLE, "" + "foreground:darken(@foreground,33%)");
                 }
             }
         });
@@ -187,10 +194,9 @@ public class StatsView extends JPanel {
         SMenu.add(ssubmitButton);
         sleepPanel.add(SMenu);
         statsPanel.add(sleepPanel);
-        //WEight panel
 
+        //Weight panel
         JPanel weightPanel = new JPanel(new MigLayout("fill,insets 20", "right", "Bottom"));
-
         JPanel WMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         WMenu.putClientProperty(FlatClientProperties.STYLE, "" + "arc:20;" + "background:lighten(@background,5%)");
 
@@ -200,8 +206,6 @@ public class StatsView extends JPanel {
         JLabel Wdescription = new JLabel("All fields required");
         Wdescription.putClientProperty(FlatClientProperties.STYLE, "" + "foreground:darken(@foreground,33%)");
 
-//        CalMenu.add(new JLabel("Date"), "gapy 8");
-//        CalMenu.add(dateField);
         JTextField weightField = new JTextField();
         weightField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Weight");
 
@@ -210,19 +214,28 @@ public class StatsView extends JPanel {
         wsubmitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                Double weight = Double.parseDouble(weightField.getText());
-                String errorMessage = StatsModel.verifyWeight(weight);
-                if (errorMessage != null) {
+                try {
+                    Double weight = Double.parseDouble(weightField.getText());
+                    String errorMessage = viewModel.updateWeight(weight);
+                    if (errorMessage != null) {
+                        weightField.setText("");
+                        Wdescription.setText(errorMessage);
+                        Wdescription.setForeground(Color.RED);
+                        Wdescription.putClientProperty(FlatClientProperties.STYLE, "font:-4");
+                    }
+                    else {
+                        acc.setWeight(weight);
+                        Wdistitle.setText("Current Weight: " + acc.getWeight());
+                        Wdescription.setText("All fields required");
+                        Wdescription.putClientProperty(FlatClientProperties.STYLE, "" + "foreground:darken(@foreground,33%)");
+                        // Refresh the weight graph
+                        refreshGraph("weight");
+                    }
+                } catch (NumberFormatException e) {
                     weightField.setText("");
-                    Wdescription.setText(errorMessage);
+                    Wdescription.setText("Please enter a valid number");
                     Wdescription.setForeground(Color.RED);
                     Wdescription.putClientProperty(FlatClientProperties.STYLE, "font:-4");
-                }
-                else {
-                    acc.setWeight(weight);
-                    Wdistitle.setText("Current Weight: " + acc.getWeight());
-                    Wdescription.setText("All fields required");
-                    Wdescription.putClientProperty(FlatClientProperties.STYLE, "" + "foreground:darken(@foreground,33%)");
                 }
             }
         });
@@ -233,43 +246,58 @@ public class StatsView extends JPanel {
         weightPanel.add(WMenu);
         statsPanel.add(weightPanel);
 
-//        submitButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent event) {
-//                Account account = new Account(CaloriesField.getText(), CaloriesField.getText());
-//                //String errorMessage = LoginViewModel.logInRequest(account);
-////                if (errorMessage != null) {
-////                    description.setText(errorMessage);
-////                    passwordField.setText("");
-////                }
-//            }
-//        });
-
-//        window.add(mainPanel);
-//
-//        EventQueue.invokeLater(() -> {
-//            window.setVisible(true);
-//            System.setProperty("apple.awt.application.name", "Rocket Health");
-//            System.setProperty("apple.awt.application.appearance", "system");
-//            window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
-//            window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
-//        });
         mainPanel.add(statsPanel);
     }
-    public JPanel getViewPanel()
-    {
-        return mainPanel;
+
+    /**
+     * Refreshes the specified graph with updated data
+     * @param metric The metric to refresh ("calories", "sleep", or "weight")
+     */
+    private void refreshGraph(String metric) {
+        ArrayList<Integer> xData = viewModel.getx();
+        ArrayList<Integer> yData = viewModel.gety(metric);
+
+        switch(metric.toLowerCase()) {
+            case "calories":
+                // Create a new graph and replace the old one
+                calorieGraph = new GraphView(xData, yData, "Day", "Calories", "Calorie Graph");
+                // Find the panel container and replace content
+                Container parent = calorieGraph.getPanel().getParent();
+                if (parent != null) {
+                    parent.removeAll();
+                    parent.add(calorieGraph.getPanel());
+                    parent.revalidate();
+                    parent.repaint();
+                }
+                break;
+            case "sleep":
+                sleepGraph = new GraphView(xData, yData, "Day", "Sleep", "Sleep Graph");
+                Container sleepParent = sleepGraph.getPanel().getParent();
+                if (sleepParent != null) {
+                    sleepParent.removeAll();
+                    sleepParent.add(sleepGraph.getPanel());
+                    sleepParent.revalidate();
+                    sleepParent.repaint();
+                }
+                break;
+            case "weight":
+                weightGraph = new GraphView(xData, yData, "Day", "Weight", "Weight Graph");
+                Container weightParent = weightGraph.getPanel().getParent();
+                if (weightParent != null) {
+                    weightParent.removeAll();
+                    weightParent.add(weightGraph.getPanel());
+                    weightParent.revalidate();
+                    weightParent.repaint();
+                }
+                break;
+        }
+
+        // Make sure the entire UI updates
+        statsPanel.revalidate();
+        statsPanel.repaint();
     }
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("UpdateSleepInterface");
-        Account a = new Account("Bob", "Smith");
-        a.setSleep(0.0);
-        a.setCalories(0);
-        a.setWeight(0.0);
-        StatsView sl = new StatsView(a);
-        frame.setContentPane(sl.getViewPanel());
-        frame.setSize(1200, 700);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+
+    public JPanel getViewPanel() {
+        return mainPanel;
     }
 }

@@ -36,11 +36,11 @@ public class CreateAccountView extends JPanel {
                 IOException e) {
             throw new RuntimeException(e);
         }
-        Image scaledImg = img.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        Image scaledImg = img.getScaledInstance(450, 450, Image.SCALE_SMOOTH);
         ImageIcon icon = new ImageIcon(scaledImg);
         JLabel logo = new JLabel(icon);
 
-        logoPanel.add(logo);
+        logoPanel.add(logo, "pos (45% - pref/2) (50% - pref/2)");
 
         add(logoPanel);
 
