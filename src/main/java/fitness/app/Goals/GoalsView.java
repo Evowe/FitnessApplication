@@ -2,6 +2,7 @@ package fitness.app.Goals;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import fitness.app.Objects.Account;
@@ -53,14 +54,15 @@ public class GoalsView extends JPanel {
         UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
 
-        setLayout(new MigLayout("insets 0, fill", "push[grow]push", "push[grow]push"));
-
-        JPanel mainPanel = new JPanel(new MigLayout("wrap 3, fill", "[grow][grow][grow]", "[][][]"));
+//        setLayout(new MigLayout("insets 0, fill", "push[grow]push", "push[grow]push"));
+        setLayout(new MigLayout("fill,insets 20"));
+        putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        JPanel mainPanel = new JPanel(new MigLayout("insets"));
         mainPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
 
         // -- RIGHT: Current Distance Goal --
-        JPanel distancePanel = new JPanel(new MigLayout("wrap 1", "right", "center"));
+        JPanel distancePanel = new JPanel(new MigLayout("insets 0,wrap"));
         distancePanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,3%)");
         JLabel weightTitle = new JLabel("Current Weight Goal");
         weightTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold");
@@ -100,20 +102,20 @@ public class GoalsView extends JPanel {
 
 
         // -- CENTER: Editable Goal Form --
-        JPanel centerPanel = new JPanel(new MigLayout("wrap, fillx, insets 30", "[grow,fill]", "[][][][][]"));
-        centerPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,5%)");
+        JPanel centerPanel = new JPanel(new MigLayout("wrap, fillx, insets 30", "fill,275", "[][][][][]"));
+        centerPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
         JLabel formTitle = new JLabel("Modify a Goal");
         formTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
 
         JLabel desc = new JLabel("");
-        desc.putClientProperty(FlatClientProperties.STYLE, "foreground:darken(@foreground,33%)");
+        //desc.putClientProperty(FlatClientProperties.STYLE, "foreground:darken(@foreground,33%)");
 
         JComboBox<String> goalTypeBox = new JComboBox<>(new String[]{"Distance", "Weight"});
-        goalTypeBox.putClientProperty(FlatClientProperties.STYLE,
-                "foreground:darken(@foreground,33%); background:darken(@background,27%)");
+        goalTypeBox.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground");
         JTextField valueField = new JTextField();
         valueField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter goal value");
+        valueField.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground");
         Dimension dim = valueField.getSize();
         JPanel horiBox = new JPanel(new BorderLayout());
         horiBox.setPreferredSize(dim);
@@ -123,6 +125,8 @@ public class GoalsView extends JPanel {
         dateField.setFocusLostBehavior(JFormattedTextField.PERSIST);
         dateField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "MM/dd/yyyy");
         dateField.setPreferredSize(dim);
+        dateField.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground");
+
 
         JButton calButt = new JButton("");
         calButt.setIcon(GoalsViewModel.getIcon("calendar"));
@@ -212,10 +216,10 @@ public class GoalsView extends JPanel {
         });
 
         centerPanel.add(formTitle, "gapbottom 20");
-        centerPanel.add(goalTypeBox);
-        centerPanel.add(valueField);
+        centerPanel.add(goalTypeBox , "gapy 10");
+        centerPanel.add(valueField,"gapy 10");
         centerPanel.add(horiBox, "gapy 10");
-        centerPanel.add(desc);
+        centerPanel.add(desc,"gapy 10");
         centerPanel.add(submit, "gapy 20");
 
         mainPanel.add(centerPanel, "grow");
@@ -223,8 +227,8 @@ public class GoalsView extends JPanel {
 
         // Add mainPanel to the second column, spanning all rows
         removeAll();
-        add(new SideMenuView(), "cell 0 0 1 3, growy");
-        add(mainPanel, "cell 1 1 1 1, grow");
+        add(new SideMenuView(),"growy, pushy");
+        add(mainPanel, "");
 
         revalidate();
         repaint();
@@ -232,7 +236,7 @@ public class GoalsView extends JPanel {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedLookAndFeelException {
         DatabaseManager.addDatabase("goals", new GoalsDB("goals"));
         //FlatLaf setup & settings
         FlatRobotoMonoFont.install();
@@ -246,6 +250,8 @@ public class GoalsView extends JPanel {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(new Dimension(1200, 700));
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        System.setProperty("apple.awt.application.appearance", "system");
+        UIManager.setLookAndFeel(new FlatLightLaf());
 
         window.setLocationRelativeTo(null);
         JPanel panel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));

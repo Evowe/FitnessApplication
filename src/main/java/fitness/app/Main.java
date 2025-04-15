@@ -25,7 +25,7 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class Main {
-    private static boolean dark = true;
+    private static boolean dark = false;
 
     private static JFrame window;
     private static Account currentUser;
