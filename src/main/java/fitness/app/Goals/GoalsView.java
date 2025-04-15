@@ -147,7 +147,7 @@ public class GoalsView extends JPanel {
                             }
                         });
                         try {
-                            System.out.println(cal.getDate());
+                            //System.out.println(cal.getDate());
                             dateField.setText(cal.getDate());
                             Thread.sleep(500); // Check every 500ms
                         } catch (InterruptedException b) {
