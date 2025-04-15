@@ -130,6 +130,7 @@ public class CreateAccountView extends JPanel {
                         System.out.println(e.getMessage());
                     }
 
+                    Main.setCurrentUser(account);
                     Main.setWindow("HomePage");
                 }
             }
