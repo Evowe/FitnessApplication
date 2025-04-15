@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
+import fitness.app.Main;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +25,7 @@ public class ProfileView extends JPanel {
 
         FlatLabel profileName = new FlatLabel();
         profileName.putClientProperty(FlatClientProperties.STYLE, "font:bold +20;");
-        profileName.setText("Username");
+        profileName.setText(Main.getCurrentUser().getUsername());
 
         FlatLabel profileTitle = new FlatLabel();
         profileTitle.putClientProperty(FlatClientProperties.STYLE, "font:italics +10; foreground:@accent;");
