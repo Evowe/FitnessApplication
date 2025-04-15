@@ -106,7 +106,7 @@ public class GoalsView extends JPanel {
 
     public void setGoalsPanel(String goalType)
     {
-        GoalsDB db = (GoalsDB) DatabaseManager.getDatabase("goals");
+        GoalsDB db = DatabaseManager.getGoalsDB();
         //GoalsDB db = new GoalsDB("Goals.db");
         //FlatRobotoMonoFont.install();
         FlatLaf.registerCustomDefaultsSource("Components.Themes");
@@ -207,7 +207,7 @@ public class GoalsView extends JPanel {
         //return goalsPanel;
     }
     public void modifyGoalsPanel() {
-        GoalsDB goalsDB = (GoalsDB) DatabaseManager.getDatabase("goals");
+        GoalsDB goalsDB = DatabaseManager.getGoalsDB();
         FlatLaf.registerCustomDefaultsSource("Components.Themes");
         UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
@@ -360,7 +360,6 @@ public class GoalsView extends JPanel {
 
 
     public static void main(String[] args) {
-        DatabaseManager.addDatabase("goals", new GoalsDB("goals"));
         //FlatLaf setup & settings
         FlatRobotoMonoFont.install();
         FlatLaf.registerCustomDefaultsSource("FlatLafSettings");

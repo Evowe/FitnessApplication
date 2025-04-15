@@ -16,9 +16,7 @@ public class GoalsViewModel {
         //return goalsView.getGoalsView();
         return null;
     }
-    public static void checkDB() throws SQLException {
-        gmodel.checkDB();
-    }
+
     public static SVGIcon getIcon(String iconName) {
         return GoalsModel.getIcon(iconName);
     }

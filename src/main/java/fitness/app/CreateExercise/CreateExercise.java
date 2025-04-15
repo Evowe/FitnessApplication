@@ -1,13 +1,17 @@
 package fitness.app.CreateExercise;
 
-import fitness.app.Objects.DatabaseManager;
 import fitness.app.Objects.Exercise;
 import fitness.app.Objects.Databases.ExerciseDB;
 
 import java.sql.SQLException;
 
 public class CreateExercise {
-    private static final String DB_NAME = "exercise";
+    private ExerciseDB exerciseDB;
+
+    public CreateExercise() {
+        // Create a single instance of ExerciseDB
+        this.exerciseDB = new ExerciseDB();
+    }
 
     public Exercise CreateExerciseCall(String name, String desc, Integer type, int valA, double valB) {
         Exercise exercise = null;
@@ -18,11 +22,9 @@ public class CreateExercise {
             case 2: // sets w/ weight
                 exercise = new Exercise(name, desc, valA, 0, valB);
                 break;
-
             case 3: // sets no weight
                 exercise = new Exercise(name, desc, valA, 0, 0);
                 break;
-
             default:
                 System.out.println("Invalid exercise type");
                 return null;
@@ -30,14 +32,7 @@ public class CreateExercise {
         System.out.println("Exercise created");
 
         try {
-            ExerciseDB exerciseDB = new ExerciseDB(DB_NAME);
-                    //(ExerciseDB) DatabaseManager.getDatabase(DB_NAME);
-            if (exerciseDB == null) { // Fixed logic error - only return null if exerciseDB is null
-                System.out.println("Exercise database not found");
-                return null;
-            }
-
-            int exerciseId = exerciseDB.saveExercise(exercise); // Removed username parameter
+            int exerciseId = exerciseDB.saveExercise(exercise);
             if (exerciseId > 0) {
                 System.out.println("Exercise saved with ID: " + exerciseId);
                 return exercise;
@@ -54,12 +49,6 @@ public class CreateExercise {
 
     public Exercise[] getAllExercises() {
         try {
-            ExerciseDB exerciseDB = (ExerciseDB) DatabaseManager.getDatabase(DB_NAME);
-            if (exerciseDB == null) {
-                System.out.println("Exercise database not found");
-                return new Exercise[0];
-            }
-
             return exerciseDB.getAllExercises().toArray(new Exercise[0]);
         } catch (SQLException e) {
             System.out.println("Error retrieving all exercises: " + e.getMessage());
@@ -70,12 +59,6 @@ public class CreateExercise {
 
     public Exercise getExercise(int id) {
         try {
-            ExerciseDB exerciseDB = (ExerciseDB) DatabaseManager.getDatabase(DB_NAME);
-            if (exerciseDB == null) {
-                System.out.println("Exercise database not found");
-                return null;
-            }
-
             return exerciseDB.getExercise(id);
         } catch (SQLException e) {
             System.out.println("Error retrieving exercise: " + e.getMessage());
@@ -86,12 +69,6 @@ public class CreateExercise {
 
     public boolean deleteExercise(int id) {
         try {
-            ExerciseDB exerciseDB = (ExerciseDB) DatabaseManager.getDatabase(DB_NAME);
-            if (exerciseDB == null) {
-                System.out.println("Exercise database not found");
-                return false;
-            }
-
             return exerciseDB.deleteExercise(id);
         } catch (SQLException e) {
             System.out.println("Error deleting exercise: " + e.getMessage());
@@ -99,5 +76,4 @@ public class CreateExercise {
             return false;
         }
     }
-
 }

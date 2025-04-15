@@ -7,25 +7,26 @@ import java.sql.Statement;
 
 // Templated Database Class
 public abstract class DBTemplate {
-    protected final String dbName;
-    protected final String url;
+    protected final String tableName;
+    private static final String DB_NAME = "fitness.db";
+    private static final String DB_URL = "jdbc:sqlite:" + DB_NAME;
+    private static Connection sharedConnection;
 
-    public DBTemplate(String dbName) {
-        this.dbName = dbName;
-        this.url = "jdbc:sqlite:" + dbName + ".db";
+    public DBTemplate(String tableName) {
+        this.tableName = tableName;
         initialize();
     }
 
     private void initialize() {
         try {
-            createDatabase();
-            System.out.println("Database " + dbName + " initialized successfully");
+            createTables();
+            System.out.println("Table " + tableName + " initialized successfully");
         } catch (SQLException e) {
-            System.out.println("Error initializing database: " + e.getMessage());
+            System.out.println("Error initializing table: " + e.getMessage());
         }
     }
 
-    protected abstract void createDatabase() throws SQLException;
+    protected abstract void createTables() throws SQLException;
 
     protected void createTable(String tableName, String[] columns) throws SQLException {
         try (Connection conn = getConnection();
@@ -52,14 +53,34 @@ public abstract class DBTemplate {
         }
     }
 
-    public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url);
+    public static synchronized Connection getConnection() throws SQLException {
+        try {
+            if (sharedConnection == null || sharedConnection.isClosed()) {
+                Class.forName("org.sqlite.JDBC");
+                sharedConnection = DriverManager.getConnection(DB_URL);
+                return sharedConnection;
+            }
+            return sharedConnection;
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("SQLite JDBC driver not found", e);
+        }
     }
 
     public void executeSQL(String sql) throws SQLException {
         try (Connection conn = getConnection();
-             Statement statement = conn.createStatement()) {
+        Statement statement = conn.createStatement()) {
             statement.execute(sql);
+        }
+    }
+
+    public static void closeConnection() {
+        try {
+            if (sharedConnection != null && !sharedConnection.isClosed()) {
+                sharedConnection.close();
+                sharedConnection = null;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error closing connection: " + e.getMessage());
         }
     }
 }

@@ -12,18 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExerciseDB extends DBTemplate {
+    private static final String TABLE_NAME = "Exercises";
+
     // Default path for sample exercises
     private static final String DEFAULT_SAMPLE_PATH =
             Paths.get(System.getProperty("user.dir"), "src", "main",
-            "resources", "sample_exercises.csv").toString();
+                    "resources", "sample_exercises.csv").toString();
 
-    public ExerciseDB(String dbName) {
-        super(dbName);
+    public ExerciseDB() {
+        super(TABLE_NAME);
         loadSampleExercisesIfEmpty();
     }
 
     @Override
-    protected void createDatabase() throws SQLException {
+    protected void createTables() throws SQLException {
         String[] exerciseColumns = {
                 "Name TEXT NOT NULL UNIQUE",
                 "Description TEXT",
@@ -32,14 +34,14 @@ public class ExerciseDB extends DBTemplate {
                 "Reps INTEGER DEFAULT 0",
                 "Weight REAL DEFAULT 0.0"
         };
-        createTable("Exercises", exerciseColumns);
+        createTable(TABLE_NAME, exerciseColumns);
     }
 
     /**
      * Checks if an exercise with the given name already exists
      */
     public boolean exerciseExists(String name) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM Exercises WHERE Name = ?";
+        String sql = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE Name = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -63,7 +65,7 @@ public class ExerciseDB extends DBTemplate {
             return -1; // Exercise already exists
         }
 
-        String sql = "INSERT INTO Exercises (Name, Description, Type, Sets, Reps, Weight) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO " + TABLE_NAME + " (Name, Description, Type, Sets, Reps, Weight) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -182,7 +184,7 @@ public class ExerciseDB extends DBTemplate {
     }
 
     public Exercise getExercise(int id) throws SQLException {
-        String sql = "SELECT * FROM Exercises WHERE ID = ?";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE ID = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -207,7 +209,7 @@ public class ExerciseDB extends DBTemplate {
 
     public List<Exercise> getAllExercises() throws SQLException {
         List<Exercise> exercises = new ArrayList<>();
-        String sql = "SELECT * FROM Exercises";
+        String sql = "SELECT * FROM " + TABLE_NAME;
 
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
@@ -229,7 +231,7 @@ public class ExerciseDB extends DBTemplate {
     }
 
     public boolean deleteExercise(int id) throws SQLException {
-        String sql = "DELETE FROM Exercises WHERE ID = ?";
+        String sql = "DELETE FROM " + TABLE_NAME + " WHERE ID = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {

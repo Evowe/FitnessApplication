@@ -8,13 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StatsDB extends DBTemplate {
+    private static final String TABLE_NAME = "stats";
 
-    public StatsDB(String dbName){
-        super(dbName);
+    public StatsDB() {
+        super(TABLE_NAME);
     }
 
     @Override
-    protected void createDatabase() throws SQLException {
+    protected void createTables() throws SQLException {
         String[] columns = {
                 "username STRING NOT NULL",
                 "date TEXT NOT NULL", // Store as YYYY-MM-DD
@@ -24,7 +25,7 @@ public class StatsDB extends DBTemplate {
                 "UNIQUE(username, date)" // Make sure only one entry per day for graphing
         };
 
-        createTable("stats", columns);
+        createTable(TABLE_NAME, columns);
     }
 
     public boolean addOrUpdateMetric(String username, LocalDate date, Integer calories, Double sleep, Double weight) throws SQLException {
@@ -45,10 +46,10 @@ public class StatsDB extends DBTemplate {
     }
 
     private boolean addMetric(String username, LocalDate date, Integer calories, Double sleep, Double weight) throws SQLException{
-        String sql = "INSERT INTO stats (username, date, calories, sleep, weight) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO " + TABLE_NAME + " (username, date, calories, sleep, weight) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql)){
+             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, username);
             ps.setString(2, date.toString());
 
@@ -84,7 +85,7 @@ public class StatsDB extends DBTemplate {
             return false;
         }
 
-        StringBuilder sqlBuilder = new StringBuilder("UPDATE stats SET ");
+        StringBuilder sqlBuilder = new StringBuilder("UPDATE " + TABLE_NAME + " SET ");
         List<Object> params = new ArrayList<>();
 
         boolean needComma = false;
@@ -133,7 +134,7 @@ public class StatsDB extends DBTemplate {
     }
 
     private boolean metricExists(String username, LocalDate date) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM stats WHERE username = ? AND date = ?";
+        String sql = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE username = ? AND date = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -152,7 +153,7 @@ public class StatsDB extends DBTemplate {
             throw new IllegalArgumentException("Invalid username or date");
         }
 
-        String sql = "SELECT * FROM stats WHERE username = ? AND date = ?";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE username = ? AND date = ?";
         Map<String, Object> metrics = new HashMap<>();
 
         try (Connection conn = getConnection();
@@ -184,7 +185,7 @@ public class StatsDB extends DBTemplate {
             throw new IllegalArgumentException("Start date must be before or equal to end date");
         }
 
-        String sql = "SELECT * FROM stats WHERE username = ? AND date BETWEEN ? AND ? ORDER BY date";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE username = ? AND date BETWEEN ? AND ? ORDER BY date";
         List<Map<String, Object>> metricsList = new ArrayList<>();
 
         try (Connection conn = getConnection();
@@ -216,9 +217,9 @@ public class StatsDB extends DBTemplate {
             throw new IllegalArgumentException("Invalid username or date");
         }
 
-        String sql = "DELETE FROM stats WHERE username = ? AND date = ?";
+        String sql = "DELETE FROM " + TABLE_NAME + " WHERE username = ? AND date = ?";
 
-        try (Connection conn = super.getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, username);

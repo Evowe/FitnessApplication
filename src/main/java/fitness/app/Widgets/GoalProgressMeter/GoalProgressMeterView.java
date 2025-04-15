@@ -13,7 +13,7 @@ import java.text.ParseException;
 
 public class GoalProgressMeterView extends JPanel {
     public GoalProgressMeterView(Account currentUser) {
-        GoalsDB goalsDB = (GoalsDB) DatabaseManager.getDatabase("goals");
+        GoalsDB goalsDB = DatabaseManager.getGoalsDB();
         try {
             Goal WeightGoal;
             Goal DistanceGoal;

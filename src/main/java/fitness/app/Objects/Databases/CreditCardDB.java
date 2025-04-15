@@ -6,12 +6,12 @@ import java.sql.*;
 
 public class CreditCardDB extends DBTemplate {
 
-    public CreditCardDB(String dbName) {
-        super(dbName);
+    public CreditCardDB() {
+        super("creditCards");
     }
 
     @Override
-    public void createDatabase() throws SQLException {
+    public void createTables() throws SQLException {
         // Create Credit Card table
         String[] columns = {
                 "cardNumber TEXT NOT NULL",
@@ -21,19 +21,6 @@ public class CreditCardDB extends DBTemplate {
                 "zipCode TEXT NOT NULL"
         };
         createTable("creditCards", columns);
-    }
-
-    public Connection getConnection() throws SQLException {
-        try {
-            // Load SQLite JDBC driver
-            Class.forName("org.sqlite.JDBC");
-
-            // Create a connection to the SQLite database
-            String dbURL = "jdbc:sqlite:creditcards.db";
-            return DriverManager.getConnection(dbURL);
-        } catch (ClassNotFoundException e) {
-            throw new SQLException("SQLite JDBC driver not found", e);
-        }
     }
 
     public void addCreditCard(CreditCard card) throws SQLException {

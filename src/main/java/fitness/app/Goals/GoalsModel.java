@@ -18,16 +18,8 @@ public class GoalsModel {
     private String goal;
     private Date deadline;
     private static SVGUniverse images = new SVGUniverse();
+    private GoalsDB goalsDB = DatabaseManager.getGoalsDB();
 
-    public void checkDB() throws SQLException {
-        GoalsDB goalsDB = (GoalsDB) DatabaseManager.getDatabase("goals");
-
-        if (goalsDB == null) {
-            goalsDB = new GoalsDB("Goals");
-            DatabaseManager.addDatabase("goals", goalsDB);
-        }
-
-    }
     public static SVGIcon getIcon(String iconName) {
         String filePath = "src/main/resources/Icons/" + iconName + ".svg";
         FileInputStream inFS;

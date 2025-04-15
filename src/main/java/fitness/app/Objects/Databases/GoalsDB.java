@@ -9,21 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GoalsDB extends DBTemplate {
-    public GoalsDB(String dbName) {
-        super(dbName);
+    private static final String TABLE_NAME = "Goals";
+
+    public GoalsDB() {
+        super(TABLE_NAME);
     }
 
     @Override
-    protected void createDatabase() throws SQLException {
-        String[] exerciseColumns = {
+    protected void createTables() throws SQLException {
+        String[] goalColumns = {
                 "username TEXT NOT NULL",
                 "Type TEXT",
                 "Value INTEGER DEFAULT 0",
                 "Date TEXT NOT NULL",
                 "Completed BOOL DEFAULT FALSE"
         };
-        createTable("Goals", exerciseColumns);
+        createTable(TABLE_NAME, goalColumns);
     }
+
     public void ensureDefaultGoals(String username) throws SQLException, ParseException {
         // Insert default Distance goal if not present
         if (getGoalByTypeAndUsername(username, "Distance") == null) {
@@ -36,22 +39,8 @@ public class GoalsDB extends DBTemplate {
         }
     }
 
-    public Connection getConnection() throws SQLException {
-        try {
-
-            Class.forName("org.sqlite.JDBC");
-
-            // Create a connection to the SQLite database
-            String dbURL = "jdbc:sqlite:Goals.db";
-            return DriverManager.getConnection(dbURL);
-        } catch (ClassNotFoundException e) {
-            throw new SQLException("SQLite JDBC driver not found", e);
-        }
-    }
-
     public void addGoal(Goal goal) throws SQLException {
-        String sql = "INSERT INTO Goals (username, Type, Value, Date, Completed) VALUES (?, ?, ?, ?, ?)";
-
+        String sql = "INSERT INTO " + TABLE_NAME + " (username, Type, Value, Date, Completed) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -68,8 +57,6 @@ public class GoalsDB extends DBTemplate {
             pstmt.setBoolean(5, goal.getCompleted());
 
             pstmt.executeUpdate();
-
-
         } catch (SQLException e) {
             System.out.println("Error adding goal: " + e.getMessage());
             throw e;
@@ -77,7 +64,7 @@ public class GoalsDB extends DBTemplate {
     }
 
     public List<Goal> getGoalsByUsername(String username) throws SQLException, ParseException {
-        String sql = "SELECT * FROM Goals WHERE username = ?";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE username = ?";
         List<Goal> goals = new ArrayList<>();
 
         try (Connection conn = getConnection();
@@ -104,7 +91,7 @@ public class GoalsDB extends DBTemplate {
     }
 
     public Goal getGoalByTypeAndUsername(String username, String type) throws SQLException {
-        String sql = "SELECT * FROM Goals WHERE username = ? AND Type = ?";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE username = ? AND Type = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -131,7 +118,7 @@ public class GoalsDB extends DBTemplate {
     }
 
     public void updateGoal(Goal goal) throws SQLException {
-        String sql = "UPDATE Goals SET Value = ?, Date = ?, Completed = ? WHERE username = ? AND Type = ?";
+        String sql = "UPDATE " + TABLE_NAME + " SET Value = ?, Date = ?, Completed = ? WHERE username = ? AND Type = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -154,8 +141,8 @@ public class GoalsDB extends DBTemplate {
         }
     }
 
-    public void updateGoalCompletion (Goal goal) throws SQLException {
-        String sql = "UPDATE Goals SET Completed = ? WHERE username = ? AND Type = ?";
+    public void updateGoalCompletion(Goal goal) throws SQLException {
+        String sql = "UPDATE " + TABLE_NAME + " SET Completed = ? WHERE username = ? AND Type = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -172,7 +159,7 @@ public class GoalsDB extends DBTemplate {
     }
 
     public void deleteGoal(String username, String type) throws SQLException {
-        String sql = "DELETE FROM Goals WHERE username = ? AND Type = ?";
+        String sql = "DELETE FROM " + TABLE_NAME + " WHERE username = ? AND Type = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

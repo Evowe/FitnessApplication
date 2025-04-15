@@ -9,13 +9,15 @@ import java.util.List;
 
 
 public class WorkoutDB extends DBTemplate {
+	private static final String WORKOUTS_TABLE = "Workouts";
+	private static final String EXERCISES_TABLE = "WorkoutExercises";  // Renamed to avoid conflict with main Exercises table
 
 	public WorkoutDB() {
-		super("workouts");
+		super(WORKOUTS_TABLE);
 	}
 
 	@Override
-	protected void createDatabase() throws SQLException {
+	protected void createTables() throws SQLException {
 		// Create Workouts table
 		String[] workoutColumns = {
 				"Name TEXT NOT NULL",
@@ -24,7 +26,7 @@ public class WorkoutDB extends DBTemplate {
 				"CaloriesBurned INTEGER DEFAULT 0",
 				"Date TEXT DEFAULT CURRENT_TIMESTAMP"
 		};
-		createTable("Workouts", workoutColumns);
+		createTable(WORKOUTS_TABLE, workoutColumns);
 
 		// Create Exercises table with Description field
 		String[] exerciseColumns = {
@@ -34,13 +36,13 @@ public class WorkoutDB extends DBTemplate {
 				"Sets INTEGER DEFAULT 0",
 				"Reps INTEGER DEFAULT 0",
 				"Weight REAL DEFAULT 0.0",
-				"FOREIGN KEY (WorkoutID) REFERENCES Workouts(ID)"
+				"FOREIGN KEY (WorkoutID) REFERENCES " + WORKOUTS_TABLE + "(ID)"
 		};
-		createTable("Exercises", exerciseColumns);
+		createTable(EXERCISES_TABLE, exerciseColumns);
 	}
 
 	public int saveWorkout(Workout workout) throws SQLException {
-		String sql = "INSERT INTO Workouts (Name, Description, Duration) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO " + WORKOUTS_TABLE + " (Name, Description, Duration) VALUES (?, ?, ?)";
 
 		try (Connection conn = getConnection();
 			 PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -74,7 +76,7 @@ public class WorkoutDB extends DBTemplate {
 			return;
 		}
 
-		String sql = "INSERT INTO Exercises (WorkoutID, Name, Description, Sets, Reps, Weight) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO " + EXERCISES_TABLE + " (WorkoutID, Name, Description, Sets, Reps, Weight) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			for (Exercise exercise : exercises) {
@@ -91,7 +93,7 @@ public class WorkoutDB extends DBTemplate {
 	}
 
 	public Workout getWorkout(int id) throws SQLException {
-		String sql = "SELECT * FROM Workouts WHERE ID = ?";
+		String sql = "SELECT * FROM " + WORKOUTS_TABLE + " WHERE ID = ?";
 
 		try (Connection conn = getConnection();
 			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -120,7 +122,7 @@ public class WorkoutDB extends DBTemplate {
 
 	private List<Exercise> getExercisesForWorkout(int workoutId, Connection conn) throws SQLException {
 		List<Exercise> exercises = new ArrayList<>();
-		String sql = "SELECT * FROM Exercises WHERE WorkoutID = ?";
+		String sql = "SELECT * FROM " + EXERCISES_TABLE + " WHERE WorkoutID = ?";
 
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setInt(1, workoutId);
@@ -144,7 +146,7 @@ public class WorkoutDB extends DBTemplate {
 
 	public List<Workout> getAllWorkouts() throws SQLException {
 		List<Workout> workouts = new ArrayList<>();
-		String sql = "SELECT ID FROM Workouts";
+		String sql = "SELECT ID FROM " + WORKOUTS_TABLE;
 
 		try (Connection conn = getConnection();
 			 Statement stmt = conn.createStatement();
@@ -165,14 +167,14 @@ public class WorkoutDB extends DBTemplate {
 	public boolean deleteWorkout(int workoutId) throws SQLException {
 		try (Connection conn = getConnection()) {
 			// First delete associated exercises
-			String exercisesSql = "DELETE FROM Exercises WHERE WorkoutID = ?";
+			String exercisesSql = "DELETE FROM " + EXERCISES_TABLE + " WHERE WorkoutID = ?";
 			try (PreparedStatement pstmt = conn.prepareStatement(exercisesSql)) {
 				pstmt.setInt(1, workoutId);
 				pstmt.executeUpdate();
 			}
 
 			// Then delete the workout
-			String workoutSql = "DELETE FROM Workouts WHERE ID = ?";
+			String workoutSql = "DELETE FROM " + WORKOUTS_TABLE + " WHERE ID = ?";
 			try (PreparedStatement pstmt = conn.prepareStatement(workoutSql)) {
 				pstmt.setInt(1, workoutId);
 				int affectedRows = pstmt.executeUpdate();
@@ -182,7 +184,7 @@ public class WorkoutDB extends DBTemplate {
 	}
 
 	public boolean updateWorkout(int workoutId, Workout workout) throws SQLException {
-		String sql = "UPDATE Workouts SET Description = ?, Duration = ? WHERE ID = ?";
+		String sql = "UPDATE " + WORKOUTS_TABLE + " SET Description = ?, Duration = ? WHERE ID = ?";
 
 		try (Connection conn = getConnection();
 			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -195,7 +197,7 @@ public class WorkoutDB extends DBTemplate {
 
 			if (affectedRows > 0) {
 				// Delete existing exercises
-				String deleteSql = "DELETE FROM Exercises WHERE WorkoutID = ?";
+				String deleteSql = "DELETE FROM " + EXERCISES_TABLE + " WHERE WorkoutID = ?";
 				try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
 					deleteStmt.setInt(1, workoutId);
 					deleteStmt.executeUpdate();
