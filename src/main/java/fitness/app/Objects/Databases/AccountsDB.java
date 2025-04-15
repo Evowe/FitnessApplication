@@ -268,5 +268,29 @@ public class AccountsDB extends DBTemplate {
     		System.out.println("Error: Could not depromote user through admin action");
     	}
     }
+
+    public void updateWallet(String username, Integer wallet) throws SQLException {
+        String sql = "UPDATE accounts SET wallet = ? WHERE username = ?";
+        try (Connection conn = getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, wallet);
+            pstmt.setString(2, username);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public int getWallet(String username) throws SQLException {
+        String sql = "SELECT wallet FROM accounts WHERE username = ?";
+        try (Connection conn = getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("wallet");
+            }
+        }
+        return -1000000;
+    }
+
     
 }

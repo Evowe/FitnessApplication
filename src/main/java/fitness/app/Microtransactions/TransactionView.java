@@ -47,7 +47,7 @@ public class TransactionView extends JPanel {
         JLabel label4 = new JLabel("CVV");
 
         FlatTextField expirField = new FlatTextField();
-        expirField.setPlaceholderText("mm/dd");
+        expirField.setPlaceholderText("mm/yr");
         JLabel label5 = new JLabel("Expir. Date");
 
         FlatButton submitButton = new FlatButton();
