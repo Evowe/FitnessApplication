@@ -44,27 +44,27 @@ public class currencyshopview extends JPanel {
             // Create and add multiple text boxes to the panel
             FlatButton five = new FlatButton();
             five.setBorderPainted(false);
-            five.setText("499 Rocket Bucks" + "\n" + "$5.00");
+            five.setText("499 Rocket Bucks" + "\n" + " $5.00");
             five.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
 
             FlatButton ten = new FlatButton();
             ten.setBorderPainted(false);
-            ten.setText("999 Rocket Bucks" + "\n" + "$10.00");
+            ten.setText("999 Rocket Bucks" + "\n" + " $10.00");
             ten.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
 
             FlatButton twenty = new FlatButton();
             twenty.setBorderPainted(false);
-            twenty.setText("1999 Rocket Bucks" + "\n" + "$20.00");
+            twenty.setText("1999 Rocket Bucks" + "\n" + " $20.00");
             twenty.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
 
             FlatButton fifty = new FlatButton();
             fifty.setBorderPainted(false);
-            fifty.setText("4999 Rocket Bucks" + "\n" + "$50.00");
+            fifty.setText("4999 Rocket Bucks" + "\n" + " $50.00");
             fifty.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
 
             FlatButton oneHundred = new FlatButton();
             oneHundred.setBorderPainted(false);
-            oneHundred.setText("9999 Rocket Bucks" + "\n" + "$100.00");
+            oneHundred.setText("9999 Rocket Bucks" + "\n" + " $100.00");
             oneHundred.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
 
             shopMenu.add(title);
