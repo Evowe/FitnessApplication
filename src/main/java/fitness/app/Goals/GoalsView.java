@@ -63,7 +63,6 @@ public class GoalsView extends JPanel {
 
         // -- RIGHT: Current Distance Goal --
         JPanel distancePanel = new JPanel(new MigLayout("insets 0,wrap"));
-        distancePanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:lighten(@background,3%)");
         JLabel weightTitle = new JLabel("Current Weight Goal");
         weightTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold");
         SimpleDateFormat displayFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -169,7 +168,8 @@ public class GoalsView extends JPanel {
             }
         });
         JButton submit = new JButton("Submit");
-        submit.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%)");
+        submit.setBorderPainted(false);
+        submit.putClientProperty(FlatClientProperties.STYLE, "background:@accent");
         submit.addActionListener(e -> {
             try {
                 double val = Double.parseDouble(valueField.getText());

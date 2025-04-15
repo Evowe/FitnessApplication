@@ -29,7 +29,7 @@ public class SettingsView {
 
         // Create the settings panel with WHITE background and rounded corners
         settingsPanel = new JPanel(new MigLayout("wrap, insets 30", "[400:400:600]", "[]"));
-        settingsPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:#FFFFFF;");
+        settingsPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:@secondaryBackground");
 
         // Style the title with red text
         JLabel title = new JLabel("Settings");
@@ -108,19 +108,17 @@ public class SettingsView {
         appearanceLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:#FF3B30;");
 
         JLabel themeLabel = new JLabel("Theme");
-        themeLabel.setForeground(Color.WHITE);
+        themeLabel.putClientProperty(FlatClientProperties.STYLE, "foreground:@foreground");
 
         String[] themes = {"Dark Mode", "Light Mode"};
         themeSelector = new JComboBox<>(themes);
         themeSelector.setSelectedIndex(SettingsViewModel.getThemeIndex());
         // Make dropdown more readable with dark background
-        themeSelector.setBackground(new Color(30, 30, 30));
-        themeSelector.setForeground(Color.WHITE);
-        themeSelector.putClientProperty(FlatClientProperties.STYLE, "background:#2A2A2A; foreground:#FFFFFF;");
+        themeSelector.putClientProperty(FlatClientProperties.STYLE, "background:@accent; foreground:@foreground");
 
         // Style notifications section with red text
         JLabel notificationsLabel = new JLabel("Notifications");
-        notificationsLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:#FF3B30;");
+        notificationsLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:@foreground;");
 
         enableNotifications = new JCheckBox("Enable Notifications");
         enableNotifications.setSelected(SettingsViewModel.isNotificationsEnabled());

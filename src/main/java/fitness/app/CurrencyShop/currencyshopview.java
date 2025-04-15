@@ -18,13 +18,20 @@ import static fitness.app.Objects.Account.updateWallet;
 
 public class currencyshopview extends JPanel {
     private static JPanel mainPanel;
-        currencyshopview (Account acc) {
-            mainPanel = new JPanel(new MigLayout("fill,insets 20", "left", "Top"));
-            add(new SideMenuView(), "growy, pushy");
+        public currencyshopview(Account acc) {
+            setLayout(new MigLayout("fill, insets 20"));
+            putClientProperty(FlatClientProperties.STYLE, "background:@background;");
+
+            JPanel menuPanel = new JPanel(new MigLayout("insets 0"));
+            menuPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
+            menuPanel.add(new SideMenuView(), "growy, pushy");
+
+            JPanel everythingElsePanel = new JPanel(new MigLayout("insets 0", "center",  "center"));
+            everythingElsePanel.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
 
 
             JPanel shopMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
-            shopMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;" + "background:lighten(@background,5%)");
+            shopMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
             FlatLabel title = new FlatLabel();
             title.setText("Select currency pack");
@@ -36,32 +43,32 @@ public class currencyshopview extends JPanel {
 
             // Create and add multiple text boxes to the panel
             FlatButton five = new FlatButton();
+            five.setBorderPainted(false);
             five.setText("499 Rocket Bucks" + "\n" + "$5.00");
-            five.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+            five.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
 
             FlatButton ten = new FlatButton();
+            ten.setBorderPainted(false);
             ten.setText("999 Rocket Bucks" + "\n" + "$10.00");
-            ten.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+            ten.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
 
             FlatButton twenty = new FlatButton();
+            twenty.setBorderPainted(false);
             twenty.setText("1999 Rocket Bucks" + "\n" + "$20.00");
-            twenty.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+            twenty.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
 
             FlatButton fifty = new FlatButton();
+            fifty.setBorderPainted(false);
             fifty.setText("4999 Rocket Bucks" + "\n" + "$50.00");
-            fifty.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
+            fifty.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
 
             FlatButton oneHundred = new FlatButton();
+            oneHundred.setBorderPainted(false);
             oneHundred.setText("9999 Rocket Bucks" + "\n" + "$100.00");
-            oneHundred.putClientProperty(FlatClientProperties.STYLE, "background:lighten(@background,10%);");
-
-            MenuBar menuBar = new MenuBar();
-
-            mainPanel.add(new SideMenuView(), "growy, pushy");
+            oneHundred.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
 
             shopMenu.add(title);
             shopMenu.add(subtext);
-
             shopMenu.add(five);
             shopMenu.add(ten);
             shopMenu.add(twenty);
@@ -74,7 +81,10 @@ public class currencyshopview extends JPanel {
             fifty.addActionListener(createPurchaseListener(acc, 4999, 50.00));
             oneHundred.addActionListener(createPurchaseListener(acc, 9999, 100.00));
 
-            mainPanel.add(shopMenu);
+            everythingElsePanel.add(shopMenu);
+
+            add(menuPanel, "growy, pushy");
+            add(everythingElsePanel);
         }
 
         public static JPanel get() {return mainPanel;}

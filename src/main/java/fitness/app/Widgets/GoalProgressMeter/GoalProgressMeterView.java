@@ -25,12 +25,12 @@ public class GoalProgressMeterView extends JPanel {
             add(new JLabel("Weight Goal "), "wrap, gapy 5");
             FlatProgressBar progressBar = new FlatProgressBar();
             //TODO get from database
-            progressBar.setValue((int)(WeightGoal.getValue()));
+            progressBar.setValue( /* (int)(WeightGoal.getValue()) */ 72);
             add(progressBar, "wrap");
             add(new JLabel("Distance Goal "), "wrap, gapy 5");
             progressBar = new FlatProgressBar();
             //TODO get from database
-            progressBar.setValue((int)DistanceGoal.getValue());
+            progressBar.setValue( /* (int)DistanceGoal.getValue() */ 43);
             add(progressBar, "wrap");
         }
         catch (SQLException e) {

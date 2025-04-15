@@ -52,8 +52,10 @@ public class CreateAccountView extends JPanel {
         JPanel createAccountMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         createAccountMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
-        JButton backButton = new JButton("Back");
-        backButton.setMaximumSize(new Dimension(50, 25));
+        JButton backButton = new JButton("<");
+        backButton.setMargin(new Insets(0,0,0,0));
+        backButton.setMinimumSize(new Dimension(36, 36));
+        backButton.setMaximumSize(new Dimension(36, 36));
         backButton.setBorderPainted(false);
         backButton.addActionListener(new ActionListener() {
             @Override

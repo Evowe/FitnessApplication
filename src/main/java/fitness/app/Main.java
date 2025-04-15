@@ -10,6 +10,7 @@ import fitness.app.Admin.AdminUsersView;
 import fitness.app.CreateAccount.CreateAccountView;
 import fitness.app.CreateExercise.CreateExcerciseView;
 import fitness.app.CurrencyShop.currencyShopViewModel;
+import fitness.app.CurrencyShop.currencyshopview;
 import fitness.app.ExerciseLibrary.ExerciseLibraryView;
 import fitness.app.Goals.GoalsView;
 import fitness.app.Home.HomeView;
@@ -27,7 +28,7 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class Main {
-    private static boolean dark = false;
+    private static boolean dark = true;
 
     private static JFrame window;
     private static Account currentUser;
@@ -88,8 +89,7 @@ public class Main {
                 window.add(new HomeView(currentUser));
             }
             case "StatsPage" -> {
-                StatsView statsView = new StatsView(currentUser);
-                window.add(statsView.getViewPanel());
+                window.add(new StatsView(currentUser));
             }
             case "AdminPage" -> {
                 window.add(new AdminHomeView());
@@ -99,7 +99,7 @@ public class Main {
                 TransactionViewModel transact = new TransactionViewModel();
                 transact.getCardUser(currentUser);
                 view.findCurrUser(currentUser);
-                window.add(currencyShopViewModel.getCurrencyView());
+                window.add(new currencyshopview(currentUser));
             }
             case "GoalsPage" -> {
                 window.add(new GoalsView(currentUser));

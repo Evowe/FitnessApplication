@@ -71,7 +71,7 @@ public class SideMenuView extends JPanel {
         FlatButton exerciseLibraryButton = new FlatButton();
         exerciseLibraryButton.setBorderPainted(false);
         exerciseLibraryButton.setText("Exercise Library");
-        exerciseLibraryButton.setIcon(sideMenuViewModel.getIcon("chart-evaluation"));
+        exerciseLibraryButton.setIcon(sideMenuViewModel.getIcon("workout-stretching"));
         exerciseLibraryButton.setHorizontalAlignment(SwingConstants.LEFT);
         exerciseLibraryButton.setMargin(new Insets(5,25,5,5));
         exerciseLibraryButton.setMinimumHeight(50);
