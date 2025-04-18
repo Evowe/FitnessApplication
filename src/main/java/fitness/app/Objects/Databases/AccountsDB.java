@@ -15,7 +15,7 @@ public class AccountsDB extends DBTemplate {
 
     @Override
     protected void createTables() throws SQLException {
-        // Create Account table
+        // Create Account table'
 
         String[] columns = {
                 "username TEXT NOT NULL",

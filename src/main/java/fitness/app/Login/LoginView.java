@@ -19,6 +19,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+//import static fitness.app.Main.updateTheme;
+
 public class LoginView extends JPanel {
     private final LoginViewModel loginViewModel;
 
@@ -99,6 +101,9 @@ public class LoginView extends JPanel {
                     if ("admin".equals(validatedAccount.getRole())) {
                         Main.setWindow("AdminPage");
                     } else {
+                        //Main.dark = validatedAccount.getMode();
+                        //updateTheme();
+                        //SwingUtilities.updateComponentTreeUI(SwingUtilities.windowForComponent(Main.window));
                         Main.setWindow("HomePage");
                     }
                 }

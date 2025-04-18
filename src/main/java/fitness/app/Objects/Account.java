@@ -101,6 +101,16 @@ public class Account {
         return theme;
     }
 
+    /*
+    public Boolean getMode(){
+        if(theme.equalsIgnoreCase("light")){
+            return false;
+        }
+        return true;
+    }
+
+
+     */
     public void setTheme(String theme) {
         this.theme = theme;
     }

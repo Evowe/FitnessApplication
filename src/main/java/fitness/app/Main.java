@@ -17,7 +17,9 @@ import fitness.app.Home.HomeView;
 import fitness.app.Login.LoginView;
 import fitness.app.Microtransactions.TransactionViewModel;
 import fitness.app.Objects.Databases.*;
+import fitness.app.Settings.SettingsModel;
 import fitness.app.Settings.SettingsViewModel;
+import fitness.app.Social.SocialView;
 import fitness.app.Statistics.StatsView;
 import fitness.app.Objects.*;
 import fitness.app.Workout.NewWorkoutView;
@@ -28,7 +30,7 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class Main {
-    private static boolean dark = true;
+    public static boolean dark = true;
 
     private static JFrame window;
     private static Account currentUser;
@@ -51,7 +53,9 @@ public class Main {
         FlatRobotoMonoFont.install();
         FlatLaf.registerCustomDefaultsSource("FlatLafSettings");
 
+
         try {
+            //CHANGE WAS HERE
             if (dark) {
                 UIManager.setLookAndFeel(new FlatDarkLaf());
             }
@@ -61,6 +65,7 @@ public class Main {
         } catch (UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
+
         UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
 
         //Application window
@@ -69,7 +74,7 @@ public class Main {
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
         window.setSize(1200, 700);
         window.setLocationRelativeTo(null);
-        window.add(new LoginView());
+        window.add(new SocialView());
         window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
         window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
         window.setVisible(true);
@@ -125,6 +130,10 @@ public class Main {
             case "NewWorkout" -> {
                 window.add(new NewWorkoutView());
             }
+            case "CreateMessage" -> {
+                //window.add(new CreateMessageView());
+                //window.add(new NewWorkoutView());
+            }
         }
         window.revalidate();
         window.repaint();
@@ -147,6 +156,24 @@ public class Main {
             e.printStackTrace();
         }
     }
+    /*
+    public static void updateTheme(){
+        try {
+            //CHANGE WAS HERE
+            if (dark) {
+                UIManager.setLookAndFeel(new FlatDarkLaf());
+            }
+            else {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            }
+        } catch (UnsupportedLookAndFeelException e) {
+            throw new RuntimeException(e);
+        }
+        SwingUtilities.updateComponentTreeUI(SwingUtilities.windowForComponent(window));
+
+    }
+
+     */
 
 
     public static Account getCurrentUser() {
