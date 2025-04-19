@@ -13,7 +13,6 @@ public class ItemsDB extends DBTemplate {
     @Override
     protected void createTables() throws SQLException {
         String[] itemsColumns = {
-                "id INTEGER PRIMARY KEY AUTOINCREMENT",
                 "name TEXT NOT NULL",
                 "description TEXT",
                 "type TEXT NOT NULL",

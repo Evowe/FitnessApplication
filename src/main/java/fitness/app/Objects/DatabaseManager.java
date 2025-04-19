@@ -12,6 +12,8 @@ public class DatabaseManager {
     private static CreditCardDB creditCardDB;
     private static StatsDB statsDB;
     private static WorkoutDB workoutDB;
+    private static ItemsDB itemsDB;
+    private static FriendsDB friendsDB;
 
     public static void initializeDatabases() {
         // Create instances of each database class
@@ -21,6 +23,8 @@ public class DatabaseManager {
         goalsDB = new GoalsDB();
         statsDB = new StatsDB();
         workoutDB = new WorkoutDB();
+        itemsDB = new ItemsDB();
+        friendsDB = new FriendsDB();
     }
 
     public static AccountsDB getAccountsDB() {
@@ -65,4 +69,17 @@ public class DatabaseManager {
         return workoutDB;
     }
 
+    public static ItemsDB getItemsDB() {
+        if (itemsDB == null) {
+            itemsDB = new ItemsDB();
+        }
+        return itemsDB;
+    }
+
+    public static FriendsDB getFriendsDB() {
+        if (friendsDB == null) {
+            friendsDB = new FriendsDB();
+        }
+        return friendsDB;
+    }
 }
