@@ -46,7 +46,6 @@ public class CalendarView extends JPanel {
         buttonName[0] = Character.toUpperCase(buttonName[0]);
         monthButton.setText(new String(buttonName));
         monthButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground; foreground:@foreground;");
-        monthButton.setForeground(new Color(193, 18, 31));
 
         //Month Selection Menu
         FlatPopupMenu monthPopupMenu = new FlatPopupMenu();
@@ -76,7 +75,6 @@ public class CalendarView extends JPanel {
 
         //Year Label
         JLabel yearLabel = new JLabel(String.valueOf(viewModel.getYear()));
-        yearLabel.setForeground(new Color(193, 18, 31));
         yearLabel.setMinimumSize(new Dimension(55, 30));
         yearLabel.setHorizontalAlignment(SwingConstants.LEFT);
 

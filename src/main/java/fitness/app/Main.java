@@ -1,5 +1,6 @@
 package fitness.app;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -16,8 +17,6 @@ import fitness.app.Goals.GoalsView;
 import fitness.app.Home.HomeView;
 import fitness.app.Login.LoginView;
 import fitness.app.Microtransactions.TransactionViewModel;
-import fitness.app.Objects.Databases.*;
-import fitness.app.Settings.SettingsModel;
 import fitness.app.Settings.SettingsViewModel;
 import fitness.app.Social.SocialView;
 import fitness.app.Statistics.StatsView;
@@ -31,16 +30,8 @@ import java.sql.SQLException;
 
 public class Main {
     public static boolean dark = true;
-
     private static JFrame window;
     private static Account currentUser;
-
-    private static AccountsDB accountsDB;
-    private static ExerciseDB exerciseDB;
-    private static CreditCardDB creditCardDB;
-    private static GoalsDB goalsDB;
-    private static StatsDB statsDB;
-    private static WorkoutDB workoutDB;
 
     public static void main(String[] args) {
         System.setProperty("apple.awt.application.name", "Rocket Health");
@@ -53,9 +44,7 @@ public class Main {
         FlatRobotoMonoFont.install();
         FlatLaf.registerCustomDefaultsSource("FlatLafSettings");
 
-
         try {
-            //CHANGE WAS HERE
             if (dark) {
                 UIManager.setLookAndFeel(new FlatDarkLaf());
             }

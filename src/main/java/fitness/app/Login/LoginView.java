@@ -65,20 +65,16 @@ public class LoginView extends JPanel {
         description.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
 
         FlatTextField usernameField = new FlatTextField();
-        usernameField.setMinimumSize(new Dimension(1, 36));
-        usernameField.setPlaceholderText("Enter username");
         usernameField.putClientProperty(FlatClientProperties.STYLE, "arc:10;");
+        usernameField.setPlaceholderText("Enter username");
 
         FlatLabel result = new FlatLabel();
 
         FlatPasswordField passwordField = new FlatPasswordField();
-        passwordField.setMinimumSize(new Dimension(1, 36));
-        passwordField.setPlaceholderText("Enter password");
         passwordField.putClientProperty(FlatClientProperties.STYLE, "arc:10; showRevealButton:true");
+        passwordField.setPlaceholderText("Enter password");
 
         FlatButton logInButton = new FlatButton();
-        logInButton.setMargin(new Insets(0,0,0,0));
-        logInButton.setMinimumSize(new Dimension(36, 30));
         logInButton.setBorderPainted(false);
         logInButton.setText("Log in");
         logInButton.addActionListener(new ActionListener() {
@@ -145,8 +141,6 @@ public class LoginView extends JPanel {
         });
 
         FlatButton createAccountButton = new FlatButton();
-        createAccountButton.setMargin(new Insets(0,0,0,0));
-        createAccountButton.setMinimumSize(new Dimension(36, 30));
         createAccountButton.setText("Create Account");
         createAccountButton.setBorderPainted(false);
         createAccountButton.addActionListener(new ActionListener() {

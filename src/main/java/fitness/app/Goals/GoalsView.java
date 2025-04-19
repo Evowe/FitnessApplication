@@ -3,6 +3,7 @@ package fitness.app.Goals;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import fitness.app.Objects.Account;
@@ -38,8 +39,6 @@ public class GoalsView extends JPanel {
     }
 
     private boolean isFrameOpen = false;
-    //private static JPanel mainPanel;
-    //private static JPanel goalsPanel;
 
     public GoalsView(Account acc) {
         //GoalsViewModel.checkDB();
@@ -50,14 +49,11 @@ public class GoalsView extends JPanel {
 
     public void modifyGoalsPanel() {
         GoalsDB goalsDB = DatabaseManager.getGoalsDB();
-        FlatLaf.registerCustomDefaultsSource("Components.Themes");
-        UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
-        FlatMacDarkLaf.setup();
 
-//        setLayout(new MigLayout("insets 0, fill", "push[grow]push", "push[grow]push"));
         setLayout(new MigLayout("fill,insets 20"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
-        JPanel mainPanel = new JPanel(new MigLayout("insets"));
+
+        JPanel mainPanel = new JPanel(new MigLayout("insets 0"));
         mainPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
 
@@ -108,13 +104,12 @@ public class GoalsView extends JPanel {
         formTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
 
         JLabel desc = new JLabel("");
-        //desc.putClientProperty(FlatClientProperties.STYLE, "foreground:darken(@foreground,33%)");
+        desc.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
 
         JComboBox<String> goalTypeBox = new JComboBox<>(new String[]{"Distance", "Weight"});
         goalTypeBox.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground");
         JTextField valueField = new JTextField();
         valueField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter goal value");
-        valueField.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground");
         Dimension dim = valueField.getSize();
         JPanel horiBox = new JPanel(new BorderLayout());
         horiBox.setPreferredSize(dim);
@@ -167,9 +162,9 @@ public class GoalsView extends JPanel {
                 popWindow.setVisible(true);
             }
         });
-        JButton submit = new JButton("Submit");
+        FlatButton submit = new FlatButton();
+        submit.setText("Submit");
         submit.setBorderPainted(false);
-        submit.putClientProperty(FlatClientProperties.STYLE, "background:@accent");
         submit.addActionListener(e -> {
             try {
                 double val = Double.parseDouble(valueField.getText());

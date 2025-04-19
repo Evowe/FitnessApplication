@@ -47,15 +47,13 @@ public class CreateAccountView extends JPanel {
 
         //Right half
         JPanel createAccountPanel = new JPanel(new MigLayout("fill,insets 20", "center", "center"));
-        createAccountPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        createAccountPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
 
         JPanel createAccountMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         createAccountMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
         JButton backButton = new JButton("<");
-        backButton.setMargin(new Insets(0,0,0,0));
-        backButton.setMinimumSize(new Dimension(36, 36));
-        backButton.setMaximumSize(new Dimension(36, 36));
+        backButton.setMaximumSize(new Dimension(30,30));
         backButton.setBorderPainted(false);
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -65,27 +63,24 @@ public class CreateAccountView extends JPanel {
         });
 
         JLabel title = new JLabel("Welcome to Rocket Health");
-        title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
+        title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6;");
 
         JLabel description = new JLabel("Create a new account to continue");
-        description.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
+        description.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground;");
 
         FlatTextField usernameField = new FlatTextField();
-        usernameField.setMinimumSize(new Dimension(30, 30));
         usernameField.putClientProperty(FlatClientProperties.STYLE, "arc:10;");
         usernameField.setPlaceholderText("Enter username");
         JLabel usernameError = new JLabel("");
 
         FlatPasswordField passwordField = new FlatPasswordField();
-        passwordField.setMinimumSize(new Dimension(30, 30));
         passwordField.setPlaceholderText("Enter password");
-        passwordField.putClientProperty(FlatClientProperties.STYLE, "arc:10; showRevealButton:true");
+        passwordField.putClientProperty(FlatClientProperties.STYLE, "arc:10; showRevealButton:true;");
         JLabel passwordError = new JLabel("");
 
         FlatPasswordField confirmPasswordField = new FlatPasswordField();
-        confirmPasswordField.setMinimumSize(new Dimension(30, 30));
-        confirmPasswordField.setPlaceholderText("Confirm password");
         confirmPasswordField.putClientProperty(FlatClientProperties.STYLE, "arc:10;");
+        confirmPasswordField.setPlaceholderText("Confirm password");
         JLabel confirmPasswordError = new JLabel("");
 
         JButton createAccountButton = new JButton("Create Account");
@@ -100,7 +95,7 @@ public class CreateAccountView extends JPanel {
                     valid = false;
                     usernameError.setText(createAccountViewModel.validateUsername(account));
                     usernameError.setForeground(Color.RED);
-                    usernameError.putClientProperty(FlatClientProperties.STYLE, "font:-4");
+                    usernameError.putClientProperty(FlatClientProperties.STYLE, "font:-4;");
                 }
                 else {
                     usernameError.setText("");
@@ -110,7 +105,7 @@ public class CreateAccountView extends JPanel {
                     valid = false;
                     passwordError.setText(createAccountViewModel.validatePassword(account));
                     passwordError.setForeground(Color.RED);
-                    passwordError.putClientProperty(FlatClientProperties.STYLE, "font:-4");
+                    passwordError.putClientProperty(FlatClientProperties.STYLE, "font:-4;");
 
                 }
                 else {
@@ -121,7 +116,7 @@ public class CreateAccountView extends JPanel {
                     valid = false;
                     confirmPasswordError.setText("Passwords do not match");
                     confirmPasswordError.setForeground(Color.RED);
-                    confirmPasswordError.putClientProperty(FlatClientProperties.STYLE, "" + "font:-4");
+                    confirmPasswordError.putClientProperty(FlatClientProperties.STYLE, "font:-4;");
                 }
                 else {
                     confirmPasswordError.setText("");
