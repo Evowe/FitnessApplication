@@ -1,5 +1,9 @@
 package fitness.app.Objects;
 
+import fitness.app.Objects.Databases.AccountsDB;
+import fitness.app.Objects.Databases.MessagesDB;
+
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class Message {
@@ -11,13 +15,20 @@ public class Message {
     private String response;
     private Type responseType;
 
-    public enum Type {CHALLENGE, FRIEND_REQUEST, ACCEPT_FRIEND, REJECT_FRIEND, ACCEPT_CHALLENGE, REJECT_CHALLENGE};
+    private static MessagesDB getMessagesDB() {
+        return DatabaseManager.getMessagesDB();
+    }
+
+    public enum Type {CHALLENGE, FRIEND_REQUEST, ACCEPT_FRIEND, REJECT_FRIEND, ACCEPT_CHALLENGE, REJECT_CHALLENGE, NOT_READ};
 
     public Message(String message, Account sender, Account receiver, Type type) {
         this.message = message;
         this.sender = sender;
         this.receiver = receiver;
         this.type = type;
+
+        response = "";
+        responseType = Type.NOT_READ;
     }
 
     public Message(String message, Account sender, Account receiver, Type type, String response, Type responseType) {
@@ -77,6 +88,9 @@ public class Message {
         else if (type.equals("ACCEPT_CHALLENGE")) {
             return Type.ACCEPT_CHALLENGE;
         }
+        else if (type.equals("NOT_READ")) {
+            return Type.NOT_READ;
+        }
         return null;
     }
 
@@ -124,6 +138,9 @@ public class Message {
         if (type == Type.REJECT_CHALLENGE) {
             return "REJECT_CHALLENGE";
         }
+        if (type == Type.NOT_READ) {
+            return "NOT_READ";
+        }
 
         return "";
     }
@@ -147,10 +164,20 @@ public class Message {
         if (type == Type.REJECT_CHALLENGE) {
             return "REJECT_CHALLENGE";
         }
+        if (type == Type.NOT_READ) {
+            return "NOT_READ";
+        }
 
         return "";
     }
 
+    public void addMessage() {
+        try{
+            getMessagesDB().addMessage(this);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 
     public Object [] getString(){
         Object [] str = new Object [6];

@@ -18,6 +18,7 @@ import fitness.app.Home.HomeView;
 import fitness.app.Login.LoginView;
 import fitness.app.Microtransactions.TransactionViewModel;
 import fitness.app.Settings.SettingsViewModel;
+import fitness.app.Social.CreateMessageView;
 import fitness.app.Social.SocialView;
 import fitness.app.Statistics.StatsView;
 import fitness.app.Objects.*;
@@ -120,8 +121,11 @@ public class Main {
                 window.add(new NewWorkoutView());
             }
             case "CreateMessage" -> {
-                //window.add(new CreateMessageView());
+                window.add(new CreateMessageView());
                 //window.add(new NewWorkoutView());
+            }
+            case "SocialView" -> {
+                window.add(new SocialView());
             }
         }
         window.revalidate();

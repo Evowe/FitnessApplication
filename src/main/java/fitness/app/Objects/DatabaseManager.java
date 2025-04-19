@@ -12,6 +12,7 @@ public class DatabaseManager {
     private static CreditCardDB creditCardDB;
     private static StatsDB statsDB;
     private static WorkoutDB workoutDB;
+    private static MessagesDB  messagesDB;
     private static ItemsDB itemsDB;
     private static FriendsDB friendsDB;
 
@@ -23,6 +24,7 @@ public class DatabaseManager {
         goalsDB = new GoalsDB();
         statsDB = new StatsDB();
         workoutDB = new WorkoutDB();
+        messagesDB = new MessagesDB();
         itemsDB = new ItemsDB();
         friendsDB = new FriendsDB();
     }
@@ -32,6 +34,13 @@ public class DatabaseManager {
             accountsDB = new AccountsDB();
         }
         return accountsDB;
+    }
+
+    public static MessagesDB getMessagesDB() {
+        if (messagesDB == null) {
+            messagesDB = new MessagesDB();
+        }
+        return messagesDB;
     }
 
     public static ExerciseDB getExerciseDB() {

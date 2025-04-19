@@ -10,6 +10,8 @@ import fitness.app.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -74,8 +76,21 @@ public class SocialView extends JPanel {
         messagesPanel.add(messagesTitle, BorderLayout.NORTH);
 
         //Need to initalize with data from friends database
-        Main.setCurrentUser(new Account("testing", "testing123123"));
-        JTable messagesTable = new JTable(viewModel.getMessageData(Main.getCurrentUser()), viewModel.getMessageColumns());
+        JTable messagesTable = new JTable(viewModel.getMessageData2(Main.getCurrentUser()), viewModel.getMessageColumns());
+        messagesTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        messagesTable.getColumnModel().getColumn(0).setPreferredWidth(350);
+        messagesTable.getColumnModel().getColumn(1).setPreferredWidth(120);
+        messagesTable.getColumnModel().getColumn(2).setPreferredWidth(130);
+
+        for(int i = 1; i < messagesTable.getColumnCount(); i++) {
+            TableColumn col = messagesTable.getColumnModel().getColumn(i);
+            DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+            dtcr.setHorizontalAlignment(SwingConstants.CENTER);
+            col.setCellRenderer(dtcr);
+        }
+
+
+
 
         JScrollPane messagesScrollPane = new JScrollPane(messagesTable);
         messagesPanel.add(messagesScrollPane, BorderLayout.CENTER);
@@ -96,7 +111,7 @@ public class SocialView extends JPanel {
         FlatButton newMessage = new FlatButton();
         newMessage.setMinimumHeight(35);
         newMessage.setMinimumWidth(200);
-        newMessage.setText("Send Message");
+        newMessage.setText("+ New Message");
         buttonPanel.add(newMessage);
         newMessage.addActionListener(new ActionListener() {
             @Override
