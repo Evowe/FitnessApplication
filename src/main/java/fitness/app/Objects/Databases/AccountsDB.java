@@ -120,6 +120,48 @@ public class AccountsDB extends DBTemplate {
         return null;
     }
 
+
+    public Account getAccountNoClose(String username) throws SQLException {
+        String sql = "SELECT * FROM accounts WHERE username = ?";
+
+        try {
+            Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Account account = new Account(
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("status"),
+                        rs.getString("role")
+                );
+
+                account.setWallet(rs.getInt("wallet"));
+                account.setId(rs.getInt("id"));
+
+                // Set preferences if columns exist
+                try {
+                    account.setTheme(rs.getString("theme"));
+                    account.setNotifications(rs.getInt("notifications") == 1);
+                    account.setWeightUnit(rs.getString("weight_unit"));
+                } catch (SQLException e) {
+                    // Columns might not exist yet in older database versions
+                    System.out.println("Note: Preference columns may not exist yet: " + e.getMessage());
+                }
+
+                return account;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting account: " + e.getMessage());
+            throw e;
+        }
+
+        return null;
+    }
+
     public boolean validLogin(String username, String password) throws SQLException {
         String sql = "SELECT * FROM accounts WHERE username = ? AND password = ?";
 

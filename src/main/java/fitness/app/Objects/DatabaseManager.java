@@ -2,6 +2,7 @@ package fitness.app.Objects;
 
 import fitness.app.Objects.Databases.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,10 +13,12 @@ public class DatabaseManager {
     private static CreditCardDB creditCardDB;
     private static StatsDB statsDB;
     private static WorkoutDB workoutDB;
+    private static MessagesDB  messagesDB;
     private static ItemsDB itemsDB;
     private static FriendsDB friendsDB;
+    private static BattlePassDB battlePassDB;
 
-    public static void initializeDatabases() {
+    public static void initializeDatabases() throws SQLException {
         // Create instances of each database class
         accountsDB = new AccountsDB();
         exerciseDB = new ExerciseDB();
@@ -23,11 +26,14 @@ public class DatabaseManager {
         goalsDB = new GoalsDB();
         statsDB = new StatsDB();
         workoutDB = new WorkoutDB();
+        messagesDB = new MessagesDB();
         itemsDB = new ItemsDB();
 
         itemsDB.createDefaultRocketItems();
         itemsDB.giveDefaultRocketToAllUsers();
         friendsDB = new FriendsDB();
+        battlePassDB = new BattlePassDB();
+        //battlePassDB.insertMockData();
     }
 
     public static AccountsDB getAccountsDB() {
@@ -35,6 +41,13 @@ public class DatabaseManager {
             accountsDB = new AccountsDB();
         }
         return accountsDB;
+    }
+
+    public static MessagesDB getMessagesDB() {
+        if (messagesDB == null) {
+            messagesDB = new MessagesDB();
+        }
+        return messagesDB;
     }
 
     public static ExerciseDB getExerciseDB() {
@@ -84,5 +97,12 @@ public class DatabaseManager {
             friendsDB = new FriendsDB();
         }
         return friendsDB;
+    }
+
+    public static BattlePassDB getBattlePassDB() {
+        if (battlePassDB == null) {
+            battlePassDB = new BattlePassDB();
+        }
+        return battlePassDB;
     }
 }

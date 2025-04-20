@@ -42,6 +42,7 @@ public class MessagesDB extends DBTemplate{
             pstmt.setString(6, message.getResponseTypeString());
 
             pstmt.executeUpdate();
+
             System.out.println("Message added successfully");
         } catch (SQLException e) {
             System.out.println("Error adding message");
@@ -64,6 +65,9 @@ public class MessagesDB extends DBTemplate{
             pstmt.setString(6, message.getTypeString());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+            con.close();
             System.out.println("Message edited successfully");
         } catch (SQLException e) {
             System.out.println("Error editing message");
@@ -99,6 +103,8 @@ public class MessagesDB extends DBTemplate{
                 return m;
             }
 
+            rs.close();
+
         } catch (SQLException e) {
             System.out.println("Error getting message");
             throw e;
@@ -113,7 +119,8 @@ public class MessagesDB extends DBTemplate{
         List<Message> incomingMessages = new ArrayList<>();
 
         try(Connection con = getConnection();
-        PreparedStatement pstmt = con.prepareStatement(sql)) {
+            PreparedStatement pstmt = con.prepareStatement(sql)){
+
             pstmt.setString(1, receiverUsername);
 
             ResultSet rs = pstmt.executeQuery();
@@ -122,18 +129,30 @@ public class MessagesDB extends DBTemplate{
 
             //Process all query results and creates new message object for each row
             while(rs.next()){
+                String msgText = rs.getString("message");
+                String sender = rs.getString("sender");
+                String receiver = rs.getString("receiver");
+                String type = rs.getString("type");
+                String response = rs.getString("response");
+                String responseType = rs.getString("responseType");
+
+                Account senderAccount = Account.getAccountNoClose(sender);
+                Account receiverAccount = Account.getAccountNoClose(receiver);
+
                 Message m = new Message(
-                        rs.getString("message"),
-                        Account.getAccount(rs.getString("sender")),
-                        Account.getAccount(rs.getString("reciever")),
-                        Message.getType(rs.getString("type")),
-                        rs.getString("response"),
-                        Message.getType(rs.getString("responseType"))
+                        msgText,
+                        senderAccount,
+                        receiverAccount,
+                        Message.getType(type),
+                        response,
+                        Message.getType(responseType)
                 );
+
 
                 incomingMessages.add(m);
 
             }
+
         } catch (SQLException e){
             System.out.println("Error getting messages");
             throw e;
@@ -142,6 +161,39 @@ public class MessagesDB extends DBTemplate{
         return incomingMessages;
     }
 
+    public List<Object []> getAllIncoming(String receiverUsername) throws SQLException{
+        String sql = "SELECT * FROM messages WHERE receiver = ?";
+        List<Object []> incomingMessages = new ArrayList<>();
+
+        try(Connection con = getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql)){
+
+            pstmt.setString(1, receiverUsername);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            incomingMessages = new ArrayList<>();
+
+            //Process all query results and creates new message object for each row
+            while(rs.next()){
+                Object[] row = new Object[3];
+                row[0] = rs.getString("message");
+                row[1] = rs.getString("sender");
+                //row[2] = rs.getString("receiver");
+                row[2] = rs.getString("type");
+                //row[4] = rs.getString("response");
+                //row[5] = rs.getString("responseType");
+
+                incomingMessages.add(row);
+            }
+
+        } catch (SQLException e){
+            System.out.println("Error getting messages");
+            throw e;
+        }
+
+        return incomingMessages;
+    }
 
     public List<Message> getAllSentMessages(String senderUsername) throws SQLException{
         //db query to select the user
@@ -170,6 +222,8 @@ public class MessagesDB extends DBTemplate{
                 sentMessages.add(m);
 
             }
+
+            rs.close();
         } catch (SQLException e){
             System.out.println("Error getting messages");
             throw e;
