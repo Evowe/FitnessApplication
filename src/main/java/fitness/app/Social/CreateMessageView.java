@@ -142,6 +142,9 @@ public class CreateMessageView extends JPanel {
 
                 Message message = new Message(messageField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
                 message.addMessage();
+                if(type == Message.Type.FRIEND_REQUEST) {
+                    viewModel.requestFriend(Main.getCurrentUser().getUsername(), viewModel.getReceiver().getUsername());
+                }
                 //viewModel.sendMessage(messageField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
                 Main.setWindow("SocialView");
                 //viewModel.selectUser(selectedRow);

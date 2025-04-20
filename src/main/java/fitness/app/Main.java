@@ -20,6 +20,7 @@ import fitness.app.Login.LoginView;
 import fitness.app.Microtransactions.TransactionViewModel;
 import fitness.app.Settings.SettingsViewModel;
 import fitness.app.Social.CreateMessageView;
+import fitness.app.Social.SendResponseView;
 import fitness.app.Social.SocialView;
 import fitness.app.Statistics.StatsView;
 import fitness.app.Objects.*;
@@ -35,7 +36,7 @@ public class Main {
     private static JFrame window;
     private static Account currentUser;
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         System.setProperty("apple.awt.application.name", "Rocket Health");
         System.setProperty("apple.awt.application.appearance", "system");
         DatabaseManager.initializeDatabases();
@@ -130,6 +131,9 @@ public class Main {
             }
             case "BattlePass" -> {
                 window.add(new BattlePassView());
+            }
+            case "SendResponse" -> {
+                window.add(new SendResponseView());
             }
         }
         window.revalidate();

@@ -100,9 +100,9 @@ public class FriendsDB extends DBTemplate{
         return pendingRequests;
     }
 
-    public List<String> getFriends(String username) throws SQLException {
+    public List<Object []> getFriends(String username) throws SQLException {
         String sql = "SELECT friend_username FROM friends WHERE user_username=? AND status = 'accepted'";
-        List<String> friends = new ArrayList<>();
+        List<Object []> friends = new ArrayList<>();
 
         try (Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -111,7 +111,9 @@ public class FriendsDB extends DBTemplate{
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                friends.add(rs.getString("friend_username"));
+                Object[] friend = new Object[1];
+                friend[0] = rs.getString("friend_username");
+                friends.add(friend);
             }
         } catch (SQLException e) {
             System.out.println("Error getting friends: " + e.getMessage());
