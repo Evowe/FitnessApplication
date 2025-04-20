@@ -51,5 +51,27 @@ public class SocialViewModel {
         socialModel.createMessage(message, sender, receiver, type);
     }
 
+    public void requestFriend(String senderUsername, String receiverUsername) {
+        socialModel.requestFriend(senderUsername, receiverUsername);
+    }
 
+    public Object[][] getFriendData(Account account) {
+        return socialModel.getFriendData(account.getUsername());
+    }
+
+    public Object[] getFriendColumns(){
+        return socialModel.getFriendColumns();
+    }
+
+    public void acceptFriendRequest(String senderUsername, String receiverUsername) {
+        socialModel.acceptFriendRequest(senderUsername, receiverUsername);
+    }
+
+    public int getSelectedRow(){
+        return socialModel.getSelectedRow();
+    }
+
+    public void setSelectedRow(int row) {
+        socialModel.setSelectedRow(row);
+    }
 }

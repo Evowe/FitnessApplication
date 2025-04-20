@@ -2,9 +2,11 @@ package fitness.app.Social;
 
 import fitness.app.Objects.Account;
 import fitness.app.Objects.Databases.AccountsDB;
+import fitness.app.Objects.Databases.FriendsDB;
 import fitness.app.Objects.Databases.MessagesDB;
 import fitness.app.Objects.Message;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +14,16 @@ import java.util.List;
 public class SocialModel {
     private MessagesDB messagesDB;
     private AccountsDB accountsDB;
+    private FriendsDB friendsDB;
 
     private Account receiver;
+    private int selectedRow;
 
     public SocialModel() {
         //Create a single instance of MessagesDB
         this.messagesDB = new MessagesDB();
         this.accountsDB = new AccountsDB();
+        this.friendsDB = new FriendsDB();
     }
 
     public Object[][] getUserData() {
@@ -100,6 +105,12 @@ public class SocialModel {
         return data;
     }
 
+
+    public int getSelectedRow() {
+        return selectedRow;
+    }
+
+
     public Object[] getMessageColumns() {
         Object[] columns = new Object[3];
         columns[0] = "Message";
@@ -141,7 +152,56 @@ public class SocialModel {
     }
 
 
+    public void requestFriend(String username, String friend){
+        try {
+            friendsDB.sendFriendRequest(username, friend);
+            System.out.println("Friend Request succesfully added to the database");
+        } catch (SQLException e) {
+            System.out.println("Database error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
+    public Object [][] getFriendData(String username){
+        List<Object []> friends = null;
+
+        try {
+            friends = friendsDB.getFriends(username);
+            System.out.println("Successfully got friends from the database");
+        } catch (SQLException e) {
+            System.out.println("Database error: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        Object[][] data = new Object[friends.size()][1];
+
+        for(int i = 0; i < friends.size(); i++){
+            data[i] = friends.get(i);
+        }
+
+        return data;
+    }
+
+    public Object[] getFriendColumns(){
+        Object[] columns = new Object[1];
+        columns[0] = "Username";
+
+        return columns;
+    }
+
+    public void acceptFriendRequest(String username, String friend){
+        try {
+            friendsDB.acceptFriendRequest(username, friend);
+            System.out.println("Successfully accepted friend request");
+        } catch (SQLException e) {
+            System.out.println("Database error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void setSelectedRow(int row){
+        selectedRow = row;
+    }
 
 
 }

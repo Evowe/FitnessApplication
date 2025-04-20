@@ -60,7 +60,20 @@ public class SocialView extends JPanel {
         myFriendsPanel.add(myFriendsTitle, BorderLayout.NORTH);
 
         //Need to initalize with data from friends database
-        JTable friendsTable = new JTable();
+
+        Object [][] data = null;
+        if(viewModel.getFriendData(Main.getCurrentUser()) == null){
+            data = new Object[1][viewModel.getFriendColumns().length];
+            Object [] empty = new Object[1];
+            empty[0] = "";
+            data[0] = empty;
+        } else{
+            data = viewModel.getFriendData(Main.getCurrentUser());
+        }
+
+
+
+        JTable friendsTable = new JTable(data, viewModel.getFriendColumns());
 
         JScrollPane friendsScrollPane = new JScrollPane(friendsTable);
         myFriendsPanel.add(friendsScrollPane, BorderLayout.CENTER);
@@ -119,6 +132,22 @@ public class SocialView extends JPanel {
                 Main.setWindow("CreateMessage" );
             }
         });
+
+        FlatButton sendResponse = new FlatButton();
+        sendResponse.setMinimumHeight(35);
+        sendResponse.setMinimumWidth(200);
+        sendResponse.setText("Send Response");
+        buttonPanel.add(sendResponse);
+        sendResponse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                Main.setWindow("SendResponse" );
+            }
+        });
+
+
+
+
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         add(mainPanel, "growy, pushy");
