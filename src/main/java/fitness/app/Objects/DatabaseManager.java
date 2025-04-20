@@ -24,6 +24,9 @@ public class DatabaseManager {
         statsDB = new StatsDB();
         workoutDB = new WorkoutDB();
         itemsDB = new ItemsDB();
+
+        itemsDB.createDefaultRocketItems();
+        itemsDB.giveDefaultRocketToAllUsers();
         friendsDB = new FriendsDB();
     }
 

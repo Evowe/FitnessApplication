@@ -15,6 +15,7 @@ import fitness.app.CurrencyShop.currencyshopview;
 import fitness.app.ExerciseLibrary.ExerciseLibraryView;
 import fitness.app.Goals.GoalsView;
 import fitness.app.Home.HomeView;
+import fitness.app.Locker.LockerView;
 import fitness.app.Login.LoginView;
 import fitness.app.Microtransactions.TransactionViewModel;
 import fitness.app.Settings.SettingsViewModel;
@@ -122,6 +123,9 @@ public class Main {
             case "CreateMessage" -> {
                 //window.add(new CreateMessageView());
                 //window.add(new NewWorkoutView());
+            }
+            case "Locker" -> {
+                window.add(new LockerView(currentUser));
             }
         }
         window.revalidate();
