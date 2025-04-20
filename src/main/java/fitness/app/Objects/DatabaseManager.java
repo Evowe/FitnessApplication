@@ -18,7 +18,7 @@ public class DatabaseManager {
     private static FriendsDB friendsDB;
     private static BattlePassDB battlePassDB;
 
-    public static void initializeDatabases() throws SQLException {
+    public static void initializeDatabases(){
         // Create instances of each database class
         accountsDB = new AccountsDB();
         exerciseDB = new ExerciseDB();
