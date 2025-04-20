@@ -8,6 +8,7 @@ import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import fitness.app.Admin.AdminAddUserView;
 import fitness.app.Admin.AdminHomeView;
 import fitness.app.Admin.AdminUsersView;
+import fitness.app.BattlePass.BattlePassView;
 import fitness.app.CreateAccount.CreateAccountView;
 import fitness.app.CreateExercise.CreateExcerciseView;
 import fitness.app.CurrencyShop.currencyShopViewModel;
@@ -34,7 +35,7 @@ public class Main {
     private static JFrame window;
     private static Account currentUser;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         System.setProperty("apple.awt.application.name", "Rocket Health");
         System.setProperty("apple.awt.application.appearance", "system");
         DatabaseManager.initializeDatabases();
@@ -126,6 +127,9 @@ public class Main {
             }
             case "SocialView" -> {
                 window.add(new SocialView());
+            }
+            case "BattlePass" -> {
+                window.add(new BattlePassView());
             }
         }
         window.revalidate();

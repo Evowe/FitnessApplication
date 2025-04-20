@@ -95,6 +95,14 @@ public class SideMenuView extends JPanel {
         shopButton.setMinimumHeight(50);
         shopButton.addActionListener(genButtonListener("currencyShopPage"));
 
+        FlatButton BPButton = new FlatButton();
+        BPButton.setBorderPainted(false);
+        BPButton.setText("Battle Pass");
+        BPButton.setHorizontalAlignment(SwingConstants.LEFT);
+        BPButton.setMargin(new Insets(5,25,5,5));
+        BPButton.setMinimumHeight(50);
+        BPButton.addActionListener(genButtonListener("BattlePass"));
+
 
         FlatLabel accountLabel = new FlatLabel();
         accountLabel.setText("Account");
@@ -135,6 +143,7 @@ public class SideMenuView extends JPanel {
         add(exerciseLibraryButton, "wrap, gapy 10");
         add(socialViewButton, "wrap, gapy 10");
         add(shopButton, "wrap, gapy 10");
+        add(BPButton, "wrap, gapy 10");
         add(accountLabel, "wrap, gap 0 0 10 0");
         add(profileButton, "wrap, gapy 0");
         add(settingsButton, "wrap, gapy 10");

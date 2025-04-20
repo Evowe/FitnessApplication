@@ -2,6 +2,7 @@ package fitness.app.Objects;
 
 import fitness.app.Objects.Databases.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,8 +16,9 @@ public class DatabaseManager {
     private static MessagesDB  messagesDB;
     private static ItemsDB itemsDB;
     private static FriendsDB friendsDB;
+    private static BattlePassDB battlePassDB;
 
-    public static void initializeDatabases() {
+    public static void initializeDatabases() throws SQLException {
         // Create instances of each database class
         accountsDB = new AccountsDB();
         exerciseDB = new ExerciseDB();
@@ -27,6 +29,8 @@ public class DatabaseManager {
         messagesDB = new MessagesDB();
         itemsDB = new ItemsDB();
         friendsDB = new FriendsDB();
+        battlePassDB = new BattlePassDB();
+        //battlePassDB.insertMockData();
     }
 
     public static AccountsDB getAccountsDB() {
@@ -90,5 +94,12 @@ public class DatabaseManager {
             friendsDB = new FriendsDB();
         }
         return friendsDB;
+    }
+
+    public static BattlePassDB getBattlePassDB() {
+        if (battlePassDB == null) {
+            battlePassDB = new BattlePassDB();
+        }
+        return battlePassDB;
     }
 }
