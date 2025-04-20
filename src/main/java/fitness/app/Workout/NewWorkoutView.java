@@ -126,7 +126,7 @@ public class NewWorkoutView extends JPanel {
 		saveWorkout.addActionListener(e -> {
 			workout.setDescription(descriptionField.getText());
 			workout.setDuration(Integer.parseInt(durationField.getText()));
-			workout.setTitle(nameField.getText());
+			workout.setName(nameField.getText());
 			Main.setWindow("WorkoutLibrary" );
 		});
 

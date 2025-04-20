@@ -12,9 +12,9 @@ public class Trainer extends Account {
         super(username, password, status, "Trainer");
         this.createdWorkouts = new ArrayList<Workout>();
     }
-
+    //TODO refactor to new workout
     public Workout createWorkout(int duration, String description, List<Exercise> exercises){
-        Workout newWorkout = new Workout(duration, description, exercises);
+        Workout newWorkout = new Workout();
         createdWorkouts.add(newWorkout);
         return newWorkout;
     }

@@ -3,7 +3,9 @@ package fitness.app.Widgets.Calendar;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CalendarViewModel {
     private final CalendarModel model;
@@ -19,9 +21,9 @@ public class CalendarViewModel {
         model.setYearMonth(YearMonth.from(this.date));
     }
 
-    public LocalDate getDate() {
-
-        return date;
+    public String getDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        return date.format(formatter);
     }
 
     public void setDay(int day) {

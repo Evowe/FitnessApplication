@@ -219,11 +219,6 @@ public class CalendarView extends JPanel {
     }
     public String getDate()
     {
-        LocalDate date = viewModel.getDate();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        String formattedDate = date.format(formatter);
-        //System.out.println(formattedDate);
-        viewModel.getDay();
-        return formattedDate;
+        return viewModel.getDate();
     }
 }

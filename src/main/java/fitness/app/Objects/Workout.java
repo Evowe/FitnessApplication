@@ -5,23 +5,45 @@ import java.util.List;
 
 
 public class Workout {
+    private String name;
     private int duration;
     private String description;
-    private String title;
-    private List<Exercise> exercises;
-
-
-    public Workout(){
-        duration = 0;
-        description = "";
-        title = "";
-        exercises = new ArrayList<>();
-    }
-
-    public Workout(int duration, String description, List<Exercise> exercises) {
+    private int CaloriesBurned;
+    private String Date;
+    private String exerciseId;
+    public Workout(String name, String description, int duration, int CaloriesBurned, String Date,String exercises) {
+        this.name = name;
         this.duration = duration;
         this.description = description;
-        this.exercises = exercises;
+        this.CaloriesBurned = CaloriesBurned;
+        this.Date = Date;
+        this.exerciseId = exercises;
+//        if(exercises!=null) {
+//            String[] parts = exercises.split(",");
+//            exerciseId = new ArrayList<>(parts.length);
+//            for (String part : parts) {
+//                exerciseId.add(Integer.parseInt(part.trim()));
+//            }
+//        }
+
+    }
+
+    public Workout() {
+        name = null;
+        duration = 0;
+        description = null;
+        CaloriesBurned = 0;
+        Date = null;
+        exerciseId = null;
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getDuration() {
@@ -40,24 +62,32 @@ public class Workout {
         this.description = description;
     }
 
-    public List<Exercise> getExercises() {
-        return exercises;
+    public int getCaloriesBurned() {
+        return CaloriesBurned;
     }
 
-    public void setExercises(List<Exercise> exercises) {
-        this.exercises = exercises;
+    public void setCaloriesBurned(int caloriesBurned) {
+        CaloriesBurned = caloriesBurned;
     }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public String getExercises() {
+        return exerciseId;
+    }
+
+    public void setExercises(String exerciseId) {
+        this.exerciseId = exerciseId;
+    }
+
 
     public void addExercise(Exercise exercise) {
-        this.exercises.add(exercise);
-    }
-
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
+        this.exerciseId = exerciseId + "," + exercise.getId();
     }
 }
-
-

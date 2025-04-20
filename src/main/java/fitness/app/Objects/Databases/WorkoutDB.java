@@ -24,46 +24,46 @@ public class WorkoutDB extends DBTemplate {
 				"Description TEXT",
 				"Duration INTEGER",
 				"CaloriesBurned INTEGER DEFAULT 0",
-				"Date TEXT DEFAULT CURRENT_TIMESTAMP"
+				"Date TEXT DEFAULT CURRENT_TIMESTAMP",
+				"Exercises TEXT"
 		};
 		createTable(WORKOUTS_TABLE, workoutColumns);
 
+		//TODO IM NOT SURE IF THIS IS NEEDED
 		// Create Exercises table with Description field
-		String[] exerciseColumns = {
-				"WorkoutID INTEGER",
-				"Name TEXT NOT NULL",
-				"Description TEXT",
-				"Sets INTEGER DEFAULT 0",
-				"Reps INTEGER DEFAULT 0",
-				"Weight REAL DEFAULT 0.0",
-				"FOREIGN KEY (WorkoutID) REFERENCES " + WORKOUTS_TABLE + "(ID)"
-		};
-		createTable(EXERCISES_TABLE, exerciseColumns);
+//		String[] exerciseColumns = {
+//				"WorkoutID INTEGER",
+//				"Name TEXT NOT NULL",
+//				"Description TEXT",
+//				"Sets INTEGER DEFAULT 0",
+//				"Reps INTEGER DEFAULT 0",
+//				"Weight REAL DEFAULT 0.0",
+//				"FOREIGN KEY (WorkoutID) REFERENCES " + WORKOUTS_TABLE + "(ID)"
+//		};
+//		createTable(EXERCISES_TABLE, exerciseColumns);
 	}
-
+	//TODO FIX
 	public int saveWorkout(Workout workout) throws SQLException {
-		String sql = "INSERT INTO " + WORKOUTS_TABLE + " (Name, Description, Duration) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO " + WORKOUTS_TABLE + " (Name, Description, Duration,CaloriesBurned,Date,Exercises) VALUES (?, ?, ?,?,?,?)";
 
 		try (Connection conn = getConnection();
 			 PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 			// Use workout name or a default if not available
-			String workoutName = workout.getTitle() != null ? workout.getTitle() : "Workout";
+			String workoutName = workout.getName() != null ? workout.getName() : "Workout";
 			pstmt.setString(1, workoutName);
 			pstmt.setString(2, workout.getDescription());
 			pstmt.setInt(3, workout.getDuration());
+			pstmt.setInt(4, workout.getCaloriesBurned());
+			pstmt.setString(5, workout.getDate());
+			pstmt.setString(6, workout.getExercises());
 
 			pstmt.executeUpdate();
 
 			// Get the generated workout ID
 			try (ResultSet rs = pstmt.getGeneratedKeys()) {
 				if (rs.next()) {
-					int workoutId = rs.getInt(1);
-
-					// Save associated exercises
-					saveExercises(workoutId, workout.getExercises(), conn);
-
-					return workoutId;
+					return rs.getInt(1);
 				}
 			}
 		}
@@ -106,13 +106,15 @@ public class WorkoutDB extends DBTemplate {
 					String name = rs.getString("Name");
 					String description = rs.getString("Description");
 					int duration = rs.getInt("Duration");
+					int CaloriesBurned = rs.getInt("CaloriesBurned");
+					String date = rs.getString("Date");
+					String exerciseId = rs.getString("Exercises");
 
 					// Get exercises for this workout
-					List<Exercise> exercises = getExercisesForWorkout(id, conn);
+					//List<Exercise> exercises = getExercisesForWorkout(id, conn);
 
 					// Create and return the workout
-					Workout workout = new Workout(duration, description, exercises);
-					return workout;
+                    return new Workout(name,description,duration,CaloriesBurned,date,exerciseId);
 				}
 			}
 		}
@@ -146,43 +148,44 @@ public class WorkoutDB extends DBTemplate {
 
 	public List<Workout> getAllWorkouts() throws SQLException {
 		List<Workout> workouts = new ArrayList<>();
+		List<Integer> ids = new ArrayList<>();
 		String sql = "SELECT ID FROM " + WORKOUTS_TABLE;
 
 		try (Connection conn = getConnection();
 			 Statement stmt = conn.createStatement();
 			 ResultSet rs = stmt.executeQuery(sql)) {
 
+			//getWorkout(id) is breakign rs
+			//This gets rs purpose before breaking it
+			//I did not fix the problem but I did get around it
 			while (rs.next()) {
-				int id = rs.getInt("ID");
-				Workout workout = getWorkout(id);
-				if (workout != null) {
-					workouts.add(workout);
-				}
+				ids.add(rs.getInt("ID"));
+			}
+		}
+		for (int id : ids) {
+			Workout workout = getWorkout(id);
+			if (workout != null) {
+				workouts.add(workout);
 			}
 		}
 
 		return workouts;
 	}
 
+
 	public boolean deleteWorkout(int workoutId) throws SQLException {
 		try (Connection conn = getConnection()) {
-			// First delete associated exercises
-			String exercisesSql = "DELETE FROM " + EXERCISES_TABLE + " WHERE WorkoutID = ?";
-			try (PreparedStatement pstmt = conn.prepareStatement(exercisesSql)) {
-				pstmt.setInt(1, workoutId);
-				pstmt.executeUpdate();
-			}
 
 			// Then delete the workout
 			String workoutSql = "DELETE FROM " + WORKOUTS_TABLE + " WHERE ID = ?";
 			try (PreparedStatement pstmt = conn.prepareStatement(workoutSql)) {
 				pstmt.setInt(1, workoutId);
 				int affectedRows = pstmt.executeUpdate();
-				return affectedRows > 0;
+				return affectedRows >= 0;
 			}
 		}
 	}
-
+	//TODO FIX
 	public boolean updateWorkout(int workoutId, Workout workout) throws SQLException {
 		String sql = "UPDATE " + WORKOUTS_TABLE + " SET Description = ?, Duration = ? WHERE ID = ?";
 
@@ -204,7 +207,7 @@ public class WorkoutDB extends DBTemplate {
 				}
 
 				// Save new exercises
-				saveExercises(workoutId, workout.getExercises(), conn);
+				//saveExercises(workoutId, workout.getExercises(), conn);
 				return true;
 			}
 		}

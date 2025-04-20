@@ -6,7 +6,24 @@ public class Exercise {
     private int sets;
     private int reps;
     private double weight;
+    private int id;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Exercise(String name, String description, int sets, int reps, double weight,int id) {
+        this.name = name;
+        this.description = description;
+        this.sets = sets;
+        this.reps = reps;
+        this.weight = weight;
+        this.id = id;
+    }
     public Exercise(String name, String description, int sets, int reps, double weight) {
         this.name = name;
         this.description = description;

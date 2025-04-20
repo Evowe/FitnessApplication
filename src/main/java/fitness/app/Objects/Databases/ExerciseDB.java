@@ -126,7 +126,6 @@ public class ExerciseDB extends DBTemplate {
                     int sets = Integer.parseInt(parts[3].trim());
                     int reps = Integer.parseInt(parts[4].trim());
                     double weight = Double.parseDouble(parts[5].trim());
-
                     Exercise exercise = null;
 
                     switch (type) {
@@ -199,7 +198,7 @@ public class ExerciseDB extends DBTemplate {
                     int reps = rs.getInt("Reps");
                     double weight = rs.getDouble("Weight");
 
-                    return new Exercise(name, description, sets, reps, weight);
+                    return new Exercise(name, description, sets, reps, weight,id);
                 }
             }
         }
@@ -221,8 +220,9 @@ public class ExerciseDB extends DBTemplate {
                 int sets = rs.getInt("Sets");
                 int reps = rs.getInt("Reps");
                 double weight = rs.getDouble("Weight");
+                int id = rs.getInt("ID");
 
-                Exercise exercise = new Exercise(name, description, sets, reps, weight);
+                Exercise exercise = new Exercise(name, description, sets, reps, weight,id);
                 exercises.add(exercise);
             }
         }
