@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static fitness.app.Main.dark;
 import static java.lang.Integer.parseInt;
 
 public class CalendarView extends JPanel {
@@ -187,6 +188,9 @@ public class CalendarView extends JPanel {
             for (String day : week) {
                 JButton dayButton = new JButton();
                 dayButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground;");
+                if(!dark){
+                    dayButton.setForeground(new Color(193, 18, 31));
+                }
                 dayButton.setBorderPainted(false);
                 dayButton.setMargin(new Insets(0, 0, 0, 0));
                 dayButton.setMinimumSize(new Dimension(36, 36));

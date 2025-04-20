@@ -136,8 +136,6 @@ public class SettingsView {
         weightUnitSelector = new JComboBox<>(weightUnits);
         weightUnitSelector.setSelectedItem(SettingsViewModel.getWeightUnitDisplayString());
         // Make dropdown more readable with dark background
-        weightUnitSelector.setBackground(new Color(30, 30, 30));
-        weightUnitSelector.setForeground(Color.WHITE);
         weightUnitSelector.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground; foreground:@foreground;");
 
         // Style save button to RED with white text

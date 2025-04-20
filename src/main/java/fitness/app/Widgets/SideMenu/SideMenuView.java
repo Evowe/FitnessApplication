@@ -77,6 +77,15 @@ public class SideMenuView extends JPanel {
         exerciseLibraryButton.setMinimumHeight(50);
         exerciseLibraryButton.addActionListener(genButtonListener("ExerciseLibrary"));
 
+        FlatButton socialViewButton = new FlatButton();
+        socialViewButton.setBorderPainted(false);
+        socialViewButton.setText("Social");
+        socialViewButton.setIcon(sideMenuViewModel.getIcon("user-circle"));
+        socialViewButton.setHorizontalAlignment(SwingConstants.LEFT);
+        socialViewButton.setMargin(new Insets(5,25,5,5));
+        socialViewButton.setMinimumHeight(50);
+        socialViewButton.addActionListener(genButtonListener("SocialView"));
+
         FlatButton shopButton = new FlatButton();
         shopButton.setBorderPainted(false);
         shopButton.setText("Shop");
@@ -85,6 +94,14 @@ public class SideMenuView extends JPanel {
         shopButton.setMargin(new Insets(5,25,5,5));
         shopButton.setMinimumHeight(50);
         shopButton.addActionListener(genButtonListener("currencyShopPage"));
+
+        FlatButton BPButton = new FlatButton();
+        BPButton.setBorderPainted(false);
+        BPButton.setText("Battle Pass");
+        BPButton.setHorizontalAlignment(SwingConstants.LEFT);
+        BPButton.setMargin(new Insets(5,25,5,5));
+        BPButton.setMinimumHeight(50);
+        BPButton.addActionListener(genButtonListener("BattlePass"));
 
 
         FlatLabel accountLabel = new FlatLabel();
@@ -97,6 +114,15 @@ public class SideMenuView extends JPanel {
         profileButton.setIcon(sideMenuViewModel.getIcon("user-circle"));
         profileButton.setHorizontalAlignment(SwingConstants.LEFT);
         profileButton.setMargin(new Insets(5,25,5,5));
+
+        FlatButton lockerButton = new FlatButton();
+        lockerButton.setBorderPainted(false);
+        lockerButton.setText("Locker");
+        lockerButton.setIcon(sideMenuViewModel.getIcon("user-circle"));
+        lockerButton.setHorizontalAlignment(SwingConstants.LEFT);
+        lockerButton.setMargin(new Insets(5,25,5,5));
+        shopButton.setMinimumHeight(50);
+        lockerButton.addActionListener(genButtonListener("Locker"));
 
         FlatButton settingsButton = new FlatButton();
         settingsButton.setBorderPainted(false);
@@ -124,9 +150,12 @@ public class SideMenuView extends JPanel {
         add(workoutsButton, "wrap, gapy 10");
         add(statisticsButton, "wrap, gapy 10");
         add(exerciseLibraryButton, "wrap, gapy 10");
+        add(socialViewButton, "wrap, gapy 10");
         add(shopButton, "wrap, gapy 10");
+        add(BPButton, "wrap, gapy 10");
         add(accountLabel, "wrap, gap 0 0 10 0");
         add(profileButton, "wrap, gapy 0");
+        add(lockerButton, "wrap, gapy 10");
         add(settingsButton, "wrap, gapy 10");
         add(new JLabel(), "wrap, growy, pushy");
         add(logOutButton, "wrap, gapy 0");

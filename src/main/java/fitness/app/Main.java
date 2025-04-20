@@ -1,5 +1,6 @@
 package fitness.app;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -7,6 +8,7 @@ import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import fitness.app.Admin.AdminAddUserView;
 import fitness.app.Admin.AdminHomeView;
 import fitness.app.Admin.AdminUsersView;
+import fitness.app.BattlePass.BattlePassView;
 import fitness.app.CreateAccount.CreateAccountView;
 import fitness.app.CreateExercise.CreateExcerciseView;
 import fitness.app.CurrencyShop.currencyShopViewModel;
@@ -14,10 +16,13 @@ import fitness.app.CurrencyShop.currencyshopview;
 import fitness.app.ExerciseLibrary.ExerciseLibraryView;
 import fitness.app.Goals.GoalsView;
 import fitness.app.Home.HomeView;
+import fitness.app.Locker.LockerView;
 import fitness.app.Login.LoginView;
 import fitness.app.Microtransactions.TransactionViewModel;
-import fitness.app.Objects.Databases.*;
 import fitness.app.Settings.SettingsViewModel;
+import fitness.app.Social.CreateMessageView;
+import fitness.app.Social.SendResponseView;
+import fitness.app.Social.SocialView;
 import fitness.app.Statistics.StatsView;
 import fitness.app.Objects.*;
 import fitness.app.Workout.NewWorkoutView;
@@ -28,17 +33,9 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class Main {
-    private static boolean dark = true;
-
+    public static boolean dark = true;
     private static JFrame window;
     private static Account currentUser;
-
-    private static AccountsDB accountsDB;
-    private static ExerciseDB exerciseDB;
-    private static CreditCardDB creditCardDB;
-    private static GoalsDB goalsDB;
-    private static StatsDB statsDB;
-    private static WorkoutDB workoutDB;
 
     public static void main(String[] args) {
         System.setProperty("apple.awt.application.name", "Rocket Health");
@@ -61,6 +58,7 @@ public class Main {
         } catch (UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
+
         UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
 
         //Application window
@@ -125,6 +123,22 @@ public class Main {
             case "NewWorkout" -> {
                 window.add(new NewWorkoutView());
             }
+            case "CreateMessage" -> {
+                window.add(new CreateMessageView());
+                //window.add(new NewWorkoutView());
+            }
+            case "SocialView" -> {
+                window.add(new SocialView());
+            }
+            case "BattlePass" -> {
+                window.add(new BattlePassView());
+            }
+            case "SendResponse" -> {
+                window.add(new SendResponseView());
+            }
+            case "Locker" -> {
+                window.add(new LockerView(currentUser));
+            }
         }
         window.revalidate();
         window.repaint();
@@ -147,6 +161,24 @@ public class Main {
             e.printStackTrace();
         }
     }
+    /*
+    public static void updateTheme(){
+        try {
+            //CHANGE WAS HERE
+            if (dark) {
+                UIManager.setLookAndFeel(new FlatDarkLaf());
+            }
+            else {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            }
+        } catch (UnsupportedLookAndFeelException e) {
+            throw new RuntimeException(e);
+        }
+        SwingUtilities.updateComponentTreeUI(SwingUtilities.windowForComponent(window));
+
+    }
+
+     */
 
 
     public static Account getCurrentUser() {

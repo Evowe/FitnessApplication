@@ -34,7 +34,7 @@ public class NewWorkoutView extends JPanel {
 		putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
 
-		//Add Navigation Menu fffrfrrrfrfrrffffffff
+		//Add Navigation Menu
 		add(new SideMenuView(), "growy, pushy");
 
 		//Setup Main Panel
@@ -98,7 +98,7 @@ public class NewWorkoutView extends JPanel {
 		workoutFieldsPanel.add(addExercise);
 
 		JLabel name = new JLabel("Workout Name");
-		name.putClientProperty(FlatClientProperties.STYLE, "" + "font:regular +6");
+		name.putClientProperty(FlatClientProperties.STYLE, "font:+6");
 		workoutFieldsPanel.add(name);
 
 		JTextField nameField = new JTextField();
@@ -106,7 +106,7 @@ public class NewWorkoutView extends JPanel {
 		workoutFieldsPanel.add(nameField);
 
 		JLabel description = new JLabel("Workout Description");
-		description.putClientProperty(FlatClientProperties.STYLE, "" + "font:regular +6");
+		description.putClientProperty(FlatClientProperties.STYLE, "font:+6");
 		workoutFieldsPanel.add(description);
 
 		JTextField descriptionField = new JTextField();
@@ -114,7 +114,7 @@ public class NewWorkoutView extends JPanel {
 		workoutFieldsPanel.add(descriptionField);
 
 		JLabel duration = new JLabel("Workout Duration");
-		duration.putClientProperty(FlatClientProperties.STYLE, "" + "font:regular +6");
+		duration.putClientProperty(FlatClientProperties.STYLE, "font:+6");
 		workoutFieldsPanel.add(duration);
 
 		JTextField durationField = new JTextField();

@@ -101,6 +101,16 @@ public class Account {
         return theme;
     }
 
+    /*
+    public Boolean getMode(){
+        if(theme.equalsIgnoreCase("light")){
+            return false;
+        }
+        return true;
+    }
+
+
+     */
     public void setTheme(String theme) {
         this.theme = theme;
     }
@@ -133,6 +143,10 @@ public class Account {
         return getAccountsDB().getAccount(username);
     }
 
+    public static Account getAccountNoClose(String username) throws SQLException {
+        return getAccountsDB().getAccountNoClose(username);
+    }
+
     public static Account updateWallet(String username, int val) throws SQLException {
         AccountsDB accountsDB = getAccountsDB();
         int wallet = accountsDB.getWallet(username);
@@ -156,4 +170,16 @@ public class Account {
     public boolean savePreferences() throws SQLException {
         return getAccountsDB().updateUserPreferences(username, theme, notifications, weightUnit);
     }
+
+
+
+    public Object [] getString(){
+        Object [] str = new Object [2];
+        str[0] = this.username;
+        str[1] = this.role;
+
+        return str;
+    }
+
+
 }

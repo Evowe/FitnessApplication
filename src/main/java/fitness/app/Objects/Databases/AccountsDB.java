@@ -1,6 +1,7 @@
 package fitness.app.Objects.Databases;
 
 import fitness.app.Objects.Account;
+import fitness.app.Objects.DatabaseManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class AccountsDB extends DBTemplate {
 
     @Override
     protected void createTables() throws SQLException {
-        // Create Account table
+        // Create Account table'
 
         String[] columns = {
                 "username TEXT NOT NULL",
@@ -36,10 +37,9 @@ public class AccountsDB extends DBTemplate {
     public void addAccount(Account account) throws SQLException {
         String sql = "INSERT INTO accounts (username, password, status, role, wallet) VALUES (?, ?, ?, ?, ?)";
 
-
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        	
+
             pstmt.setString(1, account.getUsername());
             pstmt.setString(2, account.getPassword());
             pstmt.setString(3, account.getStatus());
@@ -47,11 +47,36 @@ public class AccountsDB extends DBTemplate {
             pstmt.setInt(5, account.getWallet());
 
             pstmt.executeUpdate();
+
+            // Create ItemsDB instance
+            ItemsDB itemsDB = DatabaseManager.getItemsDB();
+
+            try {
+                // Ensure all rocket skins exist
+                itemsDB.createDefaultRocketItems();
+
+                // Get the ID of the default rocket
+                int defaultRocketId = itemsDB.getItemIdByName("Default Rocket");
+
+                if (defaultRocketId != -1) {
+                    // Use account.getUsername() instead of username
+                    itemsDB.giveItemToUser(account.getUsername(), defaultRocketId);
+                    itemsDB.equipItem(account.getUsername(), defaultRocketId);
+                    System.out.println("Default rocket given to: " + account.getUsername());
+                } else {
+                    System.err.println("Default rocket not found in database");
+                }
+            } catch (SQLException e) {
+                System.err.println("Error giving default rocket to new user: " + e.getMessage());
+                // Don't re-throw this exception as we want account creation to succeed
+                // even if giving the rocket fails
+            }
+
             System.out.println("Account added: " + account.getUsername());
 
         } catch (SQLException e) {
             System.out.println("Error adding account: " + e.getMessage());
-            throw e; //Throw e again for caller to handle
+            throw e; // Throw e again for caller to handle
         }
     }
 
@@ -92,6 +117,48 @@ public class AccountsDB extends DBTemplate {
             throw e;
         }
         
+        return null;
+    }
+
+
+    public Account getAccountNoClose(String username) throws SQLException {
+        String sql = "SELECT * FROM accounts WHERE username = ?";
+
+        try {
+            Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Account account = new Account(
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("status"),
+                        rs.getString("role")
+                );
+
+                account.setWallet(rs.getInt("wallet"));
+                account.setId(rs.getInt("id"));
+
+                // Set preferences if columns exist
+                try {
+                    account.setTheme(rs.getString("theme"));
+                    account.setNotifications(rs.getInt("notifications") == 1);
+                    account.setWeightUnit(rs.getString("weight_unit"));
+                } catch (SQLException e) {
+                    // Columns might not exist yet in older database versions
+                    System.out.println("Note: Preference columns may not exist yet: " + e.getMessage());
+                }
+
+                return account;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting account: " + e.getMessage());
+            throw e;
+        }
+
         return null;
     }
 

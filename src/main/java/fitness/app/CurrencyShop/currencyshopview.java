@@ -35,37 +35,33 @@ public class currencyshopview extends JPanel {
 
             FlatLabel title = new FlatLabel();
             title.setText("Select currency pack");
-            title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
+            title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6;");
 
             FlatLabel subtext = new FlatLabel();
             subtext.setText("adds a %5 credit card fee to listed price");
-            subtext.putClientProperty(FlatClientProperties.STYLE, "font:bold +3");
+            subtext.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground; font:bold +3;");
 
             // Create and add multiple text boxes to the panel
             FlatButton five = new FlatButton();
             five.setBorderPainted(false);
-            five.setText("499 Rocket Bucks" + "\n" + " $5.00");
-            five.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
+            five.setText("499 Rocket Bucks $5.00");
 
             FlatButton ten = new FlatButton();
             ten.setBorderPainted(false);
-            ten.setText("999 Rocket Bucks" + "\n" + " $10.00");
-            ten.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
+            ten.setText("999 Rocket Bucks $10.00");
 
             FlatButton twenty = new FlatButton();
             twenty.setBorderPainted(false);
-            twenty.setText("1999 Rocket Bucks" + "\n" + " $20.00");
-            twenty.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
+            twenty.setText("1999 Rocket Bucks $20.00");
 
             FlatButton fifty = new FlatButton();
             fifty.setBorderPainted(false);
-            fifty.setText("4999 Rocket Bucks" + "\n" + " $50.00");
+            fifty.setText("4999 Rocket Bucks $50.00");
             fifty.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
 
             FlatButton oneHundred = new FlatButton();
             oneHundred.setBorderPainted(false);
-            oneHundred.setText("9999 Rocket Bucks" + "\n" + " $100.00");
-            oneHundred.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
+            oneHundred.setText("9999 Rocket Bucks $100.00");
 
             shopMenu.add(title);
             shopMenu.add(subtext);
