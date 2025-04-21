@@ -28,17 +28,17 @@ public class ReportView extends JPanel {
     private Account currentUser;
     ReportView(Account user) throws SQLException {
         WorkoutDB workoutDB = DatabaseManager.getWorkoutDB();
-        viewModel = new ReportViewModel();
+        currentUser = user;
+        viewModel = new ReportViewModel(currentUser);
         Date d = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
-        workoutDB.deleteWorkout(8);
-
-        Workout w = new Workout("pushUps",
-                "veryHard",300,100,
+        Workout w = new Workout("PullUps",
+                "veryHard",500,50,
                 sdf.format(d).toString(), "1,2,3,4");
-
-        workoutDB.saveWorkout(w);
+        //workoutDB.addWorkout(w,currentUser.getUsername());
+        //workoutDB.deleteWorkout(currentUser.getUsername(),"pushUps");
+        //workoutDB.updateWorkout(currentUser.getUsername(),w,"pushUps");
 
         currentUser = user;
         FlatLaf.registerCustomDefaultsSource("Components.Themes");

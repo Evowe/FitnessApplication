@@ -1,5 +1,6 @@
 package fitness.app.Report;
 
+import fitness.app.Objects.Account;
 import fitness.app.Objects.DatabaseManager;
 import fitness.app.Objects.Databases.ExerciseDB;
 import fitness.app.Objects.Databases.WorkoutDB;
@@ -12,8 +13,10 @@ import java.util.List;
 
 public class ReportViewModel {
 private ReportModel reportModel;
-ReportViewModel(){
-    this.reportModel = new ReportModel();
+private Account acc;
+ReportViewModel(Account acc){
+    this.acc = acc;
+    this.reportModel = new ReportModel(acc);
 }
     public  Object [][] getWorkouts() {
         return reportModel.getWorkouts();

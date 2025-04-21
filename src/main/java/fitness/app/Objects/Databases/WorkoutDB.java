@@ -1,6 +1,5 @@
 package fitness.app.Objects.Databases;
 
-import fitness.app.Objects.Exercise;
 import fitness.app.Objects.Workout;
 
 import java.sql.*;
@@ -20,6 +19,7 @@ public class WorkoutDB extends DBTemplate {
 	protected void createTables() throws SQLException {
 		// Create Workouts table
 		String[] workoutColumns = {
+				"username STRING NOT NULL",
 				"Name TEXT NOT NULL",
 				"Description TEXT",
 				"Duration INTEGER",
@@ -31,33 +31,23 @@ public class WorkoutDB extends DBTemplate {
 
 		//TODO IM NOT SURE IF THIS IS NEEDED
 		// Create Exercises table with Description field
-//		String[] exerciseColumns = {
-//				"WorkoutID INTEGER",
-//				"Name TEXT NOT NULL",
-//				"Description TEXT",
-//				"Sets INTEGER DEFAULT 0",
-//				"Reps INTEGER DEFAULT 0",
-//				"Weight REAL DEFAULT 0.0",
-//				"FOREIGN KEY (WorkoutID) REFERENCES " + WORKOUTS_TABLE + "(ID)"
-//		};
-//		createTable(EXERCISES_TABLE, exerciseColumns);
+
 	}
 	//TODO FIX
-	public int saveWorkout(Workout workout) throws SQLException {
-		String sql = "INSERT INTO " + WORKOUTS_TABLE + " (Name, Description, Duration,CaloriesBurned,Date,Exercises) VALUES (?, ?, ?,?,?,?)";
+	public int addWorkout(Workout workout,String username) throws SQLException {
+		String sql = "INSERT INTO " + WORKOUTS_TABLE + " (Username, Name, Description, Duration,CaloriesBurned,Date,Exercises) VALUES (?,?, ?, ?,?,?,?)";
 
 		try (Connection conn = getConnection();
 			 PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 			// Use workout name or a default if not available
-			String workoutName = workout.getName() != null ? workout.getName() : "Workout";
-			pstmt.setString(1, workoutName);
-			pstmt.setString(2, workout.getDescription());
-			pstmt.setInt(3, workout.getDuration());
-			pstmt.setInt(4, workout.getCaloriesBurned());
-			pstmt.setString(5, workout.getDate());
-			pstmt.setString(6, workout.getExercises());
-
+			pstmt.setString(1, username);
+			pstmt.setString(2, workout.getName());
+			pstmt.setString(3, workout.getDescription());
+			pstmt.setInt(4, workout.getDuration());
+			pstmt.setInt(5, workout.getCaloriesBurned());
+			pstmt.setString(6, workout.getDate());
+			pstmt.setString(7, workout.getExercises());
 			pstmt.executeUpdate();
 
 			// Get the generated workout ID
@@ -67,38 +57,17 @@ public class WorkoutDB extends DBTemplate {
 				}
 			}
 		}
-
 		return -1; // Failed to save
 	}
 
-	private void saveExercises(int workoutId, List<Exercise> exercises, Connection conn) throws SQLException {
-		if (exercises == null || exercises.isEmpty()) {
-			return;
-		}
-
-		String sql = "INSERT INTO " + EXERCISES_TABLE + " (WorkoutID, Name, Description, Sets, Reps, Weight) VALUES (?, ?, ?, ?, ?, ?)";
-
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			for (Exercise exercise : exercises) {
-				pstmt.setInt(1, workoutId);
-				pstmt.setString(2, exercise.getName());
-				pstmt.setString(3, exercise.getDescription());
-				pstmt.setInt(4, exercise.getSets());
-				pstmt.setInt(5, exercise.getReps());
-				pstmt.setDouble(6, exercise.getWeight());
-
-				pstmt.executeUpdate();
-			}
-		}
-	}
-
-	public Workout getWorkout(int id) throws SQLException {
-		String sql = "SELECT * FROM " + WORKOUTS_TABLE + " WHERE ID = ?";
+	public Workout getWorkout(int id,String username) throws SQLException {
+		String sql = "SELECT * FROM " + WORKOUTS_TABLE + " WHERE username = ? AND ID = ?";
 
 		try (Connection conn = getConnection();
 			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-			pstmt.setInt(1, id);
+			pstmt.setString(1,username);
+			//pstmt.setInt(1, id);
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
@@ -110,10 +79,6 @@ public class WorkoutDB extends DBTemplate {
 					String date = rs.getString("Date");
 					String exerciseId = rs.getString("Exercises");
 
-					// Get exercises for this workout
-					//List<Exercise> exercises = getExercisesForWorkout(id, conn);
-
-					// Create and return the workout
                     return new Workout(name,description,duration,CaloriesBurned,date,exerciseId);
 				}
 			}
@@ -122,96 +87,66 @@ public class WorkoutDB extends DBTemplate {
 		return null; // Not found
 	}
 
-	private List<Exercise> getExercisesForWorkout(int workoutId, Connection conn) throws SQLException {
-		List<Exercise> exercises = new ArrayList<>();
-		String sql = "SELECT * FROM " + EXERCISES_TABLE + " WHERE WorkoutID = ?";
-
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setInt(1, workoutId);
-
-			try (ResultSet rs = pstmt.executeQuery()) {
-				while (rs.next()) {
-					String name = rs.getString("Name");
-					String description = rs.getString("Description");
-					int sets = rs.getInt("Sets");
-					int reps = rs.getInt("Reps");
-					double weight = rs.getDouble("Weight");
-
-					Exercise exercise = new Exercise(name, description, sets, reps, weight);
-					exercises.add(exercise);
-				}
-			}
-		}
-
-		return exercises;
-	}
-
-	public List<Workout> getAllWorkouts() throws SQLException {
-		List<Workout> workouts = new ArrayList<>();
-		List<Integer> ids = new ArrayList<>();
-		String sql = "SELECT ID FROM " + WORKOUTS_TABLE;
+	public List<Workout> getAllWorkouts(String username) throws SQLException {
+		List<Workout> Workouts = new ArrayList<>();
+		String sql = "SELECT * FROM " + WORKOUTS_TABLE + " WHERE username = ?";
 
 		try (Connection conn = getConnection();
-			 Statement stmt = conn.createStatement();
-			 ResultSet rs = stmt.executeQuery(sql)) {
-
-			//getWorkout(id) is breakign rs
-			//This gets rs purpose before breaking it
-			//I did not fix the problem but I did get around it
+			 PreparedStatement pst = conn.prepareStatement(sql)) {
+				pst.setString(1, username);
+		try (ResultSet rs = pst.executeQuery()) {
 			while (rs.next()) {
-				ids.add(rs.getInt("ID"));
+				String name = rs.getString("Name");
+				String description = rs.getString("Description");
+				int duration = rs.getInt("Duration");
+				int caloriesBurned = rs.getInt("CaloriesBurned");
+				String date = rs.getString("Date");
+				String exercises = rs.getString("Exercises");
+
+				Workout workout = new Workout(name, description, duration, caloriesBurned, date,exercises);
+				Workouts.add(workout);
 			}
 		}
-		for (int id : ids) {
-			Workout workout = getWorkout(id);
-			if (workout != null) {
-				workouts.add(workout);
-			}
 		}
 
-		return workouts;
+		return Workouts;
 	}
 
-
-	public boolean deleteWorkout(int workoutId) throws SQLException {
+	public void deleteWorkout(String username, String name) throws SQLException {
+		String workoutSql = "DELETE FROM " + WORKOUTS_TABLE + " WHERE name = ? AND username = ?";
 		try (Connection conn = getConnection()) {
 
 			// Then delete the workout
-			String workoutSql = "DELETE FROM " + WORKOUTS_TABLE + " WHERE ID = ?";
 			try (PreparedStatement pstmt = conn.prepareStatement(workoutSql)) {
-				pstmt.setInt(1, workoutId);
-				int affectedRows = pstmt.executeUpdate();
-				return affectedRows >= 0;
-			}
+				pstmt.setString(1,name);
+				pstmt.setString(2, username);
+                pstmt.executeUpdate();
+            }
 		}
 	}
-	//TODO FIX
-	public boolean updateWorkout(int workoutId, Workout workout) throws SQLException {
-		String sql = "UPDATE " + WORKOUTS_TABLE + " SET Description = ?, Duration = ? WHERE ID = ?";
+	public boolean updateWorkout(String username, Workout workout, String originalName) throws SQLException {
+		String sql = "UPDATE " + WORKOUTS_TABLE + " SET Name = ?, Description = ?, Duration = ?, CaloriesBurned = ?, Date = ?, Exercises = ? " +
+				"WHERE username = ? AND Name = ?";
 
 		try (Connection conn = getConnection();
 			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-			pstmt.setString(1, workout.getDescription());
-			pstmt.setInt(2, workout.getDuration());
-			pstmt.setInt(3, workoutId);
+			pstmt.setString(1, workout.getName());
+			pstmt.setString(2, workout.getDescription());
+			pstmt.setInt(3, workout.getDuration());
+			pstmt.setInt(4, workout.getCaloriesBurned());
+			pstmt.setString(5, workout.getDate());
+			pstmt.setString(6, workout.getExercises());
+			pstmt.setString(7, username);
+			pstmt.setString(8, originalName);
 
-			int affectedRows = pstmt.executeUpdate();
+			int rowsAffected = pstmt.executeUpdate();
+			return rowsAffected == 1;
 
-			if (affectedRows > 0) {
-				// Delete existing exercises
-				String deleteSql = "DELETE FROM " + EXERCISES_TABLE + " WHERE WorkoutID = ?";
-				try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
-					deleteStmt.setInt(1, workoutId);
-					deleteStmt.executeUpdate();
-				}
-
-				// Save new exercises
-				//saveExercises(workoutId, workout.getExercises(), conn);
-				return true;
-			}
+		} catch (SQLException e) {
+			System.out.println("Error updating workout: " + e.getMessage());
+			throw e;
 		}
-
-		return false;
 	}
+
 }

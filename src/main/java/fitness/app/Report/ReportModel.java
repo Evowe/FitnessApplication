@@ -1,6 +1,7 @@
 package fitness.app.Report;
 
 import fitness.app.ExerciseLibrary.ExerciseLibraryModel;
+import fitness.app.Objects.Account;
 import fitness.app.Objects.DatabaseManager;
 import fitness.app.Objects.Databases.ExerciseDB;
 import fitness.app.Objects.Databases.WorkoutDB;
@@ -15,11 +16,14 @@ import java.util.List;
 public class ReportModel {
 
     private final WorkoutDB workoutDB = DatabaseManager.getWorkoutDB();
-
+    private Account acc;
+    ReportModel(Account acc) {
+        this.acc = acc;
+    }
     public  Object [][] getWorkouts(){
         List<Workout> workouts = null;
         try{
-            workouts = workoutDB.getAllWorkouts();
+            workouts = workoutDB.getAllWorkouts(acc.getUsername());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
