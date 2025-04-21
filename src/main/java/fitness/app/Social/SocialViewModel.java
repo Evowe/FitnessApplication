@@ -3,6 +3,8 @@ package fitness.app.Social;
 import fitness.app.Objects.Account;
 import fitness.app.Objects.Message;
 
+import java.util.List;
+
 public class SocialViewModel {
     private SocialModel socialModel;
 
@@ -18,6 +20,19 @@ public class SocialViewModel {
     public Object[][] getMessageData2(Account account) {
         return socialModel.getMessageData2(account);
         //return null;
+    }
+
+    public Object[][] getResponseData(Account account) {
+        return socialModel.getResponseData(account);
+        //return null;
+    }
+
+    public void deleteFriendRequestMessages(String username, String requesterUsername) {
+        socialModel.deleteFriendRequestMessages(username, requesterUsername);
+    }
+
+    public void acceptFriendRequestMessages(String username, String requesterUsername) {
+        socialModel.acceptFriendRequestMessages(username, requesterUsername);
     }
 
     public Object[] getMessageColumns() {
@@ -73,5 +88,33 @@ public class SocialViewModel {
 
     public void setSelectedRow(int row) {
         socialModel.setSelectedRow(row);
+    }
+
+    public int getAccountCount(){
+        return socialModel.getAccountCount();
+    }
+
+    public List<String> getPendingRequests(String username){
+        return socialModel.getPendingRequests(username);
+    }
+
+    public void setFriendRequestUsername(String username){
+        socialModel.setFriendRequestUsername(username);
+    }
+
+    public String getFriendRequestUsername(){
+        return socialModel.getFriendRequestUsername();
+    }
+
+    public void declineFriendRequest(String senderUsername, String receiverUsername) {
+        socialModel.declineFriendRequest(senderUsername, receiverUsername);
+    }
+
+    public void respondToMessage(Message message) {
+        socialModel.respondToMessage(message);
+    }
+
+    public void deleteMessage(Message message) {
+        socialModel.deleteMessage(message);
     }
 }

@@ -146,25 +146,25 @@ public class Message {
     }
 
     public String getResponseTypeString() {
-        if (type == Type.CHALLENGE) {
+        if (responseType == Type.CHALLENGE) {
             return "CHALLENGE";
         }
-        if (type == Type.FRIEND_REQUEST) {
+        if (responseType == Type.FRIEND_REQUEST) {
             return "FRIEND_REQUEST";
         }
-        if (type == Type.ACCEPT_FRIEND) {
+        if (responseType == Type.ACCEPT_FRIEND) {
             return "ACCEPT_FRIEND";
         }
-        if (type == Type.REJECT_FRIEND) {
+        if (responseType == Type.REJECT_FRIEND) {
             return "REJECT_FRIEND";
         }
-        if (type == Type.ACCEPT_CHALLENGE) {
+        if (responseType == Type.ACCEPT_CHALLENGE) {
             return "ACCEPT_CHALLENGE";
         }
-        if (type == Type.REJECT_CHALLENGE) {
+        if (responseType == Type.REJECT_CHALLENGE) {
             return "REJECT_CHALLENGE";
         }
-        if (type == Type.NOT_READ) {
+        if (responseType == Type.NOT_READ) {
             return "NOT_READ";
         }
 

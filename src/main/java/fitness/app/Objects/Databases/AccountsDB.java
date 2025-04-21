@@ -345,5 +345,16 @@ public class AccountsDB extends DBTemplate {
         return -1000000;
     }
 
+    public int getCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM accounts";
+        try (Connection conn = getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return -1;
+    }
     
 }

@@ -51,6 +51,29 @@ public class MessagesDB extends DBTemplate{
 
     }
 
+    public void deleteMessage(Message message) throws SQLException{
+        String sql = "DELETE FROM messages (message, sender, receiver, type, response, responseType) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try(Connection con = getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            pstmt.setString(1, message.getMessage());
+            pstmt.setString(2, message.getSenderUsername());
+            pstmt.setString(3, message.getReceiverUsername());
+            pstmt.setString(4, message.getTypeString());
+            pstmt.setString(5, message.getResponse());
+            pstmt.setString(6, message.getResponseTypeString());
+
+            pstmt.executeUpdate();
+
+            System.out.println("Message deleted successfully");
+        } catch (SQLException e) {
+            System.out.println("Error deleting message");
+            throw e; //Throw e again for caller to handle
+        }
+
+    }
+
     public void respond(Message message) throws SQLException{
         String sql = "UPDATE messages SET response=?, responseType=? WHERE message=? AND sender=? AND receiver=? AND type =?";
 
@@ -113,6 +136,48 @@ public class MessagesDB extends DBTemplate{
         return null;
     }
 
+    public void deleteFriendRequestMessages(String username, String receiver) throws SQLException{
+        String sql = "UPDATE messages SET responseType = ? WHERE sender = ? AND receiver = ? AND type =?";
+        try(Connection con = getConnection();
+        PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            pstmt.setString(1, "REJECT_FRIEND");
+            pstmt.setString(2, receiver);
+            pstmt.setString(3, username);
+            pstmt.setString(4, "FRIEND_REQUEST");
+
+            pstmt.executeUpdate();
+
+            pstmt.close();
+            con.close();
+            System.out.println("Message edited successfully");
+        } catch (SQLException e) {
+            System.out.println("Error editing message");
+            throw e;
+        }
+    }
+
+    public void acceptFriendRequestMessages(String username, String receiver) throws SQLException{
+        String sql = "UPDATE messages SET responseType = ? WHERE sender = ? AND receiver = ? AND type =?";
+        try(Connection con = getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            pstmt.setString(1, "ACCEPT_FRIEND");
+            pstmt.setString(2, receiver);
+            pstmt.setString(3, username);
+            pstmt.setString(4, "FRIEND_REQUEST");
+
+            pstmt.executeUpdate();
+
+            pstmt.close();
+            con.close();
+            System.out.println("Message edited successfully");
+        } catch (SQLException e) {
+            System.out.println("Error editing message");
+            throw e;
+        }
+    }
+
     public List<Message> getAllIncomingMessages(String receiverUsername) throws SQLException{
         //db query to select the user
         String sql = "SELECT * FROM messages WHERE receiver = ?";
@@ -162,13 +227,14 @@ public class MessagesDB extends DBTemplate{
     }
 
     public List<Object []> getAllIncoming(String receiverUsername) throws SQLException{
-        String sql = "SELECT * FROM messages WHERE receiver = ?";
+        String sql = "SELECT * FROM messages WHERE receiver = ? AND responseType=?";
         List<Object []> incomingMessages = new ArrayList<>();
 
         try(Connection con = getConnection();
             PreparedStatement pstmt = con.prepareStatement(sql)){
 
             pstmt.setString(1, receiverUsername);
+            pstmt.setString(2, "NOT_READ");
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -193,6 +259,42 @@ public class MessagesDB extends DBTemplate{
         }
 
         return incomingMessages;
+    }
+
+
+    public List<Object []> getAllResponses(String senderUsername) throws SQLException{
+        String sql = "SELECT * FROM messages WHERE sender = ? AND responseType != ?";
+        List<Object []> responses = new ArrayList<>();
+
+        try(Connection con = getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql)){
+
+            pstmt.setString(1, senderUsername);
+            pstmt.setString(2, "NOT_READ");
+
+            ResultSet rs = pstmt.executeQuery();
+
+            responses = new ArrayList<>();
+
+            //Process all query results and creates new message object for each row
+            while(rs.next()){
+                Object[] row = new Object[3];
+                row[0] = rs.getString("response");
+                row[1] = rs.getString("receiver");
+                //row[2] = rs.getString("receiver");
+                row[2] = rs.getString("responseType");
+                //row[4] = rs.getString("response");
+                //row[5] = rs.getString("responseType");
+
+                responses.add(row);
+            }
+
+        } catch (SQLException e){
+            System.out.println("Error getting messages");
+            throw e;
+        }
+
+        return responses;
     }
 
     public List<Message> getAllSentMessages(String senderUsername) throws SQLException{

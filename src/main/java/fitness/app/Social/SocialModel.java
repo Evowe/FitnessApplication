@@ -18,6 +18,7 @@ public class SocialModel {
 
     private Account receiver;
     private int selectedRow;
+    private String friendRequestUsername;
 
     public SocialModel() {
         //Create a single instance of MessagesDB
@@ -105,6 +106,37 @@ public class SocialModel {
         return data;
     }
 
+    public Object[][] getResponseData(Account account) {
+        List<Object []> messages = null;
+        try{
+            messages = messagesDB.getAllResponses(account.getUsername());
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        Object[][] data = new Object[messages.size()][6];
+        for(int i = 0; i < messages.size(); i++){
+            data[i] = messages.get(i);
+        }
+
+        return data;
+    }
+
+    public void deleteFriendRequestMessages(String username, String requesterUsername){
+        try{
+            messagesDB.deleteFriendRequestMessages(username, requesterUsername);
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void acceptFriendRequestMessages(String username, String requesterUsername){
+        try{
+            messagesDB.acceptFriendRequestMessages(username, requesterUsername);
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 
     public int getSelectedRow() {
         return selectedRow;
@@ -203,5 +235,65 @@ public class SocialModel {
         selectedRow = row;
     }
 
+    public int getAccountCount(){
+        try {
+            return accountsDB.getCount();
+        } catch (SQLException e) {
+            System.out.println("Database error: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
+    public List<String> getPendingRequests(String username){
+        List<String> pendingRequests = null;
+
+        try {
+            pendingRequests = friendsDB.getPendingRequests(username);
+        } catch (SQLException e) {
+            System.out.println("Database error: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return pendingRequests;
+
+    }
+
+    public String getFriendRequestUsername(){
+        return this.friendRequestUsername;
+    }
+
+    public void setFriendRequestUsername(String username){
+        this.friendRequestUsername = username;
+    }
+
+    public void declineFriendRequest(String username, String friend){
+        try {
+            friendsDB.declineFriendRequest(username, friend);
+            System.out.println("Successfully declined friend request");
+        } catch (SQLException e) {
+            System.out.println("Database error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void respondToMessage(Message message){
+        try {
+            messagesDB.respond(message);
+            System.out.println("Successfully responded to message");
+        } catch (SQLException e) {
+            System.out.println("Database error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteMessage(Message message){
+        try {
+            messagesDB.deleteMessage(message);
+            System.out.println("Successfully deleted message");
+        } catch (SQLException e) {
+            System.out.println("Database error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
