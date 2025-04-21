@@ -11,7 +11,6 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -97,9 +96,6 @@ public class LoginView extends JPanel {
                     if ("admin".equals(validatedAccount.getRole())) {
                         Main.setWindow("AdminPage");
                     } else {
-                        //Main.dark = validatedAccount.getMode();
-                        //updateTheme();
-                        //SwingUtilities.updateComponentTreeUI(SwingUtilities.windowForComponent(Main.window));
                         Main.setWindow("HomePage");
                     }
                 }

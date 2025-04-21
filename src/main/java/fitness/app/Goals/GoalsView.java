@@ -98,7 +98,7 @@ public class GoalsView extends JPanel {
 
         // -- CENTER: Editable Goal Form --
         JPanel centerPanel = new JPanel(new MigLayout("wrap, fillx, insets 30", "fill,275", "[][][][][]"));
-        centerPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
+        centerPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:@accent");
 
         JLabel formTitle = new JLabel("Modify a Goal");
         formTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
