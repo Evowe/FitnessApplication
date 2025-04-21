@@ -7,6 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.nio.charset.StandardCharsets;
+
 public class AccountsDB extends DBTemplate {
 
     public AccountsDB() {
@@ -41,7 +45,7 @@ public class AccountsDB extends DBTemplate {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, account.getUsername());
-            pstmt.setString(2, account.getPassword());
+            pstmt.setString(2, hashPassword(account.getPassword()));
             pstmt.setString(3, account.getStatus());
             pstmt.setString(4, account.getRole());
             pstmt.setInt(5, account.getWallet());
@@ -169,7 +173,7 @@ public class AccountsDB extends DBTemplate {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, username);
-            pstmt.setString(2, password);
+            pstmt.setString(2, hashPassword(password));
             ResultSet rs = pstmt.executeQuery();
 
             /*
@@ -206,7 +210,7 @@ public class AccountsDB extends DBTemplate {
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, newPassword);
+            pstmt.setString(1, hashPassword(newPassword));
             pstmt.setString(2, username);
 
             int rowsAffected = pstmt.executeUpdate();
@@ -356,5 +360,63 @@ public class AccountsDB extends DBTemplate {
         }
         return -1;
     }
+
+    private String hashPassword(String plainPassword) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(
+                    plainPassword.getBytes(StandardCharsets.UTF_8));
+
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : encodedHash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            System.err.println("SHA-256 algorithm not available: " + e.getMessage());
+            // Fall back to plaintext in the worst case
+            return plainPassword;
+        }
+    }
+
+    // This function is temporary to migrate all plaintext passwords to hash
+    // Only needs to run once. Uncomment and add accountsDB.migratePasswordsToHash();
+    // in the db manager after the account db is initialized.
+    // Ask me for more guidance -Ethan
+
+    /*
+    public void migratePasswordsToHash(){
+        String selectSql = "SELECT username, password FROM accounts";
+        String updateSql = "UPDATE accounts SET password = ? WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement selectStmt = conn.prepareStatement(selectSql)) {
+
+            ResultSet rs = selectStmt.executeQuery();
+
+            while (rs.next()) {
+                String username = rs.getString("username");
+                String plainPassword = rs.getString("password");
+                String hashedPassword = hashPassword(plainPassword);
+
+                try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                    updateStmt.setString(1, hashedPassword);
+                    updateStmt.setString(2, username);
+                    updateStmt.executeUpdate();
+                    System.out.println("Migrated password for user: " + username);
+                }
+            }
+
+            System.out.println("All passwords have been migrated to SHA-256 hash");
+        } catch (SQLException e) {
+            System.out.println("Error migrating passwords: " + e.getMessage());
+        }
+    }
+     */
     
 }
