@@ -5,6 +5,7 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import fitness.app.Main;
+import fitness.app.Objects.Account;
 import fitness.app.Objects.Message;
 import fitness.app.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
@@ -15,6 +16,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class SendResponseView extends JPanel {
     SocialViewModel viewModel = new SocialViewModel();
@@ -141,29 +143,40 @@ public class SendResponseView extends JPanel {
             public void actionPerformed(ActionEvent event) {
                 //Account receiver = viewModel.selectUser(selectedRow);
                 int index = responseTypeDropdown.getSelectedIndex();
-                Message.Type type = null;
+                Message.Type responseType = null;
                 if (index == 1) {
-                    type = Message.Type.ACCEPT_FRIEND;
+                    responseType = Message.Type.ACCEPT_FRIEND;
                 } else if (index == 2) {
-                    type = Message.Type.REJECT_FRIEND;
+                    responseType = Message.Type.REJECT_FRIEND;
                 } else if (index == 3) {
-                    type = Message.Type.ACCEPT_CHALLENGE;
+                    responseType = Message.Type.ACCEPT_CHALLENGE;
                 } else if (index == 4) {
-                    type = Message.Type.REJECT_CHALLENGE;
+                    responseType = Message.Type.REJECT_CHALLENGE;
                 }
 
                 System.out.println("this is the index" + index);
 
-                //Message message = new Message(responseField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
-                //message.addMessage();
+                Object[][] data = viewModel.getMessageData2(Main.getCurrentUser());
+                String message = data[viewModel.getSelectedRow()][0].toString();
+                Account sender = null;
+                try {
+                    sender = Account.getAccount(data[viewModel.getSelectedRow()][1].toString());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                Message.Type type = Message.getType(data[viewModel.getSelectedRow()][2].toString());
+                Account recipient = Main.getCurrentUser();
+                String response = responseField.getText();
+                //Message.Type type = Message.getType(data[viewModel.getSelectedRow()][2].toString());
+                Message m = new Message(message, sender, recipient, type, response, responseType);
 
-                //Object [][] messages = viewModel.getMessageData2(Main.getCurrentUser());
-                //messagesTable.getValueAt(viewModel.getSelectedRow(), 1);
+                viewModel.respondToMessage(m);
 
-                if(type == Message.Type.ACCEPT_FRIEND) {
+                if(responseType == Message.Type.ACCEPT_FRIEND) {
                     viewModel.acceptFriendRequest(Main.getCurrentUser().getUsername(), messagesTable.getValueAt(viewModel.getSelectedRow(), 1).toString());
                 }
-                //viewModel.sendMessage(messageField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
+
+                //viewModel.sendMessage(resField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
                 Main.setWindow("SocialView");
                 //viewModel.selectUser(selectedRow);
             }

@@ -4,14 +4,12 @@ import com.kitfox.svg.SVGUniverse;
 import com.kitfox.svg.app.beans.SVGIcon;
 import fitness.app.Objects.DatabaseManager;
 import fitness.app.Objects.Databases.GoalsDB;
-
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
-import java.sql.SQLException;
 import java.util.Date;
 
 public class GoalsModel {
