@@ -137,14 +137,16 @@ public class MessagesDB extends DBTemplate{
     }
 
     public void deleteFriendRequestMessages(String username, String receiver) throws SQLException{
-        String sql = "UPDATE messages SET responseType = ? WHERE sender = ? AND receiver = ? AND type =?";
+        String sql = "UPDATE messages SET responseType = ?, response = ? WHERE sender = ? AND receiver = ? AND type =?";
         try(Connection con = getConnection();
         PreparedStatement pstmt = con.prepareStatement(sql)) {
 
             pstmt.setString(1, "REJECT_FRIEND");
-            pstmt.setString(2, receiver);
-            pstmt.setString(3, username);
-            pstmt.setString(4, "FRIEND_REQUEST");
+            String response = receiver + " declined your friend request";
+            pstmt.setString(2, response);
+            pstmt.setString(3, receiver);
+            pstmt.setString(4, username);
+            pstmt.setString(5, "FRIEND_REQUEST");
 
             pstmt.executeUpdate();
 
@@ -158,14 +160,16 @@ public class MessagesDB extends DBTemplate{
     }
 
     public void acceptFriendRequestMessages(String username, String receiver) throws SQLException{
-        String sql = "UPDATE messages SET responseType = ? WHERE sender = ? AND receiver = ? AND type =?";
+        String sql = "UPDATE messages SET responseType = ?, response = ? WHERE sender = ? AND receiver = ? AND type =?";
         try(Connection con = getConnection();
             PreparedStatement pstmt = con.prepareStatement(sql)) {
 
             pstmt.setString(1, "ACCEPT_FRIEND");
-            pstmt.setString(2, receiver);
-            pstmt.setString(3, username);
-            pstmt.setString(4, "FRIEND_REQUEST");
+            String response = receiver + " accepted your friend request";
+            pstmt.setString(2, response);
+            pstmt.setString(3, receiver);
+            pstmt.setString(4, username);
+            pstmt.setString(5, "FRIEND_REQUEST");
 
             pstmt.executeUpdate();
 

@@ -37,12 +37,14 @@ public class SocialViewModel {
 
     public Object[] getMessageColumns() {
         return socialModel.getMessageColumns();
-        //return null;
+    }
+
+    public Object[] getResponseColumns() {
+        return socialModel.getResponseColumns();
     }
 
     public Object[][] getUserData() {
         return socialModel.getUserData();
-        //return null;
     }
 
     public void setReceiver(Account account) {

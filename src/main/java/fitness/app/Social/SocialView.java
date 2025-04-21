@@ -9,6 +9,7 @@ import fitness.app.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
@@ -80,6 +81,7 @@ public class SocialView extends JPanel {
 
         JTable friendsTable = new JTable(data, viewModel.getFriendColumns());
         friendsTable.setRowHeight(50);
+        friendsTable.setShowGrid(true);
         friendsTable.setMaximumSize(new Dimension(0, 200));
         friendsTable.putClientProperty(FlatClientProperties.STYLE,  "" + "font:bold +6");
         friendsTable.setDefaultEditor(Object.class, null);
@@ -103,14 +105,15 @@ public class SocialView extends JPanel {
         friendPanel.add(friendRequestsTitle, BorderLayout.NORTH);
 
         JPanel friendsRequestsPanel = new JPanel();
-        friendsRequestsPanel.setLayout(new GridLayout(viewModel.getAccountCount(),1, 5, 5));
+        friendsRequestsPanel.setLayout(new GridLayout(8,1, 0, 5));
         //friendsRequestsPanel.setMaximumSize(new Dimension(0, 10));
 
         for(int i = 0; i < friendRequests.size(); i++){
             //friendPanel = new JPanel();
             //friendsRequestsPanel.setLayout(new GridLayout(data.length, 3));
             JPanel friendRequest = new JPanel();
-            friendRequest.setLayout(new GridLayout(1, 3));
+            friendRequest.setBorder(BorderFactory.createLineBorder(friendsTable.getGridColor(), 1));
+            friendRequest.setLayout(new GridLayout(1, 3, 5, 5));
             FlatLabel friendName = new FlatLabel();
             friendName.setText(friendRequests.get(i));
             viewModel.setFriendRequestUsername(friendRequests.get(i));
@@ -121,6 +124,8 @@ public class SocialView extends JPanel {
             //acceptFriend.setMinimumHeight(10);
             //acceptFriend.setMinimumWidth(200);
             acceptFriend.setText("Accept");
+            acceptFriend.setBackground(new Color(20, 100, 31));
+            acceptFriend.setBorder(BorderFactory.createRaisedBevelBorder());
             friendRequest.add(acceptFriend);
             acceptFriend.addActionListener(new ActionListener() {
                 @Override
@@ -139,6 +144,7 @@ public class SocialView extends JPanel {
             //declineRequest.setMinimumWidth(200);
             declineRequest.setText("Decline");
             friendRequest.add(declineRequest);
+            declineRequest.setBorder(BorderFactory.createRaisedBevelBorder());
             declineRequest.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
@@ -179,11 +185,13 @@ public class SocialView extends JPanel {
         //Need to initalize with data from friends database
         JTable messagesTable = new JTable(viewModel.getMessageData2(Main.getCurrentUser()), viewModel.getMessageColumns());
         messagesTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        messagesTable.putClientProperty(FlatClientProperties.STYLE,  "" + "font:regular +3");
+        messagesTable.putClientProperty(FlatClientProperties.STYLE,  "" + "font:regular +0");
         messagesTable.setRowHeight(50);
-        messagesTable.getColumnModel().getColumn(0).setPreferredWidth(293);
+        messagesTable.setShowGrid(true);
+
+        messagesTable.getColumnModel().getColumn(0).setPreferredWidth(313);
         messagesTable.getColumnModel().getColumn(1).setPreferredWidth(120);
-        messagesTable.getColumnModel().getColumn(2).setPreferredWidth(180);
+        messagesTable.getColumnModel().getColumn(2).setPreferredWidth(160);
         messagesTable.setDefaultEditor(Object.class, null);
 
         for(int i = 1; i < messagesTable.getColumnCount(); i++) {
@@ -212,16 +220,17 @@ public class SocialView extends JPanel {
         responsesPanel.add(responsesTitle, BorderLayout.NORTH);
 
         //Need to initalize with data from friends database
-        JTable responsesTable = new JTable(viewModel.getResponseData(Main.getCurrentUser()), viewModel.getMessageColumns());
+        JTable responsesTable = new JTable(viewModel.getResponseData(Main.getCurrentUser()), viewModel.getResponseColumns());
         responsesTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        responsesTable.putClientProperty(FlatClientProperties.STYLE,  "" + "font:regular +3");
+        responsesTable.putClientProperty(FlatClientProperties.STYLE,  "" + "font:regular +0");
         responsesTable.setRowHeight(50);
-        responsesTable.getColumnModel().getColumn(0).setPreferredWidth(293);
+        responsesTable.setShowGrid(true);
+        responsesTable.getColumnModel().getColumn(0).setPreferredWidth(313);
         responsesTable.getColumnModel().getColumn(1).setPreferredWidth(120);
-        responsesTable.getColumnModel().getColumn(2).setPreferredWidth(180);
+        responsesTable.getColumnModel().getColumn(2).setPreferredWidth(160);
         responsesTable.setDefaultEditor(Object.class, null);
 
-        for(int i = 1; i < responsesTable.getColumnCount(); i++) {
+        for(int i = 0; i < responsesTable.getColumnCount(); i++) {
             TableColumn col = responsesTable.getColumnModel().getColumn(i);
             DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
             dtcr.setHorizontalAlignment(SwingConstants.CENTER);

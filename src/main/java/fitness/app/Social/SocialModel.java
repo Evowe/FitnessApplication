@@ -155,6 +155,18 @@ public class SocialModel {
         return columns;
     }
 
+    public Object[] getResponseColumns() {
+        Object[] columns = new Object[3];
+        columns[0] = "Response";
+        columns[1] = "From";
+        //columns[2] = "Reciever";
+        columns[2] = "Response Type";
+        //columns[4] = "Response";
+        //columns[5] = "Response Type";
+
+        return columns;
+    }
+
     public Message createMessage(String message, Account sender, Account receiver, Message.Type type){
         Message m = new Message(message, sender, receiver, type);
 
