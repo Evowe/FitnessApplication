@@ -206,7 +206,7 @@ public class StatsView extends JPanel {
         statsPanel.add(sleepPanel);
 
         //Weight panel
-        JPanel weightPanel = new JPanel(new MigLayout("fill,insets 20", "right", "Bottom"));
+        JPanel weightPanel = new JPanel(new MigLayout("fill,insets 15", "right", "Bottom"));
         weightPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
         JPanel WMenu = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         WMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
@@ -239,7 +239,6 @@ public class StatsView extends JPanel {
                         Wdistitle.setText("Current Weight: " + acc.getWeight());
                         Wdescription.setText("All fields required");
                         Wdescription.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
-                        // Refresh the weight graph
                         refreshGraph("weight");
                     }
                 } catch (NumberFormatException e) {
@@ -263,19 +262,14 @@ public class StatsView extends JPanel {
         add(mainPanel);
     }
 
-    /**
-     * Refreshes the specified graph with updated data
-     * @param metric The metric to refresh ("calories", "sleep", or "weight")
-     */
+
     private void refreshGraph(String metric) {
         ArrayList<Integer> xData = viewModel.getx();
         ArrayList<Integer> yData = viewModel.gety(metric);
 
         switch(metric.toLowerCase()) {
             case "calories":
-                // Create a new graph and replace the old one
                 calorieGraph = new GraphView(xData, yData, "Day", "Calories", "Calorie Graph");
-                // Find the panel container and replace content
                 Container parent = calorieGraph.getPanel().getParent();
                 if (parent != null) {
                     parent.removeAll();
@@ -305,8 +299,6 @@ public class StatsView extends JPanel {
                 }
                 break;
         }
-
-        // Make sure the entire UI updates
         statsPanel.revalidate();
         statsPanel.repaint();
     }

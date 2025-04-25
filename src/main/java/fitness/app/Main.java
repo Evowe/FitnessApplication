@@ -18,7 +18,9 @@ import fitness.app.Goals.GoalsView;
 import fitness.app.Home.HomeView;
 import fitness.app.Locker.LockerView;
 import fitness.app.Login.LoginView;
+import fitness.app.Metrics.MetricsView;
 import fitness.app.Microtransactions.TransactionViewModel;
+import fitness.app.Report.ReportView;
 import fitness.app.Settings.SettingsViewModel;
 import fitness.app.Social.CreateMessageView;
 import fitness.app.Social.SendResponseView;
@@ -88,6 +90,9 @@ public class Main {
             }
             case "StatsPage" -> {
                 window.add(new StatsView(currentUser));
+            }
+            case "MetricsPage" -> {
+                window.add(new MetricsView(currentUser));
             }
             case "AdminPage" -> {
                 window.add(new AdminHomeView());

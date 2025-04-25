@@ -60,12 +60,12 @@ public class SideMenuView extends JPanel {
 
         FlatButton statisticsButton = new FlatButton();
         statisticsButton.setBorderPainted(false);
-        statisticsButton.setText("Statistics");
+        statisticsButton.setText("Metrics");
         statisticsButton.setIcon(sideMenuViewModel.getIcon("chart-evaluation"));
         statisticsButton.setHorizontalAlignment(SwingConstants.LEFT);
         statisticsButton.setMargin(new Insets(5,25,5,5));
         statisticsButton.setMinimumHeight(50);
-        statisticsButton.addActionListener(genButtonListener("StatsPage"));
+        statisticsButton.addActionListener(genButtonListener("MetricsPage"));
 
 
         FlatButton exerciseLibraryButton = new FlatButton();

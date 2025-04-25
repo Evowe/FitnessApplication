@@ -51,14 +51,17 @@ public class GoalsView extends JPanel {
         GoalsDB goalsDB = DatabaseManager.getGoalsDB();
 
         setLayout(new MigLayout("fill,insets 20"));
+        putClientProperty(FlatClientProperties.STYLE, "arc:20");
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
-        JPanel mainPanel = new JPanel(new MigLayout("insets 0"));
-        mainPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
+        JPanel mainPanel = new JPanel(new MigLayout());
+        mainPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
 
 
         // -- RIGHT: Current Distance Goal --
         JPanel distancePanel = new JPanel(new MigLayout("insets 0,wrap"));
+        distancePanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+
         JLabel weightTitle = new JLabel("Current Weight Goal");
         weightTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold");
         SimpleDateFormat displayFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -98,7 +101,7 @@ public class GoalsView extends JPanel {
 
         // -- CENTER: Editable Goal Form --
         JPanel centerPanel = new JPanel(new MigLayout("wrap, fillx, insets 30", "fill,275", "[][][][][]"));
-        centerPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:@accent");
+        //centerPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20; background:@accent");
 
         JLabel formTitle = new JLabel("Modify a Goal");
         formTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");

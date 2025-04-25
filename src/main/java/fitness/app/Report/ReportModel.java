@@ -5,6 +5,7 @@ import fitness.app.Objects.Account;
 import fitness.app.Objects.DatabaseManager;
 import fitness.app.Objects.Databases.ExerciseDB;
 import fitness.app.Objects.Databases.WorkoutDB;
+import fitness.app.Objects.Databases.WorkoutLogDB;
 import fitness.app.Objects.Exercise;
 import fitness.app.Objects.Workout;
 
@@ -15,15 +16,18 @@ import java.util.List;
 
 public class ReportModel {
 
-    private final WorkoutDB workoutDB = DatabaseManager.getWorkoutDB();
+    private final WorkoutLogDB workoutLogDB = DatabaseManager.getWorkoutLogDB();
     private Account acc;
     ReportModel(Account acc) {
         this.acc = acc;
     }
+    public void addWorkout(Workout w,String username) throws SQLException {
+        workoutLogDB.addWorkout(w,username);
+    }
     public  Object [][] getWorkouts(){
         List<Workout> workouts = null;
         try{
-            workouts = workoutDB.getAllWorkouts(acc.getUsername());
+            workouts = workoutLogDB.getAllWorkouts(acc.getUsername());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

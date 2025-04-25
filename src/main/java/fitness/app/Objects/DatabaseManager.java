@@ -17,6 +17,7 @@ public class DatabaseManager {
     private static ItemsDB itemsDB;
     private static FriendsDB friendsDB;
     private static BattlePassDB battlePassDB;
+    private static WorkoutLogDB workoutLogDB;
 
     public static void initializeDatabases(){
         // Create instances of each database class
@@ -33,6 +34,7 @@ public class DatabaseManager {
         itemsDB.giveDefaultRocketToAllUsers();
         friendsDB = new FriendsDB();
         battlePassDB = new BattlePassDB();
+        workoutLogDB = new WorkoutLogDB();
         //battlePassDB.insertMockData();
     }
 
@@ -104,5 +106,12 @@ public class DatabaseManager {
             battlePassDB = new BattlePassDB();
         }
         return battlePassDB;
+    }
+
+    public static WorkoutLogDB getWorkoutLogDB() {
+        if(workoutDB == null) {
+            workoutLogDB = new WorkoutLogDB();
+        }
+        return workoutLogDB;
     }
 }
