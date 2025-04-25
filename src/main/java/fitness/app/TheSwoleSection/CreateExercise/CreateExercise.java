@@ -1,7 +1,7 @@
 package fitness.app.TheSwoleSection.CreateExercise;
 
-import fitness.app.BadProjectStructureSection.Objects.Exercise;
-import fitness.app.BadProjectStructureSection.Databases.ExerciseDB;
+import fitness.app.Utility.Objects.Exercise;
+import fitness.app.Utility.Databases.ExerciseDB;
 
 import java.sql.SQLException;
 

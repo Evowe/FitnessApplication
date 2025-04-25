@@ -4,7 +4,7 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.extras.components.FlatPasswordField;
 import com.formdev.flatlaf.extras.components.FlatTextField;
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 import fitness.app.Main;
 import com.formdev.flatlaf.FlatClientProperties;
 import net.miginfocom.swing.MigLayout;

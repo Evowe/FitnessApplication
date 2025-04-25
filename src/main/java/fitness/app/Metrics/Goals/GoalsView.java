@@ -6,12 +6,12 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import fitness.app.BadProjectStructureSection.Objects.Account;
-import fitness.app.BadProjectStructureSection.Objects.DatabaseManager;
-import fitness.app.BadProjectStructureSection.Objects.Goal;
-import fitness.app.BadProjectStructureSection.Widgets.Calendar.CalendarView;
-import fitness.app.BadProjectStructureSection.Databases.GoalsDB;
-import fitness.app.BadProjectStructureSection.Widgets.SideMenu.SideMenuView;
+import fitness.app.Utility.Objects.Account;
+import fitness.app.Utility.Objects.DatabaseManager;
+import fitness.app.Utility.Objects.Goal;
+import fitness.app.Utility.Widgets.Calendar.CalendarView;
+import fitness.app.Utility.Databases.GoalsDB;
+import fitness.app.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;

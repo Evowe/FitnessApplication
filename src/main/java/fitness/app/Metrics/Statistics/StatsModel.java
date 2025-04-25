@@ -1,8 +1,8 @@
 package fitness.app.Metrics.Statistics;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
-import fitness.app.BadProjectStructureSection.Objects.DatabaseManager;
-import fitness.app.BadProjectStructureSection.Databases.StatsDB;
+import fitness.app.Utility.Objects.Account;
+import fitness.app.Utility.Objects.DatabaseManager;
+import fitness.app.Utility.Databases.StatsDB;
 
 import java.sql.SQLException;
 import java.time.LocalDate;

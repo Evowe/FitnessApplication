@@ -1,7 +1,7 @@
 package fitness.app.Metrics.Statistics;
 
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 
 import javax.swing.*;
 import java.time.LocalDate;

@@ -1,10 +1,10 @@
 package fitness.app.BonusFeatures.Social;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
-import fitness.app.BadProjectStructureSection.Databases.AccountsDB;
-import fitness.app.BadProjectStructureSection.Databases.FriendsDB;
-import fitness.app.BadProjectStructureSection.Databases.MessagesDB;
-import fitness.app.BadProjectStructureSection.Objects.Message;
+import fitness.app.Utility.Objects.Account;
+import fitness.app.Utility.Databases.AccountsDB;
+import fitness.app.Utility.Databases.FriendsDB;
+import fitness.app.Utility.Databases.MessagesDB;
+import fitness.app.Utility.Objects.Message;
 
 import java.sql.SQLException;
 import java.util.List;

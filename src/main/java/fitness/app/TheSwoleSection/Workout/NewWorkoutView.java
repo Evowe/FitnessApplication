@@ -12,11 +12,11 @@ import com.formdev.flatlaf.extras.components.FlatLabel;
 
 import fitness.app.TheSwoleSection.ExerciseLibrary.ExerciseLibraryModel;
 import fitness.app.Main;
-import fitness.app.BadProjectStructureSection.Objects.DatabaseManager;
-import fitness.app.BadProjectStructureSection.Databases.ExerciseDB;
-import fitness.app.BadProjectStructureSection.Objects.Exercise;
-import fitness.app.BadProjectStructureSection.Objects.Workout;
-import fitness.app.BadProjectStructureSection.Widgets.SideMenu.SideMenuView;
+import fitness.app.Utility.Objects.DatabaseManager;
+import fitness.app.Utility.Databases.ExerciseDB;
+import fitness.app.Utility.Objects.Exercise;
+import fitness.app.Utility.Objects.Workout;
+import fitness.app.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 public class NewWorkoutView extends JPanel {

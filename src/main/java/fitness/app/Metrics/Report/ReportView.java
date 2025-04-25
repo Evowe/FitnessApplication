@@ -6,8 +6,8 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import fitness.app.BadProjectStructureSection.Objects.Account;
-import fitness.app.BadProjectStructureSection.Widgets.SideMenu.SideMenuView;
+import fitness.app.Utility.Objects.Account;
+import fitness.app.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;

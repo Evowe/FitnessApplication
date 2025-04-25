@@ -1,8 +1,8 @@
 package fitness.app.BonusFeatures.BattlePass;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatLabel;
-import fitness.app.BadProjectStructureSection.Databases.BattlePassDB;
-import fitness.app.BadProjectStructureSection.Widgets.SideMenu.SideMenuView;
+import fitness.app.Utility.Databases.BattlePassDB;
+import fitness.app.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;

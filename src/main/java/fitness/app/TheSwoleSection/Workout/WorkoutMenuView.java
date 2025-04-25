@@ -11,7 +11,7 @@ import javax.swing.JScrollPane;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 
-import fitness.app.BadProjectStructureSection.Widgets.SideMenu.SideMenuModel;
+import fitness.app.Utility.Widgets.SideMenu.SideMenuModel;
 import net.miginfocom.swing.MigLayout;
 
 public class WorkoutMenuView {

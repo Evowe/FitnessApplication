@@ -1,12 +1,12 @@
 package fitness.app.AccountManagement.Home;
 
 import com.formdev.flatlaf.FlatClientProperties;
-import fitness.app.BadProjectStructureSection.Objects.Account;
-import fitness.app.BadProjectStructureSection.Widgets.Battlepass.BattlepassView;
-import fitness.app.BadProjectStructureSection.Widgets.Calendar.CalendarView;
-import fitness.app.BadProjectStructureSection.Widgets.GoalProgressMeter.GoalProgressMeterView;
-import fitness.app.BadProjectStructureSection.Widgets.Profile.ProfileView;
-import fitness.app.BadProjectStructureSection.Widgets.SideMenu.SideMenuView;
+import fitness.app.Utility.Objects.Account;
+import fitness.app.Utility.Widgets.Battlepass.BattlepassView;
+import fitness.app.Utility.Widgets.Calendar.CalendarView;
+import fitness.app.Utility.Widgets.GoalProgressMeter.GoalProgressMeterView;
+import fitness.app.Utility.Widgets.Profile.ProfileView;
+import fitness.app.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 

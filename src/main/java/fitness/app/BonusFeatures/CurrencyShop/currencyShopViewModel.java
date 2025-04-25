@@ -1,6 +1,6 @@
 package fitness.app.BonusFeatures.CurrencyShop;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 
 import javax.swing.*;
 

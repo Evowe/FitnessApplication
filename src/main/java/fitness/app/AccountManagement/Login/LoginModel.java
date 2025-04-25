@@ -1,6 +1,6 @@
 package fitness.app.AccountManagement.Login;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 
 public class LoginModel {
     public static String validateAccount(Account account) {

@@ -1,7 +1,7 @@
 package fitness.app.BonusFeatures.Social;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
-import fitness.app.BadProjectStructureSection.Objects.Message;
+import fitness.app.Utility.Objects.Account;
+import fitness.app.Utility.Objects.Message;
 
 import java.util.List;
 

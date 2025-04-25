@@ -1,7 +1,7 @@
 package fitness.app.AccountManagement.Settings;
 
 import fitness.app.Main;
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 import java.sql.SQLException;
 
 public class SettingsModel {

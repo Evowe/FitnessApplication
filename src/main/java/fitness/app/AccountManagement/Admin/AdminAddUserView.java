@@ -23,7 +23,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 
 import fitness.app.Main;
 import fitness.app.AccountManagement.CreateAccount.CreateAccountViewModel;
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 import net.miginfocom.swing.MigLayout;
 
 public class AdminAddUserView extends JPanel {

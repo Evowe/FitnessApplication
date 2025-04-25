@@ -6,8 +6,8 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import fitness.app.Main;
-import fitness.app.BadProjectStructureSection.Objects.Exercise;
-import fitness.app.BadProjectStructureSection.Widgets.SideMenu.SideMenuView;
+import fitness.app.Utility.Objects.Exercise;
+import fitness.app.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;

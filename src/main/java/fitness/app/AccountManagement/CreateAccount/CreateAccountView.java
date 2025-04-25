@@ -3,7 +3,7 @@ package fitness.app.AccountManagement.CreateAccount;
 import com.formdev.flatlaf.extras.components.FlatPasswordField;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import fitness.app.Main;
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 import com.formdev.flatlaf.FlatClientProperties;
 import net.miginfocom.swing.MigLayout;
 import javax.imageio.ImageIO;

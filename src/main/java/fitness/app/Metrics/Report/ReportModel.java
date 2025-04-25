@@ -1,9 +1,9 @@
 package fitness.app.Metrics.Report;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
-import fitness.app.BadProjectStructureSection.Objects.DatabaseManager;
-import fitness.app.BadProjectStructureSection.Databases.WorkoutLogDB;
-import fitness.app.BadProjectStructureSection.Objects.Workout;
+import fitness.app.Utility.Objects.Account;
+import fitness.app.Utility.Objects.DatabaseManager;
+import fitness.app.Utility.Databases.WorkoutLogDB;
+import fitness.app.Utility.Objects.Workout;
 
 import java.sql.SQLException;
 import java.util.List;

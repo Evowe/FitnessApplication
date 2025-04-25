@@ -1,6 +1,6 @@
 package fitness.app.AccountManagement.CreateAccount;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 
 public class CreateAccountViewModel {
     private static CreateAccountModel createAccountModel;

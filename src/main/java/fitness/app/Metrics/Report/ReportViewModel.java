@@ -1,7 +1,7 @@
 package fitness.app.Metrics.Report;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
-import fitness.app.BadProjectStructureSection.Objects.Workout;
+import fitness.app.Utility.Objects.Account;
+import fitness.app.Utility.Objects.Workout;
 
 import java.sql.SQLException;
 

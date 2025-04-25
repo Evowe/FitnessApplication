@@ -1,7 +1,7 @@
 package fitness.app.Metrics;
 
 import fitness.app.Metrics.Goals.GoalsView;
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 import fitness.app.Metrics.Report.ReportView;
 import fitness.app.Metrics.Statistics.StatsView;
 import net.miginfocom.swing.MigLayout;
@@ -14,9 +14,7 @@ public class MetricsView extends JPanel{
     {
         this.currentUser = currentUser;
         JTabbedPane tabbedPane = new JTabbedPane();
-        //tabbedPane.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
-        //tabbedPane.setTabPlacement(JTabbedPane.RIGHT);
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
         tabbedPane.addTab("Goals", new GoalsView(currentUser));

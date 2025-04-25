@@ -1,8 +1,8 @@
 package fitness.app.Metrics.Statistics;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
-import fitness.app.BadProjectStructureSection.Widgets.Graph.GraphView;
-import fitness.app.BadProjectStructureSection.Widgets.SideMenu.SideMenuView;
+import fitness.app.Utility.Objects.Account;
+import fitness.app.Utility.Widgets.Graph.GraphView;
+import fitness.app.Utility.Widgets.SideMenu.SideMenuView;
 import com.formdev.flatlaf.FlatClientProperties;
 import net.miginfocom.swing.MigLayout;
 

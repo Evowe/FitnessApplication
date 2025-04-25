@@ -1,6 +1,6 @@
 package fitness.app.BonusFeatures.Microtransactions;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 
 import javax.swing.*;
 

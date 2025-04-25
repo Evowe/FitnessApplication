@@ -3,9 +3,9 @@ package fitness.app.BonusFeatures.CurrencyShop;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 import fitness.app.BonusFeatures.Microtransactions.TransactionViewModel;
-import fitness.app.BadProjectStructureSection.Widgets.SideMenu.SideMenuView;
+import fitness.app.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-import static fitness.app.BadProjectStructureSection.Objects.Account.updateWallet;
+import static fitness.app.Utility.Objects.Account.updateWallet;
 
 public class currencyshopview extends JPanel {
     private static JPanel mainPanel;

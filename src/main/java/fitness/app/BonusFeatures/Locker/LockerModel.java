@@ -1,6 +1,6 @@
 package fitness.app.BonusFeatures.Locker;
 
-import fitness.app.BadProjectStructureSection.Databases.ItemsDB;
+import fitness.app.Utility.Databases.ItemsDB;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

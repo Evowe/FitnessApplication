@@ -3,7 +3,7 @@ package fitness.app.AccountManagement.Admin;
 import java.util.ArrayList;
 import java.util.List;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 
 public class AdminUsersViewModel {
 	private AdminUsersModel model = new AdminUsersModel();

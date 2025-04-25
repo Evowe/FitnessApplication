@@ -4,9 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
-import fitness.app.BadProjectStructureSection.Databases.AccountsDB;
-import fitness.app.BadProjectStructureSection.Objects.DatabaseManager;
+import fitness.app.Utility.Objects.Account;
+import fitness.app.Utility.Databases.AccountsDB;
+import fitness.app.Utility.Objects.DatabaseManager;
 
 public class AdminUsersModel {
 	private AccountsDB accDB = DatabaseManager.getAccountsDB();

@@ -1,6 +1,6 @@
 package fitness.app.AccountManagement.Login;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 
 import javax.swing.*;
 import java.sql.SQLException;

@@ -1,6 +1,6 @@
 package fitness.app.AccountManagement.CreateAccount;
 
-import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Utility.Objects.Account;
 
 import java.sql.SQLException;
 import java.util.regex.Pattern;
