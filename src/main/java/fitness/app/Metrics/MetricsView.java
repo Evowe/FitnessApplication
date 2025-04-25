@@ -1,19 +1,12 @@
 package fitness.app.Metrics;
 
-import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import fitness.app.Goals.GoalsView;
-import fitness.app.Objects.Account;
-import fitness.app.Report.ReportView;
-import fitness.app.Statistics.StatsView;
+import fitness.app.Metrics.Goals.GoalsView;
+import fitness.app.BadProjectStructureSection.Objects.Account;
+import fitness.app.Metrics.Report.ReportView;
+import fitness.app.Metrics.Statistics.StatsView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import java.awt.*;
-import java.sql.SQLException;
 
 public class MetricsView extends JPanel{
     private Account currentUser;
