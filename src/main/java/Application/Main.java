@@ -26,8 +26,7 @@ import Application.BonusFeatures.Social.CreateMessageView;
 import Application.BonusFeatures.Social.SendResponseView;
 import Application.BonusFeatures.Social.SocialView;
 import Application.Metrics.Statistics.StatsView;
-import Application.TheSwoleSection.Workout.NewWorkoutView;
-
+import Application.TheSwoleSection.CreateWorkout.NewWorkoutView;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;

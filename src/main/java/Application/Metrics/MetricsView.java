@@ -14,7 +14,7 @@ import javax.swing.*;
 public class MetricsView extends JPanel{
     private Account currentUser;
     public MetricsView(Account currentUser) {
-        setLayout(new MigLayout("fill, insets 20", "center", "center"));
+        setLayout(new MigLayout("fill, insets 20", "[]20[]", "center"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
         this.currentUser = currentUser;
 

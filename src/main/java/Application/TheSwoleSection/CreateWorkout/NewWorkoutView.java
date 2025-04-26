@@ -1,4 +1,4 @@
-package Application.TheSwoleSection.Workout;
+package Application.TheSwoleSection.CreateWorkout;
 
 import java.awt.*;
 import java.sql.SQLException;
@@ -16,7 +16,6 @@ import Application.Utility.Databases.DatabaseManager;
 import Application.Utility.Databases.ExerciseDB;
 import Application.Utility.Objects.Exercise;
 import Application.Utility.Objects.Workout;
-import Application.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 public class NewWorkoutView extends JPanel {
@@ -26,9 +25,6 @@ public class NewWorkoutView extends JPanel {
 		//Setup Main Panel Layout
 		setLayout(new MigLayout("insets 20", "left", "top"));
 		putClientProperty(FlatClientProperties.STYLE, "background:@background");
-
-		//Add Navigation Menu
-		add(new SideMenuView(), "growy, pushy");
 
 		//Setup Main Panel
 		JPanel main = new JPanel();

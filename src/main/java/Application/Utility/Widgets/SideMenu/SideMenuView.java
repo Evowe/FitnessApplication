@@ -57,15 +57,6 @@ public class SideMenuView extends JPanel {
         statisticsButton.addActionListener(genButtonListener("MetricsPage"));
 
 
-        FlatButton exerciseLibraryButton = new FlatButton();
-        exerciseLibraryButton.setBorderPainted(false);
-        exerciseLibraryButton.setText("Exercise Library");
-        exerciseLibraryButton.setIcon(sideMenuViewModel.getIcon("workout-stretching"));
-        exerciseLibraryButton.setHorizontalAlignment(SwingConstants.LEFT);
-        exerciseLibraryButton.setMargin(new Insets(5,25,5,5));
-        exerciseLibraryButton.setMinimumHeight(50);
-        exerciseLibraryButton.addActionListener(genButtonListener("ExerciseLibrary"));
-
         FlatButton socialViewButton = new FlatButton();
         socialViewButton.setBorderPainted(false);
         socialViewButton.setText("Social");
@@ -130,7 +121,6 @@ public class SideMenuView extends JPanel {
         add(homeButton, "wrap, gapy 0");
         add(workoutsButton, "wrap, gapy 10");
         add(statisticsButton, "wrap, gapy 10");
-        add(exerciseLibraryButton, "wrap, gapy 10");
         add(socialViewButton, "wrap, gapy 10");
         add(shopButton, "wrap, gapy 10");
         add(BPButton, "wrap, gapy 10");
@@ -146,6 +136,7 @@ public class SideMenuView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Main.setWindow(page);
+                System.out.println();
             }
         };
     }
