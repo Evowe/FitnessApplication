@@ -19,9 +19,10 @@ ReportViewModel(Account acc){
     public Object [] getColumns(){
         return reportModel.getColumns();
     }
-    public void addWorkout(Workout w,String username) throws SQLException {
+    public void addWorkout(Workout w,String username){
         reportModel.addWorkout(w,username);
     }
+
 
 }
 

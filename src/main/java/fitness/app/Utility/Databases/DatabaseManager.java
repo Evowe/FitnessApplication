@@ -1,8 +1,4 @@
-package fitness.app.Utility.Objects;
-
-import fitness.app.Utility.Databases.*;
-import fitness.app.Utility.Objects.Objects.Databases.*;
-import fitness.app.Objects.Databases.*;
+package fitness.app.Utility.Databases;
 
 public class DatabaseManager {
     private static AccountsDB accountsDB;

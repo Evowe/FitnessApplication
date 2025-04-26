@@ -1,5 +1,6 @@
 package fitness.app.Utility.Objects;
 
+import fitness.app.Utility.Databases.DatabaseManager;
 import fitness.app.Utility.Databases.MessagesDB;
 
 import java.sql.SQLException;

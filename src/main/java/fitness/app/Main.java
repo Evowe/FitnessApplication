@@ -8,7 +8,7 @@ import fitness.app.AccountManagement.Admin.AdminAddUserView;
 import fitness.app.AccountManagement.Admin.AdminHomeView;
 import fitness.app.AccountManagement.Admin.AdminUsersView;
 import fitness.app.Utility.Objects.Account;
-import fitness.app.Utility.Objects.DatabaseManager;
+import fitness.app.Utility.Databases.DatabaseManager;
 import fitness.app.BonusFeatures.BattlePass.BattlePassView;
 import fitness.app.AccountManagement.CreateAccount.CreateAccountView;
 import fitness.app.TheSwoleSection.CreateExercise.CreateExcerciseView;

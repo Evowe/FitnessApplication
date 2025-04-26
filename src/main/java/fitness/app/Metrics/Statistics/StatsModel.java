@@ -1,12 +1,13 @@
 package fitness.app.Metrics.Statistics;
 
 import fitness.app.Utility.Objects.Account;
-import fitness.app.Utility.Objects.DatabaseManager;
+import fitness.app.Utility.Databases.DatabaseManager;
 import fitness.app.Utility.Databases.StatsDB;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -156,4 +157,28 @@ public class StatsModel {
             return yData;
         }
     }
+
+
+    public String getDailyMetric(String category) {
+        LocalDate today = LocalDate.now();
+        Map<String,Object> map;
+        try {
+            map = statsDB.getDailyMetrics(acc.getUsername(), today);
+        }
+        catch (SQLException e){
+            System.err.println("Error retrieving data: " + e.getMessage());
+            return "0";
+        }
+        switch (category.toLowerCase()) {
+            case "calories":
+                return  map.get("calories").toString();
+            case "sleep":
+                return String.format("%.1f", ((Double)map.get("sleep")));
+
+            case "weight":
+                return String.format("%.1f", ((Double)map.get("weight")));
+        }
+        return "0";
+    }
+
 }

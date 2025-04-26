@@ -1,7 +1,6 @@
 package fitness.app.Utility.Databases;
 
 import fitness.app.Utility.Objects.Account;
-import fitness.app.Utility.Objects.DatabaseManager;
 
 import java.sql.*;
 import java.util.ArrayList;

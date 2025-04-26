@@ -6,7 +6,7 @@ import java.util.List;
 
 import fitness.app.Utility.Objects.Account;
 import fitness.app.Utility.Databases.AccountsDB;
-import fitness.app.Utility.Objects.DatabaseManager;
+import fitness.app.Utility.Databases.DatabaseManager;
 
 public class AdminUsersModel {
 	private AccountsDB accDB = DatabaseManager.getAccountsDB();

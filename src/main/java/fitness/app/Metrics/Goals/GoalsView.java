@@ -7,7 +7,7 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import fitness.app.Utility.Objects.Account;
-import fitness.app.Utility.Objects.DatabaseManager;
+import fitness.app.Utility.Databases.DatabaseManager;
 import fitness.app.Utility.Objects.Goal;
 import fitness.app.Utility.Widgets.Calendar.CalendarView;
 import fitness.app.Utility.Databases.GoalsDB;

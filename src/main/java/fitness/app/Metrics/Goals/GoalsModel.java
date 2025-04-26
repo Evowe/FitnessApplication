@@ -2,7 +2,7 @@ package fitness.app.Metrics.Goals;
 
 import com.kitfox.svg.SVGUniverse;
 import com.kitfox.svg.app.beans.SVGIcon;
-import fitness.app.Utility.Objects.DatabaseManager;
+import fitness.app.Utility.Databases.DatabaseManager;
 import fitness.app.Utility.Databases.GoalsDB;
 import java.awt.*;
 import java.io.File;

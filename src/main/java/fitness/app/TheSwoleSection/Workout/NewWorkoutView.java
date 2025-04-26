@@ -12,7 +12,7 @@ import com.formdev.flatlaf.extras.components.FlatLabel;
 
 import fitness.app.TheSwoleSection.ExerciseLibrary.ExerciseLibraryModel;
 import fitness.app.Main;
-import fitness.app.Utility.Objects.DatabaseManager;
+import fitness.app.Utility.Databases.DatabaseManager;
 import fitness.app.Utility.Databases.ExerciseDB;
 import fitness.app.Utility.Objects.Exercise;
 import fitness.app.Utility.Objects.Workout;

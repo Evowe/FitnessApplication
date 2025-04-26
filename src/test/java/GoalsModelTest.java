@@ -1,9 +1,8 @@
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import fitness.app.Goals.GoalsModel;
+import fitness.app.Metrics.Goals.GoalsModel;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class GoalsModelTest {

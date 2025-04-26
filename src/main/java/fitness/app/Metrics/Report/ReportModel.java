@@ -1,7 +1,7 @@
 package fitness.app.Metrics.Report;
 
 import fitness.app.Utility.Objects.Account;
-import fitness.app.Utility.Objects.DatabaseManager;
+import fitness.app.Utility.Databases.DatabaseManager;
 import fitness.app.Utility.Databases.WorkoutLogDB;
 import fitness.app.Utility.Objects.Workout;
 
@@ -15,8 +15,13 @@ public class ReportModel {
     ReportModel(Account acc) {
         this.acc = acc;
     }
-    public void addWorkout(Workout w,String username) throws SQLException {
-        workoutLogDB.addWorkout(w,username);
+    public void addWorkout(Workout w,String username){
+        try {
+            workoutLogDB.addWorkout(w, username);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     public  Object [][] getWorkouts(){
         List<Workout> workouts = null;

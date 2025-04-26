@@ -3,7 +3,7 @@ package fitness.app.Utility.Widgets.GoalProgressMeter;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatProgressBar;
 import fitness.app.Utility.Objects.Account;
-import fitness.app.Utility.Objects.DatabaseManager;
+import fitness.app.Utility.Databases.DatabaseManager;
 import fitness.app.Utility.Databases.GoalsDB;
 import fitness.app.Utility.Objects.Goal;
 import net.miginfocom.swing.MigLayout;

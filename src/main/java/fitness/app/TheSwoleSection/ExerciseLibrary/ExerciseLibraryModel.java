@@ -1,6 +1,6 @@
 package fitness.app.TheSwoleSection.ExerciseLibrary;
 
-import fitness.app.Utility.Objects.DatabaseManager;
+import fitness.app.Utility.Databases.DatabaseManager;
 import fitness.app.Utility.Databases.ExerciseDB;
 import fitness.app.Utility.Objects.Exercise;
 

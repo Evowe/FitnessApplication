@@ -84,4 +84,7 @@ public class StatsViewModel extends JFrame {
         this.acc = acc;
     }
 
+    public String getDailyMetric(String metric) {
+        return statsModel.getDailyMetric(metric);
+    }
 }

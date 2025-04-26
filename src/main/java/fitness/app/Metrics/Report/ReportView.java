@@ -37,15 +37,15 @@ public class ReportView extends JPanel {
 //        Workout w8 = new Workout("BenchPress", "veryHard", 550, 40, sdf.format(d).toString(), "1,3,5");
 //        Workout w9 = new Workout("MountainClimbers", "medium", 300, 25, sdf.format(d).toString(), "2,5,6");
 //        Workout w10 = new Workout("JumpRope", "easy", 250, 20, sdf.format(d).toString(), "5,6");
-//        workoutLogDB.addWorkout(w2,user.getUsername());
-//        workoutLogDB.addWorkout(w3,user.getUsername());
-//        workoutLogDB.addWorkout(w4,user.getUsername());
-//        workoutLogDB.addWorkout(w5,user.getUsername());
-//        workoutLogDB.addWorkout(w6,user.getUsername());
-//        workoutLogDB.addWorkout(w7,user.getUsername());
-//        workoutLogDB.addWorkout(w8,user.getUsername());
-//        workoutLogDB.addWorkout(w9,user.getUsername());
-//        workoutLogDB.addWorkout(w10,user.getUsername());
+//        viewModel.addWorkout(w2,user.getUsername());
+//        viewModel.addWorkout(w3,user.getUsername());
+//        viewModel.addWorkout(w4,user.getUsername());
+//        viewModel.addWorkout(w5,user.getUsername());
+//        viewModel.addWorkout(w6,user.getUsername());
+//        viewModel.addWorkout(w7,user.getUsername());
+//        viewModel.addWorkout(w8,user.getUsername());
+//        viewModel.addWorkout(w9,user.getUsername());
+//        viewModel.addWorkout(w10,user.getUsername());
 
 
         currentUser = user;

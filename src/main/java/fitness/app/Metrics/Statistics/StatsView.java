@@ -42,7 +42,7 @@ public class StatsView extends JPanel {
         calDis.putClientProperty(FlatClientProperties.STYLE, "background:@background");
         JPanel CdisMen = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         CdisMen.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
-        JLabel cdistitle = new JLabel("Daily Calories: " + acc.getCalories());
+        JLabel cdistitle = new JLabel("Daily Calories: " + viewModel.getDailyMetric("Calories"));
         cdistitle.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
         CdisMen.add(cdistitle);
         calDis.add(CdisMen);
@@ -53,7 +53,7 @@ public class StatsView extends JPanel {
         sleepDis.putClientProperty(FlatClientProperties.STYLE, "background:@background");
         JPanel SleepDisMen = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         SleepDisMen.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
-        JLabel Sdistitle = new JLabel("Total Sleep: " + acc.getSleep());
+        JLabel Sdistitle = new JLabel("Total Sleep: " + viewModel.getDailyMetric("Sleep"));
         Sdistitle.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
         SleepDisMen.add(Sdistitle);
         sleepDis.add(SleepDisMen);
@@ -64,7 +64,7 @@ public class StatsView extends JPanel {
         weightDis.putClientProperty(FlatClientProperties.STYLE, "background:@background");
         JPanel weightDisMen = new JPanel(new MigLayout("wrap,fillx,insets 30", "fill,275"));
         weightDisMen.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
-        JLabel Wdistitle = new JLabel("Current Weight: " + acc.getWeight());
+        JLabel Wdistitle = new JLabel("Current Weight: " + viewModel.getDailyMetric("Weight"));
         Wdistitle.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
         weightDisMen.add(Wdistitle);
         weightDis.add(weightDisMen);

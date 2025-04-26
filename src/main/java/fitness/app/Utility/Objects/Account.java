@@ -1,6 +1,7 @@
 package fitness.app.Utility.Objects;
 
 import fitness.app.Utility.Databases.AccountsDB;
+import fitness.app.Utility.Databases.DatabaseManager;
 
 import java.sql.SQLException;
 
@@ -57,6 +58,9 @@ public class Account {
         this.password = password;
         this.status = "active";
         this.role = "user";
+        setCalories(0);
+        setWeight(0.0);
+        setSleep(0.0);
     }
 
     public Account(String username, String password, String status, String role) {
