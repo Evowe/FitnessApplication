@@ -27,7 +27,7 @@ public class CalendarModel {
                     date = date.plusDays(1);
                 }
                 calendar.add(week);
-            } while (date.getMonth() == input.getMonth());
+            } while (calendar.size() < 7);
         }
 
         //Default Constructor

@@ -160,26 +160,6 @@ public class Main {
         }
     }
 
-    /*
-    public static void updateTheme(){
-        try {
-            //CHANGE WAS HERE
-            if (dark) {
-                UIManager.setLookAndFeel(new FlatDarkLaf());
-            }
-            else {
-                UIManager.setLookAndFeel(new FlatLightLaf());
-            }
-        } catch (UnsupportedLookAndFeelException e) {
-            throw new RuntimeException(e);
-        }
-        SwingUtilities.updateComponentTreeUI(SwingUtilities.windowForComponent(window));
-
-    }
-
-     */
-
-
     public static Account getCurrentUser() {
         return currentUser;
     }

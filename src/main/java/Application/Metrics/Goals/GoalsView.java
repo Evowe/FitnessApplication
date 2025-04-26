@@ -11,7 +11,6 @@ import Application.Utility.Databases.DatabaseManager;
 import Application.Utility.Objects.Goal;
 import Application.Utility.Widgets.Calendar.CalendarView;
 import Application.Utility.Databases.GoalsDB;
-import Application.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;

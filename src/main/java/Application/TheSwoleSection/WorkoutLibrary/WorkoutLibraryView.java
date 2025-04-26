@@ -13,7 +13,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class WorkoutLibraryView extends JPanel{
+    private WorkoutLibraryViewModel viewModel;
+
     public WorkoutLibraryView() {
+        //View Model
+        viewModel = new WorkoutLibraryViewModel();
+
         //Setup Main Panel Layout
         setLayout(new MigLayout("fill, insets 20", "center", "center"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background");

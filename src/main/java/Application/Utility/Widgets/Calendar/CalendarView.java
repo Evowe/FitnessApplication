@@ -18,26 +18,27 @@ public class CalendarView extends JPanel {
     private FlatButton yearButton;
     private final CalendarViewModel viewModel;
     private JButton currentSelection;
-    private JPanel calendarMenu;
 
     public CalendarView() {
-        setLayout(new MigLayout("insets 15"));
+        //Set standard layout
+        setLayout(new MigLayout("wrap, fillx, insets 20"));
         putClientProperty(FlatClientProperties.STYLE, "arc:20;");
-
-        //Panel Layout & Settings
-        calendarMenu = new JPanel(new MigLayout("wrap, fillx, insets 0"));
-        calendarMenu.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
         //Intialize ViewModel
         viewModel = new CalendarViewModel();
 
+        add(initMenuBar(), "growx");
+        add(initCalendarPage(), "growx, pushx");
+    }
+
+    private JPanel initMenuBar() {
         //Create Menu Bar
-        JPanel menuBar = new JPanel(new MigLayout("fill, insets 0" , "fill"));
+        JPanel menuBar = new JPanel(new MigLayout("fillx, filly, insets 0" ));
 
         //Month Selection Button
         FlatButton monthButton = new FlatButton();
-        monthButton.setMinimumSize(new Dimension(36, 36));
         monthButton.setMargin(new Insets(0, 0, 0, 0));
+        monthButton.setMinimumSize(new Dimension(36, 36));
         monthButton.setBorderPainted(false);
         monthButton.setHorizontalAlignment(SwingConstants.RIGHT);
         char[] buttonName = viewModel.getMonth().toString().toLowerCase().toCharArray();
@@ -56,8 +57,8 @@ public class CalendarView extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     viewModel.setMonth(Month.valueOf(item.getText().toUpperCase()));
                     monthButton.setText(item.getText());
-                    calendarMenu.remove(getComponentCount());
-                    setCalendar();
+                    remove(getComponentCount() - 1);
+                    add(initCalendarPage());
                 }
             });
             monthPopupMenu.add(item);
@@ -73,9 +74,9 @@ public class CalendarView extends JPanel {
 
         //Year Selection Button
         yearButton = new FlatButton();
-        yearButton.setBorderPainted(false);
-        yearButton.setMinimumSize(new Dimension(36, 36));
         yearButton.setMargin(new Insets(0, 0, 0, 0));
+        yearButton.setMinimumSize(new Dimension(36, 36));
+        yearButton.setBorderPainted(false);
         yearButton.setHorizontalAlignment(SwingConstants.LEFT);
         yearButton.setText(String.valueOf(viewModel.getYear()));
         yearButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground; foreground:@foreground;");
@@ -93,9 +94,9 @@ public class CalendarView extends JPanel {
 
         //Previous Month Button
         FlatButton lastMonthButton = new FlatButton();
-        lastMonthButton.setBorderPainted(false);
-        lastMonthButton.setMinimumSize(new Dimension(36, 36));
         lastMonthButton.setMargin(new Insets(0, 0, 0, 0));
+        lastMonthButton.setMinimumSize(new Dimension(36, 36));
+        lastMonthButton.setBorderPainted(false);
         lastMonthButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,51 +109,51 @@ public class CalendarView extends JPanel {
                 buttonName[0] = Character.toUpperCase(buttonName[0]);
                 monthButton.setText(new String(buttonName));
 
-                calendarMenu.remove(getComponentCount());
-                setCalendar();
+                remove(getComponentCount() - 1);
+                add(initCalendarPage());
             }
         });
         lastMonthButton.setText("<");
 
         //Previous Year Button
         FlatButton lastYearButton = new FlatButton();
-        lastYearButton.setBorderPainted(false);
-        lastYearButton.setMinimumSize(new Dimension(36, 36));
         lastYearButton.setMargin(new Insets(0, 0, 0, 0));
+        lastYearButton.setMinimumSize(new Dimension(36, 36));
+        lastYearButton.setBorderPainted(false);
         lastYearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 viewModel.setYear(viewModel.getYear() - 1);
                 yearButton.setText(String.valueOf(viewModel.getYear()));
 
-                calendarMenu.remove(getComponentCount());
-                setCalendar();
+                remove(getComponentCount() - 1);
+                add(initCalendarPage());
             }
         });
         lastYearButton.setText("<<");
 
         //Next Year Button
         FlatButton nextYearButton = new FlatButton();
-        nextYearButton.setBorderPainted(false);
-        nextYearButton.setMinimumSize(new Dimension(36, 36));
         nextYearButton.setMargin(new Insets(0, 0, 0, 0));
+        nextYearButton.setMinimumSize(new Dimension(36, 36));
+        nextYearButton.setBorderPainted(false);
         nextYearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 viewModel.setYear(viewModel.getYear() + 1);
                 yearButton.setText(String.valueOf(viewModel.getYear()));
 
-                calendarMenu.remove(getComponentCount());
-                setCalendar();
+                remove(getComponentCount() - 1);
+                add(initCalendarPage());
             }
         });
         nextYearButton.setText(">>");
 
         //Next Month Button
         FlatButton nextMonthButton = new FlatButton();
-        nextMonthButton.setBorderPainted(false);
-        nextMonthButton.setMinimumSize(new Dimension(36, 36));
         nextMonthButton.setMargin(new Insets(0, 0, 0, 0));
+        nextMonthButton.setMinimumSize(new Dimension(36, 36));
+        nextMonthButton.setBorderPainted(false);
         nextMonthButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -165,8 +166,8 @@ public class CalendarView extends JPanel {
                 buttonName[0] = Character.toUpperCase(buttonName[0]);
                 monthButton.setText(new String(buttonName));
 
-                calendarMenu.remove(getComponentCount());
-                setCalendar();
+                remove(getComponentCount() - 1);
+                add(initCalendarPage());
             }
         });
         nextMonthButton.setText(">");
@@ -178,13 +179,10 @@ public class CalendarView extends JPanel {
         menuBar.add(nextYearButton);
         menuBar.add(nextMonthButton);
 
-        calendarMenu.add(menuBar, "growx");
-        add(calendarMenu, "growx, pushx");
-
-        setCalendar();
+        return menuBar;
     }
 
-    private void setCalendar() {
+    private JPanel initCalendarPage() {
         JPanel calendarPanel = new JPanel(new MigLayout("wrap, fillx, insets 0", "fill"));
         ArrayList<String[]> format = viewModel.getCalendar();
 
@@ -204,12 +202,9 @@ public class CalendarView extends JPanel {
                 dayButton.setMinimumSize(new Dimension(36, 36));
                 dayButton.setMargin(new Insets(0, 0, 0, 0));
                 dayButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground;");
-                if(!dark){
-                    dayButton.setForeground(new Color(193, 18, 31));
-                }
                 dayButton.setBorderPainted(false);
                 dayButton.setText(day);
-                if ((week.equals(format.getFirst()) && parseInt(day) > 7 ) || (week.equals(format.getLast()) && parseInt(day) < 7)) {
+                if ((week.equals(format.getFirst()) && parseInt(day) > 7 ) || (week.equals(format.get(4)) && parseInt(day) < 14) || (week.equals(format.get(5)) && parseInt(day) < 14)) {
                     dayButton.setFocusable(false);
                     dayButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground; foreground:@secondaryForeground;");
                 }
@@ -233,14 +228,14 @@ public class CalendarView extends JPanel {
             calendarPanel.add(dateLabels);
         }
 
-        calendarMenu.add(calendarPanel, "growx");
+        return calendarPanel;
     }
 
     public String getDate() {
         return viewModel.getDate();
     }
 
-    public FlatPopupMenu initYearMenu() {
+    private FlatPopupMenu initYearMenu() {
         FlatPopupMenu yearPopupMenu = new FlatPopupMenu();
         for (int i = viewModel.getYear() - 5; i <= viewModel.getYear() + 5; ++i) {
             FlatMenuItem item = new FlatMenuItem();
@@ -250,8 +245,8 @@ public class CalendarView extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     viewModel.setYear(Integer.parseInt(item.getText()));
                     yearButton.setText(item.getText());
-                    calendarMenu.remove(getComponentCount());
-                    setCalendar();
+                    remove(getComponentCount() - 1);
+                    add(initCalendarPage());
                 }
             });
             yearPopupMenu.add(item);
