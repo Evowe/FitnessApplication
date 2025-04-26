@@ -27,7 +27,6 @@ public class NewWorkoutView extends JPanel {
 		setLayout(new MigLayout("insets 20", "left", "top"));
 		putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
-
 		//Add Navigation Menu
 		add(new SideMenuView(), "growy, pushy");
 

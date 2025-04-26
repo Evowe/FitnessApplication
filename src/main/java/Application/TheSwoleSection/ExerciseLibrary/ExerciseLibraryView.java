@@ -23,9 +23,6 @@ public class ExerciseLibraryView extends JPanel {
         setLayout(new MigLayout("insets 20", "left", "top"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
-        add(new SideMenuView(), "growy, pushy");
-
-
 
         //setLayout(new BorderLayout());
         //putClientProperty(FlatClientProperties.STYLE, "background:@background");

@@ -21,6 +21,8 @@ public class ReportView extends JPanel {
     private ReportViewModel viewModel;
     private Account currentUser;
     public ReportView(Account user) {
+        setLayout(new MigLayout("fill, insets 20", "center", "center"));
+        putClientProperty(FlatClientProperties.STYLE, "background:@background;");
         //WorkoutLogDB workoutLogDB = DatabaseManager.getWorkoutLogDB();
         currentUser = user;
         viewModel = new ReportViewModel(currentUser);
@@ -49,12 +51,6 @@ public class ReportView extends JPanel {
 
 
         currentUser = user;
-        FlatLaf.registerCustomDefaultsSource("Components.Themes");
-        FlatMacDarkLaf.setup();
-        putClientProperty(FlatClientProperties.STYLE, "background:@background");
-
-        setLayout(new MigLayout("fill, insets 20"));
-        add(new SideMenuView(), "growy, pushy");
         JPanel main = new JPanel();
         main.putClientProperty(FlatClientProperties.STYLE, "background:@background");
 

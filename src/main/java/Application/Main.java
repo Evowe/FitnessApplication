@@ -1,5 +1,6 @@
 package Application;
 
+import Application.TheSwoleSection.WorkoutView;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -15,7 +16,6 @@ import Application.TheSwoleSection.CreateExercise.CreateExcerciseView;
 import Application.BonusFeatures.CurrencyShop.currencyShopViewModel;
 import Application.BonusFeatures.CurrencyShop.currencyshopview;
 import Application.TheSwoleSection.ExerciseLibrary.ExerciseLibraryView;
-import Application.Metrics.Goals.GoalsView;
 import Application.AccountManagement.Home.HomeView;
 import Application.BonusFeatures.Locker.LockerView;
 import Application.AccountManagement.Login.LoginView;
@@ -27,7 +27,6 @@ import Application.BonusFeatures.Social.SendResponseView;
 import Application.BonusFeatures.Social.SocialView;
 import Application.Metrics.Statistics.StatsView;
 import Application.TheSwoleSection.Workout.NewWorkoutView;
-import Application.TheSwoleSection.WorkoutLibrary.WorkoutLibraryView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -103,9 +102,6 @@ public class Main {
                 view.findCurrUser(currentUser);
                 window.add(new currencyshopview(currentUser));
             }
-            case "GoalsPage" -> {
-                window.add(new GoalsView(currentUser));
-            }
             case "SettingsPage" -> {
                 window.add(SettingsViewModel.getSettingsView());
             }
@@ -118,8 +114,8 @@ public class Main {
             case "ExerciseLibrary" -> {
                 window.add(new ExerciseLibraryView());
             }
-            case "WorkoutLibrary" -> {
-                window.add(new WorkoutLibraryView());
+            case "Workout" -> {
+                window.add(new WorkoutView());
             }
             case "CreateExercise" -> {
                 window.add(new CreateExcerciseView());
@@ -129,7 +125,6 @@ public class Main {
             }
             case "CreateMessage" -> {
                 window.add(new CreateMessageView());
-                //window.add(new NewWorkoutView());
             }
             case "SocialView" -> {
                 window.add(new SocialView());
@@ -165,6 +160,7 @@ public class Main {
             e.printStackTrace();
         }
     }
+
     /*
     public static void updateTheme(){
         try {

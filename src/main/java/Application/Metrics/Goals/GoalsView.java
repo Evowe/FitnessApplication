@@ -50,7 +50,7 @@ public class GoalsView extends JPanel {
     public void modifyGoalsPanel() {
         GoalsDB goalsDB = DatabaseManager.getGoalsDB();
 
-        setLayout(new MigLayout("fill,insets 20"));
+        setLayout(new MigLayout("fill,insets 20", "center", "center"));
         putClientProperty(FlatClientProperties.STYLE, "arc:20");
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
@@ -225,8 +225,7 @@ public class GoalsView extends JPanel {
 
         // Add mainPanel to the second column, spanning all rows
         removeAll();
-        add(new SideMenuView(),"growy, pushy");
-        add(mainPanel, "");
+        add(mainPanel);
 
         revalidate();
         repaint();

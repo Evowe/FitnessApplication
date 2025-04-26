@@ -389,7 +389,7 @@ public class AccountsDB extends DBTemplate {
     // in the db manager after the account db is initialized.
     // Ask me for more guidance -Ethan
 
-    /*
+
     public void migratePasswordsToHash(){
         String selectSql = "SELECT username, password FROM accounts";
         String updateSql = "UPDATE accounts SET password = ? WHERE username = ?";
@@ -417,6 +417,5 @@ public class AccountsDB extends DBTemplate {
             System.out.println("Error migrating passwords: " + e.getMessage());
         }
     }
-     */
     
 }

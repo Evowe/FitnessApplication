@@ -15,10 +15,8 @@ import java.awt.event.ActionListener;
 public class WorkoutLibraryView extends JPanel{
     public WorkoutLibraryView() {
         //Setup Main Panel Layout
-        setLayout(new MigLayout("insets 20", "left", "top"));
+        setLayout(new MigLayout("fill, insets 20", "center", "center"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
-
-        add(new SideMenuView(), "growy, pushy");
 
         JPanel main = new JPanel();
         main.putClientProperty(FlatClientProperties.STYLE, "background:@background");
@@ -70,7 +68,7 @@ public class WorkoutLibraryView extends JPanel{
 
         buttonPanel.add(createWorkout);
 
-        main.add(buttonPanel, BorderLayout.SOUTH);
+        main.add(buttonPanel, BorderLayout.CENTER);
 
         add(main, "growy, pushy");
     }

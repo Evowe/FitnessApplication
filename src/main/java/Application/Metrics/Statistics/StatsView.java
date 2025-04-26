@@ -21,7 +21,7 @@ public class StatsView extends JPanel {
     private JPanel statsPanel;
 
     public StatsView(Account acc) {
-        setLayout(new MigLayout("fill, insets 20"));
+        setLayout(new MigLayout("fill, insets 20", "center", "center"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         viewModel = new StatsViewModel(acc);
@@ -29,10 +29,6 @@ public class StatsView extends JPanel {
 
         mainPanel = new JPanel(new MigLayout("fill", "[grow]", "[grow]"));
         mainPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background" );
-
-        JPanel menuPanel = new JPanel(new MigLayout("insets 0"));
-        menuPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
-        menuPanel.add(new SideMenuView(), "growy, pushy");
 
         statsPanel = new JPanel(new MigLayout("wrap 3", "[grow][grow][grow]", "[]"));
         statsPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
@@ -255,7 +251,6 @@ public class StatsView extends JPanel {
 
         mainPanel.add(statsPanel);
 
-        add(menuPanel, "growy, pushy");
         add(mainPanel);
     }
 
