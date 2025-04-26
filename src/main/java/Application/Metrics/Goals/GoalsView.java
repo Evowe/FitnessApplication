@@ -134,7 +134,7 @@ public class GoalsView extends JPanel {
                 JFrame popWindow = new JFrame();
                 popWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-                CalendarView cal = new CalendarView();
+                CalendarView cal = new CalendarView(CalendarView.Type.BUTTONED);
                 new Thread(() -> {
                     while(isFrameOpen) {
                         popWindow.addWindowListener(new WindowAdapter() {

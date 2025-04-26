@@ -19,6 +19,6 @@ public class WorkoutScheduleView extends JPanel {
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         //TODO: Replace with a new calendar variant
-        add(new CalendarView(), "gapy 20, growx, growy, pushx, pushy");
+        add(new CalendarView(CalendarView.Type.PANELED), "gapy 20, growx, growy, pushx, pushy");
     }
 }

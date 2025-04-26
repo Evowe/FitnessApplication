@@ -24,7 +24,7 @@ public class HomeView extends JPanel {
         whole.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
 
         JPanel top = new JPanel(new MigLayout("insets 0", "left", "top"));
-        top.add(new CalendarView(), "gapx 10");
+        top.add(new CalendarView(CalendarView.Type.BUTTONED), "gapx 10");
         top.add(new BattlepassView(), "gapx 10, growx, pushx, wrap");
         top.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
         whole.add(top);
