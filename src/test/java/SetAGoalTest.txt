@@ -1,0 +1,105 @@
+Test Case #1: Valid Distance Goal
+
+Test Steps:
+	1. Start on the "Goals" tab in the "Metrics" page
+	2. Select "Distance" in the "Goal Type" dropdown menu
+	3. Enter a valid distance (> 0 and <= 10,000) in the "Enter goal value" textfield
+	4. Enter a valid date (MM/dd/yyyy) in the "Date" textfield
+	5. Click on the button that says "Set Goal"
+Expected Results:
+	- User should receive a notification saying "Goal Updated!"
+	- The user's new goal should be linked to the goal progress meter widget on the homepage
+Actual Results:
+	- The user receives a notification saying "Goal Updated!"
+	- The goal is not linked to the widget
+
+
+Test Case #2: Invalid Distance Goal
+
+Test Steps;
+	1. Start on the "Goals" tab in the "Metrics" page
+	2. Select "Distance" in the "Goal Type" dropdown menu
+	3. Enter an invalid distance (< 0 and > 10,000) in the "Enter goal value" textfield
+	4. Enter a valid date (MM/dd/yyyy) in the "Date" textfield
+	5. Click on the button that says "Set Goal"
+Expected Results:
+	- The user should receive an error message saying "Invalid goal value"
+Actual Results:
+	- The user receives an error message saying "Invalid goal value"
+
+
+Test Case #3: Valid Weight Goal
+
+Test Steps:
+	1. Start on the "Goals" tab in the "Metrics" page
+	2. Select "Weight" in the "Goal Type" dropdown menu
+	3. Enter a valid distance (> 0 and <= 10,000) in the "Enter goal value" textfield
+	4. Enter a valid date (MM/dd/yyyy) in the "Date" textfield
+	5. Click on the button that says "Set Goal"
+Expected Results:
+	- User should receive a notification saying "Goal Updated!"
+	- The user's new goal should be linked to the goal progress meter widget on the homepage
+Actual Results:
+	- The user receives a notification saying "Goal Updated!"
+	- The goal is not linked to the widget
+
+
+Test Case #4: Invalid Weight Goal
+
+Test Steps:
+	1. Start on the "Goals" tab in the "Metrics" page
+	2. Select "Weight" in the "Goal Type" dropdown menu
+	3. Enter an invalid distance (< 0 and > 10,000) in the "Enter goal value" textfield
+	4. Enter a valid date (MM/dd/yyyy) in the "Date" textfield
+	5. Click on the button that says "Set Goal"
+Expected Results:
+	- The user should receive an error message saying "Invalid goal value"
+Actual Results:
+	- The user receives an error message saying "Invalid goal value"
+
+
+Test Case #5: Invalid Date Format
+
+Test Steps:
+	1. Start on the "Goals" tab in the "Metrics" page
+	2. Select "Distance" or "Weight" in the "Goal Type" dropdown menu
+	3. Enter a valid goal value (> 0 and <= 10,000) in the "Enter goal value" textfield
+	4. Enter a valid date using an invalid date format (dd/MM/yyyy)
+	5. Click on the button that says "Set Goal"
+Expected Results:
+	- The user should receive an error message saying "Invalid date format"
+Actual Results:
+	- The user receives an error message saying "Invalid date format"
+
+
+Test Case #6: Invalid Date
+
+Test Steps:
+	1. Start on the "Goals" tab in the "Metrics" page
+	2. Select "Distance" or "Weight" in the "Goal Type" dropdown menu
+	3. Enter a valid goal value (> 0 and <= 10,000) in the "Enter goal value" textfield	
+	4. Enter an invalid date (a date that has already past) in the "Date" textfield
+	5. Click on the button that says "Set Goal"
+Expected Results:
+	- The user should receive an error message saying "Please enter a future date"
+Actual Results:
+	- The user receives an error message saying "Please enter a future date"
+
+
+Test Case #7: Date Selection Menu
+
+Test Steps:
+	1. Start on the "Goals" tab in the "Metrics" page
+	2. Select "Distance" or "Weight" in the "Goal Type" dropdown menu
+	3. Enter a valid goal value (> 0 and <= 10,000) in the "Enter goal value" textfield
+	4. Click on the button to the right of the "Date" textfield to open the calendar
+	5. Select a valid date using the calendar
+	6. Click on the button that says "Set Goal"
+Expected Results:
+	- The calendar should input the selected date into the "Date" textfield
+	- User should receive a notification saying "Goal Updated!"
+	- The user's new goal should be linked to the goal progress meter widget on the homepage
+Actual Results:
+	- The calendar inputs the selected date into the "Date" textfield"
+	- The user receives a notification saying "Goal Updated!"
+	- The goal is not linked to the widget
