@@ -224,7 +224,7 @@ public class AccountsDBTest {
         assertEquals(-1000000, nonExistentWallet, "Non-existent user wallet should return error value");
     }
 
-    // Test getCount method - modified to not rely on database being empty
+    // Test getCount method
     @Test
     public void testGetCount() throws SQLException {
         int initialCount = accountsDB.getCount();

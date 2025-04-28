@@ -44,7 +44,7 @@ public class CreditCardDB extends DBTemplate {
         }
     }
 
-    protected CreditCard getCreditCard(String cardNumber) throws SQLException {
+    public CreditCard getCreditCard(String cardNumber) throws SQLException {
         String sql = "SELECT * FROM creditCards WHERE cardNumber = ?";
 
         try (Connection conn = getConnection();
