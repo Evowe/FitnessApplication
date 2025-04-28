@@ -14,11 +14,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-//import static fitness.app.Main.updateTheme;
 
 public class LoginView extends JPanel {
     private final LoginViewModel loginViewModel;
@@ -102,7 +102,6 @@ public class LoginView extends JPanel {
             }
         });
 
-
         usernameField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -136,6 +135,34 @@ public class LoginView extends JPanel {
             }
         });
 
+        JPanel forgotPasswordPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        forgotPasswordPanel.setOpaque(false);
+        JLabel forgotPasswordLink = new JLabel("Forgot Password?");
+        forgotPasswordLink.setForeground(new Color(0, 102, 204)); // Blue color for link
+        forgotPasswordLink.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        forgotPasswordLink.putClientProperty(FlatClientProperties.STYLE, "font:-2");
+
+        forgotPasswordLink.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //Quick add for underline on hover
+                forgotPasswordLink.setText("<html><u>Forgot Password?</u></html>");
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                forgotPasswordLink.setText("Forgot Password?");
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                Main.setWindow("ResetPasswordPage");
+            }
+        });
+
+        forgotPasswordPanel.add(forgotPasswordLink);
+
         FlatButton createAccountButton = new FlatButton();
         createAccountButton.setText("Create Account");
         createAccountButton.setBorderPainted(false);
@@ -152,6 +179,7 @@ public class LoginView extends JPanel {
         loginMenu.add(usernameField);
         loginMenu.add(new JLabel("Password"), "gapy 8");
         loginMenu.add(passwordField);
+        loginMenu.add(forgotPasswordPanel, "growx");
         loginMenu.add(result, "gapy 0");
         loginMenu.add(logInButton, "gapy 10");
         loginMenu.add(createAccountButton, "gapy 10");

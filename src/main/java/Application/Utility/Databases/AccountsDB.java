@@ -16,6 +16,20 @@ public class AccountsDB extends DBTemplate {
         super("accounts");
     }
 
+    //Constant for security questions
+    public static final String[] SECURITY_QUESTIONS = {
+            "What was the name of your first pet?",
+            "In what city were you born?",
+            "What was the make of your first car?",
+            "What elementary school did you attend?",
+            "What is your mother's maiden name?",
+            "What was the name of your childhood best friend?",
+            "What street did you grow up on?",
+            "What was your favorite subject in high school?",
+            "What is the name of the hospital you were born in?",
+            "What was the first concert you attended?"
+    };
+
 
     @Override
     protected void createTables() throws SQLException {
@@ -32,9 +46,19 @@ public class AccountsDB extends DBTemplate {
                 "weight_unit TEXT DEFAULT 'kg'"
         };
 
+        String[] securityColumns = {
+                "username TEXT PRIMARY KEY",
+                "question1_id INTEGER NOT NULL",
+                "answer1 TEXT NOT NULL",
+                "question2_id INTEGER NOT NULL",
+                "answer2 TEXT NOT NULL",
+                "question3_id INTEGER NOT NULL",
+                "answer3 TEXT NOT NULL",
+                "FOREIGN KEY (username) REFERENCES accounts(username) ON DELETE CASCADE"
+        };
 
         createTable("accounts", columns);
-
+        createTable("security_questions", securityColumns);
     }
 
     public void addAccount(Account account) throws SQLException {
@@ -383,4 +407,116 @@ public class AccountsDB extends DBTemplate {
         }
     }
 
+    public boolean setupSecurityQuestions(String username,
+                                          int question1Id, String answer1,
+                                          int question2Id, String answer2,
+                                          int question3Id, String answer3) throws SQLException {
+        // Validate question IDs
+        if (question1Id < 0 || question1Id >= SECURITY_QUESTIONS.length ||
+                question2Id < 0 || question2Id >= SECURITY_QUESTIONS.length ||
+                question3Id < 0 || question3Id >= SECURITY_QUESTIONS.length) {
+            throw new IllegalArgumentException("Invalid question ID");
+        }
+
+        // Validate answers aren't empty
+        if (answer1 == null || answer1.trim().isEmpty() ||
+                answer2 == null || answer2.trim().isEmpty() ||
+                answer3 == null || answer3.trim().isEmpty()) {
+            throw new IllegalArgumentException("Security answers cannot be empty");
+        }
+
+        // Make sure username exists
+        if (!usernameExists(username)) {
+            return false;
+        }
+
+        // Check that all questions are different
+        if (question1Id == question2Id || question1Id == question3Id || question2Id == question3Id) {
+            throw new IllegalArgumentException("All security questions must be different");
+        }
+
+        String sql = "INSERT OR REPLACE INTO security_questions (username, question1_id, answer1, " +
+                "question2_id, answer2, question3_id, answer3) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            pstmt.setInt(2, question1Id);
+            pstmt.setString(3, hashPassword(answer1.toLowerCase().trim())); // Using existing hash method
+            pstmt.setInt(4, question2Id);
+            pstmt.setString(5, hashPassword(answer2.toLowerCase().trim()));
+            pstmt.setInt(6, question3Id);
+            pstmt.setString(7, hashPassword(answer3.toLowerCase().trim()));
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+
+    public int[] getSecurityQuestionIds(String username) throws SQLException {
+
+        String sql = "SELECT question1_id, question2_id, question3_id FROM security_questions WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    int[] questionIds = new int[3];
+                    questionIds[0] = rs.getInt("question1_id");
+                    questionIds[1] = rs.getInt("question2_id");
+                    questionIds[2] = rs.getInt("question3_id");
+                    return questionIds;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public boolean verifySecurityAnswer(String username, int questionNumber, String answer) throws SQLException {
+        if (questionNumber < 1 || questionNumber > 3) {
+            throw new IllegalArgumentException("Question number must be 1, 2, or 3");
+        }
+
+        String answerColumn = "answer" + questionNumber;
+        String sql = "SELECT " + answerColumn + " FROM security_questions WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String storedAnswer = rs.getString(answerColumn);
+                    String hashedInput = hashPassword(answer.toLowerCase().trim());
+                    return storedAnswer.equals(hashedInput);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean resetPasswordWithSecurityAnswers(String username,
+                                                    String answer1,
+                                                    String answer2,
+                                                    String answer3,
+                                                    String newPassword) throws SQLException {
+        if (!verifySecurityAnswer(username, 1, answer1) ||
+                !verifySecurityAnswer(username, 2, answer2) ||
+                !verifySecurityAnswer(username, 3, answer3)) {
+            return false;
+        }
+        return changePassword(username, newPassword);
+    }
+
+    public String getQuestionText(int questionId) {
+        if (questionId >= 0 && questionId < SECURITY_QUESTIONS.length) {
+            return SECURITY_QUESTIONS[questionId];
+        }
+        return null;
+    }
 }
