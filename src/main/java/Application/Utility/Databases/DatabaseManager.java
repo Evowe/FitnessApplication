@@ -18,16 +18,19 @@ public class DatabaseManager {
     public static void initializeDatabases(){
         // Create instances of each database class
         accountsDB = new AccountsDB();
+        accountsDB.insertBaseAccounts();
+
         exerciseDB = new ExerciseDB();
         creditCardDB = new CreditCardDB();
         goalsDB = new GoalsDB();
         statsDB = new StatsDB();
         workoutDB = new WorkoutDB();
         messagesDB = new MessagesDB();
-        itemsDB = new ItemsDB();
 
+        itemsDB = new ItemsDB();
         itemsDB.createDefaultRocketItems();
         itemsDB.giveDefaultRocketToAllUsers();
+
         friendsDB = new FriendsDB();
         battlePassDB = new BattlePassDB();
         workoutLogDB = new WorkoutLogDB();

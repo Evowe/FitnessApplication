@@ -29,7 +29,6 @@ import Application.Metrics.Statistics.StatsView;
 import Application.TheSwoleSection.CreateWorkout.NewWorkoutView;
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
 
 public class Main {
     public static boolean dark = true;
@@ -40,8 +39,6 @@ public class Main {
         System.setProperty("apple.awt.application.name", "Rocket Health");
         System.setProperty("apple.awt.application.appearance", "system");
         DatabaseManager.initializeDatabases();
-
-        addTestAdminAccount();
 
         //FlatLaf setup & settings
         FlatRobotoMonoFont.install();
@@ -140,24 +137,6 @@ public class Main {
         }
         window.revalidate();
         window.repaint();
-    }
-
-    public static void addTestAdminAccount() {
-        try {
-            // Create admin account with username "admin" and password "admin123"
-            Account adminAccount = new Account("admin", "admin123", "active", "admin");
-
-            // Check if admin account already exists
-            if (!Account.usernameExists("admin")) {
-                adminAccount.addAccount();
-                System.out.println("Test admin account created successfully.");
-            } else {
-                System.out.println("Test admin account already exists.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error creating test admin account: " + e.getMessage());
-            e.printStackTrace();
-        }
     }
 
     public static Account getCurrentUser() {

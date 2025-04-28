@@ -1,7 +1,6 @@
 package Application.Utility.Databases;
 
 import Application.Utility.Objects.Account;
-import Application.Utility.Databases.DatabaseManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -243,22 +242,22 @@ public class AccountsDB extends DBTemplate {
             throw e;
         }
     }
-    
-    //Still necessary? Don't see implementation anywhere. Was it replaced by impl. in main?
-    private void insertBaseUser() throws SQLException {
-        String insertSQL = "INSERT INTO accounts (username, password, status, role, wallet) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
-            // Set the values for the base user
-            pstmt.setString(1, "username");
-            pstmt.setString(2, "password");
-            pstmt.setString(3, "active");
-            pstmt.setString(4, "user");
-            pstmt.setInt(5, 1000);
-            // Execute the insert
-            pstmt.executeUpdate();
+
+    // This is extremely insecure, simply there for our project's scope.
+    public void insertBaseAccounts() {
+        try {
+            if (!Account.usernameExists("username")) {
+                Account userAccount = new Account("username", "password", "active", "user");
+                userAccount.addAccount();
+            }
+
+            if (!Account.usernameExists("admin")) {
+                Account adminAccount = new Account("admin", "admin123", "active", "admin");
+                adminAccount.addAccount();
+            }
         } catch (SQLException e) {
-            System.out.println("Error inserting base user: " + e.getMessage());
-            throw e;
+            System.out.println("Error inserting accounts: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
@@ -384,38 +383,4 @@ public class AccountsDB extends DBTemplate {
         }
     }
 
-    // This function is temporary to migrate all plaintext passwords to hash
-    // Only needs to run once. Uncomment and add accountsDB.migratePasswordsToHash();
-    // in the db manager after the account db is initialized.
-    // Ask me for more guidance -Ethan
-
-
-    public void migratePasswordsToHash(){
-        String selectSql = "SELECT username, password FROM accounts";
-        String updateSql = "UPDATE accounts SET password = ? WHERE username = ?";
-
-        try (Connection conn = getConnection();
-             PreparedStatement selectStmt = conn.prepareStatement(selectSql)) {
-
-            ResultSet rs = selectStmt.executeQuery();
-
-            while (rs.next()) {
-                String username = rs.getString("username");
-                String plainPassword = rs.getString("password");
-                String hashedPassword = hashPassword(plainPassword);
-
-                try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
-                    updateStmt.setString(1, hashedPassword);
-                    updateStmt.setString(2, username);
-                    updateStmt.executeUpdate();
-                    System.out.println("Migrated password for user: " + username);
-                }
-            }
-
-            System.out.println("All passwords have been migrated to SHA-256 hash");
-        } catch (SQLException e) {
-            System.out.println("Error migrating passwords: " + e.getMessage());
-        }
-    }
-    
 }
