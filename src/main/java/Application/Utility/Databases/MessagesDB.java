@@ -102,7 +102,7 @@ public class MessagesDB extends DBTemplate{
 
 
     public Message getMessage(String message, String senderUsername, String receiverUsername, String type) throws SQLException{
-        String sql = "SELECT * FROM messages WHERE message = ? AND sender = ? AND reciever = ? AND type = ?";
+        String sql = "SELECT * FROM messages WHERE message = ? AND sender = ? AND receiver = ? AND type = ?";
 
         try(Connection con = getConnection();
         PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -118,7 +118,7 @@ public class MessagesDB extends DBTemplate{
                 Message m = new Message(
                         rs.getString("message"),
                         Account.getAccount(rs.getString("sender")),
-                        Account.getAccount(rs.getString("reciever")),
+                        Account.getAccount(rs.getString("receiver")),
                         Message.getType(rs.getString("type"))
                 );
 
@@ -319,7 +319,7 @@ public class MessagesDB extends DBTemplate{
                 Message m = new Message(
                         rs.getString("message"),
                         Account.getAccount(rs.getString("sender")),
-                        Account.getAccount(rs.getString("reciever")),
+                        Account.getAccount(rs.getString("receiver")),
                         Message.getType(rs.getString("type")),
                         rs.getString("response"),
                         Message.getType(rs.getString("responseType"))
