@@ -1,0 +1,26 @@
+Test Case #1: Valid Account Information
+
+Test Steps:
+	1. Enter a valid username in the username textfield
+	2. Enter a valid password in the password textfield
+	3. Enter the same password in the confirm password textfield
+	4. Click on the button that says "Create Account"
+Expected Results:
+	- An account is created with the user's credentials
+	- User should be redirected to the landing page
+Actual Results:
+	- An account is created with the user's credentials
+	- User is redirected to the landing page
+
+
+Test Case #2: Invalid Username
+
+Test Steps:
+	1. Enter the username "username" into the username textfield
+	2. Enter a valid password in the username textfield
+	3. Enter the same password in the confirm password textfield
+	4. Click on the button that says "Create Account"
+Expected Results:
+	- User should receiver an error message saying "This username is already taken"
+Actual Results:
+	- An error message is displayed saying "This username is already taken"

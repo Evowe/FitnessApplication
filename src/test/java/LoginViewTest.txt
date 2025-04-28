@@ -1,0 +1,74 @@
+Test Case #1: Valid Login Information
+
+Test Steps:
+	1. Enter a valid username in the username textfield
+	2. Enter a valid password in the password textfield
+	3. Click on the button that says "Log In"
+Expected Results:
+	- User should be redirected to the landing page
+Actual Results:
+	- User is redirected to the landing page
+
+
+Test Case #2: Invalid Username
+
+Test Steps:
+	1. Enter an invalid username in the username textfield
+	2. Enter a password(valid or invalid) in the password textfield
+	3. Click on the button that says "Log In"
+Expected Results:
+	- User should remain on the login page
+	- User should receive an error message which states: "Invalid username or password"
+	- The password textfield should remove all previous inputs
+Actual Results:
+	- User remains on the login page
+	- User is notified of inputting an "Invalid username or password"
+	- All inputs made to the password field are removed
+
+
+Test Case #3: Invalid Password
+
+Test Steps:
+        1. Enter a valid username in the username textfield
+        2. Enter an invalid password in the password textfield
+        3. Click on the button that says "Log In"
+Expected Results:
+        - User should remain on the login page
+        - User should receive an error message which states: "Invalid username $
+        - The password textfield should remove all previous inputs 
+Actual Result:
+        - User remains on the login page
+        - User is notified of inputting an "Invalid username or password"
+        - All inputs made to the password field are removed
+
+
+Test Case #4: Hide Password
+
+Test Steps:
+	1. Type something into the password textfield
+Expected Results:
+	- Characters typed into the password field should be hidden automatically
+Actual Results:
+	- Characters typed into the password field are masked by circles
+
+
+Test Case #5: Show Password
+
+Test Steps:
+	1. Type something into the password textfield
+	2. Click on the eye icon on the right side of the password textfield
+Expected Results:
+	- Characters should be masked until the eye icon is clicked
+	- Once the eye icon is clicked, user input should no longer be masked
+Actual Results:
+	- User input is hidden by default and only show when the eye icon is clicked
+
+
+Test Case #6: Create Account Page
+
+Test Steps:
+	1. Click on the button that says "Create Account"
+Expected Results:
+	- User should be redirected to the account creation page
+Actual Results:
+	- User is redirected to the account creation page
