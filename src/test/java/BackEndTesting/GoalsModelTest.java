@@ -1,3 +1,5 @@
+package BackEndTesting;
+
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,4 +25,5 @@ public class GoalsModelTest {
         if(error == null)
             Assertions.fail(error);
     }
+    //TODO MOST OF THE FUNCTIONS
 }
