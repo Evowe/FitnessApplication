@@ -1,0 +1,10 @@
+Test Case #1: Valid Entry
+
+Test Steps:
+	1. Start on the login page
+	2. Log in using valid account information
+Expected Results:
+	- User should be brought to the home page
+	- Various widgets including a calendar, profile menu, goal progress meter, battlepass, and navigation bar should be displayed
+Actual Results:
+	- User is brought to the home page with a working navigation menu, calendar, battlepass, goal progress meter, and profile widget

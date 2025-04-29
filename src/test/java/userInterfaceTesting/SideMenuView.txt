@@ -1,0 +1,97 @@
+Test Case #1: Home Button
+
+Test Steps:
+	1. Start on the "Metrics" page
+	2. Click on the button in the navigation sidebar that says "Home"
+Expected Results:
+	- User should be brought to the "Home" page
+Actual Results:
+	- User is brought to the "Home" page
+
+
+Test Case #2: Workouts Button
+
+Test Steps:
+	1. Start on the "Home" page
+	2. Click on the button in the navigation sidebar that says "Workouts"
+Expected Results:
+	- User should be brought to the "Workouts" page
+Actual Results:
+	- User is brought to the "Workouts" page
+
+
+Test Case #3: Metrics Button
+
+Test Steps:
+	1. Start on the "Home" page
+	2. Click on the button in the navigation sidebar that says "Metrics"
+Expected Results:
+	- User should be brought to the "Metrics" page
+Actual Results:
+	- User is brought to the "Metrics" page
+
+
+Test Case #4: Social Button
+
+Test Steps:
+	1. Start on the "Home" page
+	2. Click on the button in the navigation sidebar that says "Social"
+Expected Results:
+	- User should be brought to the "Social" page
+Actual Results:
+	- User is brought to the "Social" page
+
+
+Test Case #5: Cosmetics Button
+
+Test Steps:
+	1. Start on the "Home" page
+	2. Click on the button in the navigation sidebar that says "Cosmetics"
+Expected Results:
+	- User should be brought to the "Cosmetics" page
+Actual Results:
+	- User is brought to the "Cosmetics" page
+
+
+Test Case #6: Battlepass Button
+
+Test Steps:
+	1. Start on the "Home" page
+	2. Click on the button in the navigation sidebar that says "Battlepass"
+Expected Results:
+	- User should be brought to the "Battlepass" page
+Actual Results:
+	- User is brought to the "Battlepass" page
+
+
+Test Case #7: Profile Button
+
+Test Steps:
+	1. Start on the "Home" page
+	2. Click on the button in the navigation sidebar that says "Profile"
+Expected Results:
+	- User should be brought to the "Profile" page
+Actual Results:
+	- User is brought to the "Profile" page
+
+
+Test Case #8: Settings Button
+
+Test Steps:
+	1. Start on the "Home" page
+	2. Click on the button in the navigation sidebar that says "Settings"
+Expected Results:
+	- User should be brought to the "Settings" page
+Actual Results:
+	- User is brought to the "Settings" page
+
+
+Test Case #9: Log Out Button
+
+Test Steps:
+	1. Start on the "Home" page
+	2. Click on the button in the navigation sidebar that says "Log Out"
+Expected Results:
+	- User should be brought to the login page
+Actual Results:
+	- User is brought to the login page

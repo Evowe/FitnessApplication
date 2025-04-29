@@ -1,0 +1,87 @@
+Test Case #1: Valid Account Information
+
+Test Steps:
+	1. Enter a valid username in the username textfield
+	2. Enter a valid password in the password textfield
+	3. Enter the same password in the confirm password textfield
+	4. Click on the button that says "Create Account"
+Expected Results:
+	- An account is created with the user's credentials
+	- User should be redirected to the landing page
+Actual Results:
+	- An account is created with the user's credentials
+	- User is redirected to the landing page
+
+
+Test Case #2: Invalid Username
+
+Test Steps:
+	1. Enter an invalid username (< 4 or > 20 characters) into the username textfield
+	2. Enter a valid password in the password textfield
+	3. Enter the same password in the confirm password textfield
+	4. Click on the button that says "Create Account"
+Expected Results:
+	- User should receive an error message saying "Username must be between 4 and 20 characters"
+Actual Results:
+	- An error message is displayed saying "Username must be between 4 and 20 characters"
+
+
+Test Case #3: Username Taken
+
+Test Steps:
+	1. Enter the username "username" into the usernmae textfield
+	2. Enter a valid password in the password textfield
+	3. Enter the same password in the confirm password textfield
+	4. Click on the button tha tsays "Create Account"
+Expected Results:
+	- User should receive an error message saying "This username is already taken"
+Actual Results:
+	- An error message is displayed saying "This username is already taken
+
+
+Test Case #4: Invalid Password
+
+Test Steps:
+	1. Enter a valid username in the username textfield
+	2. Enter an invalid password (< 8 or > 20 characters) in the password textfield
+	3. Enter the same password in the confirm password textfield
+	4. click on the buttont hat says "Create Account"
+Expected Results:
+	- User should receive an error message saying "Password must be between 8 and 20 characters"
+Actual Results:
+	- User receives an error message saying "Password must be between 8 and 20 characters"
+
+
+Test Case #4: Invalid Password Confirmation
+
+Test Steps:
+	1. Enter a valid username in the username textfield
+	2. Enter a valid password in the password textfield
+	3. Enter a different password than the one in the password textfield into the confirm password textfield
+Expected Results:
+	- User should receive an error message saying "Passwords do not match"
+Actual Results:
+	- User receives an error message saying "Passwords do not match"
+
+
+Test Case #5: Show Password
+
+Test Steps:
+	1. Type something into the password textfield
+	2. Click on the eye icon on the right side of the password textfield
+Expected Results:
+	- Characters should be masked until the eye icon is clicked
+	- Once the eye icon is clicked, user input should no longer be masked
+Actual Results:
+	- User input is hidden by default and only show when the eye icon is clicked
+
+
+Test Case #6: Back Button
+
+Test Steps:
+	1. Start on the Create Account Page
+	2. Click on teh button that says "<" at the top left of the create account menu
+Expected Results:
+	- User should be taken back to the login page
+Actual Results:
+	- User is taken back to the login page
