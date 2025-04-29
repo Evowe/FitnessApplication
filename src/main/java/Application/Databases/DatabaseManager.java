@@ -1,6 +1,6 @@
 package Application.Databases;
 
-import Application.Utility.Databases.*;
+import Application.Databases.*;
 
 public class DatabaseManager {
     private static AccountsDB accountsDB;

@@ -1,8 +1,8 @@
-package fitness.app.TrainerCreatedWorkoutPlan;
+package Application.TheSwoleSection.TrainerCreatedWorkoutPlan;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatLabel;
-import fitness.app.Widgets.SideMenu.SideMenuView;
+import Application.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -81,13 +81,6 @@ public class CreateWorkoutPlanView extends JPanel {
         JTextField intensityField = new JTextField();
         intensityField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Intensity Level");
         center.add(intensityField);
-
-
-
-
-
-
-
 
 
 

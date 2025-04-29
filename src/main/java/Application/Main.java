@@ -1,5 +1,8 @@
-package fitness.app;
+package Application;
 
+import Application.AccountManagement.ResetPassword.ResetPasswordView;
+import Application.TheSwoleSection.TrainerCreatedWorkoutPlan.CreateWorkoutPlanView;
+import Application.TheSwoleSection.WorkoutView;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
