@@ -417,6 +417,6 @@ public class AccountsDB extends DBTemplate {
             System.out.println("Error migrating passwords: " + e.getMessage());
         }
     }
-     */
-    
+
+    */
 }

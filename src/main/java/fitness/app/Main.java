@@ -25,6 +25,7 @@ import fitness.app.Social.SendResponseView;
 import fitness.app.Social.SocialView;
 import fitness.app.Statistics.StatsView;
 import fitness.app.Objects.*;
+import fitness.app.TrainerCreatedWorkoutPlan.CreateWorkoutPlanView;
 import fitness.app.Workout.NewWorkoutView;
 import fitness.app.WorkoutLibrary.WorkoutLibraryView;
 
