@@ -138,7 +138,7 @@ public class LoginView extends JPanel {
         JPanel forgotPasswordPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         forgotPasswordPanel.setOpaque(false);
         JLabel forgotPasswordLink = new JLabel("Forgot Password?");
-        forgotPasswordLink.setForeground(new Color(0, 102, 204)); // Blue color for link
+        forgotPasswordLink.setForeground(new Color(192, 192, 192)); // Blue color for link
         forgotPasswordLink.setCursor(new Cursor(Cursor.HAND_CURSOR));
         forgotPasswordLink.putClientProperty(FlatClientProperties.STYLE, "font:-2");
 

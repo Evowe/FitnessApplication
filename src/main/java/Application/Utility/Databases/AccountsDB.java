@@ -47,7 +47,7 @@ public class AccountsDB extends DBTemplate {
         };
 
         String[] securityColumns = {
-                "username TEXT PRIMARY KEY",
+                "username TEXT ",
                 "question1_id INTEGER NOT NULL",
                 "answer1 TEXT NOT NULL",
                 "question2_id INTEGER NOT NULL",

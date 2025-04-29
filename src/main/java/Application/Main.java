@@ -1,5 +1,6 @@
 package Application;
 
+import Application.AccountManagement.ResetPassword.ResetPasswordView;
 import Application.TheSwoleSection.WorkoutView;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
@@ -133,6 +134,9 @@ public class Main {
             }
             case "Locker" -> {
                 window.add(new LockerView(currentUser));
+            }
+            case "ResetPasswordPage" -> {
+                window.add(new ResetPasswordView());
             }
         }
         window.revalidate();

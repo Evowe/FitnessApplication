@@ -20,7 +20,6 @@ public abstract class DBTemplate {
     private void initialize() {
         try {
             createTables();
-            System.out.println("Table " + tableName + " initialized successfully");
         } catch (SQLException e) {
             System.out.println("Error initializing table: " + e.getMessage());
         }
@@ -49,7 +48,6 @@ public abstract class DBTemplate {
 
             // Execute the SQL statement
             statement.execute(sqlBuilder.toString());
-            System.out.println("Table " + tableName + " created successfully");
         }
     }
 
