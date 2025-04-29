@@ -9,8 +9,6 @@ import java.util.List;
 
 public class WorkoutDB extends DBTemplate {
 	private static final String WORKOUTS_TABLE = "Workouts";
-	private static final String EXERCISES_TABLE = "WorkoutExercises";  // Renamed to avoid conflict with main Exercises table
-
 	public WorkoutDB() {
 		super(WORKOUTS_TABLE);
 	}
@@ -60,26 +58,27 @@ public class WorkoutDB extends DBTemplate {
 		return -1; // Failed to save
 	}
 
-	public Workout getWorkout(int id,String username) throws SQLException {
-		String sql = "SELECT * FROM " + WORKOUTS_TABLE + " WHERE username = ? AND ID = ?";
+	public Workout getWorkout(String username,String name) throws SQLException {
+		String sql = "SELECT * FROM " + WORKOUTS_TABLE + " WHERE username = ? AND name = ?";
 
 		try (Connection conn = getConnection();
 			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1,username);
+			pstmt.setString(2,name);
 			//pstmt.setInt(1, id);
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
 					// Get workout details
-					String name = rs.getString("Name");
+					String namee = rs.getString("Name");
 					String description = rs.getString("Description");
 					int duration = rs.getInt("Duration");
 					int CaloriesBurned = rs.getInt("CaloriesBurned");
 					String date = rs.getString("Date");
 					String exerciseId = rs.getString("Exercises");
 
-                    return new Workout(name,description,duration,CaloriesBurned,date,exerciseId);
+                    return new Workout(namee,description,duration,CaloriesBurned,date,exerciseId);
 				}
 			}
 		}
@@ -112,7 +111,7 @@ public class WorkoutDB extends DBTemplate {
 		return Workouts;
 	}
 
-	public void deleteWorkout(String username, String name) throws SQLException {
+	public boolean deleteWorkout(String username, String name) throws SQLException {
 		String workoutSql = "DELETE FROM " + WORKOUTS_TABLE + " WHERE name = ? AND username = ?";
 		try (Connection conn = getConnection()) {
 
@@ -120,7 +119,8 @@ public class WorkoutDB extends DBTemplate {
 			try (PreparedStatement pstmt = conn.prepareStatement(workoutSql)) {
 				pstmt.setString(1,name);
 				pstmt.setString(2, username);
-                pstmt.executeUpdate();
+				int affectedRows = pstmt.executeUpdate();
+				return affectedRows > 0;
             }
 		}
 	}
