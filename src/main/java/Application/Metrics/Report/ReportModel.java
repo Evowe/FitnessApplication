@@ -1,8 +1,8 @@
 package Application.Metrics.Report;
 
 import Application.Utility.Objects.Account;
-import Application.Utility.Databases.DatabaseManager;
-import Application.Utility.Databases.WorkoutLogDB;
+import Application.Databases.DatabaseManager;
+import Application.Databases.WorkoutLogDB;
 import Application.Utility.Objects.Workout;
 
 import java.sql.SQLException;

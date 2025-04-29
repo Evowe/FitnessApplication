@@ -1,4 +1,4 @@
-package Application.Utility.Databases;
+package Application.Databases;
 
 import Application.Utility.Objects.Goal;
 

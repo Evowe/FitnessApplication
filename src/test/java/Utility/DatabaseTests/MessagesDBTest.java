@@ -1,18 +1,17 @@
 package Utility.DatabaseTests;
 
-import Application.Utility.Databases.MessagesDB;
-import Application.Utility.Databases.DatabaseManager;
+import Application.Databases.MessagesDB;
+import Application.Databases.DatabaseManager;
 import Application.Utility.Objects.Message;
 import Application.Utility.Objects.Account;
 
-import static Application.Utility.Databases.DBTemplate.getConnection;
+import static Application.Databases.DBTemplate.getConnection;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

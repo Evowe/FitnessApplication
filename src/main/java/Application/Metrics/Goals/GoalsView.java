@@ -7,10 +7,10 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import Application.Utility.Objects.Account;
-import Application.Utility.Databases.DatabaseManager;
+import Application.Databases.DatabaseManager;
 import Application.Utility.Objects.Goal;
 import Application.Utility.Widgets.Calendar.CalendarView;
-import Application.Utility.Databases.GoalsDB;
+import Application.Databases.GoalsDB;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;

@@ -1,13 +1,12 @@
 package Application.Metrics.Statistics;
 
 import Application.Utility.Objects.Account;
-import Application.Utility.Databases.DatabaseManager;
-import Application.Utility.Databases.StatsDB;
+import Application.Databases.DatabaseManager;
+import Application.Databases.StatsDB;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

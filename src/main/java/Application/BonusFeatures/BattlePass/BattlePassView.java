@@ -1,7 +1,7 @@
 package Application.BonusFeatures.BattlePass;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatLabel;
-import Application.Utility.Databases.BattlePassDB;
+import Application.Databases.BattlePassDB;
 import Application.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 

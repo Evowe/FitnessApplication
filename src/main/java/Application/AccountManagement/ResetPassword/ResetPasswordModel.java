@@ -1,6 +1,6 @@
 package Application.AccountManagement.ResetPassword;
 
-import Application.Utility.Databases.AccountsDB;
+import Application.Databases.AccountsDB;
 import java.sql.SQLException;
 
 public class ResetPasswordModel {

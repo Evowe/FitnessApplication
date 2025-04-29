@@ -1,6 +1,6 @@
 package Utility.DatabaseTests;
 
-import Application.Utility.Databases.BattlePassDB;
+import Application.Databases.BattlePassDB;
 
 import org.junit.After;
 import org.junit.Before;

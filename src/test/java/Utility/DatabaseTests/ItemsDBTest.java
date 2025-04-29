@@ -1,7 +1,7 @@
 package Utility.DatabaseTests;
 
-import Application.Utility.Databases.DatabaseManager;
-import Application.Utility.Databases.ItemsDB;
+import Application.Databases.DatabaseManager;
+import Application.Databases.ItemsDB;
 
 import static org.junit.jupiter.api.Assertions.*;
 

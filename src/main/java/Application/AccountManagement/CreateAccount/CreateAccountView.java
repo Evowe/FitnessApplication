@@ -5,7 +5,7 @@ import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.formdev.flatlaf.extras.components.FlatComboBox;
 import Application.Main;
 import Application.Utility.Objects.Account;
-import Application.Utility.Databases.AccountsDB;
+import Application.Databases.AccountsDB;
 import com.formdev.flatlaf.FlatClientProperties;
 import net.miginfocom.swing.MigLayout;
 import javax.imageio.ImageIO;

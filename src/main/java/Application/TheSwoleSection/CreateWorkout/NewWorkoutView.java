@@ -12,8 +12,8 @@ import com.formdev.flatlaf.extras.components.FlatLabel;
 
 import Application.TheSwoleSection.ExerciseLibrary.ExerciseLibraryModel;
 import Application.Main;
-import Application.Utility.Databases.DatabaseManager;
-import Application.Utility.Databases.ExerciseDB;
+import Application.Databases.DatabaseManager;
+import Application.Databases.ExerciseDB;
 import Application.Utility.Objects.Exercise;
 import Application.Utility.Objects.Workout;
 import net.miginfocom.swing.MigLayout;

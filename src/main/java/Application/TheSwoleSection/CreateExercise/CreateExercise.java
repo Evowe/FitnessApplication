@@ -1,7 +1,7 @@
 package Application.TheSwoleSection.CreateExercise;
 
 import Application.Utility.Objects.Exercise;
-import Application.Utility.Databases.ExerciseDB;
+import Application.Databases.ExerciseDB;
 
 import java.sql.SQLException;
 

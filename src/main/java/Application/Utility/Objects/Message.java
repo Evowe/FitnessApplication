@@ -1,7 +1,7 @@
 package Application.Utility.Objects;
 
-import Application.Utility.Databases.DatabaseManager;
-import Application.Utility.Databases.MessagesDB;
+import Application.Databases.DatabaseManager;
+import Application.Databases.MessagesDB;
 
 import java.sql.SQLException;
 import java.util.Objects;

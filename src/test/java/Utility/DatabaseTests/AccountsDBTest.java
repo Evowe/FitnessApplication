@@ -1,7 +1,7 @@
 package Utility.DatabaseTests;
 
-import Application.Utility.Databases.AccountsDB;
-import Application.Utility.Databases.DatabaseManager;
+import Application.Databases.AccountsDB;
+import Application.Databases.DatabaseManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 

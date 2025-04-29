@@ -1,7 +1,7 @@
 package Application.Utility.Objects;
 
-import Application.Utility.Databases.AccountsDB;
-import Application.Utility.Databases.DatabaseManager;
+import Application.Databases.AccountsDB;
+import Application.Databases.DatabaseManager;
 
 import java.sql.SQLException;
 

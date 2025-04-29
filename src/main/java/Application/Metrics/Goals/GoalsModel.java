@@ -2,8 +2,8 @@ package Application.Metrics.Goals;
 
 import com.kitfox.svg.SVGUniverse;
 import com.kitfox.svg.app.beans.SVGIcon;
-import Application.Utility.Databases.DatabaseManager;
-import Application.Utility.Databases.GoalsDB;
+import Application.Databases.DatabaseManager;
+import Application.Databases.GoalsDB;
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;

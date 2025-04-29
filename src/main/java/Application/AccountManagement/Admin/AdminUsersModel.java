@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Application.Utility.Objects.Account;
-import Application.Utility.Databases.AccountsDB;
-import Application.Utility.Databases.DatabaseManager;
+import Application.Databases.AccountsDB;
+import Application.Databases.DatabaseManager;
 
 public class AdminUsersModel {
 	private AccountsDB accDB = DatabaseManager.getAccountsDB();

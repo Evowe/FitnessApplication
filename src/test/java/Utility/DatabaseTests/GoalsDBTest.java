@@ -1,7 +1,7 @@
 package Utility.DatabaseTests;
 
-import Application.Utility.Databases.DatabaseManager;
-import Application.Utility.Databases.GoalsDB;
+import Application.Databases.DatabaseManager;
+import Application.Databases.GoalsDB;
 import Application.Utility.Objects.Goal;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 

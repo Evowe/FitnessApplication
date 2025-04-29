@@ -1,10 +1,8 @@
 package Utility.DatabaseTests;
 
-import Application.Utility.Databases.DatabaseManager;
-import Application.Utility.Databases.WorkoutDB;
+import Application.Databases.DatabaseManager;
+import Application.Databases.WorkoutDB;
 import Application.Utility.Objects.Account;
-import Application.Utility.Objects.Workout;
-import Application.Utility.Objects.Workout;
 import Application.Utility.Objects.Workout;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -10,7 +10,7 @@ import Application.AccountManagement.Admin.AdminAddUserView;
 import Application.AccountManagement.Admin.AdminHomeView;
 import Application.AccountManagement.Admin.AdminUsersView;
 import Application.Utility.Objects.Account;
-import Application.Utility.Databases.DatabaseManager;
+import Application.Databases.DatabaseManager;
 import Application.BonusFeatures.BattlePass.BattlePassView;
 import Application.AccountManagement.CreateAccount.CreateAccountView;
 import Application.TheSwoleSection.CreateExercise.CreateExcerciseView;

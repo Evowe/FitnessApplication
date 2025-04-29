@@ -1,6 +1,6 @@
 package Application.BonusFeatures.Locker;
 
-import Application.Utility.Databases.ItemsDB;
+import Application.Databases.ItemsDB;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

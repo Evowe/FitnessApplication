@@ -1,9 +1,9 @@
 package Application.BonusFeatures.Social;
 
 import Application.Utility.Objects.Account;
-import Application.Utility.Databases.AccountsDB;
-import Application.Utility.Databases.FriendsDB;
-import Application.Utility.Databases.MessagesDB;
+import Application.Databases.AccountsDB;
+import Application.Databases.FriendsDB;
+import Application.Databases.MessagesDB;
 import Application.Utility.Objects.Message;
 
 import java.sql.SQLException;
