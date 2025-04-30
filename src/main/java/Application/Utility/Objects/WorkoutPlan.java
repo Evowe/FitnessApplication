@@ -6,12 +6,18 @@ public class WorkoutPlan {
     String name;
     String goal;
     Integer durationInWeeks;
-    List<List<Workout>> workoutSchedule;
+    List<Workout> workoutSchedule;
+    /// Edit: Decided to do a list (should be size 7) for the workout that you complete each day of the week,
+    /// if it is null, its a rest day
     //This will be a list of a list of workouts for the week so it should be a list of
     // 7 workouts for each week in the WorkoutPlan, Workout is null for rest days??
+
+
     Integer intensity;
 
-    public WorkoutPlan(String name, String goal, Integer durationInWeeks, List<List<Workout>> workoutSchedule, Integer intensity) {
+    public WorkoutPlan(){}
+
+    public WorkoutPlan(String name, String goal, Integer durationInWeeks, List<Workout> workoutSchedule, Integer intensity) {
         this.name = name;
         this.goal = goal;
         this.durationInWeeks = durationInWeeks;
@@ -43,11 +49,11 @@ public class WorkoutPlan {
         this.durationInWeeks = durationInWeeks;
     }
 
-    public List<List<Workout>> getWorkoutSchedule() {
+    public List<Workout> getWorkoutSchedule() {
         return workoutSchedule;
     }
 
-    public void setWorkoutSchedule(List<List<Workout>> workoutSchedule) {
+    public void setWorkoutSchedule(List<Workout> workoutSchedule) {
         this.workoutSchedule = workoutSchedule;
     }
 

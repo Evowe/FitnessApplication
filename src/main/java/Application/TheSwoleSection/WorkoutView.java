@@ -2,6 +2,7 @@ package Application.TheSwoleSection;
 
 import Application.Main;
 import Application.TheSwoleSection.ExerciseLibrary.ExerciseLibraryView;
+import Application.TheSwoleSection.TrainerCreatedWorkoutPlan.CreateWorkoutPlanView;
 import Application.TheSwoleSection.WorkoutLibrary.WorkoutLibraryView;
 import Application.TheSwoleSection.WorkoutSchedule.WorkoutScheduleView;
 import Application.Utility.Widgets.SideMenu.SideMenuView;
@@ -21,7 +22,7 @@ public class WorkoutView extends JPanel {
 
         tabbedPane.add("Workout Schedule", new WorkoutScheduleView(Main.getCurrentUser()));
         //TODO: Create the workout plans page (find a workout plan from a user/trainer)
-        tabbedPane.add("Workout Plans", new JPanel());
+        tabbedPane.add("Workout Plans", new CreateWorkoutPlanView());
         //TODO: Add the trainer classes page
         tabbedPane.add("Classes", new JPanel());
         tabbedPane.add("Workout Library", new WorkoutLibraryView());

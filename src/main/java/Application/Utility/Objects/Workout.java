@@ -83,6 +83,10 @@ public class Workout {
         this.exerciseId = exerciseId;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
 
     public void addExercise(Exercise exercise) {
         this.exerciseId = exerciseId + "," + exercise.getId();

@@ -1,28 +1,27 @@
 package Application.TheSwoleSection.TrainerCreatedWorkoutPlan;
 
-import Application.Databases.WorkoutDB;
 import Application.Main;
 import Application.Utility.Objects.Workout;
+import Application.Utility.Objects.WorkoutPlan;
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
-import Application.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreateWorkoutPlanView extends JPanel {
+    private CreateWorkoutPlanViewModel viewModel;
 
     public CreateWorkoutPlanView() {
+        viewModel = new CreateWorkoutPlanViewModel();
         //Setup Main Panel Layout
         setLayout(new MigLayout("insets 20", "left", "top"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
-
-        //Add Navigation Menu
-        add(new SideMenuView(), "growy, pushy");
 
         //Setup Main Panel
         JPanel main = new JPanel();
@@ -47,7 +46,7 @@ public class CreateWorkoutPlanView extends JPanel {
 
         JPanel center  = new JPanel();
         center.putClientProperty(FlatClientProperties.STYLE, "background:@background");
-        center.setLayout(new GridLayout(1, 2));
+        center.setLayout(new GridLayout(1, 2, 50, 0));
 
 
         JPanel centerLeft = new JPanel();
@@ -68,10 +67,10 @@ public class CreateWorkoutPlanView extends JPanel {
         goal.putClientProperty(FlatClientProperties.STYLE, "font:+6");
         centerLeft.add(goal);
 
-        JTextField gloalField = new JTextField();
-        gloalField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter a description of the goal of this" +
+        JTextField goalField = new JTextField();
+        goalField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter a description of the goal of this" +
                 "workout plan");
-        centerLeft.add(gloalField);
+        centerLeft.add(goalField);
 
 
             //Duration title & Text Field Setup
@@ -93,36 +92,212 @@ public class CreateWorkoutPlanView extends JPanel {
         intensityField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Intensity Level");
         centerLeft.add(intensityField);
 
+
         //CenterRight Panel
         JPanel centerRight = new JPanel();
         centerRight.putClientProperty(FlatClientProperties.STYLE, "background:@background");
-        centerRight.setLayout(new GridLayout(9, 1));
+        centerRight.setLayout(new GridLayout(7, 1, 10, 10));
 
+        //Monday
         JPanel monday = new JPanel();
+        monday.setMaximumSize(new Dimension(100, 20));
         monday.putClientProperty(FlatClientProperties.STYLE, "background:@background");
-        monday.setLayout(new FlowLayout(FlowLayout.CENTER));
+        monday.setLayout(new BorderLayout());
         JLabel mondayLabel = new JLabel("Monday");
-        mondayLabel.putClientProperty(FlatClientProperties.STYLE, "font:+6");
-        monday.add(mondayLabel);
-        JComboBox<Workout> workoutComboBox = new JComboBox<>();
-        WorkoutDB workoutDB = new WorkoutDB();
+        mondayLabel.putClientProperty(FlatClientProperties.STYLE, "font:+4");
+        monday.add(mondayLabel, BorderLayout.NORTH);
+        JComboBox<Workout> mondayWorkoutComboBox = new JComboBox<>();
+
         List<Workout> workoutList;
-        try {
-            workoutList = workoutDB.getAllWorkouts(Main.getCurrentUser().getUsername());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        workoutList = viewModel.getAllWorkouts(Main.getCurrentUser().getUsername());
+
 
         workoutList.stream().forEach(workout -> {
-            workoutComboBox.addItem(workout);
+            mondayWorkoutComboBox.addItem(workout);
         });
-        monday.add(workoutComboBox);
+        monday.add(mondayWorkoutComboBox, BorderLayout.CENTER);
 
-        centerLeft.add(monday);
+        JPanel spacer = new JPanel();
+        spacer.setPreferredSize(new Dimension(50, 20));
+        spacer.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        monday.add(spacer, BorderLayout.EAST);
+
+        //monday.add(spacer);
+        centerRight.add(monday);
+
+        //Tuesday
+        JPanel tuesday = new JPanel();
+        tuesday.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        tuesday.setLayout(new BorderLayout());
+        JLabel tuesdayLabel = new JLabel("Tuesday");
+        tuesdayLabel.putClientProperty(FlatClientProperties.STYLE, "font:+4");
+        tuesday.add(tuesdayLabel, BorderLayout.NORTH);
+        JComboBox<Workout> tuesdayWorkoutComboBox = new JComboBox<>();
+
+        workoutList.stream().forEach(workout -> {
+            tuesdayWorkoutComboBox.addItem(workout);
+        });
+
+        tuesday.add(tuesdayWorkoutComboBox, BorderLayout.CENTER);
+
+        JPanel spacerT = new JPanel();
+        spacerT.setPreferredSize(new Dimension(50, 20));
+        spacerT.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        tuesday.add(spacerT, BorderLayout.EAST);
+
+        centerRight.add(tuesday);
+
+        //Wednesday
+        JPanel wednesday = new JPanel();
+        wednesday.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        wednesday.setLayout(new BorderLayout());
+        JLabel wednesdayLabel = new JLabel("Wednesday");
+        wednesdayLabel.putClientProperty(FlatClientProperties.STYLE, "font:+4");
+        wednesday.add(wednesdayLabel, BorderLayout.NORTH);
+        JComboBox<Workout> wednesdayWorkoutComboBox = new JComboBox<>();
+
+        workoutList.stream().forEach(workout -> {
+            wednesdayWorkoutComboBox.addItem(workout);
+        });
+
+        wednesday.add(wednesdayWorkoutComboBox, BorderLayout.CENTER);
+
+        JPanel spacerW = new JPanel();
+        spacerW.setPreferredSize(new Dimension(50, 20));
+        spacerW.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        wednesday.add(spacerW, BorderLayout.EAST);
+        centerRight.add(wednesday);
+
+        //Thursday
+        JPanel thursday = new JPanel();
+        thursday.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        thursday.setLayout(new BorderLayout());
+        JLabel thursdayLabel = new JLabel("Thursday");
+        thursdayLabel.putClientProperty(FlatClientProperties.STYLE, "font:+4");
+        thursday.add(thursdayLabel, BorderLayout.NORTH);
+        JComboBox<Workout> thursdayWorkoutComboBox = new JComboBox<>();
+
+        workoutList.stream().forEach(workout -> {
+            thursdayWorkoutComboBox.addItem(workout);
+        });
+
+        thursday.add(thursdayWorkoutComboBox, BorderLayout.CENTER);
+
+        JPanel spacerTh = new JPanel();
+        spacerTh.setPreferredSize(new Dimension(50, 20));
+        spacerTh.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        thursday.add(spacerTh, BorderLayout.EAST);
+
+        centerRight.add(thursday);
+
+        //Friday
+        JPanel friday = new JPanel();
+        friday.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        friday.setLayout(new BorderLayout());
+        JLabel fridayLabel = new JLabel("Friday");
+        fridayLabel.putClientProperty(FlatClientProperties.STYLE, "font:+4");
+        friday.add(fridayLabel, BorderLayout.NORTH);
+        JComboBox<Workout> fridayWorkoutComboBox = new JComboBox<>();
+
+        workoutList.stream().forEach(workout -> {
+            fridayWorkoutComboBox.addItem(workout);
+        });
+
+        friday.add(fridayWorkoutComboBox, BorderLayout.CENTER);
+
+        JPanel spacerF = new JPanel();
+        spacerF.setPreferredSize(new Dimension(50, 20));
+        spacerF.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        friday.add(spacerF, BorderLayout.EAST);
+
+        centerRight.add(friday);
+
+        //Saturday
+        JPanel saturday = new JPanel();
+        saturday.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        saturday.setLayout(new BorderLayout());
+        JLabel saturdayLabel = new JLabel("Saturday");
+        saturdayLabel.putClientProperty(FlatClientProperties.STYLE, "font:+4");
+        saturday.add(saturdayLabel, BorderLayout.NORTH);
+        JComboBox<Workout> saturdayWorkoutComboBox = new JComboBox<>();
+
+        workoutList.stream().forEach(workout -> {
+            saturdayWorkoutComboBox.addItem(workout);
+        });
+
+        saturday.add(saturdayWorkoutComboBox, BorderLayout.CENTER);
+
+
+        JPanel spacerS = new JPanel();
+        spacerS.setPreferredSize(new Dimension(50, 20));
+        spacerS.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        saturday.add(spacerS, BorderLayout.EAST);
+
+        centerRight.add(saturday);
+
+        //Sunday
+        JPanel sunday = new JPanel();
+        sunday.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        sunday.setLayout(new BorderLayout());
+        JLabel sundayLabel = new JLabel("Sunday");
+        sundayLabel.putClientProperty(FlatClientProperties.STYLE, "font:+4");
+        sundayLabel.setMinimumSize(new Dimension(100, 20));
+        sunday.add(sundayLabel, BorderLayout.NORTH);
+        JComboBox<Workout> sundayWorkoutComboBox = new JComboBox<>();
+
+        workoutList.stream().forEach(workout -> {
+            sundayWorkoutComboBox.addItem(workout);
+        });
+
+        sunday.add(sundayWorkoutComboBox, BorderLayout.CENTER);
+
+        JPanel spacerSu = new JPanel();
+        spacerSu.setPreferredSize(new Dimension(50, 20));
+        spacerSu.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        sunday.add(spacerSu, BorderLayout.EAST);
+
+
+
+        centerRight.add(sunday);
+
 
         center.add(centerLeft);
         center.add(centerRight);
         main.add(center, BorderLayout.CENTER);
+
+
+        //South Button Panel
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        FlatButton submitButton = new FlatButton();
+        submitButton.setMinimumHeight(35);
+        submitButton.setMinimumWidth(200);
+        submitButton.setText("Submit");
+        WorkoutPlan workoutPlan = new WorkoutPlan();
+        submitButton.addActionListener(e -> {
+            workoutPlan.setName(nameField.getText());
+            workoutPlan.setGoal(goalField.getText());
+            workoutPlan.setIntensity(Integer.parseInt(intensityField.getText()));
+            workoutPlan.setDurationInWeeks(Integer.parseInt(durationField.getText()));
+
+            List<Workout> workouts = new ArrayList<>();
+            workouts.add((Workout) mondayWorkoutComboBox.getSelectedItem());
+            workouts.add((Workout) tuesdayWorkoutComboBox.getSelectedItem());
+            workouts.add((Workout) wednesdayWorkoutComboBox.getSelectedItem());
+            workouts.add((Workout) thursdayWorkoutComboBox.getSelectedItem());
+            workouts.add((Workout) fridayWorkoutComboBox.getSelectedItem());
+            workouts.add((Workout) saturdayWorkoutComboBox.getSelectedItem());
+            workouts.add((Workout) sundayWorkoutComboBox.getSelectedItem());
+
+            workoutPlan.setWorkoutSchedule(workouts);
+
+            viewModel.addWorkoutPlan(workoutPlan);
+            Main.setWindow("Workout");
+        });
+        buttonPanel.add(submitButton);
+
+        main.add(buttonPanel, BorderLayout.SOUTH);
 
 
         add(main, "growy, pushy");
