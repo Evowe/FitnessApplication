@@ -40,7 +40,8 @@ public class WorkoutLibraryView extends JPanel{
 
         //Center Panel Setup - Exercise List/Table
         //Need to be able to use workout db before this can be updated
-        JTable table = new JTable();
+        JTable table = new JTable(viewModel.getWorkoutData(Main.getCurrentUser().getUsername()),
+                viewModel.getWorkoutColumns());
         table.setRowHeight(75);
 
         JScrollPane scrollPane = new JScrollPane(table);

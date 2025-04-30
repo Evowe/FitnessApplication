@@ -50,8 +50,8 @@ public class ExerciseLibraryView extends JPanel {
         table.setRowHeight(75);
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(1200, 650));
-        scrollPane.setMaximumSize(new Dimension(1200, 650));
+        scrollPane.setPreferredSize(new Dimension(1200, 550));
+        scrollPane.setMaximumSize(new Dimension(1200, 550));
 
         JPanel tablePanel = new JPanel();
         tablePanel.setBackground(Color.BLACK);

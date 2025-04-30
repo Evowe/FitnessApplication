@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.*;
 
+import Application.Utility.Widgets.SideMenu.SideMenuView;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
@@ -20,11 +21,15 @@ import net.miginfocom.swing.MigLayout;
 
 public class NewWorkoutView extends JPanel {
 	//private static JPanel mainPanel;
-	
+	NewWorkoutViewModel viewModel;
+
 	public NewWorkoutView() {
 		//Setup Main Panel Layout
+		viewModel = new NewWorkoutViewModel();
 		setLayout(new MigLayout("insets 20", "left", "top"));
 		putClientProperty(FlatClientProperties.STYLE, "background:@background");
+
+		add(new SideMenuView(), "growy, pushy");
 
 		//Setup Main Panel
 		JPanel main = new JPanel();
@@ -116,7 +121,10 @@ public class NewWorkoutView extends JPanel {
 			workout.setDescription(descriptionField.getText());
 			workout.setDuration(Integer.parseInt(durationField.getText()));
 			workout.setName(nameField.getText());
-			Main.setWindow("WorkoutLibrary" );
+
+			viewModel.addWorkoutToDatabase(workout, Main.getCurrentUser().getUsername());
+
+			Main.setWindow("Workout" );
 		});
 
 		workoutFieldsPanel.add(saveWorkout);
@@ -124,52 +132,9 @@ public class NewWorkoutView extends JPanel {
 		tablePanel.add(workoutFieldsPanel);
 
 
-
-
 		//Add Main Panel
 		add(main, "growy, pushy");
 
-		//ANJANS CODE DO NOT TOUCH - ranch to ranch
-		/*
-
-		//Init view with mig layout
-		mainPanel = new JPanel(new MigLayout());
-		
-		//Workout Name Text Field
-		JPanel workoutName = new JPanel(new MigLayout("", "[grow, push]"));
-		workoutName.setLayout(new BoxLayout(workoutName, BoxLayout.X_AXIS));
-		
-		JLabel textFieldLabel = new JLabel("Enter Workout Name ");
-		textFieldLabel.setFont(new Font("Arial", Font.PLAIN, 42));
-		
-		JTextField nameField = new JTextField();
-		nameField.setFont(new Font("Arial", Font.PLAIN, 42));
-				
-		workoutName.add(textFieldLabel);
-		workoutName.add(nameField);
-		
-		//TODO: Add attributes based on account, need to implement user roles
-		
-		//Add exercises button
-		//TODO: Add icon
-		//TODO: Add action listener
-		FlatButton nextButton = new FlatButton();
-		nextButton.setText("Add Exercises ->");
-		
-		
-		
-		//Add components to main window
-		mainPanel.add(workoutName, "aligny top, growx, push");
-		//TODO: Add padding to button
-		
-		mainPanel.add(nextButton, "aligny bottom, alignx right");
-		
-		
-		//Testing
-		workoutName.setBorder(new LineBorder(Color.red, 2));
-
-
-		 */
 	}
 		
 }

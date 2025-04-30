@@ -33,10 +33,10 @@ public class WorkoutDB extends DBTemplate {
 	}
 	//TODO FIX
 	public int addWorkout(Workout workout,String username) throws SQLException {
-		String sql = "INSERT INTO " + WORKOUTS_TABLE + " (Username, Name, Description, Duration,CaloriesBurned,Date,Exercises) VALUES (?,?, ?, ?,?,?,?)";
+		String sql = "INSERT INTO " + WORKOUTS_TABLE + " (username, Name, Description, Duration,CaloriesBurned,Date,Exercises) VALUES (?,?, ?, ?,?,?,?)";
 
 		try (Connection conn = getConnection();
-			 PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			// Use workout name or a default if not available
 			pstmt.setString(1, username);
