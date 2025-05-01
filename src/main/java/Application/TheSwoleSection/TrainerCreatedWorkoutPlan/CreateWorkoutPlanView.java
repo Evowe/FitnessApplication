@@ -3,6 +3,7 @@ package Application.TheSwoleSection.TrainerCreatedWorkoutPlan;
 import Application.Main;
 import Application.Utility.Objects.Workout;
 import Application.Utility.Objects.WorkoutPlan;
+import Application.Utility.Widgets.SideMenu.SideMenuView;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
@@ -21,6 +22,9 @@ public class CreateWorkoutPlanView extends JPanel {
         //Setup Main Panel Layout
         setLayout(new MigLayout("insets 20", "left", "top"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
+
+        //Add navigation bar
+        add(new SideMenuView(), "growy, pushy");
 
 
         //Setup Main Panel
@@ -68,7 +72,7 @@ public class CreateWorkoutPlanView extends JPanel {
         centerLeft.add(goal);
 
         JTextField goalField = new JTextField();
-        goalField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter a description of the goal of this" +
+        goalField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter a description of the goal of this " +
                 "workout plan");
         centerLeft.add(goalField);
 
@@ -109,7 +113,7 @@ public class CreateWorkoutPlanView extends JPanel {
         JComboBox<Workout> mondayWorkoutComboBox = new JComboBox<>();
 
         List<Workout> workoutList;
-        workoutList = viewModel.getAllWorkouts(Main.getCurrentUser().getUsername());
+        workoutList = viewModel.getAllWorkouts();
 
 
         workoutList.stream().forEach(workout -> {

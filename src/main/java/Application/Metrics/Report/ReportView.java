@@ -12,6 +12,7 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -68,18 +69,43 @@ public class ReportView extends JPanel {
 
         //Center Panel Setup - Exercise List/Table
         //Need to be able to use workout db before this can be updated
-        JTable table = new JTable(viewModel.getWorkouts(), viewModel.getColumns());
+        JTable table = new JTable(viewModel.getWorkoutData(), viewModel.getColumns());
         table.setRowSelectionAllowed(false);
         table.setColumnSelectionAllowed(false);
         table.setCellSelectionEnabled(false);
         table.setRowHeight(75);
 
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
+        table.getColumnModel().getColumn(0).setPreferredWidth(150);
+        table.getColumnModel().getColumn(1).setPreferredWidth(70);
+        table.getColumnModel().getColumn(2).setPreferredWidth(3);
+        table.getColumnModel().getColumn(3).setPreferredWidth(5);
+        table.getColumnModel().getColumn(4).setPreferredWidth(5);
+        table.getColumnModel().getColumn(5).setPreferredWidth(450);
 
+        table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                                                           boolean isSelected, boolean hasFocus,
+                                                           int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                // Change font here (example: bold, size 14)
+                c.setFont(new Font("Monospaces", Font.BOLD, 15));
+
+                return c;
+            }
+        });
+
+
+        table.setDefaultEditor(Object.class, null);
+
+        for(int i = 1; i < table.getColumnCount(); i++) {
+            TableColumn col = table.getColumnModel().getColumn(i);
+            DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+            dtcr.setHorizontalAlignment(SwingConstants.CENTER);
+            col.setCellRenderer(dtcr);
+        }
+        table.setShowGrid(true);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(1200, 650));
         scrollPane.setMaximumSize(new Dimension(1200, 650));

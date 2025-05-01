@@ -206,6 +206,7 @@ public class ExerciseDB extends DBTemplate {
         return null; // Not found
     }
 
+
     public List<Exercise> getAllExercises() throws SQLException {
         List<Exercise> exercises = new ArrayList<>();
         String sql = "SELECT * FROM " + TABLE_NAME;

@@ -1,9 +1,9 @@
-package Application.TheSwoleSection.WorkoutLibrary;
+package Application.TheSwoleSection.WorkoutPlans;
 
+import Application.Main;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
-import Application.Main;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -13,16 +13,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class WorkoutLibraryView extends JPanel{
-    private WorkoutLibraryViewModel viewModel;
+public class WorkoutPlansView extends JPanel {
+    WorkoutPlansViewModel viewModel;
 
-    public WorkoutLibraryView() {
-        //View Model
-        viewModel = new WorkoutLibraryViewModel();
+    public WorkoutPlansView() {
+        viewModel = new WorkoutPlansViewModel();
 
         //Setup Main Panel Layout
-        setLayout(new MigLayout("fill, insets 20", "center", "center"));
+        setLayout(new MigLayout("insets 20", "left", "top"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
+
 
         JPanel main = new JPanel();
         main.putClientProperty(FlatClientProperties.STYLE, "background:@background");
@@ -33,23 +33,22 @@ public class WorkoutLibraryView extends JPanel{
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         FlatLabel title = new FlatLabel();
-        title.setText("Workout Library");
+        title.setText("Workout Plans");
         title.putClientProperty(FlatClientProperties.STYLE, "font:bold +25");
         titlePanel.add(title);
 
         main.add(titlePanel, BorderLayout.NORTH);
 
-        //Center Panel Setup - Exercise List/Table
-        //Need to be able to use workout db before this can be updated
-        JTable table = new JTable(viewModel.getWorkoutData(),
-                viewModel.getWorkoutColumns());
+
+        //Center Panel Setup
+        JTable table = new JTable(viewModel.getWorkoutPlanData(), viewModel.getWorkoutPlanColumns());
         table.setRowHeight(75);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        table.getColumnModel().getColumn(0).setPreferredWidth(150);
-        table.getColumnModel().getColumn(1).setPreferredWidth(120);
-        table.getColumnModel().getColumn(2).setPreferredWidth(3);
-        table.getColumnModel().getColumn(3).setPreferredWidth(400);
+        table.getColumnModel().getColumn(0).setPreferredWidth(70);
+        table.getColumnModel().getColumn(1).setPreferredWidth(80);
+        table.getColumnModel().getColumn(2).setPreferredWidth(1);
+        table.getColumnModel().getColumn(3).setPreferredWidth(500);
 
         table.setDefaultEditor(Object.class, null);
 
@@ -75,6 +74,7 @@ public class WorkoutLibraryView extends JPanel{
             }
         });
 
+
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(1200, 550));
         scrollPane.setMaximumSize(new Dimension(1200, 550));
@@ -82,7 +82,6 @@ public class WorkoutLibraryView extends JPanel{
         JPanel tablePanel = new JPanel();
         tablePanel.setBackground(Color.BLACK);
         tablePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        //tablePanel.setPreferredSize(new Dimension(1200, 550));
         tablePanel.add(scrollPane);
 
         main.add(tablePanel, BorderLayout.CENTER);
@@ -93,50 +92,50 @@ public class WorkoutLibraryView extends JPanel{
         buttonPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
 
-
-
-        FlatButton createWorkout = new FlatButton();
-        createWorkout.setMinimumHeight(35);
-        createWorkout.setMinimumWidth(200);
-        createWorkout.setText("+ Create Workout");
-        createWorkout.addActionListener(new ActionListener() {
+        FlatButton createWorkoutPlan = new FlatButton();
+        createWorkoutPlan.setMinimumHeight(35);
+        createWorkoutPlan.setMinimumWidth(200);
+        createWorkoutPlan.setText("+ Create Workout Plan");
+        createWorkoutPlan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                Main.setWindow("NewWorkout");
+                Main.setWindow("CreateWorkoutPlan" );
             }
         });
 
-        buttonPanel.add(createWorkout);
+        buttonPanel.add(createWorkoutPlan);
 
-        FlatButton recordWorkout = new FlatButton();
-        recordWorkout.setMinimumHeight(35);
-        recordWorkout.setMinimumWidth(200);
-        recordWorkout.setText("Record Workout");
-        recordWorkout.addActionListener(new ActionListener() {
+
+
+        FlatButton modifiyWorkoutPlan = new FlatButton();
+        modifiyWorkoutPlan.setMinimumHeight(35);
+        modifiyWorkoutPlan.setMinimumWidth(200);
+        modifiyWorkoutPlan.setText("Modify Workout Plan");
+        modifiyWorkoutPlan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-
+                //Main.setWindow("WorkoutPlans" );
                 if(table.getSelectedRow() != -1) {
-                    viewModel.recordWorkout(table.getValueAt(table.getSelectedRow(), 0).toString(),
-                            Main.getCurrentUser().getUsername());
-
-                    JOptionPane.showMessageDialog(null, "Workout recorded. " +
-                            "You can view in the Workout History Page under Metrics.");
-
-                    //Main.setWindow("MetricsPage");
+                    ModifiyPlanDialog dialog = new ModifiyPlanDialog(table);
+                    dialog.setVisible(true);
+                    //Main.setWindow("ModifyWorkoutPlan");
                 } else{
-                    JOptionPane.showMessageDialog(null, "No Workout Selected");
+                    JOptionPane.showMessageDialog(null, "No Plan Selected");
                 }
             }
         });
 
-        buttonPanel.add(recordWorkout);
+
+
+        buttonPanel.add(modifiyWorkoutPlan);
+
+
+
+
 
         main.add(buttonPanel, BorderLayout.SOUTH);
 
-
         add(main, "growy, pushy");
     }
+
 }
-
-

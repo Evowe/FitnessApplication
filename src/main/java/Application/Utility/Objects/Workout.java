@@ -1,6 +1,10 @@
 package Application.Utility.Objects;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class Workout {
     private String name;
     private int duration;
@@ -8,6 +12,25 @@ public class Workout {
     private int CaloriesBurned;
     private String Date;
     private String exerciseId;
+    private List<Exercise> exercises = new ArrayList<>();
+
+    public Workout(String name, String description, int duration, int CaloriesBurned, String Date, List<Exercise> exercises) {
+        this.name = name;
+        this.duration = duration;
+        this.description = description;
+        this.CaloriesBurned = CaloriesBurned;
+        this.Date = Date;
+        this.exercises = exercises;
+    }
+
+    public Workout(String name, String description, int duration, int CaloriesBurned, String Date) {
+        this.name = name;
+        this.duration = duration;
+        this.description = description;
+        this.CaloriesBurned = CaloriesBurned;
+        this.Date = Date;
+    }
+
     public Workout(String name, String description, int duration, int CaloriesBurned, String Date,String exercises) {
         this.name = name;
         this.duration = duration;
@@ -79,6 +102,8 @@ public class Workout {
         return exerciseId;
     }
 
+    public List<Exercise> getExerciseList(){return exercises;}
+
     public void setExercises(String exerciseId) {
         this.exerciseId = exerciseId;
     }
@@ -88,7 +113,26 @@ public class Workout {
         return getName();
     }
 
+    public void addExerciseToList(Exercise exercise) {
+        this.exercises.add(exercise);
+    }
+
+
     public void addExercise(Exercise exercise) {
         this.exerciseId = exerciseId + "," + exercise.getId();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Workout)) return false;
+        Workout workout = (Workout) o;
+
+        return this.getName().equals(((Workout) o).getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName()); // or whatever unique field you used
     }
 }

@@ -2,7 +2,9 @@ package Application;
 
 import Application.AccountManagement.ResetPassword.ResetPasswordView;
 import Application.TheSwoleSection.TrainerCreatedWorkoutPlan.CreateWorkoutPlanView;
+import Application.TheSwoleSection.WorkoutPlans.WorkoutPlansView;
 import Application.TheSwoleSection.WorkoutView;
+import Application.Utility.Objects.WorkoutPlan;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
@@ -66,7 +68,7 @@ public class Main {
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
         window.setSize(1200, 700);
         window.setLocationRelativeTo(null);
-        window.add(new NewWorkoutView());
+        window.add(new LoginView());
         window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
         window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
         window.setVisible(true);
@@ -139,6 +141,9 @@ public class Main {
             }
             case "ResetPasswordPage" -> {
                 window.add(new ResetPasswordView());
+            }
+            case "CreateWorkoutPlan" -> {
+                window.add(new CreateWorkoutPlanView());
             }
         }
         window.revalidate();

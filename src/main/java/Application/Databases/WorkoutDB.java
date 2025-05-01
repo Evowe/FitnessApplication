@@ -4,7 +4,9 @@ import Application.Utility.Objects.Workout;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class WorkoutDB extends DBTemplate {
@@ -32,8 +34,8 @@ public class WorkoutDB extends DBTemplate {
 
 	}
 	//TODO FIX
-	public int addWorkout(Workout workout,String username) throws SQLException {
-		String sql = "INSERT INTO " + WORKOUTS_TABLE + " (username, Name, Description, Duration,CaloriesBurned,Date,Exercises) VALUES (?,?, ?, ?,?,?,?)";
+	public int addWorkout(Workout workout, String username) throws SQLException {
+		String sql = "INSERT INTO " + WORKOUTS_TABLE + " (username, Name, Description, Duration, CaloriesBurned, Date, Exercises) VALUES (?,?, ?, ?,?,?,?)";
 
 		try (Connection conn = getConnection();
 			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -58,6 +60,7 @@ public class WorkoutDB extends DBTemplate {
 		return -1; // Failed to save
 	}
 
+
 	public Workout getWorkout(String username,String name) throws SQLException {
 		String sql = "SELECT * FROM " + WORKOUTS_TABLE + " WHERE username = ? AND name = ?";
 
@@ -78,6 +81,7 @@ public class WorkoutDB extends DBTemplate {
 					String date = rs.getString("Date");
 					String exerciseId = rs.getString("Exercises");
 
+
                     return new Workout(namee,description,duration,CaloriesBurned,date,exerciseId);
 				}
 			}
@@ -86,13 +90,39 @@ public class WorkoutDB extends DBTemplate {
 		return null; // Not found
 	}
 
-	public List<Workout> getAllWorkouts(String username) throws SQLException {
+	public Workout getWorkout(String name) throws SQLException {
+		String sql = "SELECT * FROM " + WORKOUTS_TABLE + " WHERE name = ?";
+
+		try (Connection conn = getConnection();
+			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1,name);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					// Get workout details
+					String namee = rs.getString("Name");
+					String description = rs.getString("Description");
+					int duration = rs.getInt("Duration");
+					int CaloriesBurned = rs.getInt("CaloriesBurned");
+					String date = rs.getString("Date");
+					String exerciseId = rs.getString("Exercises");
+
+					return new Workout(namee,description,duration,CaloriesBurned,date,exerciseId);
+				}
+			}
+		}
+
+		return null; // Not found
+	}
+
+	public List<Workout> getAllWorkouts() throws SQLException {
 		List<Workout> Workouts = new ArrayList<>();
-		String sql = "SELECT * FROM " + WORKOUTS_TABLE + " WHERE username = ?";
+		String sql = "SELECT * FROM " + WORKOUTS_TABLE;
 
 		try (Connection conn = getConnection();
 			 PreparedStatement pst = conn.prepareStatement(sql)) {
-				pst.setString(1, username);
+				//pst.setString(1, username);
 		try (ResultSet rs = pst.executeQuery()) {
 			while (rs.next()) {
 				String name = rs.getString("Name");
@@ -102,7 +132,7 @@ public class WorkoutDB extends DBTemplate {
 				String date = rs.getString("Date");
 				String exercises = rs.getString("Exercises");
 
-				Workout workout = new Workout(name, description, duration, caloriesBurned, date,exercises);
+				Workout workout = new Workout(name, description, duration, caloriesBurned, date, exercises);
 				Workouts.add(workout);
 			}
 		}
@@ -110,6 +140,59 @@ public class WorkoutDB extends DBTemplate {
 
 		return Workouts;
 	}
+
+	public List<Workout> getAllWorkouts(String username) throws SQLException {
+		List<Workout> Workouts = new ArrayList<>();
+		String sql = "SELECT * FROM " + WORKOUTS_TABLE + " WHERE username = ?";
+
+		try (Connection conn = getConnection();
+			 PreparedStatement pst = conn.prepareStatement(sql)) {
+			pst.setString(1, username);
+
+			try (ResultSet rs = pst.executeQuery()) {
+				while (rs.next()) {
+					String name = rs.getString("Name");
+					String description = rs.getString("Description");
+					int duration = rs.getInt("Duration");
+					int caloriesBurned = rs.getInt("CaloriesBurned");
+					String date = rs.getString("Date");
+					String exercises = rs.getString("Exercises");
+
+					Workout workout = new Workout(name, description, duration, caloriesBurned, date, exercises);
+					Workouts.add(workout);
+				}
+			}
+		}
+
+		return Workouts;
+	}
+
+	public Map<Workout, String> getAllWorkoutsWithExerciseList() throws SQLException {
+		Map<Workout, String> Workouts = new HashMap<>();
+		String sql = "SELECT * FROM " + WORKOUTS_TABLE;
+
+		try (Connection conn = getConnection();
+			 PreparedStatement pst = conn.prepareStatement(sql)) {
+			//pst.setString(1, username);
+			try (ResultSet rs = pst.executeQuery()) {
+				while (rs.next()) {
+					String name = rs.getString("Name");
+					String description = rs.getString("Description");
+					int duration = rs.getInt("Duration");
+					int caloriesBurned = rs.getInt("CaloriesBurned");
+					String date = rs.getString("Date");
+					String exercises = rs.getString("Exercises");
+
+					Workout workout = new Workout(name, description, duration, caloriesBurned, date);
+					Workouts.put(workout, exercises);
+				}
+			}
+		}
+
+		return Workouts;
+	}
+
+
 
 	public boolean deleteWorkout(String username, String name) throws SQLException {
 		String workoutSql = "DELETE FROM " + WORKOUTS_TABLE + " WHERE name = ? AND username = ?";

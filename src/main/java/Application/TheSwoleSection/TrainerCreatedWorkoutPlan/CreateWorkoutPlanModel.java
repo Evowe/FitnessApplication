@@ -6,7 +6,9 @@ import Application.Utility.Objects.Workout;
 import Application.Utility.Objects.WorkoutPlan;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CreateWorkoutPlanModel {
     WorkoutDB workoutDB;
@@ -17,13 +19,18 @@ public class CreateWorkoutPlanModel {
         workoutPlanDB = new WorkoutPlanDB();
     }
 
-    public List<Workout> getAllWorkouts(String username){
-        try {
-            return workoutDB.getAllWorkouts(username);
-        } catch (SQLException e) {
+    public List<Workout> getAllWorkouts() throws SQLException {
+
+        List<Workout> workouts = new ArrayList<>();
+        try{
+            workouts = workoutDB.getAllWorkouts();
+        } catch(SQLException e){
             throw new RuntimeException(e);
         }
+
+        return workouts;
     }
+
 
     public void addWorkoutPlan(WorkoutPlan workoutPlan){
         try{

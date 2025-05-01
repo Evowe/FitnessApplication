@@ -8,6 +8,8 @@ import Application.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,6 +50,36 @@ public class ExerciseLibraryView extends JPanel {
         //JTable table = new JTable(getRowData("sample_exercises.csv"), getColumNames("sample_exercises.csv"));
         JTable table = new JTable(ExerciseLibraryModel.getExerciseData(), ExerciseLibraryModel.getExerciseColums());
         table.setRowHeight(75);
+
+        table.getColumnModel().getColumn(0).setPreferredWidth(100);
+        table.getColumnModel().getColumn(1).setPreferredWidth(165);
+        table.getColumnModel().getColumn(2).setPreferredWidth(5);
+        table.getColumnModel().getColumn(3).setPreferredWidth(5);
+        table.getColumnModel().getColumn(4).setPreferredWidth(5);
+
+        table.setDefaultEditor(Object.class, null);
+
+        for(int i = 1; i < table.getColumnCount(); i++) {
+            TableColumn col = table.getColumnModel().getColumn(i);
+            DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+            dtcr.setHorizontalAlignment(SwingConstants.CENTER);
+            col.setCellRenderer(dtcr);
+        }
+        table.setShowGrid(true);
+
+        table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                                                           boolean isSelected, boolean hasFocus,
+                                                           int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                // Change font here (example: bold, size 14)
+                c.setFont(new Font("Monospaces", Font.BOLD, 15));
+
+                return c;
+            }
+        });
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(1200, 550));
@@ -99,41 +131,6 @@ public class ExerciseLibraryView extends JPanel {
     }
 
 
-    private Object [] getColumNames(String fileName){
-        String[] columNames = null;
-        try {
-            Scanner scanner = new Scanner(new File(fileName));
-            if (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                columNames = line.split(",");
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-        return columNames;
-    }
-
-    private Object [][] getRowData(String fileName){
-        ArrayList<String[]> rows = new ArrayList<>();
-        try{
-            Scanner scanner = new Scanner(new File(fileName));
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] values = line.split(",");
-                rows.add(values);
-            }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        Object [][] data = new Object[rows.size() - 1][];
-        for (int i = 1; i < rows.size(); i++) {
-            data[i - 1] = rows.get(i);
-        }
-
-        return data;
-    }
 
 }

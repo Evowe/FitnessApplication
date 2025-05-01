@@ -75,6 +75,11 @@ public class Exercise {
         return str;
         //Name,Description,Type,Sets,Reps,Weight
     }
+
+    @Override
+    public String toString() {
+        return new String(getName());
+    }
 }
 
 

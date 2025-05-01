@@ -85,6 +85,7 @@ public class NewWorkoutView extends JPanel {
                 }
                 Exercise exercise = exercises.get(selectedRows[i]);
 				workout.addExercise(exercise);
+				workout.addExerciseToList(exercise);
 			}
 		});
 
