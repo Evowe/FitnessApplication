@@ -2,10 +2,7 @@ package Application;
 
 import Application.AccountManagement.ResetPassword.ResetPasswordView;
 import Application.TheSwoleSection.TrainerCreatedWorkoutPlan.CreateWorkoutPlanView;
-import Application.TheSwoleSection.WorkoutPlans.WorkoutPlansView;
 import Application.TheSwoleSection.WorkoutView;
-import Application.Utility.Objects.WorkoutPlan;
-import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -19,7 +16,7 @@ import Application.BonusFeatures.BattlePass.BattlePassView;
 import Application.AccountManagement.CreateAccount.CreateAccountView;
 import Application.TheSwoleSection.CreateExercise.CreateExcerciseView;
 import Application.BonusFeatures.CurrencyShop.currencyShopViewModel;
-import Application.BonusFeatures.CurrencyShop.currencyshopview;
+import Application.BonusFeatures.CurrencyShop.currencyShopView;
 import Application.TheSwoleSection.ExerciseLibrary.ExerciseLibraryView;
 import Application.AccountManagement.Home.HomeView;
 import Application.BonusFeatures.Locker.LockerView;
@@ -97,11 +94,7 @@ public class Main {
                 window.add(new AdminHomeView());
             }
             case "currencyShopPage" -> {
-                currencyShopViewModel view = new currencyShopViewModel();
-                TransactionViewModel transact = new TransactionViewModel();
-                transact.getCardUser(currentUser);
-                view.findCurrUser(currentUser);
-                window.add(new currencyshopview(currentUser));
+                window.add(currencyShopViewModel.getCurrencyView(currentUser));
             }
             case "SettingsPage" -> {
                 window.add(SettingsViewModel.getSettingsView());
