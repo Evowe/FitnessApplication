@@ -1,6 +1,7 @@
 package Application.TheSwoleSection.WorkoutPlans;
 
 import Application.TheSwoleSection.TrainerCreatedWorkoutPlan.CreateWorkoutPlanViewModel;
+import Application.TheSwoleSection.WorkoutView;
 import Application.Utility.Objects.Exercise;
 import Application.Utility.Objects.Workout;
 import Application.Utility.Objects.WorkoutPlan;
@@ -280,8 +281,9 @@ public class ModifiyPlanDialog extends JDialog {
 
                 plan.setWorkoutSchedule(workoutSchedule);
                 viewModelWP.updateWorkoutPlan(plan);
-
                 dispose();
+
+                WorkoutView.setView("WorkoutPlans");
 
                 JOptionPane.showMessageDialog(table, "Changes saved");
             }

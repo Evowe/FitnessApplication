@@ -1,5 +1,7 @@
 package Application.Utility.Widgets.Calendar;
 
+import Application.TheSwoleSection.WorkoutSchedule.WorkoutScheduleViewModel;
+
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
@@ -55,4 +57,5 @@ public class CalendarViewModel {
     public ArrayList<String[]> getCalendar() {
         return model.getCalendar();
     }
+
 }

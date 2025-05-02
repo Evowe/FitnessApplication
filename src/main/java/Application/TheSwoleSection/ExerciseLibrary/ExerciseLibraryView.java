@@ -13,6 +13,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -48,7 +49,17 @@ public class ExerciseLibraryView extends JPanel {
 
         //Center Panel Setup - Exercise List/Table
         //JTable table = new JTable(getRowData("sample_exercises.csv"), getColumNames("sample_exercises.csv"));
-        JTable table = new JTable(ExerciseLibraryModel.getExerciseData(), ExerciseLibraryModel.getExerciseColums());
+        JTable table = new JTable(ExerciseLibraryModel.getExerciseData(), ExerciseLibraryModel.getExerciseColums()){
+            public String getToolTipText( MouseEvent e )
+            {
+                int row = rowAtPoint( e.getPoint() );
+                int column = columnAtPoint( e.getPoint() );
+
+                Object value = getValueAt(row, column);
+                return value == null ? null : value.toString();
+            }
+
+        };
         table.setRowHeight(75);
 
         table.getColumnModel().getColumn(0).setPreferredWidth(100);
@@ -59,7 +70,7 @@ public class ExerciseLibraryView extends JPanel {
 
         table.setDefaultEditor(Object.class, null);
 
-        for(int i = 1; i < table.getColumnCount(); i++) {
+        for(int i = 0; i < table.getColumnCount(); i++) {
             TableColumn col = table.getColumnModel().getColumn(i);
             DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
             dtcr.setHorizontalAlignment(SwingConstants.CENTER);

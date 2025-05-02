@@ -22,6 +22,7 @@ public class WorkoutPlanDB extends DBTemplate {
                 "name TEXT NOT NULL",
                 "goal TEXT NOT NULL",
                 "duration INTEGER NOT NULL",
+                "intensity INTEGER NOT NULL",
                 "workoutSchedule TEXT NOT NULL"
         };
 
@@ -31,14 +32,15 @@ public class WorkoutPlanDB extends DBTemplate {
 
 
     public void addWorkoutPlan(WorkoutPlan workoutPlan) throws SQLException {
-        String sql = "INSERT INTO WorkoutPlan (name, goal, duration, workoutSchedule) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO WorkoutPlan (name, goal, duration, intensity, workoutSchedule) VALUES (?, ?, ?, ?, ?)";
 
         try(Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, workoutPlan.getName());
             ps.setString(2, workoutPlan.getGoal());
             ps.setInt(3, workoutPlan.getDurationInWeeks());
-            ps.setString(4, workoutPlan.getWorkoutSchedule().toString());
+            ps.setInt(4, workoutPlan.getIntensity());
+            ps.setString(5, workoutPlan.getWorkoutSchedule().toString());
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -59,7 +61,7 @@ public class WorkoutPlanDB extends DBTemplate {
                 workoutPlan.setName(rs.getString("name"));
                 workoutPlan.setGoal(rs.getString("goal"));
                 workoutPlan.setDurationInWeeks(rs.getInt("duration"));
-
+                workoutPlan.setIntensity(rs.getInt("intensity"));
                 String workouts = rs.getString("workoutSchedule");
                 workoutPlans.put(workoutPlan, workouts);
             }
@@ -83,7 +85,7 @@ public class WorkoutPlanDB extends DBTemplate {
                 workoutPlan.setName(rs.getString("name"));
                 workoutPlan.setGoal(rs.getString("goal"));
                 workoutPlan.setDurationInWeeks(rs.getInt("duration"));
-
+                workoutPlan.setIntensity(rs.getInt("intensity"));
                 String workouts = rs.getString("workoutSchedule");
                 workoutPlans.put(workoutPlan, workouts);
             }
@@ -94,14 +96,15 @@ public class WorkoutPlanDB extends DBTemplate {
 
 
     public void updateWorkoutPlan(WorkoutPlan workoutPlan) throws SQLException {
-        String sql = "UPDATE WorkoutPlan SET goal=?, duration = ?, intensity=? workoutSchedule = ? WHERE name = ?";
+        String sql = "UPDATE WorkoutPlan SET goal=?, duration = ?, intensity=?, workoutSchedule = ? WHERE name = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, workoutPlan.getGoal());
             pstmt.setInt(2, workoutPlan.getDurationInWeeks());
-            pstmt.setString(3, workoutPlan.getWorkoutSchedule().toString());
-            pstmt.setString(4, workoutPlan.getName());
+            pstmt.setInt(3, workoutPlan.getIntensity());
+            pstmt.setString(4, workoutPlan.getWorkoutSchedule().toString());
+            pstmt.setString(5, workoutPlan.getName());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -109,12 +112,5 @@ public class WorkoutPlanDB extends DBTemplate {
             throw e;
         }
     }
-
-
-
-
-
-
-
 
 }

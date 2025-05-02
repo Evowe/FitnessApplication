@@ -1,6 +1,7 @@
 package Application.TheSwoleSection.CreateExercise;
 
 
+import Application.TheSwoleSection.WorkoutView;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
@@ -126,7 +127,8 @@ public class CreateExcerciseView extends JPanel {
                 Exercise newexercise = exercise.CreateExerciseCall
                         (Name, Description, type, RepAmount, WeightAmount);
 
-                Main.setWindow("ExerciseLibrary" );
+                Main.setWindow("Workout");
+                WorkoutView.setView("ExerciseLibrary");
             }
         });
 

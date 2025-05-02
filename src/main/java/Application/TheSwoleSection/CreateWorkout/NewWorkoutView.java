@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.*;
 
+import Application.TheSwoleSection.WorkoutView;
 import Application.Utility.Widgets.SideMenu.SideMenuView;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
@@ -125,7 +126,8 @@ public class NewWorkoutView extends JPanel {
 
 			viewModel.addWorkoutToDatabase(workout, Main.getCurrentUser().getUsername());
 
-			Main.setWindow("Workout" );
+			Main.setWindow("Workout");
+			WorkoutView.setView("WorkoutLibrary");
 		});
 
 		workoutFieldsPanel.add(saveWorkout);

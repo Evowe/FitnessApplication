@@ -12,6 +12,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 public class WorkoutLibraryView extends JPanel{
     private WorkoutLibraryViewModel viewModel;
@@ -42,7 +43,17 @@ public class WorkoutLibraryView extends JPanel{
         //Center Panel Setup - Exercise List/Table
         //Need to be able to use workout db before this can be updated
         JTable table = new JTable(viewModel.getWorkoutData(),
-                viewModel.getWorkoutColumns());
+                viewModel.getWorkoutColumns()){
+            public String getToolTipText( MouseEvent e )
+            {
+                int row = rowAtPoint( e.getPoint() );
+                int column = columnAtPoint( e.getPoint() );
+
+                Object value = getValueAt(row, column);
+                return value == null ? null : value.toString();
+            }
+
+        };
         table.setRowHeight(75);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -53,7 +64,7 @@ public class WorkoutLibraryView extends JPanel{
 
         table.setDefaultEditor(Object.class, null);
 
-        for(int i = 1; i < table.getColumnCount(); i++) {
+        for(int i = 0; i < table.getColumnCount(); i++) {
             TableColumn col = table.getColumnModel().getColumn(i);
             DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
             dtcr.setHorizontalAlignment(SwingConstants.CENTER);

@@ -1,5 +1,6 @@
 package Application.Utility.Widgets.Calendar;
 
+import Application.TheSwoleSection.WorkoutSchedule.WorkoutScheduleView;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatMenuItem;
@@ -223,6 +224,7 @@ public class CalendarView extends JPanel {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             viewModel.setDay(parseInt(day));
+                            WorkoutScheduleView.reloadDay(viewModel.getDate());
                             currentButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground;");
                             currentButton = dayButton;
                             currentButton.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
