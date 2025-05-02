@@ -22,7 +22,7 @@ import Application.BonusFeatures.BattlePass.BattlePassView;
 import Application.AccountManagement.CreateAccount.CreateAccountView;
 import Application.TheSwoleSection.CreateExercise.CreateExcerciseView;
 import Application.BonusFeatures.CurrencyShop.currencyShopViewModel;
-import Application.BonusFeatures.CurrencyShop.currencyshopview;
+import Application.BonusFeatures.CurrencyShop.currencyShopView;
 import Application.TheSwoleSection.ExerciseLibrary.ExerciseLibraryView;
 import Application.AccountManagement.Home.HomeView;
 import Application.BonusFeatures.Locker.LockerView;
@@ -101,11 +101,7 @@ public class Main {
                 window.add(new AdminHomeView());
             }
             case "currencyShopPage" -> {
-                currencyShopViewModel view = new currencyShopViewModel();
-                TransactionViewModel transact = new TransactionViewModel();
-                transact.getCardUser(currentUser);
-                view.findCurrUser(currentUser);
-                window.add(new currencyshopview(currentUser));
+                window.add(currencyShopViewModel.getCurrencyView(currentUser));
             }
             case "SettingsPage" -> {
                 window.add(SettingsViewModel.getSettingsView());
