@@ -120,14 +120,19 @@ public class NewWorkoutView extends JPanel {
 		FlatButton saveWorkout = new FlatButton();
 		saveWorkout.setText("Save Workout");
 		saveWorkout.addActionListener(e -> {
-			workout.setDescription(descriptionField.getText());
-			workout.setDuration(Integer.parseInt(durationField.getText()));
-			workout.setName(nameField.getText());
+			if(workout.getExerciseList().size() == 0){
+				JOptionPane.showMessageDialog(null,
+						"No Exercises Selected. Add Exercise to Workout to proceed.");
+			} else{
+				workout.setDescription(descriptionField.getText());
+				workout.setDuration(Integer.parseInt(durationField.getText()));
+				workout.setName(nameField.getText());
 
-			viewModel.addWorkoutToDatabase(workout, Main.getCurrentUser().getUsername());
+				viewModel.addWorkoutToDatabase(workout, Main.getCurrentUser().getUsername());
 
-			Main.setWindow("Workout");
-			WorkoutView.setView("WorkoutLibrary");
+				Main.setWindow("Workout");
+				WorkoutView.setView("WorkoutLibrary");
+			}
 		});
 
 		workoutFieldsPanel.add(saveWorkout);
