@@ -2,10 +2,14 @@ package Application.TheSwoleSection.WorkoutPlans;
 
 import Application.Databases.WorkoutDB;
 import Application.Databases.WorkoutPlanDB;
+import Application.Databases.WorkoutPlanLogDB;
+import Application.Main;
 import Application.Utility.Objects.Workout;
 import Application.Utility.Objects.WorkoutPlan;
 
+import javax.swing.*;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,10 +18,12 @@ import java.util.Map;
 public class WorkoutPlansModel {
     WorkoutPlanDB workoutPlanDB;
     WorkoutDB workoutDB;
+    WorkoutPlanLogDB workoutPlanLogDB;
 
     public WorkoutPlansModel() {
         workoutPlanDB = new WorkoutPlanDB();
         workoutDB = new WorkoutDB();
+        workoutPlanLogDB = new WorkoutPlanLogDB();
     }
 
     public Object [][] getWorkoutPlanData(){
@@ -55,12 +61,13 @@ public class WorkoutPlansModel {
                 workoutPlanList.add(workoutPlan);
             }
 
-            Object[][] data = new Object[workoutPlanList.size()][4];
+            Object[][] data = new Object[workoutPlanList.size()][5];
             for(int i = 0; i < workoutPlanList.size(); i++){
                 data[i][0] = workoutPlanList.get(i).getName();
                 data[i][1] = workoutPlanList.get(i).getGoal();
                 data[i][2] = workoutPlanList.get(i).getDurationInWeeks().toString();
-                data[i][3] = workoutPlanList.get(i).getWorkoutSchedule().toString();
+                data[i][3] = workoutPlanList.get(i).getIntensity().toString();
+                data[i][4] = workoutPlanList.get(i).getWorkoutSchedule().toString();
             }
 
             return data;
@@ -72,11 +79,12 @@ public class WorkoutPlansModel {
     }
 
     public Object [] getWorkoutPlanColumns(){
-        Object[] data = new Object[4];
+        Object[] data = new Object[5];
         data[0] = "Name";
         data[1] = "Goal";
         data[2] = "Duration";
-        data[3] = "Workout Schedule (MTWTFSS)";
+        data[3] = "Intensity";
+        data[4] = "Workout Schedule (MTWTFSS)";
         return data;
     }
 
@@ -142,4 +150,21 @@ public class WorkoutPlansModel {
            e.printStackTrace();
        }
     }
+
+    public void equipWorkoutPlan(JTable table){
+        String username = Main.getCurrentUser().getUsername();
+        String workoutName = table.getValueAt(table.getSelectedRow(), 0).toString();
+        String date = LocalDate.now().toString();
+
+        try{
+            if(workoutPlanLogDB.getCurrentPlan(username) == null){
+                workoutPlanLogDB.equipWorkoutPlan(workoutName, date, username);
+            } else{
+                workoutPlanLogDB.updateCurrentPlan(username, workoutName, date);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }

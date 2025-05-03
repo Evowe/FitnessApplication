@@ -1,6 +1,7 @@
 package Application.TheSwoleSection.WorkoutPlans;
 
 import Application.Main;
+import Application.TheSwoleSection.WorkoutView;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
@@ -12,6 +13,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 public class WorkoutPlansView extends JPanel {
     WorkoutPlansViewModel viewModel;
@@ -41,18 +43,29 @@ public class WorkoutPlansView extends JPanel {
 
 
         //Center Panel Setup
-        JTable table = new JTable(viewModel.getWorkoutPlanData(), viewModel.getWorkoutPlanColumns());
+        JTable table = new JTable(viewModel.getWorkoutPlanData(), viewModel.getWorkoutPlanColumns()){
+                public String getToolTipText( MouseEvent e )
+                {
+                    int row = rowAtPoint( e.getPoint() );
+                    int column = columnAtPoint( e.getPoint() );
+
+                    Object value = getValueAt(row, column);
+                    return value == null ? null : value.toString();
+                }
+
+        };
         table.setRowHeight(75);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        table.getColumnModel().getColumn(0).setPreferredWidth(70);
-        table.getColumnModel().getColumn(1).setPreferredWidth(80);
+        table.getColumnModel().getColumn(0).setPreferredWidth(50);
+        table.getColumnModel().getColumn(1).setPreferredWidth(30);
         table.getColumnModel().getColumn(2).setPreferredWidth(1);
-        table.getColumnModel().getColumn(3).setPreferredWidth(500);
+        table.getColumnModel().getColumn(3).setPreferredWidth(1);
+        table.getColumnModel().getColumn(4).setPreferredWidth(500);
 
         table.setDefaultEditor(Object.class, null);
 
-        for(int i = 1; i < table.getColumnCount(); i++) {
+        for(int i = 0; i < table.getColumnCount(); i++) {
             TableColumn col = table.getColumnModel().getColumn(i);
             DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
             dtcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -116,9 +129,30 @@ public class WorkoutPlansView extends JPanel {
             public void actionPerformed(ActionEvent event) {
                 //Main.setWindow("WorkoutPlans" );
                 if(table.getSelectedRow() != -1) {
-                    ModifiyPlanDialog dialog = new ModifiyPlanDialog(table);
-                    dialog.setVisible(true);
-                    //Main.setWindow("ModifyWorkoutPlan");
+                    //ModifiyPlanDialog dialog = new ModifiyPlanDialog(table);
+                    //dialog.setVisible(true);
+                    Main.setWindow("ModifyWorkoutPlan", table);
+                } else{
+                    JOptionPane.showMessageDialog(null, "No Plan Selected");
+                }
+            }
+        });
+
+        buttonPanel.add(modifiyWorkoutPlan);
+
+        FlatButton equipWorkoutPlan = new FlatButton();
+        equipWorkoutPlan.setMinimumHeight(35);
+        equipWorkoutPlan.setMinimumWidth(200);
+        equipWorkoutPlan.setText("Equip Workout Plan");
+        equipWorkoutPlan.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                if(table.getSelectedRow() != -1) {
+                    viewModel.equipWorkoutPlan(table);
+                    JOptionPane.showMessageDialog(null,
+                            table.getValueAt(table.getSelectedRow(), 0).toString() + " Equipped");
+                    Main.setWindow("Workout");
+                    WorkoutView.setView("WorkoutPlans");
                 } else{
                     JOptionPane.showMessageDialog(null, "No Plan Selected");
                 }
@@ -127,7 +161,7 @@ public class WorkoutPlansView extends JPanel {
 
 
 
-        buttonPanel.add(modifiyWorkoutPlan);
+        buttonPanel.add(equipWorkoutPlan);
 
 
 

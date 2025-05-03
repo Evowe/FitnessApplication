@@ -3,9 +3,9 @@ package Application.Utility.Objects;
 import java.util.List;
 
 public class WorkoutPlan {
-    String name;
-    String goal;
-    Integer durationInWeeks;
+    String name = "";
+    String goal = "";
+    Integer durationInWeeks = 0;
     List<Workout> workoutSchedule;
     /// Edit: Decided to do a list (should be size 7) for the workout that you complete each day of the week,
     /// if it is null, its a rest day
@@ -13,7 +13,7 @@ public class WorkoutPlan {
     // 7 workouts for each week in the WorkoutPlan, Workout is null for rest days??
 
 
-    Integer intensity;
+    Integer intensity = 0;
 
     public WorkoutPlan(){}
 

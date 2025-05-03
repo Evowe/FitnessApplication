@@ -1,6 +1,7 @@
-package Application.TheSwoleSection.TrainerCreatedWorkoutPlan;
+package Application.TheSwoleSection.WorkoutPlans;
 
 import Application.Main;
+import Application.TheSwoleSection.TrainerCreatedWorkoutPlan.CreateWorkoutPlanViewModel;
 import Application.TheSwoleSection.WorkoutView;
 import Application.Utility.Objects.Workout;
 import Application.Utility.Objects.WorkoutPlan;
@@ -12,14 +13,23 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateWorkoutPlanView extends JPanel {
+public class ModifiyWorkoutPlan extends JPanel {
     private CreateWorkoutPlanViewModel viewModel;
+    private WorkoutPlansViewModel viewModelWP;
+    private JTable table;
 
-    public CreateWorkoutPlanView() {
+    public ModifiyWorkoutPlan(JTable owner) {
         viewModel = new CreateWorkoutPlanViewModel();
+        viewModelWP = new WorkoutPlansViewModel();
+        table = owner;
+
+        WorkoutPlan plan = viewModelWP.getWorkoutPlan(table.getValueAt(table.getSelectedRow(), 0).toString());
+
         //Setup Main Panel Layout
         setLayout(new MigLayout("insets 20", "left", "top"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
@@ -40,7 +50,7 @@ public class CreateWorkoutPlanView extends JPanel {
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         FlatLabel title = new FlatLabel();
-        title.setText("Create Workout Plan");
+        title.setText("Modifiy Workout Plan");
         title.putClientProperty(FlatClientProperties.STYLE, "font:bold +25");
         titlePanel.add(title);
 
@@ -56,18 +66,20 @@ public class CreateWorkoutPlanView extends JPanel {
 
         JPanel centerLeft = new JPanel();
         centerLeft.putClientProperty(FlatClientProperties.STYLE, "background:@background");
-        centerLeft.setLayout(new GridLayout(9, 1));
+        centerLeft.setLayout(new GridLayout(14, 1));
 
-            //Name title & Text Field Setup
+        //Name title & Text Field Setup
         JLabel name = new JLabel("Name");
         name.putClientProperty(FlatClientProperties.STYLE, "font:+6");
         centerLeft.add(name);
 
-        JTextField nameField = new JTextField();
-        nameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Workout Plan Name");
+        JLabel nameField = new JLabel(plan.getName());
+        //nameField.setBackground();
+        nameField.setToolTipText("Cannot modify workout plan name");
+        nameField.putClientProperty(FlatClientProperties.STYLE, "font:bold +10");
         centerLeft.add(nameField);
 
-            //Goal title & Text Field Setup
+        //Goal title & Text Field Setup
         JLabel goal = new JLabel("Goal");
         goal.putClientProperty(FlatClientProperties.STYLE, "font:+6");
         centerLeft.add(goal);
@@ -78,7 +90,7 @@ public class CreateWorkoutPlanView extends JPanel {
         centerLeft.add(goalField);
 
 
-            //Duration title & Text Field Setup
+        //Duration title & Text Field Setup
         JLabel duration = new JLabel("Duration");
         duration.putClientProperty(FlatClientProperties.STYLE, "font:+6");
         centerLeft.add(duration);
@@ -88,7 +100,7 @@ public class CreateWorkoutPlanView extends JPanel {
         centerLeft.add(durationField);
 
 
-            //Intensity title & Text Field Setup
+        //Intensity title & Text Field Setup
         JLabel intensity = new JLabel("Intensity");
         intensity.putClientProperty(FlatClientProperties.STYLE, "font:+6");
         centerLeft.add(intensity);
@@ -113,7 +125,7 @@ public class CreateWorkoutPlanView extends JPanel {
         monday.add(mondayLabel, BorderLayout.NORTH);
         JComboBox<Workout> mondayWorkoutComboBox = new JComboBox<>();
 
-        List<Workout> workoutList;
+        java.util.List<Workout> workoutList;
         workoutList = viewModel.getAllWorkouts();
 
 
@@ -266,6 +278,37 @@ public class CreateWorkoutPlanView extends JPanel {
         centerRight.add(sunday);
 
 
+        if(plan.getName() == null){
+            plan.setName("");
+        }
+        nameField.setText(plan.getName());
+        if(plan.getGoal() == null){
+            plan.setGoal("");
+        }
+        goalField.setText(plan.getGoal());
+        if(plan.getDurationInWeeks() == null){
+            plan.setDurationInWeeks(0);
+        }
+        durationField.setText(plan.getDurationInWeeks().toString());
+        if(plan.getIntensity() == null){
+            plan.setIntensity(0);
+        }
+        intensityField.setText(plan.getIntensity().toString());
+
+        System.out.println("PRINTINT" + plan.getWorkoutSchedule().toString());
+
+        List<Workout> workouts = plan.getWorkoutSchedule();
+
+
+        mondayWorkoutComboBox.setSelectedItem(workouts.get(0));
+        tuesdayWorkoutComboBox.setSelectedItem(workouts.get(1));
+        wednesdayWorkoutComboBox.setSelectedItem(workouts.get(2));
+        thursdayWorkoutComboBox.setSelectedItem(workouts.get(3));
+        fridayWorkoutComboBox.setSelectedItem(workouts.get(4));
+        saturdayWorkoutComboBox.setSelectedItem(workouts.get(5));
+        sundayWorkoutComboBox.setSelectedItem(workouts.get(6));
+
+
         center.add(centerLeft);
         center.add(centerRight);
         main.add(center, BorderLayout.CENTER);
@@ -273,34 +316,42 @@ public class CreateWorkoutPlanView extends JPanel {
 
         //South Button Panel
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setPreferredSize(new Dimension(50, 50));
         buttonPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
         FlatButton submitButton = new FlatButton();
         submitButton.setMinimumHeight(35);
         submitButton.setMinimumWidth(200);
-        submitButton.setText("Submit");
+        submitButton.setText("Submit Changes");
         WorkoutPlan workoutPlan = new WorkoutPlan();
-        submitButton.addActionListener(e -> {
-            workoutPlan.setName(nameField.getText());
-            workoutPlan.setGoal(goalField.getText());
-            workoutPlan.setIntensity(Integer.parseInt(intensityField.getText()));
-            workoutPlan.setDurationInWeeks(Integer.parseInt(durationField.getText()));
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                plan.setGoal(goalField.getText());
+                plan.setDurationInWeeks(Integer.parseInt(durationField.getText()));
+                plan.setIntensity(Integer.parseInt(intensityField.getText()));
 
-            List<Workout> workouts = new ArrayList<>();
-            workouts.add((Workout) mondayWorkoutComboBox.getSelectedItem());
-            workouts.add((Workout) tuesdayWorkoutComboBox.getSelectedItem());
-            workouts.add((Workout) wednesdayWorkoutComboBox.getSelectedItem());
-            workouts.add((Workout) thursdayWorkoutComboBox.getSelectedItem());
-            workouts.add((Workout) fridayWorkoutComboBox.getSelectedItem());
-            workouts.add((Workout) saturdayWorkoutComboBox.getSelectedItem());
-            workouts.add((Workout) sundayWorkoutComboBox.getSelectedItem());
+                List<Workout> workoutSchedule = new ArrayList<>();
 
-            workoutPlan.setWorkoutSchedule(workouts);
+                workoutSchedule.add((Workout) mondayWorkoutComboBox.getSelectedItem());
+                workoutSchedule.add((Workout) tuesdayWorkoutComboBox.getSelectedItem());
+                workoutSchedule.add((Workout) wednesdayWorkoutComboBox.getSelectedItem());
+                workoutSchedule.add((Workout) thursdayWorkoutComboBox.getSelectedItem());
+                workoutSchedule.add((Workout) fridayWorkoutComboBox.getSelectedItem());
+                workoutSchedule.add((Workout) saturdayWorkoutComboBox.getSelectedItem());
+                workoutSchedule.add((Workout) sundayWorkoutComboBox.getSelectedItem());
 
-            viewModel.addWorkoutPlan(workoutPlan);
-            Main.setWindow("Workout");
-            WorkoutView.setView("WorkoutPlans");
+                plan.setWorkoutSchedule(workoutSchedule);
+                viewModelWP.updateWorkoutPlan(plan);
+
+                JOptionPane.showMessageDialog(table, "Changes saved");
+
+                Main.setWindow("Workout");
+                WorkoutView.setView("WorkoutPlans");
+            }
         });
+
         buttonPanel.add(submitButton);
 
         main.add(buttonPanel, BorderLayout.SOUTH);
@@ -308,6 +359,11 @@ public class CreateWorkoutPlanView extends JPanel {
 
         add(main, "growy, pushy");
     }
+
+
+
+
+
 
 
 }

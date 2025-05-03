@@ -2,6 +2,8 @@ package Application.TheSwoleSection.WorkoutPlans;
 
 import Application.Utility.Objects.WorkoutPlan;
 
+import javax.swing.*;
+
 public class WorkoutPlansViewModel {
     WorkoutPlansModel model ;
 
@@ -33,6 +35,10 @@ public class WorkoutPlansViewModel {
 
     public void updateWorkoutPlan(WorkoutPlan workoutPlan){
         model.updateWorkoutPlan(workoutPlan);
+    }
+
+    public void equipWorkoutPlan(JTable table){
+        model.equipWorkoutPlan(table);
     }
 
 }

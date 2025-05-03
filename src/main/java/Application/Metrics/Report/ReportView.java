@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -69,18 +70,30 @@ public class ReportView extends JPanel {
 
         //Center Panel Setup - Exercise List/Table
         //Need to be able to use workout db before this can be updated
-        JTable table = new JTable(viewModel.getWorkoutData(), viewModel.getColumns());
+        JTable table = new JTable(viewModel.getWorkoutData(), viewModel.getColumns()){
+            public String getToolTipText( MouseEvent e )
+            {
+                int row = rowAtPoint( e.getPoint() );
+                int column = columnAtPoint( e.getPoint() );
+
+                Object value = getValueAt(row, column);
+                return value == null ? null : value.toString();
+            }
+
+        };
         table.setRowSelectionAllowed(false);
         table.setColumnSelectionAllowed(false);
         table.setCellSelectionEnabled(false);
         table.setRowHeight(75);
 
-        table.getColumnModel().getColumn(0).setPreferredWidth(150);
-        table.getColumnModel().getColumn(1).setPreferredWidth(70);
-        table.getColumnModel().getColumn(2).setPreferredWidth(3);
-        table.getColumnModel().getColumn(3).setPreferredWidth(5);
+        table.getColumnModel().getColumn(0).setPreferredWidth(50);
+        table.getColumnModel().getColumn(1).setPreferredWidth(150);
+        table.getColumnModel().getColumn(2).setPreferredWidth(70);
+        table.getColumnModel().getColumn(3).setPreferredWidth(3);
         table.getColumnModel().getColumn(4).setPreferredWidth(5);
-        table.getColumnModel().getColumn(5).setPreferredWidth(450);
+        table.getColumnModel().getColumn(5).setPreferredWidth(5);
+        table.getColumnModel().getColumn(6).setPreferredWidth(400);
+
 
         table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
@@ -99,7 +112,7 @@ public class ReportView extends JPanel {
 
         table.setDefaultEditor(Object.class, null);
 
-        for(int i = 1; i < table.getColumnCount(); i++) {
+        for(int i = 0; i < table.getColumnCount(); i++) {
             TableColumn col = table.getColumnModel().getColumn(i);
             DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
             dtcr.setHorizontalAlignment(SwingConstants.CENTER);
