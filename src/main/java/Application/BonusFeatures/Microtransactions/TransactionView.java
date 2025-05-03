@@ -20,7 +20,7 @@ import java.time.Year;
 import java.util.stream.IntStream;
 
 public class TransactionView extends JPanel {
-    private static JPanel mainPanel;
+    public static JPanel mainPanel;
     TransactionView (Account acc) {
         mainPanel = new JPanel(new GridLayout(1,2));
 
@@ -151,7 +151,7 @@ public class TransactionView extends JPanel {
     public static JPanel get() {return mainPanel;}
 
     static class CreditCardDocumentFilter extends DocumentFilter {
-        private static final int MAX_DIGITS = 16;
+        public static final int MAX_DIGITS = 16;
 
         @Override
         public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {

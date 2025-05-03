@@ -1,94 +1,57 @@
 package Application.BonusFeatures.CurrencyShop;
 
+import Application.Utility.Objects.CartItem;
 import Application.Utility.Objects.Account;
-import Application.BonusFeatures.Microtransactions.TransactionViewModel;
+import Application.Databases.AccountsDB;
+import Application.Databases.DatabaseManager;
+import Application.Databases.ItemsDB;
 
 import javax.swing.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class currencyShopViewModel {
-    private static currencyShopModel shopModel = new currencyShopModel();
-    private static currencyShopView shopView;
 
+    /**
+     * Static method to get the currency shop view
+     * This is used for navigation in the main application
+     * @param currentUser The currently logged in user
+     * @return The currencyShopView panel
+     */
     public static JPanel getCurrencyView(Account currentUser) {
-        // Set up the model with the current user
-        shopModel.setCurrentUser(currentUser);
+        // Create a new model and set the current user
+        currencyShopModel model = new currencyShopModel();
+        model.setCurrentUser(currentUser);
 
-        // Set up transaction handling
-        TransactionViewModel transact = new TransactionViewModel();
-        transact.getCardUser(currentUser);
-
-        // Create the view
-        shopView = new currencyShopView(shopModel);
-        return shopView;
+        // Create the view with the model
+        currencyShopView view = new currencyShopView(model);
+        return view.get();
     }
 
-    public static void addToCart(int rocketBucks, double price) {
-        shopModel.addToCart(rocketBucks, price);
-        updateViews();
-    }
+    // Inner class for currency packs
+    public static class CurrencyPack {
+        private final int rocketBucks;
+        private final double price;
+        private final boolean recommended;
 
-    public static void removeFromCart(int index) {
-        shopModel.removeFromCart(index);
-        updateViews();
-    }
-
-    public static void clearCart() {
-        shopModel.clearCart();
-        updateViews();
-    }
-
-    private static void updateViews() {
-        if (shopView != null) {
-            shopView.updateCartDisplay();
+        public CurrencyPack(int rocketBucks, double price, boolean recommended) {
+            this.rocketBucks = rocketBucks;
+            this.price = price;
+            this.recommended = recommended;
         }
-    }
 
-    public static void checkout() {
-        if (shopModel.isCartEmpty()) return;
+        public int getRocketBucks() {
+            return rocketBucks;
+        }
 
-        processTransaction();
-    }
+        public double getPrice() {
+            return price;
+        }
 
-    private static void processTransaction() {
-        JFrame window = new JFrame("Rocket Health");
-        window.setSize(new java.awt.Dimension(1000, 625));
-        window.setLocationRelativeTo(null);
-        window.add(TransactionViewModel.getTransactionView());
-        window.getRootPane().putClientProperty("apple.awt.transparentTitleBar", true);
-        window.getRootPane().putClientProperty("apple.awt.windowTitleVisible", false);
-        window.setVisible(true);
-
-        // Background thread to monitor card addition
-        new Thread(() -> {
-            while (!shopModel.hasCardInfo()) {
-                try {
-                    Thread.sleep(500); // Check every 500ms
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    return;
-                }
-            }
-
-            // Card is now available — update wallet on the Swing UI thread
-            SwingUtilities.invokeLater(() -> {
-                try {
-                    boolean success = shopModel.updateUserWallet();
-                    if (success) {
-                        JOptionPane.showMessageDialog(null, "Rocket Bucks added!");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Failed to add Rocket Bucks!",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(),
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                }
-
-                window.setVisible(false);
-                window.dispose();
-                updateViews();
-            });
-        }).start();
+        public boolean isRecommended() {
+            return recommended;
+        }
     }
 }

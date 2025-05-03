@@ -56,7 +56,7 @@ public class ProfileView extends JPanel {
 
         FlatLabel profileTitle = new FlatLabel();
         profileTitle.putClientProperty(FlatClientProperties.STYLE, "font:italics +10; foreground:@accent;");
-        profileTitle.setText("Insert Title");
+        profileTitle.setText("No Title");
 
         textPanel.add(profileName);
         textPanel.add(profileTitle);
