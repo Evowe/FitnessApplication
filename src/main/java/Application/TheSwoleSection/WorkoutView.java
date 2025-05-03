@@ -22,6 +22,7 @@ import Application.Metrics.Statistics.StatsView;
 import Application.TheSwoleSection.CreateExercise.CreateExcerciseView;
 import Application.TheSwoleSection.CreateWorkout.NewWorkoutView;
 import Application.TheSwoleSection.ExerciseLibrary.ExerciseLibraryView;
+import Application.TheSwoleSection.LiveWorkout.LiveWorkoutView;
 import Application.TheSwoleSection.TrainerCreatedWorkoutPlan.CreateWorkoutPlanView;
 import Application.TheSwoleSection.WorkoutLibrary.WorkoutLibraryView;
 import Application.TheSwoleSection.WorkoutPlans.WorkoutPlansView;
@@ -50,6 +51,7 @@ public class WorkoutView extends JPanel {
         tabbedPane.add("Classes", new JPanel());
         tabbedPane.add("Workout Library", new WorkoutLibraryView());
         tabbedPane.add("Exercise Library", new ExerciseLibraryView());
+        tabbedPane.add("Live Workouts", new LiveWorkoutView());
 
 
 
@@ -74,6 +76,9 @@ public class WorkoutView extends JPanel {
             }
             case "ExerciseLibrary" -> {
                 tabbedPane.setSelectedIndex(4);
+            }
+            case "LiveWorkouts" -> {
+            	tabbedPane.setSelectedIndex(5);
             }
         }
     }

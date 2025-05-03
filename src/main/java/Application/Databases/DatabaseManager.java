@@ -13,6 +13,7 @@ public class DatabaseManager {
     private static FriendsDB friendsDB;
     private static BattlePassDB battlePassDB;
     private static WorkoutLogDB workoutLogDB;
+    private static LiveWorkoutDB liveWorkoutDB;
 
     public static void initializeDatabases(){
         // Create instances of each database class
@@ -33,6 +34,7 @@ public class DatabaseManager {
         battlePassDB = new BattlePassDB();
         workoutLogDB = new WorkoutLogDB();
         battlePassDB.fillBP();
+        liveWorkoutDB = new LiveWorkoutDB();
     }
 
     public static AccountsDB getAccountsDB() {
