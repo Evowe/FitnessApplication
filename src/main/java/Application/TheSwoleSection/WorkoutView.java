@@ -10,7 +10,7 @@ import Application.AccountManagement.ResetPassword.ResetPasswordView;
 import Application.AccountManagement.Settings.SettingsViewModel;
 import Application.BonusFeatures.BattlePass.BattlePassView;
 import Application.BonusFeatures.CurrencyShop.currencyShopViewModel;
-import Application.BonusFeatures.CurrencyShop.currencyshopview;
+//import Application.BonusFeatures.CurrencyShop.currencyshopview;
 import Application.BonusFeatures.Locker.LockerView;
 import Application.BonusFeatures.Microtransactions.TransactionViewModel;
 import Application.BonusFeatures.Social.CreateMessageView;
