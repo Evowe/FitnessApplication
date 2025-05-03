@@ -10,8 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BattlePassView extends JPanel {
@@ -19,7 +17,8 @@ public class BattlePassView extends JPanel {
     private static final int TIERS_PER_PAGE = 5;
 
     private int currentPage = 0;
-    private final List<TierData> allTiers = new ArrayList<>();
+    private final BattlePassModel battlePassModel = new BattlePassModel();
+    private final List<BattlePassModel.TierData> allTiers = battlePassModel.getTiers();
     private final JPanel tierListPanel = new JPanel();
     private final JButton prevButton = new JButton("Previous");
     private final JButton nextButton = new JButton("Next");
@@ -42,7 +41,10 @@ public class BattlePassView extends JPanel {
         tierListPanel.setLayout(new BoxLayout(tierListPanel, BoxLayout.X_AXIS));
         tierListPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
 
-        loadTiersFromDatabase();
+        // Simulate XP, replace this with real player XP logic
+        int playerXP = 1500;
+        battlePassModel.unlockTiersBasedOnXP(playerXP);
+
         updateTierList();
 
         prevButton.addActionListener(e -> {
@@ -76,27 +78,6 @@ public class BattlePassView extends JPanel {
         add(contentPanel, "grow");
     }
 
-    private void loadTiersFromDatabase() {
-        try (Connection conn = BattlePassDB.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM BattlePass ORDER BY TierNumber ASC")) {
-
-            while (rs.next()) {
-                TierData data = new TierData(
-                        rs.getInt("TierNumber"),
-                        rs.getString("Title"),
-                        rs.getString("Description"),
-                        rs.getInt("IsUnlocked"),
-                        rs.getString("ImagePath")
-                );
-                allTiers.add(data);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void updateTierList() {
         tierListPanel.removeAll();
 
@@ -104,7 +85,7 @@ public class BattlePassView extends JPanel {
         int end = Math.min(start + TIERS_PER_PAGE, allTiers.size());
 
         for (int i = start; i < end; i++) {
-            TierData tier = allTiers.get(i);
+            BattlePassModel.TierData tier = allTiers.get(i);
             tierListPanel.add(createTierCard(tier));
             tierListPanel.add(Box.createRigidArea(new Dimension(10, 0)));
         }
@@ -116,7 +97,7 @@ public class BattlePassView extends JPanel {
         nextButton.setEnabled((currentPage + 1) * TIERS_PER_PAGE < allTiers.size());
     }
 
-    private JPanel createTierCard(TierData tier) {
+    private JPanel createTierCard(BattlePassModel.TierData tier) {
         JPanel card = new JPanel(new MigLayout("wrap, insets 10", "[fill, grow]"));
         card.setPreferredSize(new Dimension(180, 280));
         card.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
@@ -134,11 +115,17 @@ public class BattlePassView extends JPanel {
 
         JLabel descLabel = new JLabel("<html><div style='width:160px;'>" + tier.description + "</div></html>");
         descLabel.setFont(descLabel.getFont().deriveFont(12f));
-        card.add(descLabel);
 
-        JLabel unlockLabel = new JLabel(tier.isUnlocked == 1 ? "Unlocked" : "Locked");
+        JLabel unlockLabel = new JLabel(tier.isUnlocked == 1 ? "Unlocked" : "Locked (XP: " + tier.requiredXP + ")");
         unlockLabel.setFont(unlockLabel.getFont().deriveFont(Font.ITALIC, 11f));
         unlockLabel.setForeground(Color.GRAY);
+
+        if (tier.imagePath.isBlank()) {
+            titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 24f));
+            descLabel.setFont(descLabel.getFont().deriveFont(20f));
+        }
+
+        card.add(descLabel);
         card.add(unlockLabel);
 
         card.addMouseListener(new MouseAdapter() {
@@ -151,14 +138,13 @@ public class BattlePassView extends JPanel {
         return card;
     }
 
-    private void showTierPopup(TierData tier) {
+    private void showTierPopup(BattlePassModel.TierData tier) {
         JPanel panel = new JPanel(new MigLayout("wrap, insets 20", "[grow]"));
         panel.setPreferredSize(new Dimension(400, 320));
         panel.putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
         JLabel titleLabel = new JLabel("<html><b>Tier " + tier.tierNumber + ": " + tier.title + "</b></html>");
         titleLabel.setFont(titleLabel.getFont().deriveFont(16f));
-        panel.add(titleLabel);
 
         if (tier.imagePath != null && !tier.imagePath.trim().isEmpty()) {
             ImageIcon icon = new ImageIcon(tier.imagePath);
@@ -169,29 +155,20 @@ public class BattlePassView extends JPanel {
 
         JLabel descriptionLabel = new JLabel("<html><div style='width:350px;'>" + tier.description + "</div></html>");
         descriptionLabel.setFont(descriptionLabel.getFont().deriveFont(13f));
-        panel.add(descriptionLabel);
 
-        JLabel unlockLabel = new JLabel(tier.isUnlocked == 1 ? "Unlocked" : "Locked");
+        JLabel unlockLabel = new JLabel(tier.isUnlocked == 1 ? "Unlocked" : "Locked (XP: " + tier.requiredXP + ")");
         unlockLabel.setFont(unlockLabel.getFont().deriveFont(Font.ITALIC, 12f));
         unlockLabel.setForeground(Color.GRAY);
+
+        if (tier.imagePath.isBlank()) {
+            titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 24f));
+            descriptionLabel.setFont(descriptionLabel.getFont().deriveFont(20f));
+        }
+
+        panel.add(titleLabel);
+        panel.add(descriptionLabel);
         panel.add(unlockLabel);
 
         JOptionPane.showMessageDialog(this, panel, "Tier Details", JOptionPane.PLAIN_MESSAGE);
-    }
-
-    private static class TierData {
-        int tierNumber;
-        String title;
-        String description;
-        int isUnlocked;
-        String imagePath;
-
-        public TierData(int tierNumber, String title, String description, int isUnlocked, String imagePath) {
-            this.tierNumber = tierNumber;
-            this.title = title;
-            this.description = description;
-            this.isUnlocked = isUnlocked;
-            this.imagePath = imagePath;
-        }
     }
 }

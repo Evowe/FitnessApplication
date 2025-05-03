@@ -38,6 +38,7 @@ public class BattlePassDB extends DBTemplate {
     }
 
     public static void fillBP() {
+
         try (Connection conn = BattlePassDB.getConnection();
              Statement stmt = conn.createStatement()) {
 
@@ -47,7 +48,21 @@ public class BattlePassDB extends DBTemplate {
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
                     "VALUES (1, 'Blue Rocket', 'A cool blue rocket skin', 'src/main/resources/Images/BlueRocket.png', 0)");
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
-                    "VALUES (2, 'Pleb', 'A title to show your progress', '', 0)");
+                    "VALUES (2, 'Pleb', 'Your muscles are small. Ew.', '', 0)");
+            stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
+                    "VALUES (3, 'Rocket Bucks', '11', '', 0)");
+            stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
+                    "VALUES (4, 'Wimp', 'Try going to the gym for once', '', 0)");
+            stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
+                    "VALUES (5, 'Nothing', '', '', 0)");
+            stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
+                    "VALUES (6, 'Rocket Bucks', '28', '', 0)");
+            stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
+                    "VALUES (7, 'Weakling', 'I guess thats progress...', '', 0)");
+            stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
+                    "VALUES (8, 'Rocket Bucks', '-4', '', 0)");
+            stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
+                    "VALUES (9, 'Fledgling', 'You might make it', '', 0)");
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
                     "VALUES (10, 'Cow Rocket', 'MOOOOOOO', 'src/main/resources/Images/mooket.PNG', 0)");
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
@@ -60,9 +75,8 @@ public class BattlePassDB extends DBTemplate {
                     "VALUES (50, 'SWOLEKET', 'THE BIGGEST ROCKET OF THEM ALL', 'src/main/resources/Images/swoleket.PNG', 0)");
 
             // Insert default filler tiers
-            for (int i = 2; i <= 49; i++) {
+            for (int i = 10; i <= 49; i++) {
                 if (i % 10 == 0) continue; // Skip custom skin tiers
-                if ( i == 2 ) continue;
                 String title = "Tier " + i;
                 String description = "Coming Soon...";
 
