@@ -151,7 +151,7 @@ public class NewWorkoutView extends JPanel {
 
 	}
 
-	public class NumberTextField extends JTextField {
+	public static class NumberTextField extends JTextField {
 
 		public NumberTextField() {
 			this.addKeyListener(new KeyAdapter() {

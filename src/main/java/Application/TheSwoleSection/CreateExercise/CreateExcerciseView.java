@@ -1,6 +1,7 @@
 package Application.TheSwoleSection.CreateExercise;
 
 
+import Application.TheSwoleSection.CreateWorkout.NewWorkoutView;
 import Application.TheSwoleSection.WorkoutView;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
@@ -98,7 +99,7 @@ public class CreateExcerciseView extends JPanel {
         repAmount.putClientProperty(FlatClientProperties.STYLE, "" + "font:regular +6");
         centerPanel.add(repAmount);
 
-        JTextField RepAmountField = new JTextField();
+        NewWorkoutView.NumberTextField RepAmountField = new NewWorkoutView.NumberTextField();
         RepAmountField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Rep Amount");
         centerPanel.add(RepAmountField);
 
@@ -107,7 +108,7 @@ public class CreateExcerciseView extends JPanel {
         weightAmount.putClientProperty(FlatClientProperties.STYLE, "" + "font:regular +6");
         centerPanel.add(weightAmount);
 
-        JTextField WeightAmountField = new JTextField();
+        NewWorkoutView.NumberTextField WeightAmountField = new NewWorkoutView.NumberTextField();
         WeightAmountField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Weight Amount");
         centerPanel.add(WeightAmountField);
 
