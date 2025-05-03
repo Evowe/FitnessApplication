@@ -34,7 +34,7 @@ public class DatabaseManager {
         friendsDB = new FriendsDB();
         battlePassDB = new BattlePassDB();
         workoutLogDB = new WorkoutLogDB();
-        //battlePassDB.insertMockData();
+        battlePassDB.fillBP();
     }
 
     public static AccountsDB getAccountsDB() {
