@@ -1,10 +1,13 @@
 package Application.TheSwoleSection.CreateWorkout;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.text.PlainDocument;
 
 import Application.TheSwoleSection.WorkoutView;
 import Application.Utility.Widgets.SideMenu.SideMenuView;
@@ -113,16 +116,19 @@ public class NewWorkoutView extends JPanel {
 		duration.putClientProperty(FlatClientProperties.STYLE, "font:+6");
 		workoutFieldsPanel.add(duration);
 
-		JTextField durationField = new JTextField();
+		NumberTextField durationField = new NumberTextField();
 		durationField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Workout Duration");
 		workoutFieldsPanel.add(durationField);
 
 		FlatButton saveWorkout = new FlatButton();
 		saveWorkout.setText("Save Workout");
 		saveWorkout.addActionListener(e -> {
-			if(workout.getExerciseList().size() == 0){
+			if(workout.getExerciseList().size() == 0) {
 				JOptionPane.showMessageDialog(null,
 						"No Exercises Selected. Add Exercise to Workout to proceed.");
+			} else if(descriptionField.getText().isEmpty() || nameField.getText().isEmpty() || durationField.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null,
+						"All fields must be filled.");
 			} else{
 				workout.setDescription(descriptionField.getText());
 				workout.setDuration(Integer.parseInt(durationField.getText()));
@@ -143,6 +149,21 @@ public class NewWorkoutView extends JPanel {
 		//Add Main Panel
 		add(main, "growy, pushy");
 
+	}
+
+	public class NumberTextField extends JTextField {
+
+		public NumberTextField() {
+			this.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					char c = e.getKeyChar();
+					if (!Character.isDigit(c)) {
+						e.consume(); // Ignore non-digit input
+					}
+				}
+			});
+		}
 	}
 		
 }

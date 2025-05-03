@@ -118,19 +118,30 @@ public class CreateExcerciseView extends JPanel {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                String Name = nameField.getText();
-                String Description = descriptionField.getText();
-                int RepAmount = Integer.parseInt(RepAmountField.getText());
-                double WeightAmount = Double.parseDouble(WeightAmountField.getText());
-                int type = dropdown.getSelectedIndex();
-                CreateExercise exercise = new CreateExercise () ;
-                Exercise newexercise = exercise.CreateExerciseCall
-                        (Name, Description, type, RepAmount, WeightAmount);
 
-                Main.setWindow("Workout");
-                WorkoutView.setView("ExerciseLibrary");
+                if(nameField.getText().isEmpty() || descriptionField.getText().isEmpty()
+                        || repAmount.getText().isEmpty() || weightAmount.getText().isEmpty()
+                        || dropdown.getSelectedIndex() == 0) {
+
+                    JOptionPane.showMessageDialog(null,
+                            "All fields must be filled.");
+
+                } else {
+                    String Name = nameField.getText();
+                    String Description = descriptionField.getText();
+                    int RepAmount = Integer.parseInt(RepAmountField.getText());
+                    double WeightAmount = Double.parseDouble(WeightAmountField.getText());
+                    int type = dropdown.getSelectedIndex();
+                    CreateExercise exercise = new CreateExercise () ;
+                    Exercise newexercise = exercise.CreateExerciseCall
+                            (Name, Description, type, RepAmount, WeightAmount);
+
+                    Main.setWindow("Workout");
+                    WorkoutView.setView("ExerciseLibrary");
+                }
             }
         });
+
 
         JLabel space = new JLabel();
         space.setBackground(new Color(20,20,20));
