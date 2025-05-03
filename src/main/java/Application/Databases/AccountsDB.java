@@ -1,6 +1,7 @@
 package Application.Databases;
 
 import Application.Utility.Objects.Account;
+import Application.Utility.Objects.CreditCard;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -59,6 +60,8 @@ public class AccountsDB extends DBTemplate {
 
         createTable("accounts", columns);
         createTable("security_questions", securityColumns);
+
+        updateAccountsTableForCreditCards();
     }
 
     public void addAccount(Account account) throws SQLException {
@@ -518,5 +521,97 @@ public class AccountsDB extends DBTemplate {
             return SECURITY_QUESTIONS[questionId];
         }
         return null;
+    }
+
+    public boolean addCreditCardToAccount(String username, CreditCard card) throws SQLException {
+        String sql = "UPDATE accounts SET cardNumber = ?, expiryDate = ?, cvv = ?, cardHolder = ?, zipCode = ? WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, card.getCardNumber());
+            pstmt.setString(2, card.getExpiryDate());
+            pstmt.setString(3, card.getCvv());
+            pstmt.setString(4, card.getCardHolder());
+            pstmt.setString(5, card.getZipCode());
+            pstmt.setString(6, username);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+
+    public CreditCard getAccountCreditCard(String username) throws SQLException {
+        String sql = "SELECT cardNumber, expiryDate, cvv, cardHolder, zipCode FROM accounts WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next() && rs.getString("cardNumber") != null) {
+                return new CreditCard(
+                        rs.getString("cardNumber"),
+                        rs.getString("expiryDate"),
+                        rs.getString("cvv"),
+                        rs.getString("cardHolder"),
+                        rs.getString("zipCode")
+                );
+            }
+        }
+        return null;
+    }
+
+
+    public boolean removeCreditCardFromAccount(String username) throws SQLException {
+        String sql = "UPDATE accounts SET cardNumber = NULL, expiryDate = NULL, cvv = NULL, cardHolder = NULL, zipCode = NULL WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+
+    public void updateAccountsTableForCreditCards() throws SQLException {
+        String[] columns = {
+                "cardNumber TEXT",
+                "expiryDate TEXT",
+                "cvv TEXT",
+                "cardHolder TEXT",
+                "zipCode TEXT"
+        };
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            for (String column : columns) {
+                String columnName = column.split(" ")[0];
+                try {
+                    ResultSet rs = stmt.executeQuery("SELECT " + columnName + " FROM accounts LIMIT 1");
+                    rs.close();
+                } catch (SQLException e) {
+                    stmt.executeUpdate("ALTER TABLE accounts ADD COLUMN " + column);
+                }
+            }
+        }
+    }
+
+    public boolean linkCreditCardToAccount(String username, String cardNumber) throws SQLException {
+        String sql = "UPDATE accounts SET linkedCardNumber = ? WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, cardNumber);
+            pstmt.setString(2, username);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        }
     }
 }

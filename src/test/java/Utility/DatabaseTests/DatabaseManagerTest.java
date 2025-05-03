@@ -82,7 +82,6 @@ public class DatabaseManagerTest {
         assertNotNull(DatabaseManager.getAccountsDB());
         assertNotNull(DatabaseManager.getExerciseDB());
         assertNotNull(DatabaseManager.getGoalsDB());
-        assertNotNull(DatabaseManager.getCreditCardDB());
         assertNotNull(DatabaseManager.getStatsDB());
         assertNotNull(DatabaseManager.getWorkoutDB());
         assertNotNull(DatabaseManager.getMessagesDB());
@@ -124,16 +123,6 @@ public class DatabaseManagerTest {
         assertNotNull(db1);
 
         GoalsDB db2 = DatabaseManager.getGoalsDB();
-        assertNotNull(db2);
-        assertSame(db1, db2);
-    }
-
-    @Test
-    public void testGetCreditCardDB() {
-        CreditCardDB db1 = DatabaseManager.getCreditCardDB();
-        assertNotNull(db1);
-
-        CreditCardDB db2 = DatabaseManager.getCreditCardDB();
         assertNotNull(db2);
         assertSame(db1, db2);
     }

@@ -6,7 +6,6 @@ public class DatabaseManager {
     private static AccountsDB accountsDB;
     private static ExerciseDB exerciseDB;
     private static GoalsDB goalsDB;
-    private static CreditCardDB creditCardDB;
     private static StatsDB statsDB;
     private static WorkoutDB workoutDB;
     private static MessagesDB messagesDB;
@@ -21,7 +20,6 @@ public class DatabaseManager {
         accountsDB.insertBaseAccounts();
 
         exerciseDB = new ExerciseDB();
-        creditCardDB = new CreditCardDB();
         goalsDB = new GoalsDB();
         statsDB = new StatsDB();
         workoutDB = new WorkoutDB();
@@ -63,13 +61,6 @@ public class DatabaseManager {
             goalsDB = new GoalsDB();
         }
         return goalsDB;
-    }
-
-    public static CreditCardDB getCreditCardDB() {
-        if (creditCardDB == null) {
-            creditCardDB = new CreditCardDB();
-        }
-        return creditCardDB;
     }
 
     public static StatsDB getStatsDB() {

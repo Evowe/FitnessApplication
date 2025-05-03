@@ -1,7 +1,7 @@
 package Application.BonusFeatures.Microtransactions;
 
 import Application.Utility.Objects.Account;
-
+import java.sql.SQLException;
 import javax.swing.*;
 
 public class TransactionViewModel {
@@ -10,6 +10,13 @@ public class TransactionViewModel {
 
     public Account getCardUser(Account acc) {
         TransactionViewModel.acc = acc;
+
+        try {
+            acc.loadCreditCard();
+        } catch (SQLException e) {
+            System.err.println("Error loading credit card: " + e.getMessage());
+        }
+
         return acc;
     }
 

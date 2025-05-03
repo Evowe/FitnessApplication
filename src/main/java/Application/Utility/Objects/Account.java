@@ -185,5 +185,36 @@ public class Account {
         return str;
     }
 
+    public boolean saveCreditCard(CreditCard card) throws SQLException {
+        if (card == null || !card.CardValidation(card)) {
+            return false;
+        }
 
+        boolean success = getAccountsDB().addCreditCardToAccount(this.username, card);
+
+        if (success) {
+            this.card = card;
+        }
+
+        return success;
+    }
+
+    public CreditCard loadCreditCard() throws SQLException {
+        if (this.card != null) {
+            return this.card;
+        }
+
+        this.card = getAccountsDB().getAccountCreditCard(this.username);
+        return this.card;
+    }
+
+    public boolean removeCreditCard() throws SQLException {
+        boolean success = getAccountsDB().removeCreditCardFromAccount(this.username);
+
+        if (success) {
+            this.card = null;
+        }
+
+        return success;
+    }
 }

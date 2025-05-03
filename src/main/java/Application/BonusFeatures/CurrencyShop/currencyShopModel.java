@@ -68,6 +68,20 @@ public class currencyShopModel {
     }
 
     public boolean hasCardInfo() {
-        return currentUser != null && currentUser.hasCard();
+        try {
+            return currentUser != null && currentUser.loadCreditCard() != null;
+        } catch (SQLException e) {
+            System.out.println("Error checking card info: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean processPayment() throws SQLException {
+        if (!hasCardInfo()) {
+            return false;
+        }
+
+        return updateUserWallet();
+
     }
 }
