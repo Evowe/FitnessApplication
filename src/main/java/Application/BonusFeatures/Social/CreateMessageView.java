@@ -123,23 +123,37 @@ public class CreateMessageView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent event) {
                 //Account receiver = viewModel.selectUser(selectedRow);
-                int index = messageTypeDropdown.getSelectedIndex();
-                Message.Type type = null;
-                if (index == 1) {
-                    type = Message.Type.CHALLENGE;
-                } else if (index == 2) {
-                    type = Message.Type.FRIEND_REQUEST;
-                }
-                System.out.println("this is the index:" + index);
 
-                Message message = new Message(messageField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
-                message.addMessage();
-                if(type == Message.Type.FRIEND_REQUEST) {
-                    viewModel.requestFriend(Main.getCurrentUser().getUsername(), viewModel.getReceiver().getUsername());
+
+                if(messageField.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "All fields must be filled.");
+                } else if(messageField.getText().length() > 100){
+                    JOptionPane.showMessageDialog(null,
+                            "No field can exceed 100 characters.");
+                } else {
+                    int index = messageTypeDropdown.getSelectedIndex();
+                    Message.Type type = null;
+                    if (index == 1) {
+                        type = Message.Type.CHALLENGE;
+                    } else if (index == 2) {
+                        type = Message.Type.FRIEND_REQUEST;
+                    }
+                    System.out.println("this is the index:" + index);
+
+                    Message message = new Message(messageField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
+                    message.addMessage();
+                    if(type == Message.Type.FRIEND_REQUEST) {
+                        viewModel.requestFriend(Main.getCurrentUser().getUsername(), viewModel.getReceiver().getUsername());
+                    }
+                    //viewModel.sendMessage(messageField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
+                    Main.setWindow("SocialView");
+                    //viewModel.selectUser(selectedRow);
                 }
-                //viewModel.sendMessage(messageField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
-                Main.setWindow("SocialView");
-                //viewModel.selectUser(selectedRow);
+
+
+
+
             }
         });
 
