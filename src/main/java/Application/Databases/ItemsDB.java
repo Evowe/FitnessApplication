@@ -128,7 +128,7 @@ public class ItemsDB extends DBTemplate {
                 {"Not Embarrassing", "Hey, you are not the weakest now", "title", "0", ""},
                 {"Trying your best", "Effort is effort", "title", "0", ""},
                 {"Looks Maxxer", "Keep mewing bud", "title", "0", ""},
-                {"Protien Addict", "just one more scoop", "title", "0", ""},
+                {"Protein Addict", "just one more scoop", "title", "0", ""},
                 {"SpeedRunner", "You are the PR", "title", "0", ""},
                 {"Big (In a good way)", "Gravity complains when you arive", "title", "0", ""},
                 {"Maximus", "Your Gluteous is...", "title", "0", ""},

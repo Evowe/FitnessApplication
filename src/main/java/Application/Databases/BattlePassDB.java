@@ -104,7 +104,7 @@ public class BattlePassDB extends DBTemplate {
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
                     "VALUES (29, 'Rocket Bucks', '18', '', 0)");
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
-                    "VALUES (30, 'Kirket', 'Prof. Kirk Rocket', 'src/main/resources/Images/kirket.PNG', 0)");
+                    "VALUES (40, 'Kirket', 'Prof. Kirk Rocket', 'src/main/resources/Images/kirket.PNG', 0)");
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
                     "VALUES (31, 'Rocket Bucks', '9', '', 0)");
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
@@ -114,7 +114,7 @@ public class BattlePassDB extends DBTemplate {
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
                     "VALUES (34, 'Rocket Bucks', '1', '', 0)");
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
-                    "VALUES (35, 'Protien Addict', 'just one more scoop', '', 0)");
+                    "VALUES (35, 'Protein Addict', 'just one more scoop', '', 0)");
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
                     "VALUES (36, 'Rocket Bucks', '28', '', 0)");
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
@@ -124,7 +124,7 @@ public class BattlePassDB extends DBTemplate {
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
                     "VALUES (39, 'Nothing', 'So close', '', 0)");
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
-                    "VALUES (40, 'Shrek Rocket', 'WHAT ARE YOU DOING IN MY SWAMP', 'src/main/resources/Images/shreket.PNG', 0)");
+                    "VALUES (30, 'Shrek Rocket', 'WHAT ARE YOU DOING IN MY SWAMP', 'src/main/resources/Images/shreket.PNG', 0)");
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
                     "VALUES (41, 'Nothing', 'You really want more?', '', 0)");
             stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
