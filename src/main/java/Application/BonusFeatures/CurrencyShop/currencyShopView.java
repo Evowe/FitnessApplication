@@ -150,20 +150,20 @@ public class currencyShopView extends JPanel {
             // Get all items from model
             List<currencyShopModel.Item> allItems = shopModel.getAllItems();
 
-            // Filter out the default rocket
-            allItems.removeIf(item -> "Default Rocket".equals(item.getName()));
+            allItems.removeIf(item ->
+                    "Default Rocket".equals(item.getName()) ||
+                            item.getIcon() == null ||
+                            item.getIcon().isEmpty()
+            );
 
-            // If there are less than 2 items, return what we have
             if (allItems.size() <= 2) {
                 return allItems;
             }
 
-            // Use the current date as seed for the random generator
-            // This ensures the same items are shown all day
             Calendar calendar = Calendar.getInstance();
             int day = calendar.get(Calendar.DAY_OF_YEAR);
             int year = calendar.get(Calendar.YEAR);
-            Random random = new Random(day + year * 1000); // Create a seed based on day and year
+            Random random = new Random(day + year * 1000);
 
             // Select 2 random items
             List<currencyShopModel.Item> featuredItems = new ArrayList<>();
