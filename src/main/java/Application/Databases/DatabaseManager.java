@@ -28,6 +28,7 @@ public class DatabaseManager {
 
         itemsDB = new ItemsDB();
         itemsDB.createDefaultRocketItems();
+        itemsDB.createDefaultTitles();
         itemsDB.giveDefaultRocketToAllUsers();
 
         friendsDB = new FriendsDB();

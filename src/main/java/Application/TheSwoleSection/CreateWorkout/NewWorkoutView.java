@@ -129,7 +129,10 @@ public class NewWorkoutView extends JPanel {
 			} else if(descriptionField.getText().isEmpty() || nameField.getText().isEmpty() || durationField.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null,
 						"All fields must be filled.");
-			} else{
+			} else if(descriptionField.getText().length() > 100 || nameField.getText().length() > 100 || durationField.getText().length() > 100){
+				JOptionPane.showMessageDialog(null,
+						"No field can exceed 100 characters.");
+			} else {
 				workout.setDescription(descriptionField.getText());
 				workout.setDuration(Integer.parseInt(durationField.getText()));
 				workout.setName(nameField.getText());

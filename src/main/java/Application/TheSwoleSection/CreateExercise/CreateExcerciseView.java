@@ -127,6 +127,10 @@ public class CreateExcerciseView extends JPanel {
                     JOptionPane.showMessageDialog(null,
                             "All fields must be filled.");
 
+                } else if(descriptionField.getText().length() > 100 || nameField.getText().length() > 100
+                        || repAmount.getText().length() > 100 || weightAmount.getText().length() > 100) {
+                    JOptionPane.showMessageDialog(null,
+                            "No field can exceed 100 characters.");
                 } else {
                     String Name = nameField.getText();
                     String Description = descriptionField.getText();
