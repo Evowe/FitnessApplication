@@ -38,9 +38,6 @@ public class DatabaseManagerTest {
         goalsDBField.setAccessible(true);
         goalsDBField.set(null, null);
 
-        Field creditCardDBField = managerClass.getDeclaredField("creditCardDB");
-        creditCardDBField.setAccessible(true);
-        creditCardDBField.set(null, null);
 
         Field statsDBField = managerClass.getDeclaredField("statsDB");
         statsDBField.setAccessible(true);
@@ -75,7 +72,6 @@ public class DatabaseManagerTest {
     public void testInitializeDatabases() throws Exception {
         assertDatabaseFieldIsNull("accountsDB");
         assertDatabaseFieldIsNull("exerciseDB");
-        assertDatabaseFieldIsNull("creditCardDB");
 
         DatabaseManager.initializeDatabases();
 
