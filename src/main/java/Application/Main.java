@@ -46,6 +46,10 @@ public class Main {
     private static JFrame window;
     private static Account currentUser;
 
+    // Add these fields for reset password functionality
+    private static String resetPasswordUser;
+    private static String resetPasswordReturnPage;
+
     public static void main(String[] args) {
         System.setProperty("apple.awt.application.name", "Rocket Health");
         System.setProperty("apple.awt.application.appearance", "system");
@@ -80,84 +84,107 @@ public class Main {
         window.setVisible(true);
     }
 
+    // Add these methods for reset password functionality
+    public static void setResetPasswordUser(String username) {
+        resetPasswordUser = username;
+    }
+
+    public static String getResetPasswordUser() {
+        return resetPasswordUser;
+    }
+
+    public static void setResetPasswordReturnPage(String page) {
+        resetPasswordReturnPage = page;
+    }
+
+    public static String getResetPasswordReturnPage() {
+        return resetPasswordReturnPage;
+    }
+
     public static void setWindow(String windowName) {
         System.out.println(currentUser);
         window.getContentPane().removeAll();
-        switch (windowName) {
-            case "LoginPage" -> {
-                window.add(new LoginView());
-            }
-            case "CreateAccountPage" -> {
-                window.add(new CreateAccountView());
-            }
-            case "HomePage" -> {
-                window.add(new HomeView(currentUser));
-            }
-            case "StatsPage" -> {
-                window.add(new StatsView(currentUser));
-            }
-            case "MetricsPage" -> {
-                window.add(new MetricsView(currentUser));
-            }
-            case "AdminPage" -> {
-                window.add(new AdminHomeView());
-            }
-            case "currencyShopPage" -> {
-                window.add(currencyShopViewModel.getCurrencyView(currentUser));
-            }
-            case "SettingsPage" -> {
-                window.add(SettingsViewModel.getSettingsView());
-            }
-            case "AdminUsers" -> {
-            	window.add(AdminUsersView.getView());
-            }
-            case "AdminAddUserView" -> {
-            	window.add(new AdminAddUserView());
-            }
-            case "ExerciseLibrary" -> {
-                window.add(new ExerciseLibraryView());
-            }
-            case "Workout" -> {
-                window.add(new WorkoutView());
-            }
-            case "CreateExercise" -> {
-                window.add(new CreateExcerciseView());
-            }
-            case "NewWorkout" -> {
-                window.add(new NewWorkoutView());
-            }
-            case "CreateMessage" -> {
-                window.add(new CreateMessageView());
-            }
-            case "SocialView" -> {
-                window.add(new SocialView());
-            }
-            case "BattlePass" -> {
-                window.add(new BattlePassView());
-            }
-            case "SendResponse" -> {
-                window.add(new SendResponseView());
-            }
-            case "Locker" -> {
-                window.add(new LockerView(currentUser));
-            }
-            case "ResetPasswordPage" -> {
-                window.add(new ResetPasswordView());
-            }
-            case "CreateWorkoutPlan" -> {
-                window.add(new CreateWorkoutPlanView());
-            }
-            case "NewLiveWorkout" -> {
-            	window.add(new NewLiveWorkoutView());
-            }
-            case "LiveWorkouts" -> {
-            	window.add(new LiveWorkoutView());
+
+        // Special case for ResetPassword
+        if (windowName.equals("ResetPassword")) {
+            window.add(new ResetPasswordView(resetPasswordUser, resetPasswordReturnPage, false));
+        } else {
+            switch (windowName) {
+                case "LoginPage" -> {
+                    window.add(new LoginView());
+                }
+                case "CreateAccountPage" -> {
+                    window.add(new CreateAccountView());
+                }
+                case "HomePage" -> {
+                    window.add(new HomeView(currentUser));
+                }
+                case "StatsPage" -> {
+                    window.add(new StatsView(currentUser));
+                }
+                case "MetricsPage" -> {
+                    window.add(new MetricsView(currentUser));
+                }
+                case "AdminPage" -> {
+                    window.add(new AdminHomeView());
+                }
+                case "currencyShopPage" -> {
+                    window.add(currencyShopViewModel.getCurrencyView(currentUser));
+                }
+                case "SettingsPage" -> {
+                    window.add(SettingsViewModel.getSettingsView());
+                }
+                case "AdminUsers" -> {
+                    AdminUsersView.refreshView();
+                    window.add(AdminUsersView.getView());
+                }
+                case "AdminAddUserView" -> {
+                    window.add(new AdminAddUserView());
+                }
+                case "ExerciseLibrary" -> {
+                    window.add(new ExerciseLibraryView());
+                }
+                case "Workout" -> {
+                    window.add(new WorkoutView());
+                }
+                case "CreateExercise" -> {
+                    window.add(new CreateExcerciseView());
+                }
+                case "NewWorkout" -> {
+                    window.add(new NewWorkoutView());
+                }
+                case "CreateMessage" -> {
+                    window.add(new CreateMessageView());
+                }
+                case "SocialView" -> {
+                    window.add(new SocialView());
+                }
+                case "BattlePass" -> {
+                    window.add(new BattlePassView());
+                }
+                case "SendResponse" -> {
+                    window.add(new SendResponseView());
+                }
+                case "Locker" -> {
+                    window.add(new LockerView(currentUser));
+                }
+                case "ResetPasswordPage" -> {
+                    window.add(new ResetPasswordView());
+                }
+                case "CreateWorkoutPlan" -> {
+                    window.add(new CreateWorkoutPlanView());
+                }
+                case "NewLiveWorkout" -> {
+                    window.add(new NewLiveWorkoutView());
+                }
+                case "LiveWorkouts" -> {
+                    window.add(new LiveWorkoutView());
+                }
             }
         }
         window.revalidate();
         window.repaint();
     }
-
 
     public static void setWindow(String name, JTable owner){
         if(name.equals("ModifyWorkoutPlan")){
