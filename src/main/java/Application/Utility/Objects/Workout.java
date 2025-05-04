@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Workout {
-    private String name;
-    private int duration;
-    private String description;
+    protected String name;
+    protected int duration;
+    protected String description;
     private int CaloriesBurned;
     private String Date;
     private String exerciseId;

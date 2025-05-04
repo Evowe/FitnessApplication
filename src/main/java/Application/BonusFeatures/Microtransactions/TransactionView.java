@@ -1,5 +1,6 @@
 package Application.BonusFeatures.Microtransactions;
 
+import Application.Databases.DatabaseManager;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
@@ -14,11 +15,12 @@ import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.time.Year;
 import java.util.stream.IntStream;
 
 public class TransactionView extends JPanel {
-    private static JPanel mainPanel;
+    public static JPanel mainPanel;
     TransactionView (Account acc) {
         mainPanel = new JPanel(new GridLayout(1,2));
 
@@ -100,23 +102,45 @@ public class TransactionView extends JPanel {
                 String selectedYear = (String) yearComboBox.getSelectedItem();
                 newCard.setExpiryDate(selectedMonth + "/" + selectedYear.substring(2));
 
-                acc.setCard(newCard);
+                // Remove this line as we're setting it again below
+                // acc.setCard(newCard);
 
                 if (newCard.CardValidation(newCard)) {
-                    /*
-                    String csvFile = "example.csv";
-                    try (FileWriter writer = new FileWriter(csvFile, true)) {
-                        writer.append(cardHolderField.getText() + "," +
-                                cardNumberField.getText() + "," +
-                                zipField.getText() + "," +
-                                cvvField.getText() + "," +
-                                expirField.getText() + "\n")
+                    try {
+                        // Instead of directly calling the database, use the Account method
+                        boolean success = acc.saveCreditCard(newCard);
 
-                    } catch (IOException d) {
-                        d.printStackTrace();
+                        if (success) {
+                            JOptionPane.showMessageDialog(
+                                    TransactionView.this,
+                                    "Card information saved successfully!",
+                                    "Success",
+                                    JOptionPane.INFORMATION_MESSAGE
+                            );
+                        } else {
+                            JOptionPane.showMessageDialog(
+                                    TransactionView.this,
+                                    "Failed to save card information.",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                        }
+                    } catch (SQLException ex) {
+                        System.err.println("Error saving credit card: " + ex.getMessage());
+                        JOptionPane.showMessageDialog(
+                                TransactionView.this,
+                                "Error saving card information: " + ex.getMessage(),
+                                "Database Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
                     }
-                     */
-                    System.out.println(newCard.CardValidation(newCard));
+                } else {
+                    JOptionPane.showMessageDialog(
+                            TransactionView.this,
+                            "Invalid card information. Please check your entries.",
+                            "Validation Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         });
@@ -127,7 +151,7 @@ public class TransactionView extends JPanel {
     public static JPanel get() {return mainPanel;}
 
     static class CreditCardDocumentFilter extends DocumentFilter {
-        private static final int MAX_DIGITS = 16;
+        public static final int MAX_DIGITS = 16;
 
         @Override
         public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {

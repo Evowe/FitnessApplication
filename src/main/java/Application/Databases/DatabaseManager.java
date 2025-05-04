@@ -6,7 +6,6 @@ public class DatabaseManager {
     private static AccountsDB accountsDB;
     private static ExerciseDB exerciseDB;
     private static GoalsDB goalsDB;
-    private static CreditCardDB creditCardDB;
     private static StatsDB statsDB;
     private static WorkoutDB workoutDB;
     private static MessagesDB messagesDB;
@@ -14,6 +13,7 @@ public class DatabaseManager {
     private static FriendsDB friendsDB;
     private static BattlePassDB battlePassDB;
     private static WorkoutLogDB workoutLogDB;
+    private static LiveWorkoutDB liveWorkoutDB;
 
     public static void initializeDatabases(){
         // Create instances of each database class
@@ -21,7 +21,6 @@ public class DatabaseManager {
         accountsDB.insertBaseAccounts();
 
         exerciseDB = new ExerciseDB();
-        creditCardDB = new CreditCardDB();
         goalsDB = new GoalsDB();
         statsDB = new StatsDB();
         workoutDB = new WorkoutDB();
@@ -29,12 +28,14 @@ public class DatabaseManager {
 
         itemsDB = new ItemsDB();
         itemsDB.createDefaultRocketItems();
+        itemsDB.createDefaultTitles();
         itemsDB.giveDefaultRocketToAllUsers();
 
         friendsDB = new FriendsDB();
         battlePassDB = new BattlePassDB();
         workoutLogDB = new WorkoutLogDB();
-        //battlePassDB.insertMockData();
+        battlePassDB.fillBP();
+        liveWorkoutDB = new LiveWorkoutDB();
     }
 
     public static AccountsDB getAccountsDB() {
@@ -63,13 +64,6 @@ public class DatabaseManager {
             goalsDB = new GoalsDB();
         }
         return goalsDB;
-    }
-
-    public static CreditCardDB getCreditCardDB() {
-        if (creditCardDB == null) {
-            creditCardDB = new CreditCardDB();
-        }
-        return creditCardDB;
     }
 
     public static StatsDB getStatsDB() {

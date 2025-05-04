@@ -19,6 +19,7 @@ public class Account {
     private boolean notifications = true;
     private String weightUnit = "kg";
     private CreditCard card;
+    private int Xp;
 
 
     private static AccountsDB getAccountsDB() {
@@ -51,6 +52,8 @@ public class Account {
     public void setSleep(Double sleep) {
         Sleep = sleep;
     }
+    public void setXp ( int xp) {Xp = xp;}
+    public int getXp() throws SQLException {return AccountsDB.getXP( username ); }
 
 
     public Account(String username, String password) {
@@ -185,5 +188,36 @@ public class Account {
         return str;
     }
 
+    public boolean saveCreditCard(CreditCard card) throws SQLException {
+        if (card == null || !card.CardValidation(card)) {
+            return false;
+        }
 
+        boolean success = getAccountsDB().addCreditCardToAccount(this.username, card);
+
+        if (success) {
+            this.card = card;
+        }
+
+        return success;
+    }
+
+    public CreditCard loadCreditCard() throws SQLException {
+        if (this.card != null) {
+            return this.card;
+        }
+
+        this.card = getAccountsDB().getAccountCreditCard(this.username);
+        return this.card;
+    }
+
+    public boolean removeCreditCard() throws SQLException {
+        boolean success = getAccountsDB().removeCreditCardFromAccount(this.username);
+
+        if (success) {
+            this.card = null;
+        }
+
+        return success;
+    }
 }

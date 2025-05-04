@@ -68,7 +68,7 @@ public class SideMenuView extends JPanel {
 
         FlatButton shopButton = new FlatButton();
         shopButton.setBorderPainted(false);
-        shopButton.setText("Cosmetics");
+        shopButton.setText("Shop");
         shopButton.setIcon(sideMenuViewModel.getIcon("shopping-cart"));
         shopButton.setHorizontalAlignment(SwingConstants.LEFT);
         shopButton.setMargin(new Insets(5,25,5,5));
