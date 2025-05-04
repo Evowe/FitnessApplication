@@ -14,7 +14,7 @@ public class LockerModel {
     private final String username;
     private List<Item> catalogItems;
     private List<Integer> ownedItemIds;
-    private List<Integer> equippedItemIds;
+    private List<Integer> equippedItemIds;  // We'll keep this as a list for compatibility, but ensure it only has 0 or 1 items
     private Map<Integer, Item> itemsCache;
 
     public LockerModel(String username) {
@@ -123,7 +123,7 @@ public class LockerModel {
         }
     }
 
-    // Equip an item
+    // Equip an item - MODIFIED to unequip any currently equipped item first
     public boolean equipItem(int itemId) {
         try {
             if (!hasItem(itemId)) {
@@ -132,6 +132,10 @@ public class LockerModel {
 
             if (hasEquipped(itemId)) {
                 return true; // Already equipped
+            }
+
+            for (Integer equippedId : new ArrayList<>(equippedItemIds)) {
+                unequipItem(equippedId);
             }
 
             itemsDB.equipItem(username, itemId);
@@ -143,11 +147,10 @@ public class LockerModel {
         }
     }
 
-    // Unequip an item
     public boolean unequipItem(int itemId) {
         try {
             if (!hasEquipped(itemId)) {
-                return false; // Not equipped
+                return false;
             }
 
             itemsDB.unequipItem(username, itemId);
@@ -159,12 +162,10 @@ public class LockerModel {
         }
     }
 
-    // Refresh data from the database
     public void refresh() {
         loadData();
     }
 
-    // Inner class to represent an Item
     public static class Item {
         private final int id;
         private final String name;
