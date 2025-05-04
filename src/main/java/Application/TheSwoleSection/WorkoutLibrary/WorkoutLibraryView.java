@@ -1,5 +1,6 @@
 package Application.TheSwoleSection.WorkoutLibrary;
 
+import Application.Databases.AccountsDB;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 public class WorkoutLibraryView extends JPanel{
     private WorkoutLibraryViewModel viewModel;
@@ -133,6 +135,13 @@ public class WorkoutLibraryView extends JPanel{
 
                     JOptionPane.showMessageDialog(null, "Workout recorded. " +
                             "You can view in the Workout History Page under Metrics.");
+
+                    try {
+                        AccountsDB.addxp(Main.getCurrentUser().getUsername(), 100); // Update DB by +100
+                        Main.getCurrentUser().setXp(Main.getCurrentUser().getXp() + 100); // Sync local object
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
 
                     //Main.setWindow("MetricsPage");
                 } else{

@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,23 +19,25 @@ import org.junit.jupiter.api.Test;
 
 public class WorkoutDBTest {
 
-    private WorkoutDB WorkoutDB;
-    private final String TEST_Workout_PREFIX = "test_workout_" + UUID.randomUUID().toString().substring(0, 8) + "_";
+    private WorkoutDB workoutDB;
+    private final String TEST_WORKOUT_PREFIX = "test_workout_" + UUID.randomUUID().toString().substring(0, 8) + "_";
+    private final String TEST_USERNAME = "test_user";
 
     @BeforeEach
     public void setUp() {
-        WorkoutDB = DatabaseManager.getWorkoutDB();
+        workoutDB = DatabaseManager.getWorkoutDB();
     }
 
     @AfterEach
     public void tearDown() throws SQLException {
         Connection conn = null;
         try {
-            conn = WorkoutDB.getConnection();
+            conn = workoutDB.getConnection();
 
             try (PreparedStatement pstmt = conn.prepareStatement(
-                    "DELETE FROM Workouts WHERE Name LIKE ?")) {
-                pstmt.setString(1, TEST_Workout_PREFIX + "%");
+                    "DELETE FROM Workouts WHERE Name LIKE ? AND username = ?")) {
+                pstmt.setString(1, TEST_WORKOUT_PREFIX + "%");
+                pstmt.setString(2, TEST_USERNAME);
                 pstmt.executeUpdate();
             }
         } finally {
@@ -47,92 +48,123 @@ public class WorkoutDBTest {
     }
 
     private String getTestWorkoutName(String baseName) {
-        return TEST_Workout_PREFIX + baseName;
+        return TEST_WORKOUT_PREFIX + baseName;
     }
 
-    //THIS TEST ADD AND GET
     @Test
-    public void addWorkoutANDGetWorkout() throws SQLException {
+    public void addWorkoutAndGetWorkout() throws SQLException {
+        // Arrange
         String name = getTestWorkoutName("pushups");
-        Date d = new Date();
-        Workout testWorkout = new Workout(name,"doing stuff",5,5,"12","1,2,3,4" );
-        Account a = new Account("Dob","Bob");
-        int id = WorkoutDB.addWorkout(testWorkout, a.getUsername());
+        Workout testWorkout = new Workout(name, "doing stuff", 5, 5, "2025-05-04", "1,2,3,4");
+
+        // Act
+        int id = workoutDB.addWorkout(testWorkout, TEST_USERNAME);
+
+        // Assert
         assertTrue(id > 0, "Workout should be saved with valid ID");
 
-          Workout retrievedWorkout = WorkoutDB.getWorkout("Dob", name);
+        Workout retrievedWorkout = workoutDB.getWorkout(TEST_USERNAME, name);
 
-          assertNotNull(retrievedWorkout);
-
+        // Assert
+        assertNotNull(retrievedWorkout, "Retrieved workout should not be null");
+        assertEquals(name, retrievedWorkout.getName(), "Workout names should match");
+        assertEquals("doing stuff", retrievedWorkout.getDescription(), "Descriptions should match");
+        assertEquals(5, retrievedWorkout.getDuration(), "Duration should match");
+        assertEquals(5, retrievedWorkout.getCaloriesBurned(), "Calories burned should match");
+        assertEquals("1,2,3,4", retrievedWorkout.getExercises(), "Exercises should match");
     }
+
     @Test
     public void testGetAllWorkouts() throws SQLException {
+        // Arrange
         String name1 = getTestWorkoutName("Workout1");
         String name2 = getTestWorkoutName("Workout2");
-        Account a = new Account("Dob","Bob");
 
-        Workout testWorkout1 = new Workout(name1,"doing stuff",5,5,"12","1,2,3,4" );
-        Workout testWorkout2 = new Workout(name2,"doing stuff",5,5,"12","1,2,3,4" );
+        Workout testWorkout1 = new Workout(name1, "doing stuff", 5, 5, "2025-05-04", "1,2,3,4");
+        Workout testWorkout2 = new Workout(name2, "more stuff", 10, 10, "2025-05-04", "5,6,7,8");
 
-        WorkoutDB.addWorkout(testWorkout1,a.getUsername());
-        WorkoutDB.addWorkout(testWorkout2,a.getUsername());
+        // Act
+        workoutDB.addWorkout(testWorkout1, TEST_USERNAME);
+        workoutDB.addWorkout(testWorkout2, TEST_USERNAME);
 
-        List<Workout> Workouts = WorkoutDB.getAllWorkouts(a.getUsername());
+        List<Workout> workouts = workoutDB.getAllWorkouts(TEST_USERNAME);
 
-        assertNotNull(Workouts);
-        assertTrue(Workouts.size() >= 2, "Should retrieve at least the two test Workouts");
+        // Assert
+        assertNotNull(workouts, "Workouts list should not be null");
+        assertTrue(workouts.size() >= 2, "Should retrieve at least the two test workouts");
 
         boolean foundWorkout1 = false;
         boolean foundWorkout2 = false;
 
-        for (Workout Workout : Workouts) {
-            if (Workout.getName().equals(name1)) {
+        for (Workout workout : workouts) {
+            if (workout.getName().equals(name1)) {
                 foundWorkout1 = true;
+                assertEquals("doing stuff", workout.getDescription(), "Description should match for workout 1");
             }
-            if (Workout.getName().equals(name2)) {
+            if (workout.getName().equals(name2)) {
                 foundWorkout2 = true;
+                assertEquals("more stuff", workout.getDescription(), "Description should match for workout 2");
             }
         }
 
-        assertTrue(foundWorkout1, "Should find first test Workout");
-        assertTrue(foundWorkout2, "Should find second test Workout");
+        assertTrue(foundWorkout1, "Should find first test workout");
+        assertTrue(foundWorkout2, "Should find second test workout");
     }
+
     @Test
     public void testDeleteWorkout() throws SQLException {
+        // Arrange
         String name = getTestWorkoutName("toDelete");
-        Workout testWorkout1 = new Workout(name,"doing stuff",5,5,"12","1,2,3,4" );
-        Account a = new Account("Dob","Bob");
+        Workout testWorkout = new Workout(name, "doing stuff", 5, 5, "2025-05-04", "1,2,3,4");
 
-        int id =WorkoutDB.addWorkout(testWorkout1,a.getUsername());
+        // Act
+        int id = workoutDB.addWorkout(testWorkout, TEST_USERNAME);
 
-        assertTrue(id > 0);
+        // Assert
+        assertTrue(id > 0, "Workout should be saved with valid ID");
 
-        boolean deleted = WorkoutDB.deleteWorkout(a.getUsername(),name);
+        // Act
+        boolean deleted = workoutDB.deleteWorkout(TEST_USERNAME, name);
+
+        // Assert
         assertTrue(deleted, "Workout should be deleted successfully");
 
-        Workout retrievedWorkout = WorkoutDB.getWorkout(a.getUsername(),name);
+        Workout retrievedWorkout = workoutDB.getWorkout(TEST_USERNAME, name);
         assertNull(retrievedWorkout, "Workout should not exist after deletion");
     }
+
     @Test
-    public void testUpdateWorkout() throws SQLException
-    {
-        String name1 = getTestWorkoutName("toDelete");
-        String name2 = getTestWorkoutName("toDelete");
-        Workout testWorkout1 = new Workout(name1,"doing stuff",5,5,"12","1,2,3,4" );
-        Workout testWorkout2 = new Workout(name2,"doing stuff",5,5,"12","1,2,3,4" );
+    public void testUpdateWorkout() throws SQLException {
+        // Arrange
+        String originalName = getTestWorkoutName("originalWorkout");
+        String updatedName = getTestWorkoutName("updatedWorkout");
 
-        Account a = new Account("Dob","Bob");
+        Workout originalWorkout = new Workout(originalName, "original description", 5, 5, "2025-05-04", "1,2,3,4");
+        Workout updatedWorkout = new Workout(updatedName, "updated description", 10, 10, "2025-05-04", "5,6,7,8");
 
-        int id =WorkoutDB.addWorkout(testWorkout1,a.getUsername());
-        assertTrue(id > 0);
+        // Act
+        int id = workoutDB.addWorkout(originalWorkout, TEST_USERNAME);
 
-        boolean b = WorkoutDB.updateWorkout(a.getUsername(),testWorkout2,name1);
-        assertTrue(b);
-        Workout retrievedWorkout = WorkoutDB.getWorkout(a.getUsername(),name2);
-        assertNotNull(retrievedWorkout);
-        assertTrue(retrievedWorkout.getName().equals(name2));
-        assertTrue(retrievedWorkout.getDescription().equals(testWorkout2.getDescription()));
+        // Assert
+        assertTrue(id > 0, "Workout should be saved with valid ID");
 
+        // Act
+        boolean updated = workoutDB.updateWorkout(TEST_USERNAME, updatedWorkout, originalName);
+
+        // Assert
+        assertTrue(updated, "Workout should be updated successfully");
+
+        // Verify the workout was updated
+        Workout retrievedWorkout = workoutDB.getWorkout(TEST_USERNAME, updatedName);
+        assertNotNull(retrievedWorkout, "Updated workout should exist");
+        assertEquals(updatedName, retrievedWorkout.getName(), "Name should be updated");
+        assertEquals("updated description", retrievedWorkout.getDescription(), "Description should be updated");
+        assertEquals(10, retrievedWorkout.getDuration(), "Duration should be updated");
+        assertEquals(10, retrievedWorkout.getCaloriesBurned(), "Calories burned should be updated");
+        assertEquals("5,6,7,8", retrievedWorkout.getExercises(), "Exercises should be updated");
+
+        // Verify the original workout name no longer exists
+        Workout originalRetrievedWorkout = workoutDB.getWorkout(TEST_USERNAME, originalName);
+        assertNull(originalRetrievedWorkout, "Original workout should no longer exist");
     }
-
 }

@@ -1,11 +1,15 @@
 package Application.BonusFeatures.BattlePass;
 
+import Application.Databases.AccountsDB;
 import Application.Databases.BattlePassDB;
 import Application.Databases.DatabaseManager;
 import Application.Databases.ItemsDB;
+import Application.Main;
 
 import java.sql.*;
 import java.util.*;
+
+import static Application.Databases.DatabaseManager.*;
 
 public class BattlePassModel {
 
@@ -80,10 +84,47 @@ public class BattlePassModel {
 
     private void setupRewardMapping() {
         rewardMapping.put(1, "Blue Rocket");
+        rewardMapping.put(2, "Pleb");
+        rewardMapping.put(3, "11");
+        rewardMapping.put(4, "Wimp");
+        rewardMapping.put(5, "28");
+        rewardMapping.put(6, "Weakling");
+        rewardMapping.put(7, "Blue Rocket");
+        rewardMapping.put(8, "-4");
+        rewardMapping.put(9, "Fledgling");
         rewardMapping.put(10, "Cow Rocket");
+        rewardMapping.put(12, "Chubby");
+        rewardMapping.put(13, "-7");
+        rewardMapping.put(14, "Soggy Noodle");
+        rewardMapping.put(15, "17");
+        rewardMapping.put(16, "Cheat Day Pro");
+        rewardMapping.put(17, "5");
+        rewardMapping.put(18, "Error 404");
         rewardMapping.put(20, "Disco Rocket");
-        rewardMapping.put(40, "Kirket");
+        rewardMapping.put(21, "Skips Leg Day");
+        rewardMapping.put(22, "15");
+        rewardMapping.put(24, "Outrageously Mediocre");
+        rewardMapping.put(25, "-32");
+        rewardMapping.put(26, "Not Embarrassing");
+        rewardMapping.put(27, "31");
+        rewardMapping.put(28, "Trying Your Best");
+        rewardMapping.put(29, "18");
         rewardMapping.put(30, "Shrek Rocket");
+        rewardMapping.put(31, "9");
+        rewardMapping.put(32, "Looks Maxxer");
+        rewardMapping.put(34, "1");
+        rewardMapping.put(35, "Protein Addict");
+        rewardMapping.put(36, "28");
+        rewardMapping.put(37, "SpeedRunner");
+        rewardMapping.put(38, "14");
+        rewardMapping.put(40, "Kirket");
+        rewardMapping.put(42, "12");
+        rewardMapping.put(43, "Big (In a good way)");
+        rewardMapping.put(44, "100");
+        rewardMapping.put(45, "Maximus");
+        rewardMapping.put(47, "Ascended Lifter");
+        rewardMapping.put(48, "104");
+        rewardMapping.put(49, "SWOLE");
         rewardMapping.put(50, "SWOLEKET");
     }
 
@@ -102,7 +143,15 @@ public class BattlePassModel {
             ItemsDB itemsDB = DatabaseManager.getItemsDB();
             int itemId = itemsDB.getItemIdByName(itemName);
             if (itemId == -1) {
-                System.out.println("Could not find item ID for " + itemName);
+                if ( itemName.matches("-?\\d+" ) ){
+                    Integer rb = Integer.parseInt(itemName);
+                    AccountsDB accountsDB = DatabaseManager.getAccountsDB();
+                    String username = Main.getCurrentUser().getUsername();
+                    int currentBalance = accountsDB.getWallet(username);
+
+                    int newBalance = currentBalance + rb;
+                    accountsDB.updateWallet(username, newBalance);
+                }
                 return false;
             }
 
