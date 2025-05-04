@@ -3,6 +3,7 @@ package Application.TheSwoleSection.CreateLiveWorkout;
 import java.awt.*;
 import javax.swing.*;
 
+import Application.TheSwoleSection.WorkoutView;
 import Application.Utility.Widgets.SideMenu.SideMenuView;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
@@ -98,7 +99,9 @@ public class NewLiveWorkoutView extends JPanel {
             workout.setStartTime(time);
 
             viewModel.addWorkout(workout, Main.getCurrentUser().getId());
-            Main.setWindow("LiveWorkouts");
+            Main.setWindow("Workout");
+            WorkoutView.setView("LiveWorkouts");
+
         });
 
         mainPanel.add(formPanel, BorderLayout.CENTER);

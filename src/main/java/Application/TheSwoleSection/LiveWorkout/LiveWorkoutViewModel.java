@@ -9,7 +9,7 @@ import Application.TheSwoleSection.WorkoutLibrary.WorkoutLibraryModel;
 
 public class LiveWorkoutViewModel {
     private LiveWorkoutModel model;
-    String streamURL = "https://afd6-68-234-142-22.ngrok-free.app";
+    String streamURL = "https://2892-129-62-66-43.ngrok-free.app";
 
     public LiveWorkoutViewModel() {
         model = new LiveWorkoutModel();
