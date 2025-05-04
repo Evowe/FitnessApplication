@@ -1,6 +1,7 @@
 package Application.BonusFeatures.BattlePass;
 
 import Application.Databases.BattlePassDB;
+import Application.Databases.DatabaseManager;
 import Application.Databases.ItemsDB;
 
 import java.sql.*;
@@ -11,8 +12,6 @@ public class BattlePassModel {
     private final List<TierData> tiers = new ArrayList<>();
     private final Map<Integer, String> rewardMapping = new HashMap<>();
     private String username;
-    private ItemsDB itemsDB = new ItemsDB();
-
 
     public BattlePassModel() {
         loadTiersFromDatabase();
@@ -81,31 +80,38 @@ public class BattlePassModel {
 
     private void setupRewardMapping() {
         rewardMapping.put(1, "Blue Rocket");
-        rewardMapping.put(2, "Green Rocket");
-        rewardMapping.put(3, "Orange Rocket");
-        rewardMapping.put(4, "Purple Rocket");
-        rewardMapping.put(5, "Yellow Rocket");
-        rewardMapping.put(6, "Cow Rocket");
-        rewardMapping.put(7, "BU Rocket");
-        rewardMapping.put(8, "Disco Rocket");
-        rewardMapping.put(9, "Kirket");
-        rewardMapping.put(10, "Party Rocket");
-        rewardMapping.put(11, "Shrek Rocket");
-        rewardMapping.put(12, "Sunset Rocket");
-        rewardMapping.put(13, "SWOLEKET");
+        rewardMapping.put(10, "Cow Rocket");
+        rewardMapping.put(20, "Disco Rocket");
+        rewardMapping.put(30, "Kirket");
+        rewardMapping.put(40, "Shrek Rocket");
+        rewardMapping.put(50, "SWOLEKET");
     }
 
-    private boolean unlockItemForTier(int tier) {
+    public boolean unlockItemForTier(int tier) {
         String itemName = rewardMapping.get(tier);
-        if (itemName == null || username == null) return false;
+        if (itemName == null) {
+            System.out.println("No item mapped for tier " + tier);
+            return false;
+        }
+        if (username == null) {
+            System.out.println("Username is null; cannot unlock item for tier " + tier);
+            return false;
+        }
 
         try {
+            ItemsDB itemsDB = DatabaseManager.getItemsDB();
             int itemId = itemsDB.getItemIdByName(itemName);
-            if (itemId == -1) return false;
+            if (itemId == -1) {
+                System.out.println("Could not find item ID for " + itemName);
+                return false;
+            }
 
             if (!itemsDB.userHasItem(username, itemId)) {
+                System.out.println("User does not have item. Granting item " + itemId);
                 itemsDB.giveItemToUser(username, itemId);
                 return true;
+            } else {
+                System.out.println("User already has item " + itemId);
             }
         } catch (SQLException e) {
             System.err.println("Error unlocking item for tier " + tier + ": " + e.getMessage());
@@ -113,6 +119,7 @@ public class BattlePassModel {
 
         return false;
     }
+
 
     public static class TierData {
         public int tierNumber;

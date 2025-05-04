@@ -19,6 +19,7 @@ public class Account {
     private boolean notifications = true;
     private String weightUnit = "kg";
     private CreditCard card;
+    private int Xp;
 
 
     private static AccountsDB getAccountsDB() {
@@ -51,6 +52,8 @@ public class Account {
     public void setSleep(Double sleep) {
         Sleep = sleep;
     }
+    public void setXp ( int xp) {Xp = xp;}
+    public int getXp() throws SQLException {return AccountsDB.getXP( username ); }
 
 
     public Account(String username, String password) {
