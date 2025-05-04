@@ -14,7 +14,7 @@ public class LockerModel {
     private final String username;
     private List<Item> catalogItems;
     private List<Integer> ownedItemIds;
-    private List<Integer> equippedItemIds;  // We'll keep this as a list for compatibility, but ensure it only has 0 or 1 items
+    private List<Integer> equippedItemIds;
     private Map<Integer, Item> itemsCache;
 
     public LockerModel(String username) {
@@ -83,6 +83,20 @@ public class LockerModel {
         return ownedItems;
     }
 
+    // Get items the user owns, filtered by type
+    public List<Item> getOwnedItemsByType(String type) {
+        List<Item> ownedByType = new ArrayList<>();
+
+        for (Integer itemId : ownedItemIds) {
+            Item item = itemsCache.get(itemId);
+            if (item != null && item.getType().equals(type)) {
+                ownedByType.add(item);
+            }
+        }
+
+        return ownedByType;
+    }
+
     // Get items the user has equipped
     public List<Item> getEquippedItems() {
         List<Item> equipped = new ArrayList<>();
@@ -95,6 +109,20 @@ public class LockerModel {
         }
 
         return equipped;
+    }
+
+    // Get items the user has equipped, filtered by type
+    public List<Item> getEquippedItemsByType(String type) {
+        List<Item> equippedByType = new ArrayList<>();
+
+        for (Integer itemId : equippedItemIds) {
+            Item item = itemsCache.get(itemId);
+            if (item != null && item.getType().equals(type)) {
+                equippedByType.add(item);
+            }
+        }
+
+        return equippedByType;
     }
 
     // Check if a user has a specific item
@@ -123,7 +151,7 @@ public class LockerModel {
         }
     }
 
-    // Equip an item - MODIFIED to unequip any currently equipped item first
+    // Equip an item - unequips any other item of the same type first
     public boolean equipItem(int itemId) {
         try {
             if (!hasItem(itemId)) {
@@ -134,10 +162,23 @@ public class LockerModel {
                 return true; // Already equipped
             }
 
-            for (Integer equippedId : new ArrayList<>(equippedItemIds)) {
-                unequipItem(equippedId);
+            // Get the item to determine its type
+            Item itemToEquip = itemsCache.get(itemId);
+            if (itemToEquip == null) {
+                return false; // Item not found in cache
             }
 
+            String itemType = itemToEquip.getType();
+
+            // Unequip any items of the same type
+            for (Integer equippedId : new ArrayList<>(equippedItemIds)) {
+                Item equippedItem = itemsCache.get(equippedId);
+                if (equippedItem != null && equippedItem.getType().equals(itemType)) {
+                    unequipItem(equippedId);
+                }
+            }
+
+            // Now equip the new item
             itemsDB.equipItem(username, itemId);
             equippedItemIds.add(itemId);
             return true;
@@ -147,10 +188,11 @@ public class LockerModel {
         }
     }
 
+    // Unequip an item
     public boolean unequipItem(int itemId) {
         try {
             if (!hasEquipped(itemId)) {
-                return false;
+                return false; // Not equipped
             }
 
             itemsDB.unequipItem(username, itemId);
@@ -162,10 +204,12 @@ public class LockerModel {
         }
     }
 
+    // Refresh data from the database
     public void refresh() {
         loadData();
     }
 
+    // Inner class to represent an Item
     public static class Item {
         private final int id;
         private final String name;
