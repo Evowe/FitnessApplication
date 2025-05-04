@@ -389,12 +389,12 @@ public class AccountsDB extends DBTemplate {
         return 0;
     }
 
-    public void addxp( String username, int xp) throws SQLException {
-        String sql = "UPDATE accounts SET XP = xp + ? WHERE username = ?";
+    public static void addxp(String username, int xp) throws SQLException {
+        String sql = "UPDATE accounts SET XP = XP + ? WHERE username = ?";
         try (Connection conn = getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, username);
-            pstmt.setInt(2, xp);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, xp);           // Set XP increment first
+            pstmt.setString(2, username);  // Set username second
             pstmt.executeUpdate();
         }
     }
