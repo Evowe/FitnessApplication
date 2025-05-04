@@ -19,7 +19,6 @@ public class AdminHomeView extends JPanel{
 		//Init whole window with 2 cols with unequal ratio. 
 		//20% - menu bar, 80% - content
 		setLayout(new MigLayout("", "[20%] [80%]", "[grow]"));
-		//ADFVYASDFTIAD
 		//Button menu sidebar (consistent with home page)
 			//TODO: play around with padding (insets)
 			//TODO: grow sidebar in x dir to a certain extent
@@ -65,7 +64,6 @@ public class AdminHomeView extends JPanel{
 	        contentTitle.setFont(new Font("Arial", Font.BOLD, 36));
 	        
 	        
-	        //TODO: implement with db
 	        JPanel requests = new JPanel();
 	        requests.setLayout(new BoxLayout(requests, BoxLayout.Y_AXIS));
 	        

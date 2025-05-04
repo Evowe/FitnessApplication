@@ -10,9 +10,6 @@ public class AdminUsersViewModel {
 	private AdminUsersModel model = new AdminUsersModel();
 	private DefaultTableModel tableModel; // Reference to the table model
 
-	public void setTableModel(DefaultTableModel model) {
-		this.tableModel = model;
-	}
 
 	public List<Object[]> getUsers() {
 		List<Object[]> users = new ArrayList<>();
@@ -44,10 +41,8 @@ public class AdminUsersViewModel {
 
 	public boolean resetUserPassword(String username, String newPassword) {
 		try {
-			// Call the model method to reset the password
 			boolean success = model.resetUserPassword(username, newPassword);
 
-			// No need to refresh the table since password changes don't affect displayed data
 			return success;
 		} catch (Exception e) {
 			System.err.println("Error resetting password: " + e.getMessage());
