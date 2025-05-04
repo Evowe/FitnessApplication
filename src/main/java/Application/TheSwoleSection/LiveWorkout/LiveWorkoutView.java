@@ -24,6 +24,8 @@ public class LiveWorkoutView extends JPanel {
     public LiveWorkoutView() {
         //View Model
         viewModel = new LiveWorkoutViewModel();
+
+		Main.getCurrentUser().setRole("trainer");
         
         System.out.println(Main.getCurrentUser().getRole());
 
@@ -33,6 +35,7 @@ public class LiveWorkoutView extends JPanel {
 
         JPanel main = new JPanel();
         main.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+		main.setLayout(new BorderLayout());
 
         //North Panel Setup - Title
         JPanel titlePanel = new JPanel();
@@ -118,13 +121,14 @@ public class LiveWorkoutView extends JPanel {
 	       createWorkout.addActionListener(new ActionListener() {
 	           @Override
 	           public void actionPerformed(ActionEvent event) {
-	               Main.setWindow("NewLiveWorkout");
+
+				   Main.setWindow("NewLiveWorkout");
 	           }
 	       });
 	
 	       buttonPanel.add(createWorkout);
 	
-	       main.add(buttonPanel, BorderLayout.CENTER);
+	       main.add(buttonPanel, BorderLayout.SOUTH);
        }
 
        add(main, "growy, pushy");

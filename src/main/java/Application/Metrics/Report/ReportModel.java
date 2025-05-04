@@ -201,16 +201,18 @@ public class ReportModel {
         if(workouts.size() == 0) {
             workoutsSize = 1;
         }
-
-        for(int i = workoutsSize - 1; i < workouts.size() + workoutPlans.size(); i++){
-            data[i][0] = "WorkoutPlan";
-            data[i][1] = workoutPlans.get(0).getName();
-            data[i][2] = workoutPlans.get(0).getGoal();
-            data[i][3] = workoutPlans.get(0).getDurationInWeeks();
-            data[i][4] = "N/A";
-            data[i][5] = workoutPlanLogDB.getEquipDate(workoutPlans.get(0).getName());
-            data[i][6] = "N/A";
+        if(workoutPlans.size() != 0) {
+            for(int i = workoutsSize - 1; i < workouts.size() + workoutPlans.size(); i++){
+                data[i][0] = "WorkoutPlan";
+                data[i][1] = workoutPlans.get(0).getName();
+                data[i][2] = workoutPlans.get(0).getGoal();
+                data[i][3] = workoutPlans.get(0).getDurationInWeeks();
+                data[i][4] = "N/A";
+                data[i][5] = workoutPlanLogDB.getEquipDate(workoutPlans.get(0).getName());
+                data[i][6] = "N/A";
+            }
         }
+
 
         return data;
     }
