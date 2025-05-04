@@ -82,8 +82,8 @@ public class BattlePassModel {
         rewardMapping.put(1, "Blue Rocket");
         rewardMapping.put(10, "Cow Rocket");
         rewardMapping.put(20, "Disco Rocket");
-        rewardMapping.put(30, "Kirket");
-        rewardMapping.put(40, "Shrek Rocket");
+        rewardMapping.put(40, "Kirket");
+        rewardMapping.put(30, "Shrek Rocket");
         rewardMapping.put(50, "SWOLEKET");
     }
 
