@@ -10,7 +10,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.List;
+
+import static Application.Main.getCurrentUser;
 
 public class BattlePassView extends JPanel {
 
@@ -23,7 +26,7 @@ public class BattlePassView extends JPanel {
     private final JButton prevButton = new JButton("Previous");
     private final JButton nextButton = new JButton("Next");
 
-    public BattlePassView() {
+    public BattlePassView(){
         setLayout(new MigLayout("fill, insets 20"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background;");
 
@@ -42,7 +45,14 @@ public class BattlePassView extends JPanel {
         tierListPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
 
         // Simulate XP, replace this with real player XP logic
-        int playerXP = 1500;
+        int playerXP = 0;
+        battlePassModel.setUsername(getCurrentUser().getUsername());
+        try {
+            playerXP = getCurrentUser().getXp();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
         battlePassModel.unlockTiersBasedOnXP(playerXP);
 
         updateTierList();
