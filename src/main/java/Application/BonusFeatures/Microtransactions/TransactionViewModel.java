@@ -1,27 +1,45 @@
 package Application.BonusFeatures.Microtransactions;
 
 import Application.Utility.Objects.Account;
-import java.sql.SQLException;
+import Application.BonusFeatures.CurrencyShop.currencyShopModel;
+
 import javax.swing.*;
 
 public class TransactionViewModel {
-    private static TransactionView transactionInterface;
-    private static Account acc;
+    private static TransactionView transactionView;
+    private static Account currentUser;
+    private static JDialog parentDialog;
+    private static currencyShopModel shopModel;
 
-    public Account getCardUser(Account acc) {
-        TransactionViewModel.acc = acc;
+    public void getCardUser(Account acc) {
+        currentUser = acc;
+        transactionView = new TransactionView(acc);
+    }
 
-        try {
-            acc.loadCreditCard();
-        } catch (SQLException e) {
-            System.err.println("Error loading credit card: " + e.getMessage());
-        }
-
-        return acc;
+    public void getCardUser(Account acc, JDialog dialog, currencyShopModel model) {
+        currentUser = acc;
+        parentDialog = dialog;
+        shopModel = model;
+        transactionView = new TransactionView(acc, dialog, model);
     }
 
     public static JPanel getTransactionView() {
-        transactionInterface = new TransactionView(acc);
-        return transactionInterface.get();
+        return transactionView.get();
+    }
+
+    // Helper method to set the parent dialog after view creation
+    public static void setParentDialog(JDialog dialog) {
+        if (transactionView != null) {
+            transactionView.setParentDialog(dialog);
+        }
+        parentDialog = dialog;
+    }
+
+    // Helper method to set the shop model after view creation
+    public static void setShopModel(currencyShopModel model) {
+        if (transactionView != null) {
+            transactionView.setShopModel(model);
+        }
+        shopModel = model;
     }
 }

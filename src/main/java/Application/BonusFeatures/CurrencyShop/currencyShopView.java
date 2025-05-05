@@ -316,12 +316,62 @@ public class currencyShopView extends JPanel {
         packButton.putClientProperty(FlatClientProperties.STYLE, "background:@accent;");
 
         packButton.addActionListener(e -> {
-            addToCart(rocketBucks, price);
+            // Check if the user already has a card
+            try {
+                Account currentAccount = shopModel.getCurrentUser();
+                currentAccount.loadCreditCard();
 
-            JOptionPane.showMessageDialog(this,
-                    rocketBucks + " Rocket Bucks added to cart!",
-                    "Added to Cart",
-                    JOptionPane.INFORMATION_MESSAGE);
+                if (currentAccount.hasCard()) {
+                    // User has a card, add to cart normally
+                    addToCart(rocketBucks, price);
+
+                    JOptionPane.showMessageDialog(this,
+                            rocketBucks + " Rocket Bucks added to cart!",
+                            "Added to Cart",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    // User doesn't have a card, ask if they want to add one now
+                    int option = JOptionPane.showConfirmDialog(
+                            this,
+                            "You need to add a credit card first. Would you like to add one now?",
+                            "Credit Card Required",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (option == JOptionPane.YES_OPTION) {
+                        // Save the currency pack info for the transaction view to use
+                        shopModel.setPendingCurrencyPack(rocketBucks, price);
+
+                        // Create a dialog to hold the transaction view
+                        JDialog cardDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Add Credit Card", true);
+                        cardDialog.setSize(1000, 800);
+                        cardDialog.setLocationRelativeTo(this);
+
+                        // Use the TransactionViewModel to get the view
+                        TransactionViewModel viewModel = new TransactionViewModel();
+                        viewModel.getCardUser(currentAccount, cardDialog, shopModel);
+                        JPanel transactionPanel = TransactionViewModel.getTransactionView();
+
+                        cardDialog.add(transactionPanel);
+
+                        // Show the dialog
+                        cardDialog.setVisible(true);
+
+                        // After dialog is closed, update the balance display
+                        updateBalanceDisplay();
+                    }
+                }
+            } catch (SQLException ex) {
+                System.err.println("Error checking credit card: " + ex.getMessage());
+
+                // Default behavior if there's an error
+                addToCart(rocketBucks, price);
+
+                JOptionPane.showMessageDialog(this,
+                        rocketBucks + " Rocket Bucks added to cart!",
+                        "Added to Cart",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         });
 
         panel.add(packButton);
@@ -467,12 +517,19 @@ public class currencyShopView extends JPanel {
             if (option == JOptionPane.YES_OPTION) {
                 // Create a dialog to hold the transaction view
                 JDialog cardDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Add Credit Card", true);
-                cardDialog.setSize(1000, 600);
+                cardDialog.setSize(1000, 800);
                 cardDialog.setLocationRelativeTo(this);
 
-                // Use the TransactionViewModel to get the view
+                // Save the current cart items as the pending currency pack
+                if (!shopModel.isCartEmpty()) {
+                    int totalRocketBucks = shopModel.getTotalRocketBucks();
+                    double totalPrice = shopModel.getTotalPrice();
+                    shopModel.setPendingCurrencyPack(totalRocketBucks, totalPrice);
+                }
+
+                // Use the TransactionViewModel to get the view, passing the dialog and shop model
                 TransactionViewModel viewModel = new TransactionViewModel();
-                viewModel.getCardUser(currentAccount);
+                viewModel.getCardUser(currentAccount, cardDialog, shopModel);
                 JPanel transactionPanel = TransactionViewModel.getTransactionView();
 
                 cardDialog.add(transactionPanel);
@@ -485,6 +542,10 @@ public class currencyShopView extends JPanel {
                 if (!currentAccount.hasCard()) {
                     throw new SQLException("Credit card information is required for checkout");
                 }
+
+                // The TransactionView will have added the pending items to the user's balance
+                // and will have closed the dialog automatically, so we can just return
+                return;
             } else {
                 throw new SQLException("Credit card information is required for checkout");
             }
@@ -520,10 +581,7 @@ public class currencyShopView extends JPanel {
             throw new SQLException("Purchase was cancelled");
         }
 
-        // Process the payment here (in a real app, you would integrate with a payment processor)
-        // For now, just simulate successful payment
 
-        // Update user's balance
         AccountsDB accountsDB = DatabaseManager.getAccountsDB();
         String username = currentAccount.getUsername();
         int currentBalance = accountsDB.getWallet(username);
