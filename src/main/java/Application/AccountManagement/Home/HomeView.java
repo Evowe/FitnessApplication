@@ -24,7 +24,7 @@ public class HomeView extends JPanel {
         JPanel whole = new JPanel(new MigLayout("wrap, fillx, filly,insets 0", "[grow, fill]", " [grow, fill]"));
         whole.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
 
-        JPanel top = new JPanel(new MigLayout("debug, insets 0", "left", "top"));
+        JPanel top = new JPanel(new MigLayout("insets 0", "left", "top"));
         top.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
         top.add(new CalendarView(), "gapx 10, growx, growy, pushx, pushy");
         JPanel stack = new JPanel(new MigLayout("wrap, insets 0", "left", "top"));
@@ -34,7 +34,7 @@ public class HomeView extends JPanel {
         top.add(stack, "gapx 0, growx, growy, pushx, pushy");
         whole.add(top, "growx, pushx");
 
-        JPanel bottom = new JPanel(new MigLayout("fill, debug, insets 0", "[grow,fill][grow,fill]", " [grow,fill]"));
+        JPanel bottom = new JPanel(new MigLayout("fill, insets 0", "[grow,fill][grow,fill]", " [grow,fill]"));
         bottom.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
         bottom.add(new ProfileView(), "gapy 10, gapx 10, growx, pushx, growy, pushy");
         bottom.add(new DaysSinceLastWorkoutView(), "gapy 10, gapx 10, growx, pushx, growy, pushy");
