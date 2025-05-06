@@ -287,10 +287,14 @@ public class WorkoutScheduleView extends JPanel {
                 scrollPane.setMaximumSize(new Dimension(1200, 200));
 
                 centerBottom.add(scrollPane);
+                centerBottom.repaint();
+                centerBottom.revalidate();
             } else{
                 JLabel titleLabel = new JLabel("No Scheduled Workouts");
                 titleLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +12");
                 centerBottom.add(titleLabel);
+                centerBottom.repaint();
+                centerBottom.revalidate();
                 //center.add(centerBottom);
 
                 //main.add(center, BorderLayout.CENTER);
@@ -303,8 +307,9 @@ public class WorkoutScheduleView extends JPanel {
             JLabel titleLabel = new JLabel("No Scheduled Workouts");
             titleLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +12");
             centerBottom.add(titleLabel);
+            centerBottom.repaint();
+            centerBottom.revalidate();
             center.add(centerBottom, BorderLayout.SOUTH);
-
             main.add(center, BorderLayout.CENTER);
         }
     }
