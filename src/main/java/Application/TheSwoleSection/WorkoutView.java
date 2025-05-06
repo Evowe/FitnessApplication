@@ -2,6 +2,7 @@ package Application.TheSwoleSection;
 
 import Application.Main;
 import Application.TheSwoleSection.ExerciseLibrary.ExerciseLibraryView;
+import Application.TheSwoleSection.LiveWorkout.LiveWorkoutView;
 import Application.TheSwoleSection.WorkoutLibrary.WorkoutLibraryView;
 import Application.TheSwoleSection.WorkoutPlans.WorkoutPlansView;
 import Application.TheSwoleSection.WorkoutSchedule.WorkoutScheduleView;
