@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Application.Utility.Objects.LiveWorkout;
-import Application.Utility.Objects.Workout;
 
 public class LiveWorkoutDB extends DBTemplate {
 	

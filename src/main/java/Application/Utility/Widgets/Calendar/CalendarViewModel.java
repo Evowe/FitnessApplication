@@ -1,7 +1,5 @@
 package Application.Utility.Widgets.Calendar;
 
-import Application.TheSwoleSection.WorkoutSchedule.WorkoutScheduleViewModel;
-
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;

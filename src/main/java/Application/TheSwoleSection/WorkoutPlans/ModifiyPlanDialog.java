@@ -2,7 +2,6 @@ package Application.TheSwoleSection.WorkoutPlans;
 
 import Application.TheSwoleSection.TrainerCreatedWorkoutPlan.CreateWorkoutPlanViewModel;
 import Application.TheSwoleSection.WorkoutView;
-import Application.Utility.Objects.Exercise;
 import Application.Utility.Objects.Workout;
 import Application.Utility.Objects.WorkoutPlan;
 import com.formdev.flatlaf.FlatClientProperties;

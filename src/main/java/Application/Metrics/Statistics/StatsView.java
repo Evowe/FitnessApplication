@@ -2,7 +2,6 @@ package Application.Metrics.Statistics;
 
 import Application.Utility.Objects.Account;
 import Application.Utility.Widgets.Graph.GraphView;
-import Application.Utility.Widgets.SideMenu.SideMenuView;
 import com.formdev.flatlaf.FlatClientProperties;
 import net.miginfocom.swing.MigLayout;
 

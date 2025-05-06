@@ -4,7 +4,6 @@ import Application.Utility.Objects.Workout;
 import Application.Utility.Objects.WorkoutPlan;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CreateWorkoutPlanViewModel {

@@ -4,11 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Application.Main;
 import Application.Databases.LiveWorkoutDB;
-import Application.Databases.WorkoutDB;
 import Application.Utility.Objects.LiveWorkout;
-import Application.Utility.Objects.Workout;
 
 public class LiveWorkoutModel {
 	 private LiveWorkoutDB db;

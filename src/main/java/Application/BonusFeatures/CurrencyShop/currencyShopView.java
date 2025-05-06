@@ -1,6 +1,5 @@
 package Application.BonusFeatures.CurrencyShop;
 
-import Application.BonusFeatures.Microtransactions.TransactionView;
 import Application.BonusFeatures.Microtransactions.TransactionViewModel;
 import Application.Utility.Objects.Account;
 import Application.Utility.Objects.CreditCard;

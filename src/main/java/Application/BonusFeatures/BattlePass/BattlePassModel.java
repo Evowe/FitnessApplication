@@ -9,7 +9,6 @@ import Application.Main;
 import java.sql.*;
 import java.util.*;
 
-import static Application.Databases.DatabaseManager.*;
 
 public class BattlePassModel {
 

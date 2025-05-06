@@ -1,16 +1,8 @@
 package Application.BonusFeatures.CurrencyShop;
 
-import Application.Utility.Objects.CartItem;
 import Application.Utility.Objects.Account;
-import Application.Databases.AccountsDB;
-import Application.Databases.DatabaseManager;
-import Application.Databases.ItemsDB;
 
 import javax.swing.*;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class currencyShopViewModel {
 
