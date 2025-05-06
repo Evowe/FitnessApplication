@@ -21,7 +21,6 @@ import javax.swing.table.DefaultTableModel;
 import com.formdev.flatlaf.extras.components.FlatButton;
 
 import Application.Main;
-import Application.AccountManagement.ResetPassword.ResetPasswordView;
 import net.miginfocom.swing.MigLayout;
 
 public class AdminUsersView {

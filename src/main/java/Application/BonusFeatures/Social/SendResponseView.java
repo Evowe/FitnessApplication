@@ -5,7 +5,6 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.extras.components.FlatTextField;
-//import Application.Main;
 import Application.Utility.Objects.Account;
 import Application.Utility.Objects.Message;
 import Application.Utility.Widgets.SideMenu.SideMenuView;

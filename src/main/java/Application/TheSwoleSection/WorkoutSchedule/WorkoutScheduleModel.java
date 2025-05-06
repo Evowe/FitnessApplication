@@ -8,7 +8,6 @@ import Application.Utility.Objects.Exercise;
 import Application.Utility.Objects.Workout;
 import Application.Utility.Objects.WorkoutPlan;
 
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;

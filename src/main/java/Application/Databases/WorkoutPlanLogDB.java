@@ -1,7 +1,5 @@
 package Application.Databases;
 
-import Application.Utility.Objects.WorkoutPlan;
-import org.sqlite.core.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

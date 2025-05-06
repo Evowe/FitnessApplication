@@ -5,14 +5,12 @@ import java.util.Date;
 public class WorkoutClass {
     Workout workout;
     Trainer trainer;
-    //Set<User> attendees = new HashSet<User>;
     Date date;
     String className;
     Integer intensityLevel;
     String workoutType;
 
     public WorkoutClass(/*Set<User> attendees,*/ Workout workout, Trainer trainer, Date date, String className, Integer intensityLevel, String workoutType) {
-        //this.attendees = attendees;
         this.workout = workout;
         this.trainer = trainer;
         this.date = date;

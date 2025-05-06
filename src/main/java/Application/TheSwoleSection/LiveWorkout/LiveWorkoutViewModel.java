@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import Application.TheSwoleSection.WorkoutLibrary.WorkoutLibraryModel;
-
 public class LiveWorkoutViewModel {
     private LiveWorkoutModel model;
     String streamURL = "https://2892-129-62-66-43.ngrok-free.app";

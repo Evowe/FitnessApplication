@@ -7,7 +7,6 @@ import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import Application.Utility.Objects.Account;
-import Application.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;

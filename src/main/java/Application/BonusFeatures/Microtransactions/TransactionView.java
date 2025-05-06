@@ -1,6 +1,5 @@
 package Application.BonusFeatures.Microtransactions;
 
-import Application.Databases.DatabaseManager;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
