@@ -150,4 +150,30 @@ public class WorkoutLogDB extends DBTemplate {
         }
     }
 
+    public Workout getMostRecentWorkout(String username) throws SQLException {
+        String sql = "SELECT * FROM " + WORKOUTS_TABLE +
+                " WHERE username = ? ORDER BY Date DESC LIMIT 1";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String name = rs.getString("Name");
+                    String description = rs.getString("Description");
+                    int duration = rs.getInt("Duration");
+                    int caloriesBurned = rs.getInt("CaloriesBurned");
+                    String date = rs.getString("Date");
+                    String exercises = rs.getString("Exercises");
+
+                    return new Workout(name, description, duration, caloriesBurned, date, exercises);
+                }
+            }
+        }
+
+        return null; // No workouts found for this user
+    }
+
 }

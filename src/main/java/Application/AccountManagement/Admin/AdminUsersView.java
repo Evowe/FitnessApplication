@@ -122,7 +122,7 @@ public class AdminUsersView {
 							// Confirmation dialog
 							int confirm = JOptionPane.showConfirmDialog(
 									mainPanel,
-									"Are you sure you want to promote user '" + user + "' to admin?",
+									"Are you sure you want to promote user '" + user + "' to trainer?",
 									"Confirm Promotion",
 									JOptionPane.YES_NO_OPTION
 							);
