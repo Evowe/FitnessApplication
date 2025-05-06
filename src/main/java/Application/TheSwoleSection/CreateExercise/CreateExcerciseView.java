@@ -21,7 +21,9 @@ public class CreateExcerciseView extends JPanel {
 
     public CreateExcerciseView() {
         //Setup Main Panel
-        setLayout(new MigLayout("insets 20", "left", "top"));
+        //setLayout(new MigLayout("insets 20", "left", "top"));
+        setLayout(new MigLayout("fill, insets 20", "[]20[]", "center"));
+
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         //Add navigation bar

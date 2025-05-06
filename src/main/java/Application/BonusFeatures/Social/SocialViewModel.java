@@ -119,4 +119,8 @@ public class SocialViewModel {
     public void deleteMessage(Message message) {
         socialModel.deleteMessage(message);
     }
+
+    public Boolean haventBeenDeclined(String senderUsername, String receiverUsername) {
+        return socialModel.haventBeenDeclined(senderUsername, receiverUsername);
+    }
 }

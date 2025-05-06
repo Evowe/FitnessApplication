@@ -124,7 +124,8 @@ public class ReportView extends JPanel {
         scrollPane.setMaximumSize(new Dimension(1200, 650));
 
         JPanel tablePanel = new JPanel();
-        tablePanel.setBackground(Color.BLACK);
+        tablePanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        //tablePanel.setBackground(Color.BLACK);
         tablePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         tablePanel.add(scrollPane);
 

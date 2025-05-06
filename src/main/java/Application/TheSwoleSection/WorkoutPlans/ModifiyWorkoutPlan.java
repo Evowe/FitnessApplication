@@ -31,7 +31,9 @@ public class ModifiyWorkoutPlan extends JPanel {
         WorkoutPlan plan = viewModelWP.getWorkoutPlan(table.getValueAt(table.getSelectedRow(), 0).toString());
 
         //Setup Main Panel Layout
-        setLayout(new MigLayout("insets 20", "left", "top"));
+        //setLayout(new MigLayout("insets 20", "left", "top"));
+        setLayout(new MigLayout("fill, insets 20", "[]20[]", "center"));
+
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         //Add navigation bar

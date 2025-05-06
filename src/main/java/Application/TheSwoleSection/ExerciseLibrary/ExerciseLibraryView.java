@@ -23,7 +23,7 @@ public class ExerciseLibraryView extends JPanel {
 
     public ExerciseLibraryView() {
         //Setup Main Panel Layout
-        setLayout(new MigLayout("insets 20", "left", "top"));
+        setLayout(new MigLayout("fill, insets 20", "center", "center"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
 
@@ -33,6 +33,7 @@ public class ExerciseLibraryView extends JPanel {
         //add(new SideMenuView(), BorderLayout.WEST);
         JPanel main = new JPanel();
         main.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        main.setLayout(new BorderLayout());
 
         //North Panel Setup - Title
         JPanel titlePanel = new JPanel();
@@ -93,11 +94,12 @@ public class ExerciseLibraryView extends JPanel {
         });
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(1200, 550));
-        scrollPane.setMaximumSize(new Dimension(1200, 550));
+        scrollPane.setPreferredSize(new Dimension(1200, 650));
+        scrollPane.setMaximumSize(new Dimension(1200, 650));
 
         JPanel tablePanel = new JPanel();
-        tablePanel.setBackground(Color.BLACK);
+        tablePanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        //tablePanel.setBackground(Color.BLACK);
         tablePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         tablePanel.add(scrollPane);
 
@@ -138,6 +140,7 @@ public class ExerciseLibraryView extends JPanel {
 
         main.add(buttonPanel, BorderLayout.SOUTH);
 
+        //add(main, "align center, growy, pushy");
         add(main, "growy, pushy");
     }
 

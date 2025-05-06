@@ -48,10 +48,10 @@ public class WorkoutView extends JPanel {
         //TODO: Create the workout plans page (find a workout plan from a user/trainer)
         tabbedPane.add("Workout Plans", new WorkoutPlansView());
         //TODO: Add the trainer classes page
-        tabbedPane.add("Classes", new JPanel());
+        tabbedPane.add("Classes", new LiveWorkoutView());
         tabbedPane.add("Workout Library", new WorkoutLibraryView());
         tabbedPane.add("Exercise Library", new ExerciseLibraryView());
-        tabbedPane.add("Live Workouts", new LiveWorkoutView());
+        //tabbedPane.add("Live Workouts", new LiveWorkoutView());
 
 
 
@@ -76,9 +76,6 @@ public class WorkoutView extends JPanel {
             }
             case "ExerciseLibrary" -> {
                 tabbedPane.setSelectedIndex(4);
-            }
-            case "LiveWorkouts" -> {
-            	tabbedPane.setSelectedIndex(5);
             }
         }
     }
