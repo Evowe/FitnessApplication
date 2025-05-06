@@ -19,23 +19,17 @@ public class CalendarView extends JPanel {
     private FlatButton yearButton;
     private final CalendarViewModel viewModel;
     private JButton currentButton;
-    public enum Type {PANELED, BUTTONED}
 
-    public CalendarView(Type type) {
+    public CalendarView() {
         //Set standard layout
-        setLayout(new MigLayout("wrap, fillx, insets 20"));
+        setLayout(new MigLayout("wrap, fillx, filly, insets 20"));
         putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
         //Intialize ViewModel
         viewModel = new CalendarViewModel();
 
-        add(initMenuBar(), "growx");
-        if (type == Type.BUTTONED) {
-            add(initButtonPage(), "growx, pushx");
-        }
-        else {
-            add(initPanelPage(), "growx, pushx");
-        }
+        add(initMenuBar(), "growx, pushx");
+        add(initButtonPage(), "growx, pushx, growy, pushy");
     }
 
     private JPanel initMenuBar() {
@@ -65,7 +59,8 @@ public class CalendarView extends JPanel {
                     viewModel.setMonth(Month.valueOf(item.getText().toUpperCase()));
                     monthButton.setText(item.getText());
                     remove(getComponentCount() - 1);
-                    add(initButtonPage(), "growy, pushy");
+                    add(initButtonPage(), "growx, pushx, growy, pushy");
+                    
                 }
             });
             monthPopupMenu.add(item);
@@ -117,7 +112,7 @@ public class CalendarView extends JPanel {
                 monthButton.setText(new String(buttonName));
 
                 remove(getComponentCount() - 1);
-                add(initButtonPage(), "growy, pushy");
+                add(initButtonPage(), "growx, pushx, growy, pushy");
             }
         });
         lastMonthButton.setText("<");
@@ -134,7 +129,7 @@ public class CalendarView extends JPanel {
                 yearButton.setText(String.valueOf(viewModel.getYear()));
 
                 remove(getComponentCount() - 1);
-                add(initButtonPage(), "growy, pushy");
+                add(initButtonPage(), "growx, pushx, growy, pushy");
             }
         });
         lastYearButton.setText("<<");
@@ -151,7 +146,7 @@ public class CalendarView extends JPanel {
                 yearButton.setText(String.valueOf(viewModel.getYear()));
 
                 remove(getComponentCount() - 1);
-                add(initButtonPage(), "growy, pushy");
+                add(initButtonPage(), "growx, pushx, growy, pushy");
             }
         });
         nextYearButton.setText(">>");
@@ -174,7 +169,7 @@ public class CalendarView extends JPanel {
                 monthButton.setText(new String(buttonName));
 
                 remove(getComponentCount() - 1);
-                add(initButtonPage(), "growy, pushy");
+                add(initButtonPage(), "growx, pushx, growy, pushy");
             }
         });
         nextMonthButton.setText(">");
@@ -239,33 +234,6 @@ public class CalendarView extends JPanel {
         return calendarPanel;
     }
 
-    private JPanel initPanelPage() {
-        JPanel calendarPanel = new JPanel(new MigLayout("wrap, fillx, insets 0", "fill", "fill"));
-        ArrayList<String[]> format = viewModel.getCalendar();
-
-        JPanel dayLabels = new JPanel(new MigLayout("fill, insets 0", "center"));
-        String[] labels = format.removeFirst();
-        for (String label : labels) {
-            JLabel day = new JLabel(label);
-            day.putClientProperty(FlatClientProperties.STYLE, "font:bold");
-            dayLabels.add(day);
-        }
-        calendarPanel.add(dayLabels);
-
-        for (String[] week : format) {
-            JPanel dateLabels = new JPanel(new MigLayout("fill, insets 0", "center"));
-            for (String day : week) {
-                JPanel dayPanel = new JPanel(new MigLayout("wrap, insets 3"));
-                dayPanel.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground;");
-                dayPanel.add(new JLabel(day));
-                dateLabels.add(dayPanel);
-            }
-            calendarPanel.add(dateLabels, "growx, growy, pushx, pushy");
-        }
-
-        return calendarPanel;
-    }
-
     public String getDate() {
         return viewModel.getDate();
     }
@@ -281,7 +249,7 @@ public class CalendarView extends JPanel {
                     viewModel.setYear(Integer.parseInt(item.getText()));
                     yearButton.setText(item.getText());
                     remove(getComponentCount() - 1);
-                    add(initButtonPage(), "growy, pushy");
+                    add(initButtonPage(), "growx, pushx, growy, pushy");
                 }
             });
             yearPopupMenu.add(item);

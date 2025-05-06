@@ -151,7 +151,6 @@ public class Main {
         window.repaint();
     }
 
-
     public static void setWindow(String name, JTable owner){
         if(name.equals("ModifyWorkoutPlan")){
             window.getContentPane().removeAll();

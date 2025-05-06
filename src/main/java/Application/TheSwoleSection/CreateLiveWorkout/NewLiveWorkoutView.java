@@ -18,14 +18,18 @@ public class NewLiveWorkoutView extends JPanel {
 
     public NewLiveWorkoutView() {
         viewModel = new NewLiveWorkoutViewModel();
-        setLayout(new MigLayout("insets 20", "[grow]", "top"));
+        //setLayout(new MigLayout("insets 20", "[grow]", "top"));
+        setLayout(new MigLayout("fill, insets 20", "[]20[]", "center"));
+
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         // Side Menu
-        add(new SideMenuView(), "dock west, growy");
+        //add(new SideMenuView(), "dock west, growy");
+        add(new SideMenuView(), "growy, pushy");
 
         // Main Panel
         JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setPreferredSize(new Dimension(1200, 650));
         mainPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         // Title Panel
@@ -105,6 +109,6 @@ public class NewLiveWorkoutView extends JPanel {
         });
 
         mainPanel.add(formPanel, BorderLayout.CENTER);
-        add(mainPanel, "grow");
+        add(mainPanel, "growy, pushy");
     }
 }

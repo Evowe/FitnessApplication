@@ -17,9 +17,9 @@ public class ProfileView extends JPanel {
         putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
         FlatButton profileButton = new FlatButton();
-        profileButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground; arc:100;");
+        profileButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground; arc:250;");
         profileButton.setBorderPainted(false);
-        profileButton.setMinimumSize(new Dimension(100,100));
+        profileButton.setMinimumSize(new Dimension(250,250));
 
 
         String iconPath = null;
@@ -34,17 +34,17 @@ public class ProfileView extends JPanel {
             // Load the rocket image
             try {
                 ImageIcon rocketIcon = new ImageIcon(iconPath);
-                Image scaledImg = rocketIcon.getImage().getScaledInstance(90, 90, Image.SCALE_SMOOTH);
+                Image scaledImg = rocketIcon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
                 profileButton.setIcon(new ImageIcon(scaledImg));
             } catch (Exception e) {
                 // Fallback to default if image loading fails
                 System.err.println("Error loading rocket image: " + e.getMessage());
-                FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 90, 90);
+                FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 250, 250);
                 profileButton.setIcon(icon);
             }
         } else {
             // No equipped rocket, use default SVG
-            FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 90, 90);
+            FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 250, 250);
             profileButton.setIcon(icon);
         }
 

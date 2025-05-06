@@ -1,5 +1,6 @@
 package Application.AccountManagement.Home;
 
+import Application.Utility.Widgets.DaysSinceLastWorkout.DaysSinceLastWorkoutView;
 import com.formdev.flatlaf.FlatClientProperties;
 import Application.Utility.Objects.Account;
 import Application.Utility.Widgets.Battlepass.BattlepassView;
@@ -20,21 +21,25 @@ public class HomeView extends JPanel {
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         add(new SideMenuView(), "growy, pushy");
-        JPanel whole = new JPanel(new MigLayout("wrap, insets 2"));
+        JPanel whole = new JPanel(new MigLayout("wrap, fillx, filly,insets 0", "[grow, fill]", " [grow, fill]"));
         whole.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
 
         JPanel top = new JPanel(new MigLayout("insets 0", "left", "top"));
-        top.add(new CalendarView(CalendarView.Type.BUTTONED), "gapx 10");
-        top.add(new BattlepassView(), "gapx 10, growx, pushx, wrap");
         top.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
-        whole.add(top);
+        top.add(new CalendarView(), "gapx 10, growx, growy, pushx, pushy");
+        JPanel stack = new JPanel(new MigLayout("wrap, insets 0", "left", "top"));
+        stack.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
+        stack.add(new BattlepassView(), "gapx 10, gapy 0, growx, growy, pushx, pushy");
+        stack.add(new GoalProgressMeterView(currentUser), "gapx 10, gapy 10, growx, growy, pushx, pushy");
+        top.add(stack, "gapx 0, growx, growy, pushx, pushy");
+        whole.add(top, "growx, pushx");
 
-        JPanel bottom = new JPanel(new MigLayout("insets 0", "left", "top"));
-        bottom.add(new GoalProgressMeterView(currentUser), "gapy 5, gapx 10, growx, pushx");
-        bottom.add(new ProfileView(), "gapy 5, gapx 10, growx, pushx, wrap");
+        JPanel bottom = new JPanel(new MigLayout("fill, insets 0", "[grow,fill][grow,fill]", " [grow,fill]"));
         bottom.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
-        whole.add(bottom);
+        bottom.add(new ProfileView(), "gapy 10, gapx 10, growx, pushx, growy, pushy");
+        bottom.add(new DaysSinceLastWorkoutView(), "gapy 10, gapx 10, growx, pushx, growy, pushy");
+        whole.add(bottom, "growx, pushx");
 
-        add(whole, "growy, pushy");
+        add(whole, "growx, pushx, growy, pushy");
     }
 }
