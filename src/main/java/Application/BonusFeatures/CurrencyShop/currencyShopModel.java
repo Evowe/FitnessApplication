@@ -127,4 +127,25 @@ public class currencyShopModel {
             return icon;
         }
     }
+
+    private int pendingRocketBucks = 0;
+    private double pendingPrice = 0.0;
+
+    public void setPendingCurrencyPack(int rocketBucks, double price) {
+        this.pendingRocketBucks = rocketBucks;
+        this.pendingPrice = price;
+    }
+
+    public int getPendingRocketBucks() {
+        return pendingRocketBucks;
+    }
+
+    public double getPendingPrice() {
+        return pendingPrice;
+    }
+
+    public void clearPendingCurrencyPack() {
+        this.pendingRocketBucks = 0;
+        this.pendingPrice = 0.0;
+    }
 }

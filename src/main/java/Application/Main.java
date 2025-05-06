@@ -3,12 +3,7 @@ package Application;
 import Application.AccountManagement.ResetPassword.ResetPasswordView;
 import Application.TheSwoleSection.TrainerCreatedWorkoutPlan.CreateWorkoutPlanView;
 import Application.TheSwoleSection.WorkoutPlans.ModifiyWorkoutPlan;
-import Application.TheSwoleSection.WorkoutPlans.WorkoutPlansView;
-import Application.TheSwoleSection.WorkoutSchedule.WorkoutScheduleView;
 import Application.TheSwoleSection.WorkoutView;
-import Application.Utility.Objects.WorkoutPlan;
-import Application.Utility.Widgets.Calendar.CalendarView;
-import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -23,14 +18,12 @@ import Application.AccountManagement.CreateAccount.CreateAccountView;
 import Application.TheSwoleSection.CreateExercise.CreateExcerciseView;
 import Application.TheSwoleSection.CreateLiveWorkout.NewLiveWorkoutView;
 import Application.BonusFeatures.CurrencyShop.currencyShopViewModel;
-import Application.BonusFeatures.CurrencyShop.currencyShopView;
 import Application.TheSwoleSection.ExerciseLibrary.ExerciseLibraryView;
 import Application.TheSwoleSection.LiveWorkout.LiveWorkoutView;
 import Application.AccountManagement.Home.HomeView;
 import Application.BonusFeatures.Locker.LockerView;
 import Application.AccountManagement.Login.LoginView;
 import Application.Metrics.MetricsView;
-import Application.BonusFeatures.Microtransactions.TransactionViewModel;
 import Application.AccountManagement.Settings.SettingsViewModel;
 import Application.BonusFeatures.Social.CreateMessageView;
 import Application.BonusFeatures.Social.SendResponseView;
@@ -39,7 +32,6 @@ import Application.Metrics.Statistics.StatsView;
 import Application.TheSwoleSection.CreateWorkout.NewWorkoutView;
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
 
 public class Main {
     public static boolean dark = true;
@@ -109,6 +101,7 @@ public class Main {
                 window.add(SettingsViewModel.getSettingsView());
             }
             case "AdminUsers" -> {
+                AdminUsersView.refreshView();
             	window.add(AdminUsersView.getView());
             }
             case "AdminAddUserView" -> {
