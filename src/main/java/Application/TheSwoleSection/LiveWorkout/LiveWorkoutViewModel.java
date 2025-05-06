@@ -7,7 +7,7 @@ import java.net.URISyntaxException;
 
 public class LiveWorkoutViewModel {
     private LiveWorkoutModel model;
-    String streamURL = "https://2892-129-62-66-43.ngrok-free.app";
+    String streamURL = "https://8df9-129-62-66-75.ngrok-free.app";
 
     public LiveWorkoutViewModel() {
         model = new LiveWorkoutModel();
