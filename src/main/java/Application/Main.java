@@ -3,12 +3,7 @@ package Application;
 import Application.AccountManagement.ResetPassword.ResetPasswordView;
 import Application.TheSwoleSection.TrainerCreatedWorkoutPlan.CreateWorkoutPlanView;
 import Application.TheSwoleSection.WorkoutPlans.ModifiyWorkoutPlan;
-import Application.TheSwoleSection.WorkoutPlans.WorkoutPlansView;
-import Application.TheSwoleSection.WorkoutSchedule.WorkoutScheduleView;
 import Application.TheSwoleSection.WorkoutView;
-import Application.Utility.Objects.WorkoutPlan;
-import Application.Utility.Widgets.Calendar.CalendarView;
-import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -22,13 +17,11 @@ import Application.BonusFeatures.BattlePass.BattlePassView;
 import Application.AccountManagement.CreateAccount.CreateAccountView;
 import Application.TheSwoleSection.CreateExercise.CreateExcerciseView;
 import Application.BonusFeatures.CurrencyShop.currencyShopViewModel;
-import Application.BonusFeatures.CurrencyShop.currencyShopView;
 import Application.TheSwoleSection.ExerciseLibrary.ExerciseLibraryView;
 import Application.AccountManagement.Home.HomeView;
 import Application.BonusFeatures.Locker.LockerView;
 import Application.AccountManagement.Login.LoginView;
 import Application.Metrics.MetricsView;
-import Application.BonusFeatures.Microtransactions.TransactionViewModel;
 import Application.AccountManagement.Settings.SettingsViewModel;
 import Application.BonusFeatures.Social.CreateMessageView;
 import Application.BonusFeatures.Social.SendResponseView;
@@ -37,7 +30,6 @@ import Application.Metrics.Statistics.StatsView;
 import Application.TheSwoleSection.CreateWorkout.NewWorkoutView;
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
 
 public class Main {
     public static boolean dark = true;
@@ -149,7 +141,6 @@ public class Main {
         window.revalidate();
         window.repaint();
     }
-
 
     public static void setWindow(String name, JTable owner){
         if(name.equals("ModifyWorkoutPlan")){

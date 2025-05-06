@@ -57,7 +57,7 @@ public class WorkoutScheduleView extends JPanel {
         center.setPreferredSize(new Dimension(1000, 500));
 
 
-        calendarPanel = new CalendarView(CalendarView.Type.BUTTONED);
+        calendarPanel = new CalendarView();
         //ADD TOP PANE
         center.add(calendarPanel, BorderLayout.CENTER);
 
