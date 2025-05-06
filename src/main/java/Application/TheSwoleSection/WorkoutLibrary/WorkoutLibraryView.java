@@ -139,8 +139,8 @@ public class WorkoutLibraryView extends JPanel{
                             "You can view in the Workout History Page under Metrics.");
 
                     try {
-                        AccountsDB.addxp(Main.getCurrentUser().getUsername(), 19700); // Update DB by +100
-                        Main.getCurrentUser().setXp(Main.getCurrentUser().getXp() + 19700); // Sync local object
+                        AccountsDB.addxp(Main.getCurrentUser().getUsername(), 100); // Update DB by +100
+                        Main.getCurrentUser().setXp(Main.getCurrentUser().getXp() + 100); // Sync local object
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
