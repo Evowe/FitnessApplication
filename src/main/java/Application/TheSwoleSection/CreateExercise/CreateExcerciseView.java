@@ -51,7 +51,7 @@ public class CreateExcerciseView extends JPanel {
         //Center Panel Setup
         JPanel centerPanel = new JPanel();
         centerPanel.setMinimumSize(new Dimension(1200, 500));
-        centerPanel.putClientProperty(FlatClientProperties.STYLE, "background:@accent");
+        centerPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
         centerPanel.setLayout(new GridLayout(15, 1));
 
 

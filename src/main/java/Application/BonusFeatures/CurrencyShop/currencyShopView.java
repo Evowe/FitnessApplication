@@ -162,7 +162,7 @@ public class currencyShopView extends JPanel {
             Calendar calendar = Calendar.getInstance();
             int day = calendar.get(Calendar.DAY_OF_YEAR);
             int year = calendar.get(Calendar.YEAR);
-            Random random = new Random(day + year * 1000);
+            Random random = new Random(day + year * 1008);
 
             // Select 2 random items
             List<currencyShopModel.Item> featuredItems = new ArrayList<>();

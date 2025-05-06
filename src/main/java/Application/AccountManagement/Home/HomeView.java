@@ -1,5 +1,6 @@
 package Application.AccountManagement.Home;
 
+import Application.Main;
 import Application.Utility.Widgets.DaysSinceLastWorkout.DaysSinceLastWorkoutView;
 import com.formdev.flatlaf.FlatClientProperties;
 import Application.Utility.Objects.Account;
@@ -37,7 +38,7 @@ public class HomeView extends JPanel {
         JPanel bottom = new JPanel(new MigLayout("fill, insets 0", "[grow,fill][grow,fill]", " [grow,fill]"));
         bottom.putClientProperty(FlatClientProperties.STYLE, "background:@background;");
         bottom.add(new ProfileView(), "gapy 10, gapx 10, growx, pushx, growy, pushy");
-        bottom.add(new DaysSinceLastWorkoutView(), "gapy 10, gapx 10, growx, pushx, growy, pushy");
+        bottom.add(new DaysSinceLastWorkoutView(Main.getCurrentUser().getUsername()), "gapy 10, gapx 10, growx, pushx, growy, pushy");
         whole.add(bottom, "growx, pushx");
 
         add(whole, "growx, pushx, growy, pushy");
