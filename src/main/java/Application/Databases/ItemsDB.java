@@ -74,14 +74,14 @@ public class ItemsDB extends DBTemplate {
                 {"Orange Rocket", "A vibrant orange rocket", "rocket", "100", "src/main/resources/Images/OrangeRocket.png"},
                 {"Purple Rocket", "A royal purple rocket", "rocket", "100", "src/main/resources/Images/PurpleRocket.png"},
                 {"Yellow Rocket", "A bright yellow rocket", "rocket", "100", "src/main/resources/Images/YellowRocket.png"},
-                {"Cow Rocket", "MOOOOOOO", "rocket", "500", "src/main/resources/Images/mooket.PNG"},
+                {"Cow Rocket", "MOOOOOOO", "rocket", "1000", "src/main/resources/Images/mooket.PNG"},
                 {"BU Rocket", "Sic 'em Bears", "rocket", "500", "src/main/resources/Images/bucket.PNG"},
                 {"Disco Rocket", "DANCE TIME", "rocket", "500", "src/main/resources/Images/disket.PNG"},
-                {"Kirket", "Prof. Kirk Rocket", "rocket", "1000", "src/main/resources/Images/kirket.PNG"},
-                {"Party Rocket", "PARTY TIME", "rocket", "500", "src/main/resources/Images/parket.PNG"},
-                {"Shrek Rocket", "WHAT ARE YOU DOING IN MY SWAMP", "rocket", "1000", "src/main/resources/Images/shreket.PNG"},
+                {"Kirket", "Prof. Kirk Rocket", "rocket", "10000", "src/main/resources/Images/kirket.PNG"},
+                {"Party Rocket", "PARTY TIME", "rocket", "750", "src/main/resources/Images/parket.PNG"},
+                {"Shrek Rocket", "WHAT ARE YOU DOING IN MY SWAMP", "rocket", "1500", "src/main/resources/Images/shreket.PNG"},
                 {"Sunset Rocket", "How peaceful", "rocket", "500", "src/main/resources/Images/sunket.PNG"},
-                {"SWOLEKET", "THE BIGGEST ROCKET OF THEM ALL", "rocket", "1000", "src/main/resources/Images/swoleket.PNG"},
+                {"SWOLEKET", "THE BIGGEST ROCKET OF THEM ALL", "rocket", "10000", "src/main/resources/Images/swoleket.PNG"},
         };
 
         String checkSql = "SELECT name FROM items WHERE name = ?";
