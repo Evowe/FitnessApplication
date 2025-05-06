@@ -3,17 +3,12 @@ package Application.TheSwoleSection.WorkoutLibrary;
 import Application.Databases.ExerciseDB;
 import Application.Databases.WorkoutDB;
 import Application.Databases.WorkoutLogDB;
-import Application.Utility.Objects.Exercise;
 import Application.Utility.Objects.Workout;
-import Application.Utility.Objects.WorkoutPlan;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class WorkoutLibraryModel {
     private WorkoutDB workoutDB;

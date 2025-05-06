@@ -142,7 +142,7 @@ public class MessagesDB extends DBTemplate{
         PreparedStatement pstmt = con.prepareStatement(sql)) {
 
             pstmt.setString(1, "REJECT_FRIEND");
-            String response = receiver + " declined your friend request";
+            String response = username + " declined your friend request";
             pstmt.setString(2, response);
             pstmt.setString(3, receiver);
             pstmt.setString(4, username);
@@ -165,7 +165,7 @@ public class MessagesDB extends DBTemplate{
             PreparedStatement pstmt = con.prepareStatement(sql)) {
 
             pstmt.setString(1, "ACCEPT_FRIEND");
-            String response = receiver + " accepted your friend request";
+            String response = username + " accepted your friend request";
             pstmt.setString(2, response);
             pstmt.setString(3, receiver);
             pstmt.setString(4, username);

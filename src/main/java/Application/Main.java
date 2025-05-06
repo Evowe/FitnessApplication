@@ -16,8 +16,10 @@ import Application.Databases.DatabaseManager;
 import Application.BonusFeatures.BattlePass.BattlePassView;
 import Application.AccountManagement.CreateAccount.CreateAccountView;
 import Application.TheSwoleSection.CreateExercise.CreateExcerciseView;
+import Application.TheSwoleSection.CreateLiveWorkout.NewLiveWorkoutView;
 import Application.BonusFeatures.CurrencyShop.currencyShopViewModel;
 import Application.TheSwoleSection.ExerciseLibrary.ExerciseLibraryView;
+import Application.TheSwoleSection.LiveWorkout.LiveWorkoutView;
 import Application.AccountManagement.Home.HomeView;
 import Application.BonusFeatures.Locker.LockerView;
 import Application.AccountManagement.Login.LoginView;
@@ -99,6 +101,7 @@ public class Main {
                 window.add(SettingsViewModel.getSettingsView());
             }
             case "AdminUsers" -> {
+                AdminUsersView.refreshView();
             	window.add(AdminUsersView.getView());
             }
             case "AdminAddUserView" -> {
@@ -136,6 +139,12 @@ public class Main {
             }
             case "CreateWorkoutPlan" -> {
                 window.add(new CreateWorkoutPlanView());
+            }
+            case "NewLiveWorkout" -> {
+            	window.add(new NewLiveWorkoutView());
+            }
+            case "LiveWorkouts" -> {
+            	window.add(new LiveWorkoutView());
             }
         }
         window.revalidate();

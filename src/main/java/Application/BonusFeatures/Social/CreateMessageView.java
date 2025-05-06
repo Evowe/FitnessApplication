@@ -21,7 +21,9 @@ public class CreateMessageView extends JPanel {
 
     public CreateMessageView() {
         //Setup Main Panel Layout
-        setLayout(new MigLayout("insets 20", "left", "top"));
+        //setLayout(new MigLayout("fill, insets 20", "center", "center"));
+        setLayout(new MigLayout("fill, insets 20", "[]20[]", "center"));
+
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         add(new SideMenuView(), "growy, pushy");
@@ -123,23 +125,50 @@ public class CreateMessageView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent event) {
                 //Account receiver = viewModel.selectUser(selectedRow);
-                int index = messageTypeDropdown.getSelectedIndex();
-                Message.Type type = null;
-                if (index == 1) {
-                    type = Message.Type.CHALLENGE;
-                } else if (index == 2) {
-                    type = Message.Type.FRIEND_REQUEST;
-                }
-                System.out.println("this is the index:" + index);
 
-                Message message = new Message(messageField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
-                message.addMessage();
-                if(type == Message.Type.FRIEND_REQUEST) {
-                    viewModel.requestFriend(Main.getCurrentUser().getUsername(), viewModel.getReceiver().getUsername());
+
+                if(messageField.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "All fields must be filled.");
+                } else if(messageField.getText().length() > 100){
+                    JOptionPane.showMessageDialog(null,
+                            "No field can exceed 100 characters.");
+                } else {
+                    int index = messageTypeDropdown.getSelectedIndex();
+                    Message.Type type = null;
+                    if (index == 1) {
+                        type = Message.Type.CHALLENGE;
+                    } else if (index == 2) {
+                        type = Message.Type.FRIEND_REQUEST;
+                    }
+                    System.out.println("this is the index:" + index);
+
+
+                    if(type == Message.Type.FRIEND_REQUEST) {
+                        if(viewModel.haventBeenDeclined(Main.getCurrentUser().getUsername(), viewModel.getReceiver().getUsername())){
+                            viewModel.requestFriend(Main.getCurrentUser().getUsername(), viewModel.getReceiver().getUsername());
+                            Message message = new Message(messageField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
+                            message.addMessage();
+                            Main.setWindow("SocialView");
+                        } else{
+                            JOptionPane.showMessageDialog(null,
+                                    "You cannot send another friend request to " +
+                                            viewModel.getReceiver().getUsername() + ". They have already declined you.");
+                        }
+                        //viewModel.requestFriend(Main.getCurrentUser().getUsername(), viewModel.getReceiver().getUsername());
+                    } else{
+                        Message message = new Message(messageField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
+                        message.addMessage();
+                        Main.setWindow("SocialView");
+                    }
+                    //viewModel.sendMessage(messageField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
+
+                    //viewModel.selectUser(selectedRow);
                 }
-                //viewModel.sendMessage(messageField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
-                Main.setWindow("SocialView");
-                //viewModel.selectUser(selectedRow);
+
+
+
+
             }
         });
 

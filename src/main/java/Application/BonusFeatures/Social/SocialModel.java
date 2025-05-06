@@ -306,4 +306,15 @@ public class SocialModel {
             e.printStackTrace();
         }
     }
+
+
+    public Boolean haventBeenDeclined(String senderUsername, String friendUsername){
+        try{
+            return friendsDB.haventBeenDeclined(senderUsername, friendUsername);
+        } catch (SQLException e){
+            System.out.println("Database error: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

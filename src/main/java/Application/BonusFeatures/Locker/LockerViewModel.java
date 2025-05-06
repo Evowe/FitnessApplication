@@ -21,8 +21,16 @@ public class LockerViewModel {
         return model.getOwnedItems();
     }
 
+    public List<LockerModel.Item> getOwnedItemsByType(String type) {
+        return model.getOwnedItemsByType(type);
+    }
+
     public List<LockerModel.Item> getEquippedItems() {
         return model.getEquippedItems();
+    }
+
+    public List<LockerModel.Item> getEquippedItemsByType(String type) {
+        return model.getEquippedItemsByType(type);
     }
 
     public boolean purchaseItem(int itemId) {

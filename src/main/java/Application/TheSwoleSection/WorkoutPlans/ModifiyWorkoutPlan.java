@@ -31,7 +31,9 @@ public class ModifiyWorkoutPlan extends JPanel {
         WorkoutPlan plan = viewModelWP.getWorkoutPlan(table.getValueAt(table.getSelectedRow(), 0).toString());
 
         //Setup Main Panel Layout
-        setLayout(new MigLayout("insets 20", "left", "top"));
+        //setLayout(new MigLayout("insets 20", "left", "top"));
+        setLayout(new MigLayout("fill, insets 20", "[]20[]", "center"));
+
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         //Add navigation bar
@@ -328,27 +330,42 @@ public class ModifiyWorkoutPlan extends JPanel {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                plan.setGoal(goalField.getText());
-                plan.setDurationInWeeks(Integer.parseInt(durationField.getText()));
-                plan.setIntensity(Integer.parseInt(intensityField.getText()));
+                if(nameField.getText().isEmpty() || goalField.getText().isEmpty()
+                        || intensityField.getText().isEmpty() || durationField.getText().isEmpty()) {
 
-                List<Workout> workoutSchedule = new ArrayList<>();
+                    JOptionPane.showMessageDialog(null,
+                            "All fields must be filled.");
 
-                workoutSchedule.add((Workout) mondayWorkoutComboBox.getSelectedItem());
-                workoutSchedule.add((Workout) tuesdayWorkoutComboBox.getSelectedItem());
-                workoutSchedule.add((Workout) wednesdayWorkoutComboBox.getSelectedItem());
-                workoutSchedule.add((Workout) thursdayWorkoutComboBox.getSelectedItem());
-                workoutSchedule.add((Workout) fridayWorkoutComboBox.getSelectedItem());
-                workoutSchedule.add((Workout) saturdayWorkoutComboBox.getSelectedItem());
-                workoutSchedule.add((Workout) sundayWorkoutComboBox.getSelectedItem());
+                } else if(nameField.getText().length() > 100 || goalField.getText().length() > 100
+                        || intensityField.getText().length() > 100 || durationField.getText().length() > 100) {
 
-                plan.setWorkoutSchedule(workoutSchedule);
-                viewModelWP.updateWorkoutPlan(plan);
+                    JOptionPane.showMessageDialog(null,
+                            "No field can exceed 100 characters.");
 
-                JOptionPane.showMessageDialog(table, "Changes saved");
+                } else{
+                    plan.setGoal(goalField.getText());
+                    plan.setDurationInWeeks(Integer.parseInt(durationField.getText()));
+                    plan.setIntensity(Integer.parseInt(intensityField.getText()));
 
-                Main.setWindow("Workout");
-                WorkoutView.setView("WorkoutPlans");
+                    List<Workout> workoutSchedule = new ArrayList<>();
+
+                    workoutSchedule.add((Workout) mondayWorkoutComboBox.getSelectedItem());
+                    workoutSchedule.add((Workout) tuesdayWorkoutComboBox.getSelectedItem());
+                    workoutSchedule.add((Workout) wednesdayWorkoutComboBox.getSelectedItem());
+                    workoutSchedule.add((Workout) thursdayWorkoutComboBox.getSelectedItem());
+                    workoutSchedule.add((Workout) fridayWorkoutComboBox.getSelectedItem());
+                    workoutSchedule.add((Workout) saturdayWorkoutComboBox.getSelectedItem());
+                    workoutSchedule.add((Workout) sundayWorkoutComboBox.getSelectedItem());
+
+                    plan.setWorkoutSchedule(workoutSchedule);
+                    viewModelWP.updateWorkoutPlan(plan);
+
+                    JOptionPane.showMessageDialog(table, "Changes saved");
+
+                    Main.setWindow("Workout");
+                    WorkoutView.setView("WorkoutPlans");
+                }
+
             }
         });
 

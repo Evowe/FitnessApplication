@@ -5,7 +5,6 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.extras.components.FlatTextField;
-//import Application.Main;
 import Application.Utility.Objects.Account;
 import Application.Utility.Objects.Message;
 import Application.Utility.Widgets.SideMenu.SideMenuView;
@@ -24,7 +23,9 @@ public class SendResponseView extends JPanel {
 
     public SendResponseView() {
         //Setup Main Panel Layout
-        setLayout(new MigLayout("insets 20", "left", "top"));
+        //setLayout(new MigLayout("fill, insets 20", "center", "center"));
+        setLayout(new MigLayout("fill, insets 20", "[]20[]", "center"));
+
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         add(new SideMenuView(), "growy, pushy");
@@ -56,10 +57,13 @@ public class SendResponseView extends JPanel {
         //Setup myMessagesBlock
         JPanel messagesPanel = new JPanel();
         messagesPanel.setLayout(new BorderLayout());
+        messagesPanel.setBackground(Color.BLACK);
 
         FlatLabel messagesTitle = new FlatLabel();
         messagesTitle.setText("My Messages");
         messagesTitle.putClientProperty(FlatClientProperties.STYLE, "" + "font:regular +6");
+        messagesTitle.setBackground(Color.BLACK);
+        //messagesTitle.putClientProperty(FlatClientProperties.STYLE, "background:@background");
         messagesPanel.add(messagesTitle, BorderLayout.NORTH);
 
         //Need to initalize with data from friends database
@@ -142,46 +146,58 @@ public class SendResponseView extends JPanel {
         sendResponseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                //Account receiver = viewModel.selectUser(selectedRow);
-                int index = responseTypeDropdown.getSelectedIndex();
-                Message.Type responseType = null;
-                if (index == 1) {
-                    responseType = Message.Type.ACCEPT_FRIEND;
-                } else if (index == 2) {
-                    responseType = Message.Type.REJECT_FRIEND;
-                } else if (index == 3) {
-                    responseType = Message.Type.ACCEPT_CHALLENGE;
-                } else if (index == 4) {
-                    responseType = Message.Type.REJECT_CHALLENGE;
+                if (responseTypeDropdown.getSelectedItem().equals("Select Type") || responseField.getText().isEmpty()
+                        || responseTypeDropdown.getSelectedItem().equals("Select Type")) {
+                    JOptionPane.showMessageDialog(null,
+                            "All fields must be filled.");
+                } else if (responseField.getText().length() > 100) {
+                    JOptionPane.showMessageDialog(null,
+                            "No field can exceed 100 characters.");
+                } else {
+                    //Account receiver = viewModel.selectUser(selectedRow);
+                    int index = responseTypeDropdown.getSelectedIndex();
+                    Message.Type responseType = null;
+                    if (index == 1) {
+                        responseType = Message.Type.ACCEPT_FRIEND;
+                    } else if (index == 2) {
+                        responseType = Message.Type.REJECT_FRIEND;
+                    } else if (index == 3) {
+                        responseType = Message.Type.ACCEPT_CHALLENGE;
+                    } else if (index == 4) {
+                        responseType = Message.Type.REJECT_CHALLENGE;
+                    }
+
+                    System.out.println("this is the index" + index);
+
+                    Object[][] data = viewModel.getMessageData2(Main.getCurrentUser());
+                    String message = data[viewModel.getSelectedRow()][0].toString();
+                    Account sender = null;
+                    try {
+                        sender = Account.getAccount(data[viewModel.getSelectedRow()][1].toString());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Message.Type type = Message.getType(data[viewModel.getSelectedRow()][2].toString());
+                    Account recipient = Main.getCurrentUser();
+                    String response = responseField.getText();
+                    //Message.Type type = Message.getType(data[viewModel.getSelectedRow()][2].toString());
+                    Message m = new Message(message, sender, recipient, type, response, responseType);
+
+                    viewModel.respondToMessage(m);
+
+                    if (responseType == Message.Type.ACCEPT_FRIEND) {
+                        viewModel.acceptFriendRequest(Main.getCurrentUser().getUsername(), messagesTable.getValueAt(viewModel.getSelectedRow(), 1).toString());
+                    }
+
+                    //viewModel.sendMessage(resField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
+                    Main.setWindow("SocialView");
+                    //viewModel.selectUser(selectedRow);
                 }
-
-                System.out.println("this is the index" + index);
-
-                Object[][] data = viewModel.getMessageData2(Main.getCurrentUser());
-                String message = data[viewModel.getSelectedRow()][0].toString();
-                Account sender = null;
-                try {
-                    sender = Account.getAccount(data[viewModel.getSelectedRow()][1].toString());
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                Message.Type type = Message.getType(data[viewModel.getSelectedRow()][2].toString());
-                Account recipient = Main.getCurrentUser();
-                String response = responseField.getText();
-                //Message.Type type = Message.getType(data[viewModel.getSelectedRow()][2].toString());
-                Message m = new Message(message, sender, recipient, type, response, responseType);
-
-                viewModel.respondToMessage(m);
-
-                if(responseType == Message.Type.ACCEPT_FRIEND) {
-                    viewModel.acceptFriendRequest(Main.getCurrentUser().getUsername(), messagesTable.getValueAt(viewModel.getSelectedRow(), 1).toString());
-                }
-
-                //viewModel.sendMessage(resField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
-                Main.setWindow("SocialView");
-                //viewModel.selectUser(selectedRow);
             }
+
         });
+
+
 
         mainPanel.add(center, BorderLayout.CENTER);
         mainPanel.add(sendResponseButton, BorderLayout.SOUTH);

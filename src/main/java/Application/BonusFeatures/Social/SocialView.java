@@ -20,12 +20,12 @@ public class SocialView extends JPanel {
 
     public SocialView() {
         //Setup Main Panel
-        setLayout(new MigLayout("insets 20", "left", "top"));
+        setLayout(new MigLayout("fill, insets 20", "[]20[]", "center"));
+        //setLayout(new MigLayout("insets 20", "left", "top"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         //Add navigation bar
         add(new SideMenuView(), "growy, pushy");
-
 
         //Setup Main Panel
         JPanel mainPanel = new JPanel(new BorderLayout());

@@ -1,6 +1,7 @@
 package Application.TheSwoleSection.TrainerCreatedWorkoutPlan;
 
 import Application.Main;
+import Application.TheSwoleSection.CreateWorkout.NewWorkoutView;
 import Application.TheSwoleSection.WorkoutView;
 import Application.Utility.Objects.Workout;
 import Application.Utility.Objects.WorkoutPlan;
@@ -21,7 +22,9 @@ public class CreateWorkoutPlanView extends JPanel {
     public CreateWorkoutPlanView() {
         viewModel = new CreateWorkoutPlanViewModel();
         //Setup Main Panel Layout
-        setLayout(new MigLayout("insets 20", "left", "top"));
+        //setLayout(new MigLayout("insets 20", "left", "top"));
+        setLayout(new MigLayout("fill, insets 20", "[]20[]", "center"));
+
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         //Add navigation bar
@@ -83,7 +86,7 @@ public class CreateWorkoutPlanView extends JPanel {
         duration.putClientProperty(FlatClientProperties.STYLE, "font:+6");
         centerLeft.add(duration);
 
-        JTextField durationField = new JTextField();
+        NewWorkoutView.NumberTextField durationField = new NewWorkoutView.NumberTextField();
         durationField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Workout Plan Duration (in weeks)");
         centerLeft.add(durationField);
 
@@ -93,7 +96,7 @@ public class CreateWorkoutPlanView extends JPanel {
         intensity.putClientProperty(FlatClientProperties.STYLE, "font:+6");
         centerLeft.add(intensity);
 
-        JTextField intensityField = new JTextField();
+        NewWorkoutView.NumberTextField intensityField = new NewWorkoutView.NumberTextField();
         intensityField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Intensity Level");
         centerLeft.add(intensityField);
 
@@ -281,30 +284,45 @@ public class CreateWorkoutPlanView extends JPanel {
         submitButton.setText("Submit");
         WorkoutPlan workoutPlan = new WorkoutPlan();
         submitButton.addActionListener(e -> {
-            workoutPlan.setName(nameField.getText());
-            workoutPlan.setGoal(goalField.getText());
-            workoutPlan.setIntensity(Integer.parseInt(intensityField.getText()));
-            workoutPlan.setDurationInWeeks(Integer.parseInt(durationField.getText()));
 
-            List<Workout> workouts = new ArrayList<>();
-            workouts.add((Workout) mondayWorkoutComboBox.getSelectedItem());
-            workouts.add((Workout) tuesdayWorkoutComboBox.getSelectedItem());
-            workouts.add((Workout) wednesdayWorkoutComboBox.getSelectedItem());
-            workouts.add((Workout) thursdayWorkoutComboBox.getSelectedItem());
-            workouts.add((Workout) fridayWorkoutComboBox.getSelectedItem());
-            workouts.add((Workout) saturdayWorkoutComboBox.getSelectedItem());
-            workouts.add((Workout) sundayWorkoutComboBox.getSelectedItem());
+            if(nameField.getText().isEmpty() || goalField.getText().isEmpty()
+                    || intensityField.getText().isEmpty() || durationField.getText().isEmpty()) {
 
-            workoutPlan.setWorkoutSchedule(workouts);
+                JOptionPane.showMessageDialog(null,
+                        "All fields must be filled.");
 
-            viewModel.addWorkoutPlan(workoutPlan);
-            Main.setWindow("Workout");
-            WorkoutView.setView("WorkoutPlans");
+            } else if(nameField.getText().length() > 100 || goalField.getText().length() > 100
+                    || intensityField.getText().length() > 100 || durationField.getText().length() > 100) {
+
+                JOptionPane.showMessageDialog(null,
+                        "No field can exceed 100 characters.");
+
+            } else{
+                workoutPlan.setName(nameField.getText());
+                workoutPlan.setGoal(goalField.getText());
+                workoutPlan.setIntensity(Integer.parseInt(intensityField.getText()));
+                workoutPlan.setDurationInWeeks(Integer.parseInt(durationField.getText()));
+
+                List<Workout> workouts = new ArrayList<>();
+                workouts.add((Workout) mondayWorkoutComboBox.getSelectedItem());
+                workouts.add((Workout) tuesdayWorkoutComboBox.getSelectedItem());
+                workouts.add((Workout) wednesdayWorkoutComboBox.getSelectedItem());
+                workouts.add((Workout) thursdayWorkoutComboBox.getSelectedItem());
+                workouts.add((Workout) fridayWorkoutComboBox.getSelectedItem());
+                workouts.add((Workout) saturdayWorkoutComboBox.getSelectedItem());
+                workouts.add((Workout) sundayWorkoutComboBox.getSelectedItem());
+
+                workoutPlan.setWorkoutSchedule(workouts);
+
+                viewModel.addWorkoutPlan(workoutPlan);
+                Main.setWindow("Workout");
+                WorkoutView.setView("WorkoutPlans");
+            }
+
         });
         buttonPanel.add(submitButton);
 
         main.add(buttonPanel, BorderLayout.SOUTH);
-
 
         add(main, "growy, pushy");
     }

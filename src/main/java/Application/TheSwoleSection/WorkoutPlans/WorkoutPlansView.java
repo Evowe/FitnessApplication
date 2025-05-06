@@ -22,12 +22,13 @@ public class WorkoutPlansView extends JPanel {
         viewModel = new WorkoutPlansViewModel();
 
         //Setup Main Panel Layout
-        setLayout(new MigLayout("insets 20", "left", "top"));
+        setLayout(new MigLayout("fill, insets 20", "center", "center"));
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
 
         JPanel main = new JPanel();
         main.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        main.setLayout(new BorderLayout());
 
         //North Panel Setup - Title
         JPanel titlePanel = new JPanel();
@@ -89,11 +90,12 @@ public class WorkoutPlansView extends JPanel {
 
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(1200, 550));
-        scrollPane.setMaximumSize(new Dimension(1200, 550));
+        scrollPane.setPreferredSize(new Dimension(1200, 650));
+        scrollPane.setMaximumSize(new Dimension(1200, 650));
 
         JPanel tablePanel = new JPanel();
-        tablePanel.setBackground(Color.BLACK);
+        tablePanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        //tablePanel.setBackground(Color.BLACK);
         tablePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         tablePanel.add(scrollPane);
 

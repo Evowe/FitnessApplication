@@ -1,6 +1,7 @@
 package Application.Databases;
 
 import Application.Utility.Objects.Account;
+import Application.Utility.Objects.CreditCard;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -43,7 +44,8 @@ public class AccountsDB extends DBTemplate {
                 "wallet INTEGER DEFAULT 0",
                 "theme TEXT DEFAULT 'dark'",
                 "notifications INTEGER DEFAULT 1",
-                "weight_unit TEXT DEFAULT 'kg'"
+                "weight_unit TEXT DEFAULT 'kg'",
+                "XP INTEGER DEFAULT 0",
         };
 
         String[] securityColumns = {
@@ -59,6 +61,8 @@ public class AccountsDB extends DBTemplate {
 
         createTable("accounts", columns);
         createTable("security_questions", securityColumns);
+
+        updateAccountsTableForCreditCards();
     }
 
     public void addAccount(Account account) throws SQLException {
@@ -372,6 +376,29 @@ public class AccountsDB extends DBTemplate {
         return -1000000;
     }
 
+    public static int getXP(String username) throws SQLException {
+        String sql = "SELECT XP FROM accounts WHERE username = ?";
+        try (Connection conn = getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("xp");
+            }
+        }
+        return 0;
+    }
+
+    public static void addxp(String username, int xp) throws SQLException {
+        String sql = "UPDATE accounts SET XP = XP + ? WHERE username = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, xp);           // Set XP increment first
+            pstmt.setString(2, username);  // Set username second
+            pstmt.executeUpdate();
+        }
+    }
+
     public int getCount() throws SQLException {
         String sql = "SELECT COUNT(*) FROM accounts";
         try (Connection conn = getConnection();
@@ -519,4 +546,98 @@ public class AccountsDB extends DBTemplate {
         }
         return null;
     }
+
+    public boolean addCreditCardToAccount(String username, CreditCard card) throws SQLException {
+        String sql = "UPDATE accounts SET cardNumber = ?, expiryDate = ?, cvv = ?, cardHolder = ?, zipCode = ? WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, card.getCardNumber());
+            pstmt.setString(2, card.getExpiryDate());
+            pstmt.setString(3, card.getCvv());
+            pstmt.setString(4, card.getCardHolder());
+            pstmt.setString(5, card.getZipCode());
+            pstmt.setString(6, username);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+
+    public CreditCard getAccountCreditCard(String username) throws SQLException {
+        String sql = "SELECT cardNumber, expiryDate, cvv, cardHolder, zipCode FROM accounts WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next() && rs.getString("cardNumber") != null) {
+                return new CreditCard(
+                        rs.getString("cardNumber"),
+                        rs.getString("expiryDate"),
+                        rs.getString("cvv"),
+                        rs.getString("cardHolder"),
+                        rs.getString("zipCode")
+                );
+            }
+        }
+        return null;
+    }
+
+
+    public boolean removeCreditCardFromAccount(String username) throws SQLException {
+        String sql = "UPDATE accounts SET cardNumber = NULL, expiryDate = NULL, cvv = NULL, cardHolder = NULL, zipCode = NULL WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+
+    public void updateAccountsTableForCreditCards() throws SQLException {
+        String[] columns = {
+                "cardNumber TEXT",
+                "expiryDate TEXT",
+                "cvv TEXT",
+                "cardHolder TEXT",
+                "zipCode TEXT"
+        };
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            for (String column : columns) {
+                String columnName = column.split(" ")[0];
+                try {
+                    ResultSet rs = stmt.executeQuery("SELECT " + columnName + " FROM accounts LIMIT 1");
+                    rs.close();
+                } catch (SQLException e) {
+                    stmt.executeUpdate("ALTER TABLE accounts ADD COLUMN " + column);
+                }
+            }
+        }
+    }
+
+    public boolean linkCreditCardToAccount(String username, String cardNumber) throws SQLException {
+        String sql = "UPDATE accounts SET linkedCardNumber = ? WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, cardNumber);
+            pstmt.setString(2, username);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+
+
 }

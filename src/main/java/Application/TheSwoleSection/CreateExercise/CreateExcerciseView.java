@@ -21,7 +21,9 @@ public class CreateExcerciseView extends JPanel {
 
     public CreateExcerciseView() {
         //Setup Main Panel
-        setLayout(new MigLayout("insets 20", "left", "top"));
+        //setLayout(new MigLayout("insets 20", "left", "top"));
+        setLayout(new MigLayout("fill, insets 20", "[]20[]", "center"));
+
         putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
         //Add navigation bar
@@ -49,7 +51,7 @@ public class CreateExcerciseView extends JPanel {
         //Center Panel Setup
         JPanel centerPanel = new JPanel();
         centerPanel.setMinimumSize(new Dimension(1200, 500));
-        centerPanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        centerPanel.putClientProperty(FlatClientProperties.STYLE, "background:@accent");
         centerPanel.setLayout(new GridLayout(15, 1));
 
 
@@ -60,8 +62,8 @@ public class CreateExcerciseView extends JPanel {
         centerPanel.add(name);
 
         FlatTextField nameField = new FlatTextField();
-        nameField.setMinimumSize(new Dimension(200, 12));
-        nameField.setMaximumSize(new Dimension(200, 12));
+        nameField.setMinimumSize(new Dimension(1200, 12));
+        nameField.setMaximumSize(new Dimension(1200, 12));
         nameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Name");
         centerPanel.add(nameField);
 
@@ -73,8 +75,8 @@ public class CreateExcerciseView extends JPanel {
         centerPanel.add(description);
 
         FlatTextField descriptionField = new FlatTextField();
-        descriptionField.setMinimumSize(new Dimension(200, 12));
-        descriptionField.setMaximumSize(new Dimension(200, 12));
+        descriptionField.setMinimumSize(new Dimension(1200, 12));
+        descriptionField.setMaximumSize(new Dimension(1200, 12));
         descriptionField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Description");
         centerPanel.add(descriptionField);
 
@@ -87,8 +89,8 @@ public class CreateExcerciseView extends JPanel {
         String[] options = {"Select Type", "Sets", "Sets w/ Weight", "Sets w/o Weight"};
         JComboBox<String> dropdown = new JComboBox<>(options);
         dropdown.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Select Type");
-        dropdown.setBackground(new Color(200,200,200));
-        dropdown.setForeground(new Color(120, 120, 120));
+        //dropdown.setBackground(new Color(200,200,200));
+        //dropdown.setForeground(new Color(120, 120, 120));
         centerPanel.add(dropdown);
 
         mainPanel.add(centerPanel, BorderLayout.CENTER);
@@ -127,6 +129,10 @@ public class CreateExcerciseView extends JPanel {
                     JOptionPane.showMessageDialog(null,
                             "All fields must be filled.");
 
+                } else if(descriptionField.getText().length() > 100 || nameField.getText().length() > 100
+                        || repAmount.getText().length() > 100 || weightAmount.getText().length() > 100) {
+                    JOptionPane.showMessageDialog(null,
+                            "No field can exceed 100 characters.");
                 } else {
                     String Name = nameField.getText();
                     String Description = descriptionField.getText();

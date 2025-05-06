@@ -181,4 +181,33 @@ public class FriendsDB extends DBTemplate{
             throw e;
         }
     }
+
+    public Boolean haventBeenDeclined(String username, String friend) throws SQLException {
+        String sql = "SELECT * FROM friends WHERE (user_username = ? AND friend_username = ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+            ps.setString(2, friend);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String stat = rs.getString("status");
+                if (stat.equals("accepted")) {
+                    return true;
+                } else{
+                    return false;
+                }
+            }
+
+            //ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Error checking if you have been declined by friend: " + e.getMessage());
+            throw e;
+        }
+
+        return true;
+    }
 }

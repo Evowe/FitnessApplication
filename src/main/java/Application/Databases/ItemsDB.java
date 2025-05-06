@@ -74,14 +74,14 @@ public class ItemsDB extends DBTemplate {
                 {"Orange Rocket", "A vibrant orange rocket", "rocket", "100", "src/main/resources/Images/OrangeRocket.png"},
                 {"Purple Rocket", "A royal purple rocket", "rocket", "100", "src/main/resources/Images/PurpleRocket.png"},
                 {"Yellow Rocket", "A bright yellow rocket", "rocket", "100", "src/main/resources/Images/YellowRocket.png"},
-                {"Cow Rocket", "MOOOOOOO", "rocket", "500", "src/main/resources/Images/mooket.PNG"},
+                {"Cow Rocket", "MOOOOOOO", "rocket", "1000", "src/main/resources/Images/mooket.PNG"},
                 {"BU Rocket", "Sic 'em Bears", "rocket", "500", "src/main/resources/Images/bucket.PNG"},
                 {"Disco Rocket", "DANCE TIME", "rocket", "500", "src/main/resources/Images/disket.PNG"},
-                {"Kirket", "Prof. Kirk Rocket", "rocket", "1000", "src/main/resources/Images/kirket.PNG"},
-                {"Party Rocket", "PARTY TIME", "rocket", "500", "src/main/resources/Images/parket.PNG"},
-                {"Shrek Rocket", "WHAT ARE YOU DOING IN MY SWAMP", "rocket", "1000", "src/main/resources/Images/shreket.PNG"},
+                {"Kirket", "Prof. Kirk Rocket", "rocket", "10000", "src/main/resources/Images/kirket.PNG"},
+                {"Party Rocket", "PARTY TIME", "rocket", "750", "src/main/resources/Images/parket.PNG"},
+                {"Shrek Rocket", "WHAT ARE YOU DOING IN MY SWAMP", "rocket", "1500", "src/main/resources/Images/shreket.PNG"},
                 {"Sunset Rocket", "How peaceful", "rocket", "500", "src/main/resources/Images/sunket.PNG"},
-                {"SWOLEKET", "THE BIGGEST ROCKET OF THEM ALL", "rocket", "1000", "src/main/resources/Images/swoleket.PNG"},
+                {"SWOLEKET", "THE BIGGEST ROCKET OF THEM ALL", "rocket", "10000", "src/main/resources/Images/swoleket.PNG"},
         };
 
         String checkSql = "SELECT name FROM items WHERE name = ?";
@@ -110,6 +110,56 @@ public class ItemsDB extends DBTemplate {
             }
         } catch (SQLException e){
             System.err.println("Error inserting/checking rocket skins: " + e.getMessage());
+        }
+    }
+
+    public void createDefaultTitles() {
+        String[][] titles = {
+                {"Pleb", "Your muscles are small. Ew.", "title", "0", ""},
+                {"Wimp", "Try going to the gym for once", "title", "0", ""},
+                {"Weakling", "I guess thats progress...", "title", "0", ""},
+                {"Fledgling", "You might actually make it", "title", "0", ""},
+                {"Chubby", "There is SOME mass I guess", "title", "0", ""},
+                {"Soggy Noodle", "Protein? ever heard of it?", "title", "0", ""},
+                {"Cheat Day Pro", "go to the gym.", "title", "0", ""},
+                {"Error 404", "Abs not found", "title", "0", ""},
+                {"Skips Leg day", "and arms. And everything else...", "title", "0", ""},
+                {"Outrageously Mediocre", "No comment", "title", "0", ""},
+                {"Not Embarrassing", "Hey, you are not the weakest now", "title", "0", ""},
+                {"Trying your best", "Effort is effort", "title", "0", ""},
+                {"Looks Maxxer", "Keep mewing bud", "title", "0", ""},
+                {"Protein Addict", "just one more scoop", "title", "0", ""},
+                {"SpeedRunner", "You are the PR", "title", "0", ""},
+                {"Big (In a good way)", "Gravity complains when you arive", "title", "0", ""},
+                {"Maximus", "Your Gluteous is...", "title", "0", ""},
+                {"Ascended Lifter", "Beyond gym. Beyond mortal.", "title", "0", ""},
+                {"SWOLE", "You have acheived peak mass, physics weeps", "title", "0", ""}
+        };
+
+        String checkSql = "SELECT name FROM items WHERE name = ?";
+        String insertSql = "INSERT INTO items (name, description, type, price, icon) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = getConnection()) {
+            PreparedStatement checkPs = conn.prepareStatement(checkSql);
+            PreparedStatement insertPs = conn.prepareStatement(insertSql);
+
+            for (String[] title : titles) {
+                // Check if title exists
+                checkPs.setString(1, title[0]);
+                ResultSet rs = checkPs.executeQuery();
+
+                if (!rs.next()) {
+                    insertPs.setString(1, title[0]);
+                    insertPs.setString(2, title[1]);
+                    insertPs.setString(3, title[2]);
+                    insertPs.setInt(4, Integer.parseInt(title[3]));
+                    insertPs.setString(5, title[4]);
+
+                    insertPs.executeUpdate();
+                }
+            }
+        } catch (SQLException e){
+            System.err.println("Error inserting/checking titles: " + e.getMessage());
         }
     }
 
@@ -341,4 +391,32 @@ public class ItemsDB extends DBTemplate {
         return null;
     }
 
+    public String getEquippedTitleName(String username) {
+        try {
+            List<Integer> equippedItems = getEquippedItems(username);
+
+            if (equippedItems.isEmpty()) {
+                return null;
+            }
+
+            String sql = "SELECT name FROM items WHERE id = ? AND type = 'title'";
+
+            try (Connection conn = getConnection()) {
+                PreparedStatement ps = conn.prepareStatement(sql);
+
+                for (int itemId : equippedItems) {
+                    ps.setInt(1, itemId);
+                    ResultSet rs = ps.executeQuery();
+
+                    if (rs.next()) {
+                        return rs.getString("name");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting equipped title name: " + e.getMessage());
+        }
+
+        return null;
+    }
 }

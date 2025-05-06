@@ -7,7 +7,6 @@ import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.fonts.roboto_mono.FlatRobotoMonoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import Application.Utility.Objects.Account;
-import Application.Utility.Widgets.SideMenu.SideMenuView;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -124,7 +123,8 @@ public class ReportView extends JPanel {
         scrollPane.setMaximumSize(new Dimension(1200, 650));
 
         JPanel tablePanel = new JPanel();
-        tablePanel.setBackground(Color.BLACK);
+        tablePanel.putClientProperty(FlatClientProperties.STYLE, "background:@background");
+        //tablePanel.setBackground(Color.BLACK);
         tablePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         tablePanel.add(scrollPane);
 

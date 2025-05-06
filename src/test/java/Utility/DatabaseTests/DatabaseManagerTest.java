@@ -38,9 +38,6 @@ public class DatabaseManagerTest {
         goalsDBField.setAccessible(true);
         goalsDBField.set(null, null);
 
-        Field creditCardDBField = managerClass.getDeclaredField("creditCardDB");
-        creditCardDBField.setAccessible(true);
-        creditCardDBField.set(null, null);
 
         Field statsDBField = managerClass.getDeclaredField("statsDB");
         statsDBField.setAccessible(true);
@@ -75,14 +72,12 @@ public class DatabaseManagerTest {
     public void testInitializeDatabases() throws Exception {
         assertDatabaseFieldIsNull("accountsDB");
         assertDatabaseFieldIsNull("exerciseDB");
-        assertDatabaseFieldIsNull("creditCardDB");
 
         DatabaseManager.initializeDatabases();
 
         assertNotNull(DatabaseManager.getAccountsDB());
         assertNotNull(DatabaseManager.getExerciseDB());
         assertNotNull(DatabaseManager.getGoalsDB());
-        assertNotNull(DatabaseManager.getCreditCardDB());
         assertNotNull(DatabaseManager.getStatsDB());
         assertNotNull(DatabaseManager.getWorkoutDB());
         assertNotNull(DatabaseManager.getMessagesDB());
@@ -124,16 +119,6 @@ public class DatabaseManagerTest {
         assertNotNull(db1);
 
         GoalsDB db2 = DatabaseManager.getGoalsDB();
-        assertNotNull(db2);
-        assertSame(db1, db2);
-    }
-
-    @Test
-    public void testGetCreditCardDB() {
-        CreditCardDB db1 = DatabaseManager.getCreditCardDB();
-        assertNotNull(db1);
-
-        CreditCardDB db2 = DatabaseManager.getCreditCardDB();
         assertNotNull(db2);
         assertSame(db1, db2);
     }

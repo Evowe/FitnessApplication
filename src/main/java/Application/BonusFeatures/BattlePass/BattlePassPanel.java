@@ -1,3 +1,4 @@
+/*
 package Application.BonusFeatures.BattlePass;
 
 import javax.swing.*;
@@ -67,4 +68,4 @@ public class BattlePassPanel extends JPanel {
         });
     }
 }
-
+*/

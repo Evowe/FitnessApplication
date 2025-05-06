@@ -1,7 +1,5 @@
 package Application.TheSwoleSection.WorkoutLibrary;
 
-import Application.Utility.Objects.Workout;
-
 public class WorkoutLibraryViewModel {
     private WorkoutLibraryModel model;
 

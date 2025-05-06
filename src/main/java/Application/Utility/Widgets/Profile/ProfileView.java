@@ -56,7 +56,19 @@ public class ProfileView extends JPanel {
 
         FlatLabel profileTitle = new FlatLabel();
         profileTitle.putClientProperty(FlatClientProperties.STYLE, "font:italics +10; foreground:@accent;");
-        profileTitle.setText("Insert Title");
+
+        // Get the equipped title name from the database
+        String titleName = "No Title";
+        try {
+            String equippedTitleName = itemsDB.getEquippedTitleName(Main.getCurrentUser().getUsername());
+            if (equippedTitleName != null && !equippedTitleName.isEmpty()) {
+                titleName = equippedTitleName;
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading equipped title: " + e.getMessage());
+        }
+
+        profileTitle.setText(titleName);
 
         textPanel.add(profileName);
         textPanel.add(profileTitle);

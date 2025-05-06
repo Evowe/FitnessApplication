@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Streamer Feed</title>
+
+    <style>
+        body {
+            background-color: #212121;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;    
+            height: 100vh;        
+            margin: 0;               
+        }
+
+        h1 {
+            display: flex;
+            margin-bottom: 40px;
+            align-items: center;
+            font-size: 48px;
+            color: #ffffff;
+        }
+
+        h1 img {
+            height: 3em;
+            margin-right: 0.5em;
+        }
+
+        #localFeed {
+            aspect-ratio: 4/3;
+            height: 800px;
+            border: 2px solid #000;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        <img src="RocketHealthLogo.PNG" alt="Icon">
+        Trainer Feed
+    </h1>
+
+    <video id="localFeed" autoplay playsinline muted></video>
+
+    <script src="streamer.js"></script>
+</body>
+</html>

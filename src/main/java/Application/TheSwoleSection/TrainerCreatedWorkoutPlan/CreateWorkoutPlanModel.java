@@ -8,7 +8,6 @@ import Application.Utility.Objects.WorkoutPlan;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class CreateWorkoutPlanModel {
     WorkoutDB workoutDB;

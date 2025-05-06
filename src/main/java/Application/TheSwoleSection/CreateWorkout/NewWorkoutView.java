@@ -30,7 +30,9 @@ public class NewWorkoutView extends JPanel {
 	public NewWorkoutView() {
 		//Setup Main Panel Layout
 		viewModel = new NewWorkoutViewModel();
-		setLayout(new MigLayout("insets 20", "left", "top"));
+		//setLayout(new MigLayout("insets 20", "left", "top"));
+		setLayout(new MigLayout("fill, insets 20", "[]20[]", "center"));
+
 		putClientProperty(FlatClientProperties.STYLE, "background:@background");
 
 		add(new SideMenuView(), "growy, pushy");
@@ -129,7 +131,10 @@ public class NewWorkoutView extends JPanel {
 			} else if(descriptionField.getText().isEmpty() || nameField.getText().isEmpty() || durationField.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null,
 						"All fields must be filled.");
-			} else{
+			} else if(descriptionField.getText().length() > 100 || nameField.getText().length() > 100 || durationField.getText().length() > 100){
+				JOptionPane.showMessageDialog(null,
+						"No field can exceed 100 characters.");
+			} else {
 				workout.setDescription(descriptionField.getText());
 				workout.setDuration(Integer.parseInt(durationField.getText()));
 				workout.setName(nameField.getText());
