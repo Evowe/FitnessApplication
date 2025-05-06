@@ -94,7 +94,7 @@ public class LoginView extends JPanel {
                     Main.setCurrentUser(validatedAccount);
                     // Check role and redirect accordingly
                     if ("admin".equals(validatedAccount.getRole())) {
-                        Main.setWindow("AdminPage");
+                        Main.setWindow("AdminUsers");
                     } else {
                         Main.setWindow("HomePage");
                     }
@@ -127,7 +127,7 @@ public class LoginView extends JPanel {
                     Main.setCurrentUser(validatedAccount);
 
                     if ("admin".equals(validatedAccount.getRole())) {
-                        Main.setWindow("AdminPage");
+                        Main.setWindow("AdminUsers");
                     } else {
                         Main.setWindow("HomePage");
                     }

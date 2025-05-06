@@ -45,10 +45,10 @@ public class AdminUsersView {
 
 		//Top bar items
 		FlatButton backButton = new FlatButton();
-		backButton.setText("<-Back");
+		backButton.setText("Log Out");
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Main.setWindow("AdminDashboard");
+				Main.setWindow("LoginPage");
 			}
 		});
 

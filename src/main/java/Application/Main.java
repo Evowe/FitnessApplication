@@ -91,9 +91,6 @@ public class Main {
             case "MetricsPage" -> {
                 window.add(new MetricsView(currentUser));
             }
-            case "AdminPage" -> {
-                window.add(new AdminHomeView());
-            }
             case "currencyShopPage" -> {
                 window.add(currencyShopViewModel.getCurrencyView(currentUser));
             }
