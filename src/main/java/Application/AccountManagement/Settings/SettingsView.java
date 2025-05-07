@@ -17,8 +17,6 @@ public class SettingsView {
     private static JPasswordField newPassConfField;
     private static JLabel passwordError;
     private static JLabel confirmPasswordError;
-    private static JComboBox<String> themeSelector;
-    private static JCheckBox enableNotifications;
     private static JComboBox<String> weightUnitSelector;
 
     public SettingsView() {
@@ -102,28 +100,6 @@ public class SettingsView {
             }
         });
 
-        // Style appearance section with red text
-        JLabel appearanceLabel = new JLabel("Appearance");
-        appearanceLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:@foreground;");
-
-        JLabel themeLabel = new JLabel("Theme");
-        themeLabel.putClientProperty(FlatClientProperties.STYLE, "foreground:@foreground");
-
-        String[] themes = {"Dark Mode", "Light Mode"};
-        themeSelector = new JComboBox<>(themes);
-        themeSelector.setSelectedIndex(SettingsViewModel.getThemeIndex());
-        // Make dropdown more readable with dark background
-        themeSelector.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground; foreground:@foreground");
-
-        // Style notifications section with red text
-        JLabel notificationsLabel = new JLabel("Notifications");
-        notificationsLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:@foreground;");
-
-        enableNotifications = new JCheckBox("Enable Notifications");
-        enableNotifications.setSelected(SettingsViewModel.isNotificationsEnabled());
-        enableNotifications.setForeground(Color.WHITE);
-        enableNotifications.putClientProperty(FlatClientProperties.STYLE, "");
-
         // Style unit preferences section with red text
         JLabel unitPreferencesLabel = new JLabel("Unit Preferences");
         unitPreferencesLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +4; foreground:@foreground;");
@@ -144,8 +120,9 @@ public class SettingsView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 boolean success = SettingsViewModel.saveSettings(
-                        themeSelector.getSelectedIndex(),
-                        enableNotifications.isSelected(),
+                        //Killed some options because not enough time to implement
+                        SettingsViewModel.getThemeIndex(),  // Keep current theme
+                        SettingsViewModel.isNotificationsEnabled(),  // Keep current notification setting
                         weightUnitSelector.getSelectedItem().toString()
                 );
 
@@ -173,13 +150,6 @@ public class SettingsView {
         settingsPanel.add(newPassConfField, "growx");
         settingsPanel.add(confirmPasswordError, "gapy 0");
         settingsPanel.add(changePasswordButton, "growx");
-
-        settingsPanel.add(appearanceLabel, "gapy 20, growx");
-        settingsPanel.add(themeLabel, "growx");
-        settingsPanel.add(themeSelector, "growx");
-
-        settingsPanel.add(notificationsLabel, "gapy 20, growx");
-        settingsPanel.add(enableNotifications, "growx");
 
         settingsPanel.add(unitPreferencesLabel, "gapy 20, growx");
         settingsPanel.add(weightUnitLabel, "growx");

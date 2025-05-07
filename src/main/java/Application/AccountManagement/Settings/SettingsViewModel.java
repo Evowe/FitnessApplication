@@ -19,6 +19,8 @@ public class SettingsViewModel {
     }
 
     public static boolean saveSettings(int themeIndex, boolean notificationsEnabled, String weightUnit) {
+        // We still pass through the theme and notifications settings to maintain compatibility
+        // with the existing SettingsModel
         return SettingsModel.saveSettings(themeIndex, notificationsEnabled, weightUnit);
     }
 

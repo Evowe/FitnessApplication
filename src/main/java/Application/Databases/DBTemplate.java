@@ -71,14 +71,4 @@ public abstract class DBTemplate {
         }
     }
 
-    public static void closeConnection() {
-        try {
-            if (sharedConnection != null && !sharedConnection.isClosed()) {
-                sharedConnection.close();
-                sharedConnection = null;
-            }
-        } catch (SQLException e) {
-            System.out.println("Error closing connection: " + e.getMessage());
-        }
-    }
 }

@@ -152,10 +152,3 @@ public class BattlePassDB extends DBTemplate {
     }
 
 }
-
-/*
-            stmt.executeUpdate("INSERT INTO BattlePass (TierNumber, Title, Description, ImagePath, IsUnlocked) " +
-                    "VALUES (2, 'Pleb', 'A title to show your progress', '', 0)");
-
- */
-
