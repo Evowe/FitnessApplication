@@ -3,7 +3,6 @@ package Application.Utility.Widgets.DaysSinceLastWorkout;
 import Application.Databases.WorkoutLogDB;
 import Application.Utility.Objects.Workout;
 import com.formdev.flatlaf.FlatClientProperties;
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,19 +20,34 @@ public class DaysSinceLastWorkoutView extends JPanel {
         this.username = username;
         this.workoutLogDB = new WorkoutLogDB();
 
-        setLayout(new MigLayout("wrap, fillx, insets 20", "center", "center"));
+        setLayout(new BorderLayout());
         putClientProperty(FlatClientProperties.STYLE, "arc:20; background:@secondaryBackground");
+
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setOpaque(false); // Make it transparent
+
+        contentPanel.add(Box.createVerticalGlue());
 
         JLabel title = new JLabel("Days Since Last Workout");
         title.putClientProperty(FlatClientProperties.STYLE, "font: +24");
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setHorizontalAlignment(SwingConstants.CENTER);
 
         daysCounter = new JLabel("--");
         daysCounter.putClientProperty(FlatClientProperties.STYLE, "font: +90");
+        daysCounter.setAlignmentX(Component.CENTER_ALIGNMENT);
+        daysCounter.setHorizontalAlignment(SwingConstants.CENTER);
 
-        add(title, "align center");
-        add(daysCounter, "align center");
+        contentPanel.add(title);
+        contentPanel.add(Box.createVerticalStrut(10)); // Space between title and counter
+        contentPanel.add(daysCounter);
 
-        // Calculate and update days since last workout
+        contentPanel.add(Box.createVerticalGlue());
+
+        add(contentPanel, BorderLayout.CENTER);
+        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
         updateDaysCounter();
     }
 
@@ -50,11 +64,9 @@ public class DaysSinceLastWorkoutView extends JPanel {
                 // Calculate days difference
                 int daysSince = (int) ChronoUnit.DAYS.between(workoutDate, today);
 
-                // Update the counter
                 daysCounter.setText(String.valueOf(daysSince));
 
             } else {
-                // No workout found - handle this case
                 daysCounter.setText("0");
                 daysCounter.setForeground(new Color(150, 150, 150)); // Gray
             }
@@ -66,12 +78,10 @@ public class DaysSinceLastWorkoutView extends JPanel {
     }
 
     private LocalDate parseDate(String dateStr) {
-        // Adjust the formatter pattern based on your actual date format in the database
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             return LocalDate.parse(dateStr, formatter);
         } catch (Exception e) {
-            // Try alternative format if the first one fails
             try {
                 DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
                 return LocalDate.parse(dateStr.split("T")[0]);
@@ -82,7 +92,6 @@ public class DaysSinceLastWorkoutView extends JPanel {
         }
     }
 
-    // Method to refresh the widget (can be called after workout is added/updated)
     public void refresh() {
         updateDaysCounter();
     }

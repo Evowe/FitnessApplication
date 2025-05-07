@@ -42,7 +42,7 @@ public class ProfileView extends JPanel {
             }
         } else {
             // No equipped rocket, use default SVG
-            FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 300, 300);
+            FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 275, 275);
             profileButton.setIcon(icon);
         }
 
