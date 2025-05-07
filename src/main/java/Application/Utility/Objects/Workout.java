@@ -13,6 +13,7 @@ public class Workout {
     private String Date;
     private String exerciseId;
     private List<Exercise> exercises = new ArrayList<>();
+    protected String Author;
 
     public Workout(String name, String description, int duration, int CaloriesBurned, String Date, List<Exercise> exercises) {
         this.name = name;

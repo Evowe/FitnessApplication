@@ -330,42 +330,49 @@ public class ModifiyWorkoutPlan extends JPanel {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(nameField.getText().isEmpty() || goalField.getText().isEmpty()
-                        || intensityField.getText().isEmpty() || durationField.getText().isEmpty()) {
+                if (Main.getCurrentUser().getUsername().equals(plan.getAuthor())) {
+                    if (nameField.getText().isEmpty() || goalField.getText().isEmpty()
+                            || intensityField.getText().isEmpty() || durationField.getText().isEmpty()) {
 
-                    JOptionPane.showMessageDialog(null,
-                            "All fields must be filled.");
+                        JOptionPane.showMessageDialog(null,
+                                "All fields must be filled.");
 
-                } else if(nameField.getText().length() > 100 || goalField.getText().length() > 100
-                        || intensityField.getText().length() > 100 || durationField.getText().length() > 100) {
+                    } else if (nameField.getText().length() > 100 || goalField.getText().length() > 100
+                            || intensityField.getText().length() > 100 || durationField.getText().length() > 100) {
 
-                    JOptionPane.showMessageDialog(null,
-                            "No field can exceed 100 characters.");
+                        JOptionPane.showMessageDialog(null,
+                                "No field can exceed 100 characters.");
 
-                } else{
-                    plan.setGoal(goalField.getText());
-                    plan.setDurationInWeeks(Integer.parseInt(durationField.getText()));
-                    plan.setIntensity(Integer.parseInt(intensityField.getText()));
+                    } else {
+                        plan.setGoal(goalField.getText());
+                        plan.setDurationInWeeks(Integer.parseInt(durationField.getText()));
+                        plan.setIntensity(Integer.parseInt(intensityField.getText()));
 
-                    List<Workout> workoutSchedule = new ArrayList<>();
+                        List<Workout> workoutSchedule = new ArrayList<>();
 
-                    workoutSchedule.add((Workout) mondayWorkoutComboBox.getSelectedItem());
-                    workoutSchedule.add((Workout) tuesdayWorkoutComboBox.getSelectedItem());
-                    workoutSchedule.add((Workout) wednesdayWorkoutComboBox.getSelectedItem());
-                    workoutSchedule.add((Workout) thursdayWorkoutComboBox.getSelectedItem());
-                    workoutSchedule.add((Workout) fridayWorkoutComboBox.getSelectedItem());
-                    workoutSchedule.add((Workout) saturdayWorkoutComboBox.getSelectedItem());
-                    workoutSchedule.add((Workout) sundayWorkoutComboBox.getSelectedItem());
+                        workoutSchedule.add((Workout) mondayWorkoutComboBox.getSelectedItem());
+                        workoutSchedule.add((Workout) tuesdayWorkoutComboBox.getSelectedItem());
+                        workoutSchedule.add((Workout) wednesdayWorkoutComboBox.getSelectedItem());
+                        workoutSchedule.add((Workout) thursdayWorkoutComboBox.getSelectedItem());
+                        workoutSchedule.add((Workout) fridayWorkoutComboBox.getSelectedItem());
+                        workoutSchedule.add((Workout) saturdayWorkoutComboBox.getSelectedItem());
+                        workoutSchedule.add((Workout) sundayWorkoutComboBox.getSelectedItem());
 
-                    plan.setWorkoutSchedule(workoutSchedule);
-                    viewModelWP.updateWorkoutPlan(plan);
+                        plan.setWorkoutSchedule(workoutSchedule);
+                        viewModelWP.updateWorkoutPlan(plan);
 
-                    JOptionPane.showMessageDialog(table, "Changes saved");
+                        JOptionPane.showMessageDialog(table, "Changes saved");
 
+                        Main.setWindow("Workout");
+                        WorkoutView.setView("WorkoutPlans");
+                    }
+
+                }
+                else {
+                    JOptionPane.showMessageDialog(table, "Error, you do not own this plan.");
                     Main.setWindow("Workout");
                     WorkoutView.setView("WorkoutPlans");
                 }
-
             }
         });
 
