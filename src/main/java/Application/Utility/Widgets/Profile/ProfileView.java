@@ -33,16 +33,16 @@ public class ProfileView extends JPanel {
         if (iconPath != null) {
             try {
                 ImageIcon rocketIcon = new ImageIcon(iconPath);
-                Image scaledImg = rocketIcon.getImage().getScaledInstance(275, 275, Image.SCALE_SMOOTH);
+                Image scaledImg = rocketIcon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
                 profileButton.setIcon(new ImageIcon(scaledImg));
             } catch (Exception e) {
                 System.err.println("Error loading rocket image: " + e.getMessage());
-                FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 275, 275);
+                FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 250, 250);
                 profileButton.setIcon(icon);
             }
         } else {
             // No equipped rocket, use default SVG
-            FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 275, 275);
+            FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 250, 250);
             profileButton.setIcon(icon);
         }
 
