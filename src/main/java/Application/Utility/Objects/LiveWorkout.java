@@ -23,8 +23,9 @@ public class LiveWorkout extends Workout {
 		this.duration = duration;
 		this.Users = 0;
 	}
-	
-	public Boolean getLive() {
+
+
+    public Boolean getLive() {
 		return live;
 	}
 

@@ -37,9 +37,6 @@ public class ExerciseDB extends DBTemplate {
         createTable(TABLE_NAME, exerciseColumns);
     }
 
-    /**
-     * Checks if an exercise with the given name already exists
-     */
     public boolean exerciseExists(String name) throws SQLException {
         String sql = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE Name = ?";
 

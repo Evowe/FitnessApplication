@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class NewWorkoutModel {
     WorkoutDB workoutDB;
 
-    NewWorkoutModel(){
+    public NewWorkoutModel(){
         workoutDB = new WorkoutDB();
     }
 

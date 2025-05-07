@@ -14,10 +14,10 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class WorkoutScheduleModel {
-    WorkoutPlanDB workoutPlanDB;
-    WorkoutPlanLogDB workoutPlanLogDB;
-    WorkoutDB workoutDB;
-    ExerciseDB exerciseDB;
+    public WorkoutPlanDB workoutPlanDB;
+    public WorkoutPlanLogDB workoutPlanLogDB;
+    public WorkoutDB workoutDB;
+    public ExerciseDB exerciseDB;
 
     public WorkoutScheduleModel() {
         workoutPlanDB = new WorkoutPlanDB();

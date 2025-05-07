@@ -8,7 +8,7 @@ import Application.Utility.Objects.LiveWorkout;
 public class NewLiveWorkoutModel {
 	LiveWorkoutDB db;
 
-    NewLiveWorkoutModel(){
+    public NewLiveWorkoutModel(){
         db = new LiveWorkoutDB();
     }
 

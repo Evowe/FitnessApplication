@@ -50,21 +50,6 @@ public class WorkoutPlanDB extends DBTemplate {
         }
     }
 
-    public String getAuthor(WorkoutPlan workoutPlan) throws SQLException {
-        String sql = "SELECT Author FROM WorkoutPlan WHERE name = ?";
-
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, workoutPlan.getAuthor());
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getString("Author");
-            }
-
-        }
-        return "Error No Author";
-    }
-
     public Map<WorkoutPlan, String> getAllWorkoutPlans() throws SQLException {
         String sql = "SELECT * FROM WorkoutPlan";
 
@@ -128,6 +113,18 @@ public class WorkoutPlanDB extends DBTemplate {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error updating goal: " + e.getMessage());
+            throw e;
+        }
+    }
+    public void deleteWorkoutPlan(String planName) throws SQLException {
+        String sql = "DELETE FROM WorkoutPlan WHERE name = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, planName);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting workout plan from DB: " + e.getMessage());
             throw e;
         }
     }

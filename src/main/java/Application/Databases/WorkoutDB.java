@@ -167,32 +167,6 @@ public class WorkoutDB extends DBTemplate {
 		return Workouts;
 	}
 
-	public Map<Workout, String> getAllWorkoutsWithExerciseList() throws SQLException {
-		Map<Workout, String> Workouts = new HashMap<>();
-		String sql = "SELECT * FROM " + WORKOUTS_TABLE;
-
-		try (Connection conn = getConnection();
-			 PreparedStatement pst = conn.prepareStatement(sql)) {
-			//pst.setString(1, username);
-			try (ResultSet rs = pst.executeQuery()) {
-				while (rs.next()) {
-					String name = rs.getString("Name");
-					String description = rs.getString("Description");
-					int duration = rs.getInt("Duration");
-					int caloriesBurned = rs.getInt("CaloriesBurned");
-					String date = rs.getString("Date");
-					String exercises = rs.getString("Exercises");
-
-					Workout workout = new Workout(name, description, duration, caloriesBurned, date);
-					Workouts.put(workout, exercises);
-				}
-			}
-		}
-
-		return Workouts;
-	}
-
-
 
 	public boolean deleteWorkout(String username, String name) throws SQLException {
 		String workoutSql = "DELETE FROM " + WORKOUTS_TABLE + " WHERE name = ? AND username = ?";

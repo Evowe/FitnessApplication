@@ -301,43 +301,4 @@ public class MessagesDB extends DBTemplate{
         return responses;
     }
 
-    public List<Message> getAllSentMessages(String senderUsername) throws SQLException{
-        //db query to select the user
-        String sql = "SELECT * FROM messages WHERE sender = ?";
-        List<Message> sentMessages = new ArrayList<>();
-
-        try(Connection con = getConnection();
-            PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setString(1, senderUsername);
-
-            ResultSet rs = pstmt.executeQuery();
-
-            sentMessages = new ArrayList<>();
-
-            //Process all query results and creates new message object for each row
-            while(rs.next()){
-                Message m = new Message(
-                        rs.getString("message"),
-                        Account.getAccount(rs.getString("sender")),
-                        Account.getAccount(rs.getString("receiver")),
-                        Message.getType(rs.getString("type")),
-                        rs.getString("response"),
-                        Message.getType(rs.getString("responseType"))
-                );
-
-                sentMessages.add(m);
-
-            }
-
-            rs.close();
-        } catch (SQLException e){
-            System.out.println("Error getting messages");
-            throw e;
-        }
-
-        return sentMessages;
-    }
-
-
-
 }

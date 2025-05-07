@@ -190,7 +190,9 @@ public class WorkoutScheduleView extends JPanel {
     }
 
     public static void reloadDay(String date){
-        centerBottom.removeAll();
+        if (centerBottom != null) {
+            centerBottom.removeAll();
+        }
 
         if(equippedWorkoutPlan != null) {
             //Check if the plan date is still valid
@@ -306,11 +308,13 @@ public class WorkoutScheduleView extends JPanel {
         } else{
             JLabel titleLabel = new JLabel("No Scheduled Workouts");
             titleLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold +12");
-            centerBottom.add(titleLabel);
-            centerBottom.repaint();
-            centerBottom.revalidate();
-            center.add(centerBottom, BorderLayout.SOUTH);
-            main.add(center, BorderLayout.CENTER);
+            if (centerBottom != null) {
+                centerBottom.add(titleLabel);
+                centerBottom.repaint();
+                centerBottom.revalidate();
+                center.add(centerBottom, BorderLayout.SOUTH);
+                main.add(center, BorderLayout.CENTER);
+            }
         }
     }
 }

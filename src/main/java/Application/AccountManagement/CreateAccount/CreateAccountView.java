@@ -92,6 +92,18 @@ public class CreateAccountView extends JPanel {
         confirmPasswordField.setPlaceholderText("Confirm password");
         JLabel confirmPasswordError = new JLabel("");
 
+        // Add role selection dropdown (only User and Trainer options)
+        JLabel roleLabel = new JLabel("Account Type");
+        roleLabel.putClientProperty(FlatClientProperties.STYLE, "font:bold;");
+
+        String[] roles = {"User", "Trainer"};
+        JComboBox<String> roleSelect = new JComboBox(roles);
+        roleSelect.putClientProperty(FlatClientProperties.STYLE, "arc:10;");
+        roleSelect.setSelectedIndex(0); // Default to User
+
+        JLabel roleDescription = new JLabel("Select your account type");
+        roleDescription.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground;");
+
         // Security Questions Section
         JLabel securityQuestionsTitle = new JLabel("Security Questions");
         securityQuestionsTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold;");
@@ -145,7 +157,10 @@ public class CreateAccountView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent event) {
                 boolean valid = true;
-                Account account = new Account(usernameField.getText(), passwordField.getText());
+
+                // Create account with selected role
+                String selectedRole = ((String) roleSelect.getSelectedItem()).toLowerCase();
+                Account account = new Account(usernameField.getText(), passwordField.getText(), "active", selectedRole);
 
                 // Clear all error messages
                 usernameError.setText("");
@@ -272,6 +287,11 @@ public class CreateAccountView extends JPanel {
         createAccountMenu.add(new JLabel("Confirm Password"), "gapy 8");
         createAccountMenu.add(confirmPasswordField);
         createAccountMenu.add(confirmPasswordError, "gapy 0");
+
+        // Add role selection before security questions
+        createAccountMenu.add(roleLabel, "gapy 16");
+        createAccountMenu.add(roleDescription);
+        createAccountMenu.add(roleSelect, "gapy 4");
 
         // Add security questions section
         createAccountMenu.add(securityQuestionsTitle, "gapy 16");
