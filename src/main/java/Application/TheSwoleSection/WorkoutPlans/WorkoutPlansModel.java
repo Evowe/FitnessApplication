@@ -145,6 +145,7 @@ public class WorkoutPlansModel {
 
     public void updateWorkoutPlan(WorkoutPlan workoutPlan){
        try{
+           System.out.println("updateWorkoutPlan");
            workoutPlanDB.updateWorkoutPlan(workoutPlan);
        } catch (SQLException e){
            e.printStackTrace();

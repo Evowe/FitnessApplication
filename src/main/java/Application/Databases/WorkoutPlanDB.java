@@ -11,16 +11,19 @@ import java.util.Map;
 
 public class WorkoutPlanDB extends DBTemplate {
 
-    public WorkoutPlanDB() {super("WorkoutPlan");}
+    public WorkoutPlanDB() {
+        super("WorkoutPlan");
+    }
 
     @Override
     protected void createTables() throws SQLException {
-        String [] columns = {
+        String[] columns = {
                 "name TEXT NOT NULL",
                 "goal TEXT NOT NULL",
                 "duration INTEGER NOT NULL",
                 "intensity INTEGER NOT NULL",
-                "workoutSchedule TEXT NOT NULL"
+                "workoutSchedule TEXT NOT NULL",
+                "Author TEXT NOT NULL"
         };
 
         createTable("WorkoutPlan", columns);
@@ -29,21 +32,37 @@ public class WorkoutPlanDB extends DBTemplate {
 
 
     public void addWorkoutPlan(WorkoutPlan workoutPlan) throws SQLException {
-        String sql = "INSERT INTO WorkoutPlan (name, goal, duration, intensity, workoutSchedule) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO WorkoutPlan (name, goal, duration, intensity, workoutSchedule, Author) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try(Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, workoutPlan.getName());
             ps.setString(2, workoutPlan.getGoal());
             ps.setInt(3, workoutPlan.getDurationInWeeks());
             ps.setInt(4, workoutPlan.getIntensity());
             ps.setString(5, workoutPlan.getWorkoutSchedule().toString());
+            ps.setString(6, workoutPlan.getAuthor());
 
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error adding workout plan to DB: " + e.getMessage());
             throw e;
         }
+    }
+
+    public String getAuthor(WorkoutPlan workoutPlan) throws SQLException {
+        String sql = "SELECT Author FROM WorkoutPlan WHERE name = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, workoutPlan.getAuthor());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("Author");
+            }
+
+        }
+        return "Error No Author";
     }
 
     public Map<WorkoutPlan, String> getAllWorkoutPlans() throws SQLException {
@@ -60,6 +79,7 @@ public class WorkoutPlanDB extends DBTemplate {
                 workoutPlan.setDurationInWeeks(rs.getInt("duration"));
                 workoutPlan.setIntensity(rs.getInt("intensity"));
                 String workouts = rs.getString("workoutSchedule");
+                workoutPlan.setAuthor(rs.getString("Author"));
                 workoutPlans.put(workoutPlan, workouts);
             }
         }
@@ -84,6 +104,7 @@ public class WorkoutPlanDB extends DBTemplate {
                 workoutPlan.setDurationInWeeks(rs.getInt("duration"));
                 workoutPlan.setIntensity(rs.getInt("intensity"));
                 String workouts = rs.getString("workoutSchedule");
+                workoutPlan.setAuthor(rs.getString("Author"));
                 workoutPlans.put(workoutPlan, workouts);
             }
         }
@@ -102,6 +123,7 @@ public class WorkoutPlanDB extends DBTemplate {
             pstmt.setInt(3, workoutPlan.getIntensity());
             pstmt.setString(4, workoutPlan.getWorkoutSchedule().toString());
             pstmt.setString(5, workoutPlan.getName());
+            //pstmt.setString(6, workoutPlan.getAuthor());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

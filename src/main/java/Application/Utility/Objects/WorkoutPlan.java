@@ -14,15 +14,17 @@ public class WorkoutPlan {
 
 
     Integer intensity = 0;
+    String Author = "";
 
     public WorkoutPlan(){}
 
-    public WorkoutPlan(String name, String goal, Integer durationInWeeks, List<Workout> workoutSchedule, Integer intensity) {
+    public WorkoutPlan(String name, String goal, Integer durationInWeeks, List<Workout> workoutSchedule, Integer intensity, String Author) {
         this.name = name;
         this.goal = goal;
         this.durationInWeeks = durationInWeeks;
         this.workoutSchedule = workoutSchedule;
         this.intensity = intensity;
+        this.Author = Author;
     }
 
     public String getName() {
@@ -63,5 +65,13 @@ public class WorkoutPlan {
 
     public void setIntensity(Integer intensity) {
         this.intensity = intensity;
+    }
+
+    public String getAuthor() {
+        return Author;
+    }
+
+    public void setAuthor(String Author) {
+        this.Author = Author;
     }
 }
