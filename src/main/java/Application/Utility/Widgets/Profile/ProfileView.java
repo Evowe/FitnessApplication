@@ -13,14 +13,14 @@ import java.awt.*;
 
 public class ProfileView extends JPanel {
     public ProfileView() {
-        setLayout(new MigLayout("fillx, insets 15", "center", "center"));
+        setLayout(new MigLayout("fill, insets 15", "[center]", "[center]"));
         putClientProperty(FlatClientProperties.STYLE, "arc:20;");
 
         FlatButton profileButton = new FlatButton();
         profileButton.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground; arc:250;");
         profileButton.setBorderPainted(false);
         profileButton.setMinimumSize(new Dimension(250,250));
-
+        profileButton.setPreferredSize(new Dimension(250,250)); // Added preferred size
 
         String iconPath = null;
         ItemsDB itemsDB = DatabaseManager.getItemsDB();
@@ -31,31 +31,36 @@ public class ProfileView extends JPanel {
         }
 
         if (iconPath != null) {
-            // Load the rocket image
             try {
                 ImageIcon rocketIcon = new ImageIcon(iconPath);
-                Image scaledImg = rocketIcon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+                Image scaledImg = rocketIcon.getImage().getScaledInstance(275, 275, Image.SCALE_SMOOTH);
                 profileButton.setIcon(new ImageIcon(scaledImg));
             } catch (Exception e) {
-                // Fallback to default if image loading fails
                 System.err.println("Error loading rocket image: " + e.getMessage());
-                FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 250, 250);
+                FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 275, 275);
                 profileButton.setIcon(icon);
             }
         } else {
             // No equipped rocket, use default SVG
-            FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 250, 250);
+            FlatSVGIcon icon = new FlatSVGIcon("Icons/user-circle.svg", 300, 300);
             profileButton.setIcon(icon);
         }
 
-        JPanel textPanel = new JPanel(new MigLayout("wrap, insets 0, gapy 0"));
+        JPanel contentPanel = new JPanel(new MigLayout("wrap, fillx, insets 0", "[center]", "[][]"));
+
+        contentPanel.add(profileButton, "center");
+
+        JPanel textPanel = new JPanel(new MigLayout("wrap, insets 0, gapy 0", "[center]", "[][]"));
+        textPanel.setOpaque(false); // Make panel background transparent
 
         FlatLabel profileName = new FlatLabel();
         profileName.putClientProperty(FlatClientProperties.STYLE, "font:bold +20;");
         profileName.setText(Main.getCurrentUser().getUsername());
+        profileName.setHorizontalAlignment(SwingConstants.CENTER); // Center the text
 
         FlatLabel profileTitle = new FlatLabel();
         profileTitle.putClientProperty(FlatClientProperties.STYLE, "font:italics +10; foreground:@accent;");
+        profileTitle.setHorizontalAlignment(SwingConstants.CENTER); // Center the text
 
         // Get the equipped title name from the database
         String titleName = "No Title";
@@ -70,10 +75,13 @@ public class ProfileView extends JPanel {
 
         profileTitle.setText(titleName);
 
-        textPanel.add(profileName);
-        textPanel.add(profileTitle);
+        textPanel.add(profileName, "center");
+        textPanel.add(profileTitle, "center");
 
-        add(profileButton);
-        add(textPanel);
+        // Add text panel to content panel
+        contentPanel.add(textPanel, "center");
+
+        // Add the content panel to the main panel
+        add(contentPanel, "center");
     }
 }

@@ -20,14 +20,9 @@ public class GraphView extends JFrame {
         UIManager.put("defaultFont", new Font(FlatRobotoMonoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-//        int[] x = {1,2,3,4,5,6,7,8,9,10};
-//        int[] y = {1,2,3,4,5,6,7,8,9,10};
         for(int i=0; i<x.size(); i++) {
             dataset.addValue(y.get(i),yAxis, Integer.toString(x.get(i)));
         }
-//        dataset.addValue(1, "Series1", "2020");
-//        dataset.addValue(3, "Series1", "2021");
-//        dataset.addValue(2, "Series1", "2022");
 
         JFreeChart chart = ChartFactory.createLineChart(
                 title,
