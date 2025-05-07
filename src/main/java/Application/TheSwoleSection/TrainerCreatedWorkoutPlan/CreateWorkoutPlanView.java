@@ -299,6 +299,7 @@ public class CreateWorkoutPlanView extends JPanel {
 
             } else{
                 workoutPlan.setName(nameField.getText());
+                workoutPlan.setAuthor(Main.getCurrentUser().getUsername());
                 workoutPlan.setGoal(goalField.getText());
                 workoutPlan.setIntensity(Integer.parseInt(intensityField.getText()));
                 workoutPlan.setDurationInWeeks(Integer.parseInt(durationField.getText()));
