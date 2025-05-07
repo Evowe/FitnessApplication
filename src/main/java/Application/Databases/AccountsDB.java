@@ -527,19 +527,6 @@ public class AccountsDB extends DBTemplate {
         return false;
     }
 
-    public boolean resetPasswordWithSecurityAnswers(String username,
-                                                    String answer1,
-                                                    String answer2,
-                                                    String answer3,
-                                                    String newPassword) throws SQLException {
-        if (!verifySecurityAnswer(username, 1, answer1) ||
-                !verifySecurityAnswer(username, 2, answer2) ||
-                !verifySecurityAnswer(username, 3, answer3)) {
-            return false;
-        }
-        return changePassword(username, newPassword);
-    }
-
     public String getQuestionText(int questionId) {
         if (questionId >= 0 && questionId < SECURITY_QUESTIONS.length) {
             return SECURITY_QUESTIONS[questionId];

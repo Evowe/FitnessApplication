@@ -50,21 +50,6 @@ public class WorkoutPlanDB extends DBTemplate {
         }
     }
 
-    public String getAuthor(WorkoutPlan workoutPlan) throws SQLException {
-        String sql = "SELECT Author FROM WorkoutPlan WHERE name = ?";
-
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, workoutPlan.getAuthor());
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getString("Author");
-            }
-
-        }
-        return "Error No Author";
-    }
-
     public Map<WorkoutPlan, String> getAllWorkoutPlans() throws SQLException {
         String sql = "SELECT * FROM WorkoutPlan";
 

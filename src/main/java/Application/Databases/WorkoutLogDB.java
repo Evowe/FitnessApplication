@@ -28,8 +28,6 @@ public class WorkoutLogDB extends DBTemplate {
         };
         createTable(WORKOUTS_TABLE, workoutColumns);
 
-        //TODO IM NOT SURE IF THIS IS NEEDED
-        // Create Exercises table with Description field
 
     }
     //TODO FIX
