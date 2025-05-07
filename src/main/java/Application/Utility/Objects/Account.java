@@ -21,6 +21,10 @@ public class Account {
     private CreditCard card;
     private int Xp;
 
+    public Account() {
+
+    }
+
 
     private static AccountsDB getAccountsDB() {
         return DatabaseManager.getAccountsDB();
@@ -143,6 +147,7 @@ public class Account {
     public Boolean hasCard() {return card != null;}
 
     public void addAccount() throws SQLException {
+        //getAccountsDB().setupSecurityQuestions(username,1,"a",2,"b",3,"c");
         getAccountsDB().addAccount(this);
     }
 

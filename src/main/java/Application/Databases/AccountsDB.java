@@ -504,8 +504,8 @@ public class AccountsDB extends DBTemplate {
     }
 
     public boolean verifySecurityAnswer(String username, int questionNumber, String answer) throws SQLException {
-        if (questionNumber < 1 || questionNumber > 3) {
-            throw new IllegalArgumentException("Question number must be 1, 2, or 3");
+        if (questionNumber < 0 || questionNumber > 3) {
+            throw new IllegalArgumentException("Question number must be 0,1, or 2");
         }
 
         String answerColumn = "answer" + questionNumber;
@@ -609,6 +609,61 @@ public class AccountsDB extends DBTemplate {
                     stmt.executeUpdate("ALTER TABLE accounts ADD COLUMN " + column);
                 }
             }
+        }
+    }
+
+    public boolean linkCreditCardToAccount(String username, String cardNumber) throws SQLException {
+        String sql = "UPDATE accounts SET linkedCardNumber = ? WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, cardNumber);
+            pstmt.setString(2, username);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+    public boolean deleteUser(String username) throws SQLException {
+        if (!usernameExists(username)) {
+            System.out.println("Error: User does not exist.");
+            return false;
+        }
+
+        String deleteSecurityQuestionsSql = "DELETE FROM security_questions WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(deleteSecurityQuestionsSql)) {
+
+            pstmt.setString(1, username);
+            pstmt.executeUpdate();
+
+            System.out.println("Security questions removed for user: " + username);
+        } catch (SQLException e) {
+            System.out.println("Error deleting security questions: " + e.getMessage());
+            throw e;
+        }
+
+        // Now delete from the accounts table
+        String deleteAccountSql = "DELETE FROM accounts WHERE username = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(deleteAccountSql)) {
+
+            pstmt.setString(1, username);
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Account deleted successfully: " + username);
+                return true;
+            } else {
+                System.out.println("Error: Could not delete account.");
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error deleting account: " + e.getMessage());
+            throw e;
         }
     }
 
