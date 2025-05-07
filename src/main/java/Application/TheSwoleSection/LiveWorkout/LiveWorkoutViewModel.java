@@ -1,9 +1,13 @@
 package Application.TheSwoleSection.LiveWorkout;
 
+import Application.Databases.LiveWorkoutDB;
+import Application.Utility.Objects.LiveWorkout;
+
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 
 public class LiveWorkoutViewModel {
     private LiveWorkoutModel model;
@@ -43,7 +47,7 @@ public class LiveWorkoutViewModel {
     public void joinStream() {
     	try {
     		URI url = new URI(streamURL + "/viewer.html");
-    		
+
     		if (Desktop.isDesktopSupported()) {
     			Desktop.getDesktop().browse(url);
     		} else {
@@ -57,4 +61,16 @@ public class LiveWorkoutViewModel {
 			e2.printStackTrace();
 		}
     }
+
+	public void addUserToWorkout(String workoutName) {
+		try {
+			LiveWorkout workout = model.getWorkoutByName(workoutName); // implement this in model
+			if (workout != null) {
+				LiveWorkoutDB db = new LiveWorkoutDB();
+				db.incrementUserCountByNameAndStartTime(workout.getName(), workout.getStartTime());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

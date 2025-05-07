@@ -1,5 +1,6 @@
 package Application.TheSwoleSection.LiveWorkout;
 
+import Application.Databases.LiveWorkoutDB;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatLabel;
@@ -14,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 //Made from scratch from WorkoutLibraryView
 public class LiveWorkoutView extends JPanel {
@@ -24,8 +26,6 @@ public class LiveWorkoutView extends JPanel {
         //View Model
         viewModel = new LiveWorkoutViewModel();
 
-		Main.getCurrentUser().setRole("trainer");
-        
         System.out.println(Main.getCurrentUser().getRole());
 
         //Setup Main Panel Layout
@@ -83,13 +83,15 @@ public class LiveWorkoutView extends JPanel {
 					if (val.equals("Join")) {
 						if (Main.getCurrentUser().getRole().equals("trainer")) {
 							viewModel.startStream();
-							
+
 						} else {
+                            viewModel.getWorkoutData();
+							System.out.println("Workout name: " + table.getValueAt(row, 0).toString());
+							viewModel.addUserToWorkout(table.getValueAt(row, 0).toString());
 							viewModel.joinStream();
 						}
 					}
-				
-				
+
 				}
 			}
 		});
@@ -126,8 +128,30 @@ public class LiveWorkoutView extends JPanel {
 				   Main.setWindow("NewLiveWorkout");
 	           }
 	       });
+
+		   FlatButton viewStats = new FlatButton();
+		   viewStats.setMinimumHeight(35);
+		   viewStats.setMinimumWidth(200);
+		   viewStats.setText("View Stats");
+		   viewStats.addActionListener(new ActionListener() {
+			   @Override
+			   public void actionPerformed(ActionEvent event) {
+				   System.out.println("tried to see stats");
+                   try {
+                       JOptionPane.showMessageDialog(null,
+                               "you have had: " +
+                               LiveWorkoutDB.getTotalUserCountByTrainerId(Main.getCurrentUser().getId()) +
+                               " users in your classes");
+                   } catch (SQLException e) {
+                       throw new RuntimeException(e);
+                   }
+
+
+               }
+		   });
 	
 	       buttonPanel.add(createWorkout);
+		   buttonPanel.add(viewStats);
 	
 	       main.add(buttonPanel, BorderLayout.SOUTH);
        }
