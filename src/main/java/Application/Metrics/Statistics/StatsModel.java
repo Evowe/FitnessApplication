@@ -13,7 +13,7 @@ import java.util.Map;
 public class StatsModel {
     public Account acc;
     public final StatsDB statsDB;
-    StatsModel(Account acc) {
+    public StatsModel(Account acc) {
         this.acc = acc;
         this.statsDB = DatabaseManager.getStatsDB();
     }

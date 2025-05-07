@@ -1,4 +1,4 @@
-package BackEndTesting;
+package BackEndTesting.AccountManagementTesting;
 
 import Application.AccountManagement.ResetPassword.ResetPasswordModel;
 import Application.Databases.AccountsDB;

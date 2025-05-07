@@ -1,4 +1,4 @@
-package BackEndTesting;
+package BackEndTesting.AccountManagementTesting;
 
 import Application.AccountManagement.CreateAccount.CreateAccountModel;
 import org.testng.annotations.Test;

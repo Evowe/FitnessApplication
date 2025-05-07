@@ -19,7 +19,7 @@ public class ReportModel {
     private WorkoutDB workoutDB;
 
     private Account acc;
-    ReportModel(Account acc) {
+    public ReportModel(Account acc) {
         this.acc = acc;
         workoutPlanLogDB = new WorkoutPlanLogDB();
         workoutPlanDB = new WorkoutPlanDB();

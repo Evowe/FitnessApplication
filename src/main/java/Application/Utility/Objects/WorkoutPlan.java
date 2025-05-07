@@ -74,4 +74,8 @@ public class WorkoutPlan {
     public void setAuthor(String Author) {
         this.Author = Author;
     }
+
+    public void setDescription(String s) {
+
+    }
 }

@@ -1,4 +1,4 @@
-package BackEndTesting;
+package BackEndTesting.AccountManagementTesting;
 
 import Application.AccountManagement.Login.LoginModel;
 import Application.Utility.Objects.Account;

@@ -131,5 +131,17 @@ public class WorkoutPlanDB extends DBTemplate {
             throw e;
         }
     }
+    public void deleteWorkoutPlan(String planName) throws SQLException {
+        String sql = "DELETE FROM WorkoutPlan WHERE name = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, planName);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error deleting workout plan from DB: " + e.getMessage());
+            throw e;
+        }
+    }
 
 }
