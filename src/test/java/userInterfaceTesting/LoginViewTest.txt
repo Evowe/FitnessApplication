@@ -1,8 +1,8 @@
 Test Case #1: Valid Login Information
 
 Test Steps:
-	1. Enter a valid username in the username textfield
-	2. Enter a valid password in the password textfield
+	1. Enter "goduser" in the username textfield
+	2. Enter "password" in the password textfield
 	3. Click on the button that says "Log In"
 Expected Results:
 	- User should be redirected to the landing page
@@ -13,8 +13,8 @@ Actual Results:
 Test Case #2: Invalid Username
 
 Test Steps:
-	1. Enter an invalid username in the username textfield
-	2. Enter a password(valid or invalid) in the password textfield
+	1. Enter "a" in the username textfield
+	2. Enter "password" in the password textfield
 	3. Click on the button that says "Log In"
 Expected Results:
 	- User should remain on the login page
@@ -29,8 +29,8 @@ Actual Results:
 Test Case #3: Invalid Password
 
 Test Steps:
-        1. Enter a valid username in the username textfield
-        2. Enter an invalid password in the password textfield
+        1. Enter "goduser" in the username textfield
+        2. Enter "a" in the password textfield
         3. Click on the button that says "Log In"
 Expected Results:
         - User should remain on the login page
@@ -45,7 +45,7 @@ Actual Result:
 Test Case #4: Hide Password
 
 Test Steps:
-	1. Type something into the password textfield
+	1. Type "a" into the password textfield
 Expected Results:
 	- Characters typed into the password field should be hidden automatically
 Actual Results:
@@ -55,7 +55,7 @@ Actual Results:
 Test Case #5: Show Password
 
 Test Steps:
-	1. Type something into the password textfield
+	1. Type "a" into the password textfield
 	2. Click on the eye icon on the right side of the password textfield
 Expected Results:
 	- Characters should be masked until the eye icon is clicked
