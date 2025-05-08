@@ -30,7 +30,7 @@ public class WorkoutPlanDB extends DBTemplate {
     }
 
     public static void incrementUsersbyName(String name) throws SQLException {
-        String sql = "UPDATE liveWorkouts SET users = users + 1 WHERE name = ?";
+        String sql = "UPDATE WorkoutPlan SET users = users + 1 WHERE name = ?";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
@@ -39,7 +39,7 @@ public class WorkoutPlanDB extends DBTemplate {
     }
 
     public static int getTotalUserCountByAuthor(String Author) throws SQLException {
-        String sql = "SELECT COALESCE(SUM(users), 0) AS total_users FROM liveWorkouts WHERE Author = ?";
+        String sql = "SELECT COALESCE(SUM(users), 0) AS total_users FROM WorkoutPlan WHERE Author = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

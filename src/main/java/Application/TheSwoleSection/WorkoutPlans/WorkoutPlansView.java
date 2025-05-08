@@ -1,6 +1,7 @@
 package Application.TheSwoleSection.WorkoutPlans;
 
 import Application.Databases.LiveWorkoutDB;
+import Application.Databases.WorkoutPlanDB;
 import Application.Main;
 import Application.TheSwoleSection.WorkoutView;
 import com.formdev.flatlaf.FlatClientProperties;
@@ -153,6 +154,11 @@ public class WorkoutPlansView extends JPanel {
             public void actionPerformed(ActionEvent event) {
                 if(table.getSelectedRow() != -1) {
                     viewModel.equipWorkoutPlan(table);
+                    try {
+                        WorkoutPlanDB.incrementUsersbyName(table.getValueAt(table.getSelectedRow(), 0).toString());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                     JOptionPane.showMessageDialog(null,
                             table.getValueAt(table.getSelectedRow(), 0).toString() + " Equipped");
                     Main.setWindow("Workout");
@@ -172,22 +178,21 @@ public class WorkoutPlansView extends JPanel {
             public void actionPerformed(ActionEvent event) {
                 System.out.println("tried to see stats");
                 //try {
+                try {
                     JOptionPane.showMessageDialog(null,
                             "you have had: " +
-                                    "" +
-                                    " users in your classes");
-                //} catch (SQLException e) {
-                //    throw new RuntimeException(e);
-                //}
+                                    WorkoutPlanDB.getTotalUserCountByAuthor(Main.getCurrentUser().getUsername()) +
+                                    " users in your plans");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
 
         buttonPanel.add(equipWorkoutPlan);
 
-
-
-
+        buttonPanel.add(viewStats);
 
         main.add(buttonPanel, BorderLayout.SOUTH);
 
