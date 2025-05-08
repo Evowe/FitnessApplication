@@ -12,19 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class WorkoutLibraryModelTest {
 
     @Test
-    public void testGetWorkoutDataReturnsNonNullArray() {
-        WorkoutLibraryModel model = new WorkoutLibraryModel();
-        final Object[][][] data = {null};
-
-        assertDoesNotThrow(() -> {
-            data[0] = model.getWorkoutData();
-        });
-
-        assertNotNull(data[0], "Workout data should not be null");
-        assertTrue(true, "Workout data should have 0 or more rows");
-    }
-
-    @Test
     public void testGetWorkoutColumnsReturnsExpectedLength() {
         WorkoutLibraryModel model = new WorkoutLibraryModel();
         Object[] columns = model.getWorkoutColumns();

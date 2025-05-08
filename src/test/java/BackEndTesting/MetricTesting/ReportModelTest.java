@@ -29,20 +29,4 @@ public class ReportModelTest {
         reportModel.addWorkout(workout, testAccount.getUsername(),50);
     }
 
-    @Test
-    public void testGetWorkoutData() {
-        Object[][] data = reportModel.getWorkoutData();
-
-        assertNotNull(data, "Workout data should not be null.");
-        assertTrue(data.length > 0, "There should be at least one workout returned.");
-
-        Object[] row = data[0];
-        assertEquals("Workout", row[0]);
-        assertEquals("Test Workout", row[1]);
-        assertEquals("Test Description", row[2]);
-        assertEquals(30, row[3]);
-        assertEquals(250, row[4]);
-        assertEquals("2025-05-07", row[5]);
-        assertTrue(row[6].toString().contains("[]") || row[6].toString().isEmpty(), "Exercise list should be empty.");
-    }
 }

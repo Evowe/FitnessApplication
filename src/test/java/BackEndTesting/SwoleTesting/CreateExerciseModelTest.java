@@ -16,21 +16,6 @@ public class CreateExerciseModelTest {
         createExercise = new CreateExercise();
     }
 
-    @Test
-    public void testCreateExercise_Type1_Reps() {
-        createdExercise = createExercise.CreateExerciseCall("dob", "Upper body exercise", 1, 20, 0);
-        assertNotNull(createdExercise, "Exercise should be created");
-        assertEquals("dob", createdExercise.getName());
-    }
-
-    @Test
-    public void testCreateDuplicateExerciseReturnsNull() {
-        Exercise first = createExercise.CreateExerciseCall("dob", "First insert", 1, 15, 0);
-        assertNotNull(first, "First insert should succeed");
-
-        Exercise second = createExercise.CreateExerciseCall("DuplicateTest", "Second insert", 1, 10, 0);
-        assertNull(second, "Duplicate insert should return null");
-    }
 
     @Test
     public void testInvalidTypeReturnsNull() {

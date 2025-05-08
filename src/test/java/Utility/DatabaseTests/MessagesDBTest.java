@@ -169,7 +169,7 @@ public class MessagesDBTest {
         List<Object[]> responses = messagesDB.getAllResponses(testSender.getUsername());
 
         assertFalse(responses.isEmpty(), "Response list should not be empty");
-        assertEquals(testSender.getUsername() + " accepted your friend request", responses.get(0)[0]);
+        assertEquals(testReceiver.getUsername() + " accepted your friend request", responses.get(0)[0]);
         assertEquals("ACCEPT_FRIEND", responses.get(0)[2]);
     }
 
@@ -188,7 +188,7 @@ public class MessagesDBTest {
         List<Object[]> responses = messagesDB.getAllResponses(testSender.getUsername());
 
         assertFalse(responses.isEmpty(), "Response list should not be empty");
-        assertEquals(testSender.getUsername() + " declined your friend request", responses.get(0)[0]);
+        assertEquals(testReceiver.getUsername() + " declined your friend request", responses.get(0)[0]);
         assertEquals("REJECT_FRIEND", responses.get(0)[2]);
     }
 
