@@ -420,6 +420,44 @@ public class ItemsDB extends DBTemplate {
         return null;
     }
 
+    public void giveAllItemsToUser(String username) {
+        String selectItemsSql = "SELECT id FROM items";
+        String checkItemSql = "SELECT * FROM user_items WHERE username = ? AND item_id = ?";
+        String insertItemSql = "INSERT INTO user_items (username, item_id) VALUES (?, ?)";
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet itemsRs = stmt.executeQuery(selectItemsSql);
+             PreparedStatement checkPs = conn.prepareStatement(checkItemSql);
+             PreparedStatement insertPs = conn.prepareStatement(insertItemSql)) {
+
+            List<Integer> itemsToAdd = new ArrayList<>();
+
+            // First collect all item IDs
+            while (itemsRs.next()) {
+                itemsToAdd.add(itemsRs.getInt("id"));
+            }
+
+            // For each item, check if user already has it
+            for (int itemId : itemsToAdd) {
+                checkPs.setString(1, username);
+                checkPs.setInt(2, itemId);
+                ResultSet rs = checkPs.executeQuery();
+
+                // If user doesn't have this item, add it
+                if (!rs.next()) {
+                    insertPs.setString(1, username);
+                    insertPs.setInt(2, itemId);
+                    insertPs.executeUpdate();
+                    System.out.println("Gave item ID " + itemId + " to user: " + username);
+                }
+            }
+
+            System.out.println("Successfully processed all items for user: " + username);
+        } catch (SQLException e) {
+            System.err.println("Error giving all items to user " + username + ": " + e.getMessage());
+        }
+    }
 
 
 }

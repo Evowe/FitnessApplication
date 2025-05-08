@@ -279,6 +279,13 @@ public class AccountsDB extends DBTemplate {
                 userAccount.addAccount();
             }
 
+            if (!Account.usernameExists("goduser")) {
+                Account userAccount = new Account("goduser", "password", "active", "user");
+                userAccount.addAccount();
+                ItemsDB itemsDB = DatabaseManager.getItemsDB();
+                itemsDB.giveAllItemsToUser("goduser");
+            }
+
             if (!Account.usernameExists("admin")) {
                 Account adminAccount = new Account("admin", "admin123", "active", "admin");
                 adminAccount.addAccount();
