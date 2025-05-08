@@ -42,30 +42,37 @@ public class GoalProgressMeterView extends JPanel {
                 e.printStackTrace();
                 return;
             }
-            double weight = (double) map.get("weight");
-            setLayout(new MigLayout("wrap,fillx,insets 30", "fill,275"));
-            putClientProperty(FlatClientProperties.STYLE, "arc:20;");
-            add(new JLabel("Weight Goal "), "wrap, gapy 5");
             FlatProgressBar progressBar = new FlatProgressBar();
-            //TODO get from database
-            progressBar.setValue((int) (weight/ (WeightGoal.getValue()) *100));
-            add(progressBar, "wrap");
-            add(new JLabel("Workout Goal "), "wrap, gapy 5");
-            progressBar = new FlatProgressBar();
-            //TODO get from database
-            List<Workout> workouts = null;
+            if ( map.get("weight") != null ) {
+                    double weight = (double) map.get("weight");
+                    setLayout(new MigLayout("wrap,fillx,insets 30", "fill,275"));
+                    putClientProperty(FlatClientProperties.STYLE, "arc:20;");
+                    add(new JLabel("Weight Goal "), "wrap, gapy 5");
+                    //TODO get from database
+                    progressBar.setValue((int) (weight / (WeightGoal.getValue()) * 100));
+                    add(progressBar, "wrap");
+            }
+            else {
+                add(new JLabel("Set a goal to see your progress!"), "wrap, gapy 5");
+            }
+                progressBar = new FlatProgressBar();
+                //TODO get from database
+                List<Workout> workouts = null;
 
-            try {
-                workouts = workoutLogDB.getAllWorkouts(currentUser.getUsername());
-            }
-            catch(SQLException e){
-                System.err.println("Error retrieving data: " + e.getMessage());
-                e.printStackTrace();
-                return;
-            }
-            double w = workouts.size();
-            progressBar.setValue((int)(w/(double) WorkoutGoal.getValue() * 100));
-            add(progressBar, "wrap");
+                try {
+                    workouts = workoutLogDB.getAllWorkouts(currentUser.getUsername());
+                } catch (SQLException e) {
+                    System.err.println("Error retrieving data: " + e.getMessage());
+                    e.printStackTrace();
+                    return;
+                }
+                double w = workouts.size();
+                if ( WorkoutGoal != null) {
+                    add(new JLabel("Workout Goal "), "wrap, gapy 5");
+                    progressBar.setValue((int) (w / (double) WorkoutGoal.getValue() * 100));
+                    add(progressBar, "wrap");
+                }
+
         }
         catch (SQLException e) {
             e.printStackTrace();

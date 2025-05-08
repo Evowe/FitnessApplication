@@ -23,13 +23,37 @@ public class WorkoutPlanDB extends DBTemplate {
                 "duration INTEGER NOT NULL",
                 "intensity INTEGER NOT NULL",
                 "workoutSchedule TEXT NOT NULL",
-                "Author TEXT NOT NULL"
+                "Author TEXT NOT NULL",
+                "users INTEGER DEFAULT 0"
         };
-
         createTable("WorkoutPlan", columns);
-
     }
 
+    public static void incrementUsersbyName(String name) throws SQLException {
+        String sql = "UPDATE liveWorkouts SET users = users + 1 WHERE name = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public static int getTotalUserCountByAuthor(String Author) throws SQLException {
+        String sql = "SELECT COALESCE(SUM(users), 0) AS total_users FROM liveWorkouts WHERE Author = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, Author);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total_users");
+                }
+            }
+        }
+        return 0; // If no workouts or an error occurs
+    }
 
     public void addWorkoutPlan(WorkoutPlan workoutPlan) throws SQLException {
         String sql = "INSERT INTO WorkoutPlan (name, goal, duration, intensity, workoutSchedule, Author) VALUES (?, ?, ?, ?, ?, ?)";

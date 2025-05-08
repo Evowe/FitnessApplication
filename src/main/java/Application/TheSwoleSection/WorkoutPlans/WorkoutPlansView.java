@@ -1,5 +1,6 @@
 package Application.TheSwoleSection.WorkoutPlans;
 
+import Application.Databases.LiveWorkoutDB;
 import Application.Main;
 import Application.TheSwoleSection.WorkoutView;
 import com.formdev.flatlaf.FlatClientProperties;
@@ -14,6 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 public class WorkoutPlansView extends JPanel {
     WorkoutPlansViewModel viewModel;
@@ -161,6 +163,24 @@ public class WorkoutPlansView extends JPanel {
             }
         });
 
+        FlatButton viewStats = new FlatButton();
+        viewStats.setMinimumHeight(35);
+        viewStats.setMinimumWidth(200);
+        viewStats.setText("View Stats");
+        viewStats.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                System.out.println("tried to see stats");
+                //try {
+                    JOptionPane.showMessageDialog(null,
+                            "you have had: " +
+                                    "" +
+                                    " users in your classes");
+                //} catch (SQLException e) {
+                //    throw new RuntimeException(e);
+                //}
+            }
+        });
 
 
         buttonPanel.add(equipWorkoutPlan);
