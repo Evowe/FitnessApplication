@@ -57,9 +57,9 @@ public class GoalsView extends JPanel {
         mainPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
 
 
-        // -- RIGHT: Current Distance Goal --
-        JPanel distancePanel = new JPanel(new MigLayout("insets 0,wrap"));
-        distancePanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+        // -- RIGHT: Current Workout Goal --
+        JPanel WorkoutPanel = new JPanel(new MigLayout("insets 0,wrap"));
+        WorkoutPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
 
         JLabel weightTitle = new JLabel("Current Weight Goal");
         weightTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold");
@@ -77,25 +77,25 @@ public class GoalsView extends JPanel {
         } catch (SQLException e) {
             weightContent.setText("Error loading goal.");
         }
-        JLabel distanceTitle = new JLabel("Current Distance Goal");
-        distanceTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold");
+        JLabel WorkoutTitle = new JLabel("Current Workout Goal");
+        WorkoutTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold");
 
-        JLabel distanceContent = new JLabel("");
+        JLabel WorkoutContent = new JLabel("");
         try {
-            Goal distanceGoal = goalsDB.getGoalByTypeAndUsername(currentUser.getUsername(), "Distance");
-            if (distanceGoal == null) {
-                distanceGoal = new Goal(currentUser.getUsername(), "Distance", 0, new Date(), false);
-                goalsDB.addGoal(distanceGoal);
+            Goal WorkoutGoal = goalsDB.getGoalByTypeAndUsername(currentUser.getUsername(), "Workout");
+            if (WorkoutGoal == null) {
+                WorkoutGoal = new Goal(currentUser.getUsername(), "Workout", 0, new Date(), false);
+                goalsDB.addGoal(WorkoutGoal);
             }
-            String formattedDate = displayFormat.format(distanceGoal.getDate());
-            distanceContent.setText(distanceGoal.getValue() + " by " + formattedDate);
+            String formattedDate = displayFormat.format(WorkoutGoal.getDate());
+            WorkoutContent.setText(WorkoutGoal.getValue() + " by " + formattedDate);
         } catch (SQLException e) {
-            distanceContent.setText("Error loading goal.");
+            WorkoutContent.setText("Error loading goal.");
         }
-        distancePanel.add(weightTitle);
-        distancePanel.add(weightContent);
-        distancePanel.add(distanceTitle);
-        distancePanel.add(distanceContent);
+        WorkoutPanel.add(weightTitle);
+        WorkoutPanel.add(weightContent);
+        WorkoutPanel.add(WorkoutTitle);
+        WorkoutPanel.add(WorkoutContent);
 
 
         // -- CENTER: Editable Goal Form --
@@ -108,7 +108,7 @@ public class GoalsView extends JPanel {
         JLabel desc = new JLabel("");
         desc.putClientProperty(FlatClientProperties.STYLE, "foreground:@secondaryForeground");
 
-        JComboBox<String> goalTypeBox = new JComboBox<>(new String[]{"Distance", "Weight"});
+        JComboBox<String> goalTypeBox = new JComboBox<>(new String[]{"Workout", "Weight"});
         goalTypeBox.putClientProperty(FlatClientProperties.STYLE, "background:@secondaryBackground");
         JTextField valueField = new JTextField();
         valueField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter goal value");
@@ -220,7 +220,7 @@ public class GoalsView extends JPanel {
         centerPanel.add(submit, "gapy 20");
 
         mainPanel.add(centerPanel, "grow");
-        mainPanel.add(distancePanel, "grow");
+        mainPanel.add(WorkoutPanel, "grow");
 
         // Add mainPanel to the second column, spanning all rows
         removeAll();
