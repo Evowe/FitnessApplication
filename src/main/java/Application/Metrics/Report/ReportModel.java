@@ -25,9 +25,9 @@ public class ReportModel {
         workoutPlanDB = new WorkoutPlanDB();
         workoutDB = new WorkoutDB();
     }
-    public void addWorkout(Workout w,String username){
+    public void addWorkout(Workout w,String username, int calories){
         try {
-            workoutLogDB.addWorkout(w, username);
+            workoutLogDB.addWorkout(w, username, calories);
         }
         catch (SQLException e) {
             e.printStackTrace();

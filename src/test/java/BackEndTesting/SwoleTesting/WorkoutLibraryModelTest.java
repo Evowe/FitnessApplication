@@ -46,8 +46,8 @@ public class WorkoutLibraryModelTest {
 
         try {
             workoutDB.addWorkout(workout, testUsername);
-
-            model.recordWorkout(testWorkoutName, testUsername);
+            int caloriesBurned = Integer.valueOf(120);
+            model.recordWorkout(testWorkoutName, testUsername, caloriesBurned);
 
         } catch (Exception e) {
             e.printStackTrace();

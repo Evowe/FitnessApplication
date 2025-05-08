@@ -20,8 +20,8 @@ public class ReportViewModel {
         return reportModel.getColumns();
     }
 
-    public void addWorkout(Workout w, String username) {
-        reportModel.addWorkout(w, username);
+    public void addWorkout(Workout w, String username, int calories) {
+        reportModel.addWorkout(w, username, calories);
     }
 
     public Object[][] getWorkoutData() {

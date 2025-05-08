@@ -13,6 +13,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class SocialView extends JPanel {
@@ -181,7 +182,18 @@ public class SocialView extends JPanel {
         messagesPanel.add(messagesTitle, BorderLayout.NORTH);
 
         //Need to initalize with data from friends database
-        JTable messagesTable = new JTable(viewModel.getMessageData2(Main.getCurrentUser()), viewModel.getMessageColumns());
+        JTable messagesTable = new JTable(viewModel.getMessageData2(Main.getCurrentUser()),
+                viewModel.getMessageColumns()){
+            public String getToolTipText( MouseEvent e )
+            {
+                int row = rowAtPoint( e.getPoint() );
+                int column = columnAtPoint( e.getPoint() );
+
+                Object value = getValueAt(row, column);
+                return value == null ? null : value.toString();
+            }
+
+        };
         messagesTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         messagesTable.putClientProperty(FlatClientProperties.STYLE,  "" + "font:regular +0");
         messagesTable.setRowHeight(50);
@@ -218,7 +230,18 @@ public class SocialView extends JPanel {
         responsesPanel.add(responsesTitle, BorderLayout.NORTH);
 
         //Need to initalize with data from friends database
-        JTable responsesTable = new JTable(viewModel.getResponseData(Main.getCurrentUser()), viewModel.getResponseColumns());
+        JTable responsesTable = new JTable(viewModel.getResponseData(Main.getCurrentUser()),
+                viewModel.getResponseColumns()){
+            public String getToolTipText( MouseEvent e )
+            {
+                int row = rowAtPoint( e.getPoint() );
+                int column = columnAtPoint( e.getPoint() );
+
+                Object value = getValueAt(row, column);
+                return value == null ? null : value.toString();
+            }
+
+        };
         responsesTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         responsesTable.putClientProperty(FlatClientProperties.STYLE,  "" + "font:regular +0");
         responsesTable.setRowHeight(50);
