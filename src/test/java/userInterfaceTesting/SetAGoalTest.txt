@@ -63,8 +63,8 @@ Test Case #5: Invalid Date Format
 Test Steps:
 	1. Start on the "Goals" tab in the "Metrics" page
 	2. Select "Distance" or "Weight" in the "Goal Type" dropdown menu
-	3. Enter a valid goal value (> 0 and <= 10,000) in the "Enter goal value" textfield
-	4. Enter a valid date using an invalid date format (dd/MM/yyyy)
+	3. Enter a "100" in the "Enter goal value" textfield
+	4. Enter a today's date using an invalid date format (dd/MM/yyyy)
 	5. Click on the button that says "Set Goal"
 Expected Results:
 	- The user should receive an error message saying "Invalid date format"
@@ -78,7 +78,7 @@ Test Steps:
 	1. Start on the "Goals" tab in the "Metrics" page
 	2. Select "Distance" or "Weight" in the "Goal Type" dropdown menu
 	3. Enter "100" in the "Enter goal value" textfield	
-	4. Enter an invalid date (a date that has already past) in the "Date" textfield
+	4. Enter yesterday's date (MM/dd/yyyy) in the "Date" textfield
 	5. Click on the button that says "Set Goal"
 Expected Results:
 	- The user should receive an error message saying "Please enter a future date"
