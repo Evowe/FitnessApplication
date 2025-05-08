@@ -57,7 +57,7 @@ public class WorkoutLogDBTest {
         Date d = new Date();
         Workout testWorkout = new Workout(name,"doing stuff",5,5,"12","1,2,3,4" );
         Account a = new Account("Dob","Bob");
-        int id = WorkoutLogDB.addWorkout(testWorkout, a.getUsername());
+        int id = WorkoutLogDB.addWorkout(testWorkout, a.getUsername(),50);
         assertTrue(id > 0, "Workout should be saved with valid ID");
 
         Workout retrievedWorkout = WorkoutLogDB.getWorkout("Dob", name);
@@ -74,8 +74,8 @@ public class WorkoutLogDBTest {
         Workout testWorkout1 = new Workout(name1,"doing stuff",5,5,"12","1,2,3,4" );
         Workout testWorkout2 = new Workout(name2,"doing stuff",5,5,"12","1,2,3,4" );
 
-        WorkoutLogDB.addWorkout(testWorkout1,a.getUsername());
-        WorkoutLogDB.addWorkout(testWorkout2,a.getUsername());
+        WorkoutLogDB.addWorkout(testWorkout1,a.getUsername(),50);
+        WorkoutLogDB.addWorkout(testWorkout2,a.getUsername(),50);
 
         List<Workout> Workouts = WorkoutLogDB.getAllWorkouts(a.getUsername());
 
@@ -103,7 +103,7 @@ public class WorkoutLogDBTest {
         Workout testWorkout1 = new Workout(name,"doing stuff",5,5,"12","1,2,3,4" );
         Account a = new Account("Dob","Bob");
 
-        int id =WorkoutLogDB.addWorkout(testWorkout1,a.getUsername());
+        int id =WorkoutLogDB.addWorkout(testWorkout1,a.getUsername(),50);
 
         assertTrue(id > 0);
 
@@ -123,7 +123,7 @@ public class WorkoutLogDBTest {
 
         Account a = new Account("Dob","Bob");
 
-        int id =WorkoutLogDB.addWorkout(testWorkout1,a.getUsername());
+        int id =WorkoutLogDB.addWorkout(testWorkout1,a.getUsername(),50);
         assertTrue(id > 0);
 
         boolean b = WorkoutLogDB.updateWorkout(a.getUsername(),testWorkout2,name1);

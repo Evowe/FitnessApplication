@@ -24,9 +24,9 @@ public class ReportModelTest {
         workout.setDuration(30);
         workout.setCaloriesBurned(250);
         workout.setDate("2025-05-07");
-        workout.setExercises("[]");
+        workout.setExercises("1");
 
-        reportModel.addWorkout(workout, testAccount.getUsername());
+        reportModel.addWorkout(workout, testAccount.getUsername(),50);
     }
 
     @Test

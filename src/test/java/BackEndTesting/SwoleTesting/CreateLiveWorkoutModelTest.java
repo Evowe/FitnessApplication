@@ -22,7 +22,7 @@ public class CreateLiveWorkoutModelTest {
                 false,
                 "This is a test workout",
                 "2025-05-08",
-                60
+                60,5
         );
 
         assertDoesNotThrow(() -> model.addWorkout(workout, 1));
