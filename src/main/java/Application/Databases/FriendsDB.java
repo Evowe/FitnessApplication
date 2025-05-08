@@ -61,7 +61,8 @@ public class FriendsDB extends DBTemplate{
                 }
 
                 // Create the reciprocal relationship
-                String insertSql = "INSERT INTO friends (user_username, friend_username, status) VALUES (?, ?, 'accepted')";
+                String insertSql = "INSERT INTO friends (user_username, friend_username, status) VALUES (?, ?, 'accepted') " +
+                        "ON CONFLICT(user_username, friend_username) DO UPDATE SET status = 'accepted'";
 
                 try (PreparedStatement insertPs = conn.prepareStatement(insertSql)) {
                     insertPs.setString(1, username);
@@ -100,6 +101,7 @@ public class FriendsDB extends DBTemplate{
                     updatePs.executeUpdate();
                 }
 
+                /*
                 // Create the reciprocal relationship
                 String insertSql = "INSERT INTO friends (user_username, friend_username, status) VALUES (?, ?, 'declined')";
 
@@ -108,6 +110,8 @@ public class FriendsDB extends DBTemplate{
                     insertPs.setString(2, friendRequester);
                     insertPs.executeUpdate();
                 }
+
+                 */
 
             } else {
                 System.out.println("No pending friend request found from " + friendRequester + " to " + username);

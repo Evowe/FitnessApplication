@@ -31,7 +31,7 @@ public class WorkoutLogDB extends DBTemplate {
 
     }
     //TODO FIX
-    public int addWorkout(Workout workout,String username) throws SQLException {
+    public int addWorkout(Workout workout,String username, int calories) throws SQLException {
         String sql = "INSERT INTO " + WORKOUTS_TABLE + " (Username, Name, Description, Duration,CaloriesBurned,Date,Exercises) VALUES (?,?, ?, ?,?,?,?)";
 
         try (Connection conn = getConnection();
@@ -42,7 +42,7 @@ public class WorkoutLogDB extends DBTemplate {
             pstmt.setString(2, workout.getName());
             pstmt.setString(3, workout.getDescription());
             pstmt.setInt(4, workout.getDuration());
-            pstmt.setInt(5, workout.getCaloriesBurned());
+            pstmt.setInt(5, calories);
             pstmt.setString(6, workout.getDate());
             pstmt.setString(7, workout.getExercises());
             pstmt.executeUpdate();

@@ -16,9 +16,8 @@ public class WorkoutLibraryViewModel {
         return model.getWorkoutColumns();
     }
 
-
-    public void recordWorkout(String workoutName, String username){
-        model.recordWorkout(workoutName, username);
+    public void recordWorkout(String workoutName, String username, int calories){
+        model.recordWorkout(workoutName, username, calories);
     }
 
 }

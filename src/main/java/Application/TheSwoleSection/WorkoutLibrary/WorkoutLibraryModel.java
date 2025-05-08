@@ -68,16 +68,18 @@ public class WorkoutLibraryModel {
     }
 
 
-    public void recordWorkout(String workoutName, String username){
+    public void recordWorkout(String workoutName, String username, int calories){
 
         try{
             Workout workout = workoutDB.getWorkout(workoutName);
             workout.setDate(LocalDate.now().toString());
+
             if(workout != null){
-                workoutLogDB.addWorkout(workout, username);
+                workoutLogDB.addWorkout(workout, username, calories);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 }

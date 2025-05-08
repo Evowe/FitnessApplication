@@ -155,43 +155,53 @@ public class SendResponseView extends JPanel {
                             "No field can exceed 100 characters.");
                 } else {
                     //Account receiver = viewModel.selectUser(selectedRow);
+                    Boolean correspondingType = true;
                     int index = responseTypeDropdown.getSelectedIndex();
-                    Message.Type responseType = null;
-                    if (index == 1) {
-                        responseType = Message.Type.ACCEPT_FRIEND;
-                    } else if (index == 2) {
-                        responseType = Message.Type.REJECT_FRIEND;
-                    } else if (index == 3) {
-                        responseType = Message.Type.ACCEPT_CHALLENGE;
-                    } else if (index == 4) {
-                        responseType = Message.Type.REJECT_CHALLENGE;
-                    }
-
-                    System.out.println("this is the index" + index);
-
                     Object[][] data = viewModel.getMessageData2(Main.getCurrentUser());
-                    String message = data[viewModel.getSelectedRow()][0].toString();
-                    Account sender = null;
-                    try {
-                        sender = Account.getAccount(data[viewModel.getSelectedRow()][1].toString());
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
                     Message.Type type = Message.getType(data[viewModel.getSelectedRow()][2].toString());
-                    Account recipient = Main.getCurrentUser();
-                    String response = responseField.getText();
-                    //Message.Type type = Message.getType(data[viewModel.getSelectedRow()][2].toString());
-                    Message m = new Message(message, sender, recipient, type, response, responseType);
+                    Message.Type responseType = null;
+                    if (index == 1 && type == Message.Type.FRIEND_REQUEST) {
+                        responseType = Message.Type.ACCEPT_FRIEND;
+                    } else if (index == 2 && type == Message.Type.FRIEND_REQUEST) {
+                        responseType = Message.Type.REJECT_FRIEND;
+                    } else if (index == 3 && type == Message.Type.CHALLENGE) {
+                        responseType = Message.Type.ACCEPT_CHALLENGE;
+                    } else if (index == 4 && type == Message.Type.CHALLENGE) {
+                        responseType = Message.Type.REJECT_CHALLENGE;
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "You must select a corresponding type to the message type.");
+                        correspondingType = false;
 
-                    viewModel.respondToMessage(m);
-
-                    if (responseType == Message.Type.ACCEPT_FRIEND) {
-                        viewModel.acceptFriendRequest(Main.getCurrentUser().getUsername(), messagesTable.getValueAt(viewModel.getSelectedRow(), 1).toString());
                     }
 
-                    //viewModel.sendMessage(resField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
-                    Main.setWindow("SocialView");
-                    //viewModel.selectUser(selectedRow);
+                    if(correspondingType){
+                        String message = data[viewModel.getSelectedRow()][0].toString();
+                        Account sender = null;
+                        try {
+                            sender = Account.getAccount(data[viewModel.getSelectedRow()][1].toString());
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Account recipient = Main.getCurrentUser();
+                        String response = responseField.getText();
+                        //Message.Type type = Message.getType(data[viewModel.getSelectedRow()][2].toString());
+                        Message m = new Message(message, sender, recipient, type, response, responseType);
+
+                        viewModel.respondToMessage(m);
+
+                        if (responseType == Message.Type.ACCEPT_FRIEND) {
+                            viewModel.acceptFriendRequest(Main.getCurrentUser().getUsername(), messagesTable.getValueAt(viewModel.getSelectedRow(), 1).toString());
+                        } else if (responseType == Message.Type.REJECT_FRIEND) {
+                            viewModel.declineFriendRequest(Main.getCurrentUser().getUsername(), messagesTable.getValueAt(viewModel.getSelectedRow(), 1).toString());
+                            //viewModel.deleteFriendRequestMessages(Main.getCurrentUser().getUsername(), messagesTable.getValueAt(viewModel.getSelectedRow(), 1).toString());
+                        }
+
+                        //viewModel.sendMessage(resField.getText(), Main.getCurrentUser(), viewModel.getReceiver(), type);
+                        Main.setWindow("SocialView");
+                        //viewModel.selectUser(selectedRow);
+                    }
+
                 }
             }
 

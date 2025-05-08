@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 public class WorkoutLibraryView extends JPanel{
     private WorkoutLibraryViewModel viewModel;
@@ -132,20 +133,29 @@ public class WorkoutLibraryView extends JPanel{
             public void actionPerformed(ActionEvent event) {
 
                 if(table.getSelectedRow() != -1) {
-                    viewModel.recordWorkout(table.getValueAt(table.getSelectedRow(), 0).toString(),
-                            Main.getCurrentUser().getUsername());
+                    String input = JOptionPane.showInputDialog(null, "Enter calories burned:",
+                            "Input", JOptionPane.PLAIN_MESSAGE);
 
-                    JOptionPane.showMessageDialog(null, "Workout recorded. " +
-                            "You can view in the Workout History Page under Metrics.");
 
-                    try {
-                        AccountsDB.addxp(Main.getCurrentUser().getUsername(), 100); // Update DB by +100
-                        Main.getCurrentUser().setXp(Main.getCurrentUser().getXp() + 100); // Sync local object
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                    if(input == null || input.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Need to enter calories to proceed.");
+                    } else {
+                        int calories = Integer.parseInt(input);
+                        viewModel.recordWorkout(table.getValueAt(table.getSelectedRow(), 0).toString(),
+                                Main.getCurrentUser().getUsername(), calories);
+
+                        JOptionPane.showMessageDialog(null, "Workout recorded. " +
+                                "You can view in the Workout History Page under Metrics.");
+
+                        try {
+                            AccountsDB.addxp(Main.getCurrentUser().getUsername(), 100); // Update DB by +100
+                            Main.getCurrentUser().setXp(Main.getCurrentUser().getXp() + 100); // Sync local object
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        //Main.setWindow("MetricsPage");
                     }
 
-                    //Main.setWindow("MetricsPage");
                 } else{
                     JOptionPane.showMessageDialog(null, "No Workout Selected");
                 }
