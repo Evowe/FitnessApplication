@@ -3,8 +3,8 @@ Test Case #1: Valid Distance Goal
 Test Steps:
 	1. Start on the "Goals" tab in the "Metrics" page
 	2. Select "Distance" in the "Goal Type" dropdown menu
-	3. Enter a valid distance (> 0 and <= 10,000) in the "Enter goal value" textfield
-	4. Enter a valid date (MM/dd/yyyy) in the "Date" textfield
+	3. Enter a "100" in the "Enter goal value" textfield
+	4. Enter a today's date (MM/dd/yyyy) in the "Date" textfield
 	5. Click on the button that says "Set Goal"
 Expected Results:
 	- User should receive a notification saying "Goal Updated!"
